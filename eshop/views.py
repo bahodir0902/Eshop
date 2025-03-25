@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.shortcuts import render, redirect
-from .models import Product
+from products.models import Product, Inventory
 from .forms import ProductModelForm
 
 
@@ -12,9 +12,11 @@ def home(request):
 
 
 def fetch_product(q: str | None, page: int | None):
-    products = Product.objects.all().order_by('name')
+    products = Product.available_products.all().order_by('name')
     if q and q != 'None':
-        products = Product.objects.filter(Q(name__icontains=q) | Q(description__icontains=q))
+        products = Product.available_products.filter(Q(name__icontains=q) | Q(description__icontains=q))
+
+    products = products.annotate(stock_count=Sum('inventory_products__stock_count'))
 
     paginator = Paginator(products, 6)
     products = paginator.get_page(page)
@@ -65,11 +67,16 @@ def find_and_edit_product(request):
     page_number = request.GET.get('page')
     print(request.path)
     products = fetch_product(q, page_number)
+    total_products = Product.objects.all().count()
+    total_active = Product.available_products.all().count()
+
 
     data = {
-        'products': products
+        'products': products,
+        'total_products': total_products,
+        'total_active': total_active
     }
-    return render(request, 'find_and_edit_product.html', {'products': products})
+    return render(request, 'find_and_edit_product.html', context=data)
 
 def find_and_delete_product(request):
     q = request.GET.get('q')
