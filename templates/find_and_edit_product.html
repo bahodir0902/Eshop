@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Product Management
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/admin-products.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="admin-dashboard">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>Product Management</h1>
+                <div class="header-actions">
+                    <a href="{% url 'shop:add_product' %}" class="btn-primary">
+                        <i class="fa fa-plus"></i> Add New Product
+                    </a>
+                    <div class="search-container">
+                        <input type="text" id="productSearch" placeholder="Search products...">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <span class="stat-value">{{ total_products }}</span>
+                    <span class="stat-label">Total Products</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">{{ total_active|default:'0' }}</span>
+                    <span class="stat-label">Active</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">{{ out_of_stock_count|default:'0' }}</span>
+                    <span class="stat-label">Out of Stock</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value">${{ total_inventory_value|default:'0' }}</span>
+                    <span class="stat-label">Inventory Value</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label>Category:</label>
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <!-- Add category options dynamically if available -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Status:</label>
+                <select id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="out_of_stock">Out of Stock</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Sort By:</label>
+                <select id="sortOrder">
+                    <option value="newest">Newest First</option>
+                    <option value="name_asc">Name (A-Z)</option>
+                    <option value="price_high">Price (High-Low)</option>
+                    <option value="price_low">Price (Low-High)</option>
+                </select>
+            </div>
+            <button class="btn-outline" id="resetFilters">
+                <i class="fa fa-refresh"></i> Reset
+            </button>
+        </div>
+
+        <div class="bulk-actions">
+            <div class="selected-count">0 items selected</div>
+            <div class="action-buttons">
+                <button class="btn-outline btn-sm bulk-btn disabled" id="bulkEdit">
+                    <i class="fa fa-pencil"></i> Edit Selected
+                </button>
+                <button class="btn-outline btn-sm bulk-btn disabled" id="bulkDelete">
+                    <i class="fa fa-trash"></i> Delete Selected
+                </button>
+                <button class="btn-outline btn-sm bulk-btn disabled" id="bulkExport">
+                    <i class="fa fa-download"></i> Export Selected
+                </button>
+            </div>
+        </div>
+
+        <div class="product-table-container">
+            <table class="product-table">
+                <thead>
+                <tr>
+                    <th class="checkbox-cell">
+                        <input type="checkbox" id="selectAll">
+                    </th>
+                    <th class="image-cell">Image</th>
+                    <th class="name-cell">Name</th>
+                    <th>SKU</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th class="actions-cell">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td class="checkbox-cell">
+                            <input type="checkbox" class="product-select" data-id="{{ product.pk }}">
+                        </td>
+                        <td class="image-cell">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <div class="no-image">
+                                    <i class="fa fa-image"></i>
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td class="name-cell">
+                            <span class="product-name">{{ product.name }}</span>
+                            <span class="product-description">{{ product.description|truncatechars:60 }}</span>
+                        </td>
+                        <td>{{ product.id|default:"—" }}</td>
+                        <td>${{ product.price }}</td>
+                        <td>
+                            <span class="stock-badge {% if product.stock_count < 5 %}low-stock{% elif product.stock_count > 20 %}high-stock{% else %}medium-stock{% endif %}">
+                                {{ product.stock_count|default:"0" }}
+                            </span>
+                        </td>
+                        <td>{{ product.category|default:"Uncategorized" }}</td>
+                        <td>
+                            <span class="status-badge {% if product.is_available %}active{% else %}inactive{% endif %}">
+                                {% if product.is_available %}Active{% else %}Inactive{% endif %}
+                            </span>
+                        </td>
+                        <td>{{ product.created_at|date:"M d, Y" }}</td>
+                        <td class="actions-cell">
+                            <div class="action-buttons">
+                                <a href="#" class="btn-icon" title="View">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="{% url 'shop:edit_product' product.pk %}" class="btn-icon" title="Edit">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <button class="btn-icon delete-product" data-id="{{ product.pk }}" title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr class="empty-row">
+                        <td colspan="10">
+                            <div class="empty-state">
+                                <i class="fa fa-cubes empty-icon"></i>
+                                <h3>No Products Available</h3>
+                                <p>Get started by adding your first product to the inventory.</p>
+                                <a href="{% url 'shop:add_product' %}" class="btn-primary">
+                                    <i class="fa fa-plus"></i> Add Product
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% include 'page.html' with page=products %}
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Deletion</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this product? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-outline" id="cancelDelete">Cancel</button>
+                <button class="btn-danger" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/admin-products.js' %}"></script>
+{% endblock %}
