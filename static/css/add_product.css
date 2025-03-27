@@ -1,0 +1,144 @@
+/* Product Form Container */
+.product-form {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    max-width: 600px;
+    margin: 50px auto;
+    animation: fadeIn 0.6s ease-in;
+}
+
+/* Form Title */
+.product-form h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Form Group */
+.product-form .form-group {
+    margin-bottom: 25px;
+}
+
+/* Labels */
+.product-form label {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Input Wrappers */
+.product-form .input-wrapper {
+    position: relative;
+}
+
+.product-form .input-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 18px;
+}
+
+.product-form .input-wrapper input,
+.product-form .textarea-wrapper textarea {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.product-form .textarea-wrapper textarea {
+    padding-left: 12px;
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Focus Effects */
+.product-form .input-wrapper input:focus,
+.product-form .textarea-wrapper textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+/* Custom Switch for Checkbox */
+.product-form .custom-switch {
+    display: inline-block;
+    position: relative;
+    width: 50px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.product-form .custom-switch input[type="checkbox"] {
+    display: none;
+}
+
+.product-form .custom-switch label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.product-form .custom-switch label::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: left 0.3s;
+}
+
+.product-form .custom-switch input[type="checkbox"]:checked + label {
+    background: #007bff;
+}
+
+.product-form .custom-switch input[type="checkbox"]:checked + label::after {
+    left: 28px;
+}
+
+/* Submit Button */
+.product-form .btn-primary {
+    background: linear-gradient(45deg, #007bff, #00c6ff);
+    border: none;
+    padding: 12px 0;
+    border-radius: 25px;
+    font-weight: bold;
+    color: white;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.product-form .btn-primary:hover {
+    background: linear-gradient(45deg, #00c6ff, #007bff);
+    box-shadow: 0 6px 15px rgba(0, 198, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
