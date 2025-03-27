@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Add Product
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/add_product.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="product-form">
+        <h3>Add a New Product</h3>
+        <form method="post">
+            {% csrf_token %}
+            <!-- Name Field -->
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}">Name</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-tag"></i>
+                    {{ form.name }}
+                </div>
+            </div>
+            <!-- Price Field -->
+            <div class="form-group">
+                <label for="{{ form.price.id_for_label }}">Price</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-dollar-sign"></i>
+                    {{ form.price }}
+                </div>
+            </div>
+            <!-- Description Field -->
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                <div class="textarea-wrapper">
+                    {{ form.description }}
+                </div>
+            </div>
+            <!-- Is Available Field -->
+            <div class="form-group">
+                <div class="custom-switch">
+                    {{ form.is_available }}
+                    <label for="{{ form.is_available.id_for_label }}"></label>
+                </div>
+                <span>Is Available</span>
+            </div>
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Product Showcase
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="products-container">
+        <header class="products-header">
+            <h1>Product Collection</h1>
+            <div class="view-controls">
+                <button class="view-btn active" data-view="grid">
+                    <i class="fa fa-th"></i>
+                </button>
+                <button class="view-btn" data-view="list">
+                    <i class="fa fa-list"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="products-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{{ product.image|default:'https://via.placeholder.com/300x200' }}"
+                             alt="{{ product.name }}">
+                        <div class="product-badges">
+                            {% if product.is_new %}
+                                <span class="badge new">New</span>
+                            {% endif %}
+                            {% if product.discount > 0 %}
+                                <span class="badge sale">-{{ product.discount }}%</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-title">{{ product.name }}</h2>
+                        <div class="product-price">
+                            <span class="current-price">${{ product.price }}</span>
+                        </div>
+                        <p class="product-description">{{ product.description }}</p>
+                        <div class="product-meta">
+                            <span class="product-date">Added {{ product.created_at|date:"M d, Y" }}</span>
+                            {% if product.rating %}
+                                <div class="product-rating">
+                                    {% for i in "12345" %}
+                                        {% if forloop.counter <= product.rating %}
+                                            <i class="fa fa-star"></i>
+                                        {% else %}
+                                            <i class="fa fa-star-o"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <button type="button" class="btn btn-primary buy-now">
+                            <i class="fa fa-credit-card"></i> Buy Now
+                        </button>
+                        <button type="button" class="btn btn-outline add-to-cart">
+                            <i class="fa fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button type="button" class="btn btn-icon wishlist">
+                            <i class="fa fa-heart-o"></i>
+                        </button>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <i class="fa fa-shopping-bag empty-icon"></i>
+                    <h3>No Products Available</h3>
+                    <p>Check back soon for new additions to our catalog.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% include 'page.html' with page=products %}
+    </div>
+
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+    <script src="{% static 'js/products.js' %}"></script>
+{% endblock %}
