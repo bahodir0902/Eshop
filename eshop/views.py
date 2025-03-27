@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.db.models import Q, Sum
 from django.shortcuts import render, redirect
-from products.models import Product, Inventory
+from products.models import Product, Inventory, Category
 from .forms import ProductModelForm
 
 
@@ -11,16 +11,27 @@ def home(request):
     return render(request, 'home.html')
 
 
-def fetch_product(q: str | None, page: int | None):
-    products = Product.available_products.all().order_by('name')
+def fetch_product(q, page, per_page=5, category_id=None, status=None):
+    products = Product.objects.all().order_by('-is_available', 'name', 'created_at')
+
+    if category_id:
+        db_category = Category.objects.filter(pk=category_id).first()
+        subcategories = db_category.get_all_subcategories()
+        subcategories_id = [cat.id for cat in subcategories] + [db_category.id]
+        products = Product.objects.filter(category_id__in=subcategories_id)
+
     if q and q != 'None':
-        products = Product.available_products.filter(Q(name__icontains=q) | Q(description__icontains=q))
+        products = Product.objects.filter(Q(name__icontains=q) | Q(description__icontains=q))
+
+    if status == 'out_of_stock':
+        products = products.filter(is_available=False)
+    if status == 'active':
+        products = products.filter(is_available=True)
 
     products = products.annotate(stock_count=Sum('inventory_products__stock_count'))
 
-    paginator = Paginator(products, 6)
+    paginator = Paginator(products, per_page)
     products = paginator.get_page(page)
-
     return products
 
 
@@ -65,24 +76,45 @@ def edit_product(request, pk):
 def find_and_edit_product(request):
     q = request.GET.get('q')
     page_number = request.GET.get('page')
-    print(request.path)
-    products = fetch_product(q, page_number)
+    category = request.GET.get('category')
+    status = request.GET.get('status')
+    try:
+        per_page = int(request.GET.get('items_per_page'))
+    except Exception as e:
+        per_page = 5
+
+    products = fetch_product(q, page_number, per_page, category, status)
     total_products = Product.objects.all().count()
     total_active = Product.available_products.all().count()
+    Inventory.objects.filter()
+    inventory = Inventory.objects.all()
+    categories = Category.objects.filter(parent_category=None)
 
+    value = 0
+    total_out_of_stock = 0
+    for inv in inventory:
+        if inv.stock_count == 0:
+            total_out_of_stock += 1
+        value += inv.product.price * inv.stock_count
 
     data = {
         'products': products,
         'total_products': total_products,
-        'total_active': total_active
+        'total_active': total_active,
+        'total_inventory_value': value,
+        'out_of_stock': total_out_of_stock,
+        'categories': categories
     }
     return render(request, 'find_and_edit_product.html', context=data)
 
 def find_and_delete_product(request):
     q = request.GET.get('q')
     page_number = request.GET.get('page')
+    category = request.GET.get('category')
+    status = request.GET.get('status')
+    per_page = request.GET.get('items_per_page')
     print(request.path)
-    products = fetch_product(q, page_number)
+    products = fetch_product(q, page_number, int(per_page), category, status)
 
     data = {
         'products': products
