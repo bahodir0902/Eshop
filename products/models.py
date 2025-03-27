@@ -26,6 +26,12 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_all_subcategories(self):
+        subcategories = list(self.subcategories.all())
+        for subcategory in subcategories:
+            subcategories.extend(subcategory.get_all_subcategories())
+        return subcategories
+
 def validate_image_size(image):
     max_size = 4 * 1024 * 1024
     if image.size > max_size:
@@ -58,6 +64,7 @@ class Product(BaseModel):
     objects = models.Manager()
     available_products = AvailableProducts()
     approved_products = ApprovedProducts()
+
 
     @override
     def __str__(self):
