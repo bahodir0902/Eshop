@@ -19,8 +19,10 @@ Product Management
                     <i class="fa fa-plus"></i> Add New Product
                 </a>
                 <div class="search-container">
-                    <input type="text" id="productSearch" placeholder="Search products...">
-                    <i class="fa fa-search"></i>
+                    <form class="d-flex" method="get" action="{% if request.path == '/shop/find_and_edit_product' %}{% url 'shop:find_and_edit_product' %}{% endif %}">
+                        <input type="text" id="productSearch" name="q" value="{{ q }}" placeholder="Search products...">
+                        <i class="fa fa-search"></i>
+                    </form>
                 </div>
             </div>
         </div>
@@ -53,7 +55,6 @@ Product Management
                 <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}> {{ category.name }}</option>
                 {% endfor %}
             </select>
-
         </div>
         <div class="filter-group">
             <label>Status:</label>
@@ -62,27 +63,27 @@ Product Management
                 <option value="active" {% if request.GET.status == "active" %}selected{% endif %}>Active</option>
                 <option value="out_of_stock" {% if request.GET.status == "out_of_stock" %}selected{% endif %}>Out of Stock</option>
             </select>
-
         </div>
         <div class="filter-group">
             <label>Sort By:</label>
             <select id="sortOrder">
-                <option value="newest">Newest First</option>
-                <option value="name_asc">Name (A-Z)</option>
-                <option value="price_high">Price (High-Low)</option>
-                <option value="price_low">Price (Low-High)</option>
+                <option value="name_asc" {% if request.GET.sort == "name_asc" %}selected{% endif %}>Name (A-Z)</option>
+                <option value="name_desc" {% if request.GET.sort == "name_desc" %}selected{% endif %}>Name (Z-A)</option>
+                <option value="newest" {% if request.GET.sort == "newest" %}selected{% endif %}>Newest First</option>
+                <option value="oldest" {% if request.GET.sort == "oldest" %}selected{% endif %}>Oldest First</option>
+                <option value="price_high" {% if request.GET.sort == "price_high" %}selected{% endif %}>Price (High-Low)</option>
+                <option value="price_low" {% if request.GET.sort == "price_low" %}selected{% endif %}>Price (Low-High)</option>
             </select>
         </div>
         <div class="filter-group">
             <label>Items Per Page:</label>
             <select id="per_page">
-                <option value="5" {% if request.GET.per_page == "5" %}selected{% endif %}>5</option>
+                <option value="6" {% if request.GET.per_page == "6" %}selected{% endif %}>6</option>
                 <option value="10" {% if request.GET.per_page == "10" %}selected{% endif %}>10</option>
                 <option value="20" {% if request.GET.per_page == "20" %}selected{% endif %}>20</option>
                 <option value="50" {% if request.GET.per_page == "50" %}selected{% endif %}>50</option>
                 <option value="100" {% if request.GET.per_page == "100" %}selected{% endif %}>100</option>
             </select>
-
         </div>
         <button class="btn-outline" id="resetFilters">
             <i class="fa fa-refresh"></i> Reset
@@ -107,82 +108,82 @@ Product Management
     <div class="product-table-container">
         <table class="product-table">
             <thead>
-            <tr>
-                <th class="checkbox-cell">
-                    <input type="checkbox" id="selectAll">
-                </th>
-                <th class="image-cell">Image</th>
-                <th class="name-cell">Name</th>
-                <th>SKU</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Category</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th class="actions-cell">Actions</th>
-            </tr>
+                <tr>
+                    <th class="checkbox-cell">
+                        <input type="checkbox" id="selectAll">
+                    </th>
+                    <th class="image-cell">Image</th>
+                    <th class="name-cell">Name</th>
+                    <th>SKU</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th class="actions-cell">Actions</th>
+                </tr>
             </thead>
             <tbody>
-            {% for product in products %}
-            <tr>
-                <td class="checkbox-cell">
-                    <input type="checkbox" class="product-select" data-id="{{ product.pk }}">
-                </td>
-                <td class="image-cell">
-                    {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                    {% else %}
-                    <div class="no-image">
-                        <i class="fa fa-image"></i>
-                    </div>
-                    {% endif %}
-                </td>
-                <td class="name-cell">
-                    <span class="product-name">{{ product.name }}</span>
-                    <span class="product-description">{{ product.description|truncatechars:60 }}</span>
-                </td>
-                <td>{{ product.id|default:"—" }}</td>
-                <td>${{ product.price }}</td>
-                <td>
-                            <span class="stock-badge {% if product.stock_count < 5 %}low-stock{% elif product.stock_count > 20 %}high-stock{% else %}medium-stock{% endif %}">
-                                {{ product.stock_count|default:"0" }}
-                            </span>
-                </td>
-                <td>{{ product.category|default:"Uncategorized" }}</td>
-                <td>
-                            <span class="status-badge {% if product.is_available %}active{% else %}inactive{% endif %}">
-                                {% if product.is_available %}Active{% else %}Out of Stock{% endif %}
-                            </span>
-                </td>
-                <td>{{ product.created_at|date:"M d, Y" }}</td>
-                <td class="actions-cell">
-                    <div class="action-buttons">
-                        <a href="#" class="btn-icon" title="View">
-                            <i class="fa fa-eye"></i>
-                        </a>
-                        <a href="{% url 'shop:edit_product' product.pk %}" class="btn-icon" title="Edit">
-                            <i class="fa fa-pencil"></i>
-                        </a>
-                        <button class="btn-icon delete-product" data-id="{{ product.pk }}" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            {% empty %}
-            <tr class="empty-row">
-                <td colspan="10">
-                    <div class="empty-state">
-                        <i class="fa fa-cubes empty-icon"></i>
-                        <h3>No Products Available</h3>
-                        <p>Get started by adding your first product to the inventory.</p>
-                        <a href="{% url 'shop:add_product' %}" class="btn-primary">
-                            <i class="fa fa-plus"></i> Add Product
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
+                {% for product in products %}
+                <tr>
+                    <td class="checkbox-cell">
+                        <input type="checkbox" class="product-select" data-id="{{ product.pk }}">
+                    </td>
+                    <td class="image-cell">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <div class="no-image">
+                            <i class="fa fa-image"></i>
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td class="name-cell">
+                        <span class="product-name">{{ product.name }}</span>
+                        <span class="product-description">{{ product.description|truncatechars:60 }}</span>
+                    </td>
+                    <td>{{ product.id|default:"—" }}</td>
+                    <td>${{ product.price }}</td>
+                    <td>
+                        <span class="stock-badge {% if product.stock_count < 5 %}low-stock{% elif product.stock_count > 20 %}high-stock{% else %}medium-stock{% endif %}">
+                            {{ product.stock_count|default:"0" }}
+                        </span>
+                    </td>
+                    <td>{{ product.category|default:"Uncategorized" }}</td>
+                    <td>
+                        <span class="status-badge {% if product.is_available %}active{% else %}inactive{% endif %}">
+                            {% if product.is_available %}Active{% else %}Out of Stock{% endif %}
+                        </span>
+                    </td>
+                    <td>{{ product.created_at|date:"M d, Y" }}</td>
+                    <td class="actions-cell">
+                        <div class="action-buttons">
+                            <a href="#" class="btn-icon" title="View">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a href="{% url 'shop:edit_product' product.pk %}" class="btn-icon" title="Edit">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <button class="btn-icon delete-product" data-id="{{ product.pk }}" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr class="empty-row">
+                    <td colspan="10">
+                        <div class="empty-state">
+                            <i class="fa fa-cubes empty-icon"></i>
+                            <h3>No Products Available</h3>
+                            <p>Get started by adding your first product to the inventory.</p>
+                            <a href="{% url 'shop:add_product' %}" class="btn-primary">
+                                <i class="fa fa-plus"></i> Add Product
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -207,7 +208,6 @@ Product Management
     </div>
 </div>
 
-
 <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
 <script src="{% static 'js/admin-products.js' %}"></script>
 <script>
@@ -230,30 +230,35 @@ Product Management
     document.getElementById('statusFilter').addEventListener('change', function () {
         let selectedStatus = this.value;
         let url = new URL(window.location.href);
-
-        // Preserve existing filters (category, etc.)
         if (selectedStatus) {
             url.searchParams.set('status', selectedStatus);
         } else {
             url.searchParams.delete('status');
         }
-
-        // Update the page with the new filter
         window.location.href = url.toString();
     });
 
-     document.getElementById('per_page').addEventListener('change', function () {
+    document.getElementById('per_page').addEventListener('change', function () {
         let selectedPerPage = this.value;
         let url = new URL(window.location.href);
-
-        // Preserve existing filters (category, status, sort, etc.)
         if (selectedPerPage) {
             url.searchParams.set('per_page', selectedPerPage);
         } else {
             url.searchParams.delete('per_page');
         }
+        window.location.href = url.toString();
+    });
 
-        // Reload the page with the new per_page parameter
+
+
+    document.getElementById('sortOrder').addEventListener('change', function () {
+        let selectedSortOrder = this.value;
+        let url = new URL(window.location.href);
+        if (selectedSortOrder) {
+            url.searchParams.set('sort', selectedSortOrder);
+        } else {
+            url.searchParams.delete('sort');
+        }
         window.location.href = url.toString();
     });
 </script>
