@@ -11,7 +11,7 @@ def home(request):
     return render(request, 'home.html')
 
 
-def fetch_product(q, page, per_page=5, category_id=None, status=None):
+def fetch_product(q, page, per_page=5, category_id=None, status=None, sort='name'):
     products = Product.objects.all().order_by('-is_available', 'name', 'created_at')
 
     if category_id:
@@ -20,13 +20,27 @@ def fetch_product(q, page, per_page=5, category_id=None, status=None):
         subcategories_id = [cat.id for cat in subcategories] + [db_category.id]
         products = Product.objects.filter(category_id__in=subcategories_id)
 
-    if q and q != 'None':
-        products = Product.objects.filter(Q(name__icontains=q) | Q(description__icontains=q))
-
     if status == 'out_of_stock':
         products = products.filter(is_available=False)
     if status == 'active':
         products = products.filter(is_available=True)
+
+    if q and q != 'None':
+        products = products.filter(Q(name__icontains=q) | Q(description__icontains=q))
+
+    print(sort)
+    if sort == 'price_high':
+        products = products.order_by('-price')
+    elif sort == 'price_low':
+        products = products.order_by('price')
+    elif sort == 'name_asc':
+        products = products.order_by('name')
+    elif sort == 'name_desc':
+        products = products.order_by('-name')
+    elif sort == 'newest':
+        products = products.order_by('-created_at')
+    elif sort == 'oldest':
+        products = products.order_by('created_at')
 
     products = products.annotate(stock_count=Sum('inventory_products__stock_count'))
 
@@ -78,12 +92,14 @@ def find_and_edit_product(request):
     page_number = request.GET.get('page')
     category = request.GET.get('category')
     status = request.GET.get('status')
+    sort = request.GET.get('sort')
     try:
-        per_page = int(request.GET.get('items_per_page'))
+        per_page = int(request.GET.get('per_page'))
     except Exception as e:
-        per_page = 5
+        per_page = 6
 
-    products = fetch_product(q, page_number, per_page, category, status)
+    products = fetch_product(q, page_number, per_page, category, status, sort)
+
     total_products = Product.objects.all().count()
     total_active = Product.available_products.all().count()
     Inventory.objects.filter()
@@ -112,9 +128,12 @@ def find_and_delete_product(request):
     page_number = request.GET.get('page')
     category = request.GET.get('category')
     status = request.GET.get('status')
-    per_page = request.GET.get('items_per_page')
+    try:
+        per_page = int(request.GET.get('per_page'))
+    except Exception as e:
+        per_page = 6
     print(request.path)
-    products = fetch_product(q, page_number, int(per_page), category, status)
+    products = fetch_product(q, page_number, per_page, category, status)
 
     data = {
         'products': products
