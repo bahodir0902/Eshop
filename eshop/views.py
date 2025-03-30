@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q, Sum
 from django.shortcuts import render, redirect
 from products.models import Product, Inventory, Category
-from .forms import ProductModelForm
+from products.forms import ProductModelForm
 
 
 # Create your views here.
@@ -28,7 +28,6 @@ def fetch_product(q, page, per_page=5, category_id=None, status=None, sort='name
     if q and q != 'None':
         products = products.filter(Q(name__icontains=q) | Q(description__icontains=q))
 
-    print(sort)
     if sort == 'price_high':
         products = products.order_by('-price')
     elif sort == 'price_low':
