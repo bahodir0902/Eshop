@@ -1,49 +1,122 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Add Product
+Add Product
 {% endblock %}
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/add_product.css' %}">
+<link rel="stylesheet" href="{% static 'css/add_product.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="product-form">
-        <h3>Add a New Product</h3>
-        <form method="post">
-            {% csrf_token %}
-            <!-- Name Field -->
-            <div class="form-group">
-                <label for="{{ form.name.id_for_label }}">Name</label>
-                <div class="input-wrapper">
-                    <i class="fas fa-tag"></i>
-                    {{ form.name }}
-                </div>
+<div class="product-form">
+    <h3 class="neon-title">Add a New Product</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- Name Field -->
+        <div class="form-group floating-label-group">
+            <div class="input-wrapper">
+                {{ form.name }}
+                <label for="{{ form.name.id_for_label }}">Product Name</label>
+                <!--                <i class="fas fa-cube"></i>-->
             </div>
-            <!-- Price Field -->
-            <div class="form-group">
-                <label for="{{ form.price.id_for_label }}">Price</label>
+        </div>
+
+        <!-- Price and Slug -->
+        <div class="form-row">
+            <div class="form-group floating-label-group">
                 <div class="input-wrapper">
-                    <i class="fas fa-dollar-sign"></i>
                     {{ form.price }}
+                    <label for="{{ form.price.id_for_label }}">Price</label>
+                    <!--                    <i class="fas fa-coins"></i>-->
                 </div>
             </div>
-            <!-- Description Field -->
-            <div class="form-group">
-                <label for="{{ form.description.id_for_label }}">Description</label>
-                <div class="textarea-wrapper">
-                    {{ form.description }}
+            <div class="form-group floating-label-group">
+                <div class="input-wrapper">
+                    {{ form.slug }}
+                    <label for="{{ form.slug.id_for_label }}">URL Slug</label>
+                    <!--                    <i class="fas fa-link"></i>-->
                 </div>
             </div>
-            <!-- Is Available Field -->
-            <div class="form-group">
+        </div>
+
+        <!-- Category and Shop -->
+        <div class="form-row">
+            <div class="form-group custom-select">
+                <label for="{{ form.category.id_for_label }}">Category</label>
+                <div class="select-wrapper">
+                    <!--                    <i class="fas fa-tags"></i>-->
+                    {{ form.category }}
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+            <div class="form-group custom-select">
+                <label for="{{ form.shop.id_for_label }}">Shop</label>
+                <div class="select-wrapper">
+                    <i class="fas fa-store"></i>
+                    {{ form.shop }}
+                    <div class="select-arrow"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-group">
+            <div class="file-upload-wrapper">
+                <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}" class="file-upload">
+                <label for="{{ form.image.id_for_label }}" class="upload-label">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span class="upload-text">Drag & Drop or Click to Upload Image</span>
+                    <span class="file-name"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group textarea-group">
+            <div class="textarea-wrapper">
+                {{ form.description }}
+                <label for="{{ form.description.id_for_label }}">Product Description</label>
+            </div>
+        </div>
+
+        <!-- Stock Count Field -->
+        <div class="form-group floating-label-group">
+            <div class="input-wrapper" style="width: 30%;">
+                {{ form.stock_count }}
+                <label for="{{ form.stock_count.id_for_label }}">Stock Count</label>
+            </div>
+        </div>
+
+
+        <!-- Toggle Switches -->
+        <div class="switch-grid">
+            <div class="switch-item">
                 <div class="custom-switch">
                     {{ form.is_available }}
                     <label for="{{ form.is_available.id_for_label }}"></label>
                 </div>
-                <span>Is Available</span>
+                <span>Available</span>
             </div>
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Add Product</button>
-        </form>
-    </div>
+            <div class="switch-item">
+                <div class="custom-switch">
+                    {{ form.is_discounted }}
+                    <label for="{{ form.is_discounted.id_for_label }}"></label>
+                </div>
+                <span>Discounted</span>
+            </div>
+            <div class="switch-item">
+                <div class="custom-switch">
+                    {{ form.is_featured }}
+                    <label for="{{ form.is_featured.id_for_label }}"></label>
+                </div>
+                <span>Featured</span>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary hologram-effect">
+            <span class="btn-text">Launch Product</span>
+            <div class="glow"></div>
+        </button>
+    </form>
+</div>
 {% endblock %}
