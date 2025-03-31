@@ -1,5 +1,6 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+
 from products.models import Product, Inventory
 
 
@@ -12,4 +13,5 @@ def set_is_available_to_false(sender, instance: Inventory, created, **kwargs):
 @receiver(post_save, sender=Product)
 def set_moderation_status(sender, instance: Product, created, **kwargs):
     pass
+
 
