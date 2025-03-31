@@ -1,6 +1,5 @@
 from datetime import timedelta
 from typing import override
-
 from django.contrib.auth.models import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser

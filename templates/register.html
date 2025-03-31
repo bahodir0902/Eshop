@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <div class="register-card">
+        <div class="card-side card-left">
+            <div class="steps-container">
+                <h3>Create Account</h3>
+                <div class="steps">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Personal Info</h4>
+                            <p>Your basic details</p>
+                        </div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Account Info</h4>
+                            <p>Set up your login</p>
+                        </div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Confirm Information</h4>
+                            <p>Review your details</p>
+                        </div>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Verification</h4>
+                            <p>Enter code from email</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 25%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card-side card-right">
+            <div class="form-header">
+                <h2>Join Our Community</h2>
+                <p>Fill in your details to create an account</p>
+            </div>
+            <form method="post" id="register-form">
+                {% csrf_token %}
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" data-step="1">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            {{ form.first_name }}
+                            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            {{ form.last_name }}
+                            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                        </div>
+                    </div>
+                    <button type="button" class="next-btn" data-next="2">
+                        <span>Next</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Step 2: Account Information -->
+                <div class="form-step" data-step="2">
+                    <div class="form-group">
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        {{ form.email }}
+                        <label for="{{ form.email.id_for_label }}">Email Address</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        {{ form.password }}
+                        <label for="{{ form.password.id_for_label }}">Password</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        {{ form.re_password }}
+                        <label for="{{ form.re_password.id_for_label }}">Confirm Password</label>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="back-btn" data-back="1">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Back</span>
+                        </button>
+                        <button type="button" class="next-btn" data-next="3">
+                            <span>Next</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Confirm Information -->
+                <div class="form-step" data-step="3">
+                    <div class="confirmation-container">
+                        <h4>Review Your Information</h4>
+                        <div class="confirmation-data">
+                            <div class="confirmation-row">
+                                <div class="confirmation-label">First Name:</div>
+                                <div class="confirmation-value" id="confirm-first-name"></div>
+                            </div>
+                            <div class="confirmation-row">
+                                <div class="confirmation-label">Last Name:</div>
+                                <div class="confirmation-value" id="confirm-last-name"></div>
+                            </div>
+                            <div class="confirmation-row">
+                                <div class="confirmation-label">Email:</div>
+                                <div class="confirmation-value" id="confirm-email"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="terms-container">
+                        <h4>Terms of Service</h4>
+                        <div class="terms-scroll">
+                            <p>Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use.</p>
+                            <p>The content of the pages of this website is for your general information and use only. It is subject to change without notice.</p>
+                            <p>This website uses cookies to monitor browsing preferences. If you do allow cookies to be used, personal information may be stored by us for use by third parties.</p>
+                            <p>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose.</p>
+                        </div>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I agree to the Terms of Service and Privacy Policy</label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="newsletter" name="newsletter">
+                        <label for="newsletter">Subscribe to our newsletter for updates and offers</label>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="back-btn" data-back="2">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Back</span>
+                        </button>
+                        <button type="button" id="submit-details-btn" class="next-btn" data-next="4">
+                            <span>Submit Details</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Verification Code -->
+                <div class="form-step" data-step="4">
+                    <div class="verification-container">
+                        <h4>Email Verification</h4>
+                        <p class="verification-text">We've sent a 4-digit verification code to your email. Please enter it below to complete your registration.</p>
+                        <div class="verification-code-container">
+                            <input type="text" maxlength="1" class="verification-digit" name="digit1" required>
+                            <input type="text" maxlength="1" class="verification-digit" name="digit2" required>
+                            <input type="text" maxlength="1" class="verification-digit" name="digit3" required>
+                            <input type="text" maxlength="1" class="verification-digit" name="digit4" required>
+                        </div>
+                        <p class="resend-code">
+                            Didn't receive a code? <a href="#" id="resend-code">Resend Code</a>
+                            <span id="resend-timer" class="resend-timer"></span>
+                        </p>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="back-btn" data-back="3">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Back</span>
+                        </button>
+                        <button type="submit" class="register-btn">
+                            <span>Complete Registration</span>
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="login-link">
+                Already have an account? <a href="{% url 'accounts:login' %}">Log In</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/register.js' %}"></script>
+{% endblock %}

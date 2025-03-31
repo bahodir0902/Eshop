@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="card-side card-left">
+            <div class="background-elements">
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
+                <div class="circle circle-3"></div>
+                <div class="wave"></div>
+            </div>
+            <div class="brand">
+                <h1>Welcome Back</h1>
+                <p>Sign in to continue your shopping journey</p>
+            </div>
+        </div>
+        <div class="card-side card-right">
+            <div class="form-header">
+                <h2>Login</h2>
+                <p>Please enter your credentials</p>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email Address</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    {{ form.password }}
+
+                </div>
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="{% url 'accounts:forgot_password' %}" class="forgot-password">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-btn">
+                    <span>Log In</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="register-link">
+                    Don't have an account? <a href="{% url 'accounts:register' %}">Register</a>
+                </div>
+            </form>
+            <div class="social-login">
+                <span>Or login with</span>
+                <div class="social-buttons">
+                    <button class="social-btn google">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="social-btn twitter">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

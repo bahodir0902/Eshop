@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="verify-container">
+    <h2 class="verify-title">Verify Your Email 📩</h2>
+    <p class="verify-message">
+        We've sent you a 4-digit passcode to verify your email address. Please check your inbox (and spam folder just in case) and enter the code below to proceed.
+    </p>
+
+    <form method="POST" >
+        {% csrf_token %}
+        <input type="text" name="verification_code" class="verify-input" placeholder="Enter 4-digit code" maxlength="4" required>
+        <button type="submit" class="verify-button">Verify</button>
+        {% if messages %}
+        <div class="error-messages">
+            {% for message in messages %}
+                <p class="error-message">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    </form>
+
+    <p class="verify-note">
+        Didn’t receive the email? <a href="" class="verify-link">Try again</a>.
+    </p>
+</div>
+
+<style>
+    .verify-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        text-align: center;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .verify-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .verify-message {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .verify-input {
+        width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        text-align: center;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .verify-button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        color: white;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .verify-button:hover {
+        background-color: #0056b3;
+    }
+
+    .verify-note {
+        font-size: 14px;
+        color: #777;
+        margin-top: 15px;
+    }
+
+    .verify-link {
+        color: #007BFF;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .verify-link:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}

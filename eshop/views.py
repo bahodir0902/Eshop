@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q, Sum
 from django.shortcuts import render, redirect
 from products.models import Product, Inventory, Category
-from products.forms import ProductModelForm
+from products.forms import AddProductModelForm, UpdateProductModelForm
 
 
 # Create your views here.
@@ -11,7 +11,7 @@ def home(request):
     return render(request, 'home.html')
 
 
-def fetch_product(q, page, per_page=5, category_id=None, status=None, sort='name'):
+def fetch_product(q, page, per_page=6, category_id=None, status=None, sort='name'):
     products = Product.objects.all().order_by('-is_available', 'name', 'created_at')
 
     if category_id:
@@ -41,7 +41,7 @@ def fetch_product(q, page, per_page=5, category_id=None, status=None, sort='name
     elif sort == 'oldest':
         products = products.order_by('created_at')
 
-    products = products.annotate(stock_count=Sum('inventory_products__stock_count'))
+    products = products.annotate(stock_count=Sum('inventory__stock_count'))
 
     paginator = Paginator(products, per_page)
     products = paginator.get_page(page)
@@ -60,13 +60,16 @@ def list_product(request):
 
 
 def add_product(request):
-    form = ProductModelForm()
+    form = AddProductModelForm()
     if request.method == 'POST':
-        form = ProductModelForm(request.POST)
+        form = AddProductModelForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            product = form.save(commit=False)
+
+            product.save(user=request.user)
             return redirect('shop:list_products')
         form.add_error(None, 'Please enter valid data.')
+        print(form.errors)
         return render(request, 'add_product_form.html', {'form': form})
 
     return render(request, 'add_product_form.html', {'form': form})
@@ -75,14 +78,15 @@ def add_product(request):
 def edit_product(request, pk):
     product = Product.objects.filter(pk=pk).first()
     if request.method == 'POST':
-        form = ProductModelForm(request.POST, instance=product)
+        form = UpdateProductModelForm(request.POST, instance=product, files=request.FILES)
         if form.is_valid():
-            form.save()
+            products = form.save(commit=False)
+            products.save()
             return redirect('shop:find_and_edit_product')
         form.add_error(None, 'Please enter valid data.')
         return render(request, 'edit_product.html', {'form': form})
 
-    form = ProductModelForm(instance=product)
+    form = UpdateProductModelForm(instance=product)
     return render(request, 'edit_product.html', {'form': form})
 
 
@@ -101,16 +105,15 @@ def find_and_edit_product(request):
 
     total_products = Product.objects.all().count()
     total_active = Product.available_products.all().count()
-    Inventory.objects.filter()
-    inventory = Inventory.objects.all()
+    inventory = Inventory.objects.all().distinct()
     categories = Category.objects.filter(parent_category=None)
 
     value = 0
     total_out_of_stock = 0
-    for inv in inventory:
-        if inv.stock_count == 0:
+    for product in products:
+        if product.inventory.stock_count == 0:
             total_out_of_stock += 1
-        value += inv.product.price * inv.stock_count
+        value += product.price * product.inventory.stock_count
 
     data = {
         'products': products,

@@ -10,13 +10,23 @@
     <div class="products-container">
         <header class="products-header">
             <h1>Product Collection</h1>
-            <div class="view-controls">
-                <button class="view-btn active" data-view="grid">
-                    <i class="fa fa-th"></i>
-                </button>
-                <button class="view-btn" data-view="list">
-                    <i class="fa fa-list"></i>
-                </button>
+            <div class="header-controls">
+                <form class="search-form" method="get" action="{% url 'shop:list_products' %}">
+                    <div class="search-container">
+                        <input type="text" name="q" placeholder="Search products..." class="search-input" value="{{ request.GET.q|default:'' }}">
+                        <button type="submit" class="search-button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fa fa-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fa fa-list"></i>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -24,8 +34,8 @@
             {% for product in products %}
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="{{ product.image|default:'https://via.placeholder.com/300x200' }}"
-                             alt="{{ product.name }}">
+                        <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}" alt="{{ product.name }}">
+
                         <div class="product-badges">
                             {% if product.is_new %}
                                 <span class="badge new">New</span>

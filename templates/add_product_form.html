@@ -1,122 +1,232 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}
-Add Product
-{% endblock %}
+
+{% block title %}Add Product{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/add_product.css' %}">
 {% endblock %}
+
 {% block content %}
-<div class="product-form">
-    <h3 class="neon-title">Add a New Product</h3>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <!-- Name Field -->
-        <div class="form-group floating-label-group">
-            <div class="input-wrapper">
-                {{ form.name }}
-                <label for="{{ form.name.id_for_label }}">Product Name</label>
-                <!--                <i class="fas fa-cube"></i>-->
-            </div>
+<div class="container">
+    <div class="product-form-card">
+        <div class="form-header">
+            <h1>Add New Product</h1>
+            <p class="subtitle">Enter product details below</p>
         </div>
 
-        <!-- Price and Slug -->
-        <div class="form-row">
-            <div class="form-group floating-label-group">
-                <div class="input-wrapper">
-                    {{ form.price }}
-                    <label for="{{ form.price.id_for_label }}">Price</label>
-                    <!--                    <i class="fas fa-coins"></i>-->
+        <form method="post" enctype="multipart/form-data" class="product-form">
+            {% csrf_token %}
+
+            <div class="form-section">
+                <h2 class="section-title">Basic Information</h2>
+
+                <!-- Product Name -->
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">Product Name</label>
+                    {{ form.name }}
+                    <span class="form-hint">Choose a descriptive name for your product</span>
+                </div>
+
+                <div class="form-row">
+                    <!-- Price -->
+                    <div class="form-group">
+                        <label for="{{ form.price.id_for_label }}">Price</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                            {{ form.price }}
+                        </div>
+                    </div>
+
+                    <!-- URL Slug -->
+                    <div class="form-group">
+                        <label for="{{ form.slug.id_for_label }}">URL Slug</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-link"></i>
+                            {{ form.slug }}
+                        </div>
+                        <span class="form-hint">Used in product URL: example-product</span>
+                    </div>
+                </div>
+
+                <!-- Stock Count -->
+                <div class="form-group half-width">
+                    <label for="{{ form.stock_count.id_for_label }}">Stock Count</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-cubes"></i>
+                        {{ form.stock_count }}
+                    </div>
                 </div>
             </div>
-            <div class="form-group floating-label-group">
-                <div class="input-wrapper">
-                    {{ form.slug }}
-                    <label for="{{ form.slug.id_for_label }}">URL Slug</label>
-                    <!--                    <i class="fas fa-link"></i>-->
+
+            <div class="form-section">
+                <h2 class="section-title">Classification</h2>
+
+                <div class="form-row">
+                    <!-- Category -->
+                    <div class="form-group">
+                        <label for="{{ form.category.id_for_label }}">Category</label>
+                        <div class="select-container">
+                            <i class="fas fa-tag"></i>
+                            {{ form.category }}
+                            <i class="fas fa-chevron-down dropdown-icon"></i>
+                        </div>
+                    </div>
+
+                    <!-- Shop -->
+                    <div class="form-group">
+                        <label for="{{ form.shop.id_for_label }}">Shop</label>
+                        <div class="select-container">
+                            <i class="fas fa-store"></i>
+                            {{ form.shop }}
+                            <i class="fas fa-chevron-down dropdown-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inventory -->
+                <div class="form-group">
+                    <label for="{{ form.inventory.id_for_label }}">Inventory</label>
+                    <div class="select-container">
+                        <i class="fas fa-warehouse"></i>
+                        {{ form.inventory }}
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Category and Shop -->
-        <div class="form-row">
-            <div class="form-group custom-select">
-                <label for="{{ form.category.id_for_label }}">Category</label>
-                <div class="select-wrapper">
-                    <!--                    <i class="fas fa-tags"></i>-->
-                    {{ form.category }}
-                    <div class="select-arrow"></div>
+            <div class="form-section">
+                <h2 class="section-title">Product Details</h2>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">Description</label>
+                    {{ form.description }}
+                    <span class="form-hint">Describe your product in detail</span>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <div class="image-upload-container">
+                        <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}" class="file-input">
+                        <div class="upload-ui">
+                            <div class="upload-icon-container">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">
+                                <span class="primary-text">Drop your image here or click to browse</span>
+                                <span class="secondary-text">Supports: JPG, PNG, GIF (Max 5MB)</span>
+                            </div>
+                        </div>
+                        <div class="selected-file">
+                            <div class="file-preview"></div>
+                            <div class="file-info">
+                                <span class="file-name">No file selected</span>
+                                <button type="button" class="remove-file">Remove</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group custom-select">
-                <label for="{{ form.shop.id_for_label }}">Shop</label>
-                <div class="select-wrapper">
-                    <i class="fas fa-store"></i>
-                    {{ form.shop }}
-                    <div class="select-arrow"></div>
+
+            <div class="form-section">
+                <h2 class="section-title">Product Status</h2>
+
+                <div class="toggle-options">
+                    <!-- Available Toggle -->
+                    <div class="toggle-option">
+                        <div class="toggle-label">
+                            <span>Available for Purchase</span>
+                            <span class="status-hint">Make product visible to customers</span>
+                        </div>
+                        <label class="toggle-switch">
+                            {{ form.is_available }}
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <!-- Featured Toggle -->
+                    <div class="toggle-option">
+                        <div class="toggle-label">
+                            <span>Featured Product</span>
+                            <span class="status-hint">Show in featured sections</span>
+                        </div>
+                        <label class="toggle-switch">
+                            {{ form.is_featured }}
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <!-- Discounted Toggle -->
+                    <div class="toggle-option">
+                        <div class="toggle-label">
+                            <span>Discounted</span>
+                            <span class="status-hint">Apply discount to this product</span>
+                        </div>
+                        <label class="toggle-switch">
+                            {{ form.is_discounted }}
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Image Upload -->
-        <div class="form-group">
-            <div class="file-upload-wrapper">
-                <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}" class="file-upload">
-                <label for="{{ form.image.id_for_label }}" class="upload-label">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <span class="upload-text">Drag & Drop or Click to Upload Image</span>
-                    <span class="file-name"></span>
-                </label>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    <span>Launch Product</span>
+                </button>
             </div>
-        </div>
-
-        <!-- Description -->
-        <div class="form-group textarea-group">
-            <div class="textarea-wrapper">
-                {{ form.description }}
-                <label for="{{ form.description.id_for_label }}">Product Description</label>
-            </div>
-        </div>
-
-        <!-- Stock Count Field -->
-        <div class="form-group floating-label-group">
-            <div class="input-wrapper" style="width: 30%;">
-                {{ form.stock_count }}
-                <label for="{{ form.stock_count.id_for_label }}">Stock Count</label>
-            </div>
-        </div>
-
-
-        <!-- Toggle Switches -->
-        <div class="switch-grid">
-            <div class="switch-item">
-                <div class="custom-switch">
-                    {{ form.is_available }}
-                    <label for="{{ form.is_available.id_for_label }}"></label>
-                </div>
-                <span>Available</span>
-            </div>
-            <div class="switch-item">
-                <div class="custom-switch">
-                    {{ form.is_discounted }}
-                    <label for="{{ form.is_discounted.id_for_label }}"></label>
-                </div>
-                <span>Discounted</span>
-            </div>
-            <div class="switch-item">
-                <div class="custom-switch">
-                    {{ form.is_featured }}
-                    <label for="{{ form.is_featured.id_for_label }}"></label>
-                </div>
-                <span>Featured</span>
-            </div>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary hologram-effect">
-            <span class="btn-text">Launch Product</span>
-            <div class="glow"></div>
-        </button>
-    </form>
+        </form>
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // File upload preview
+        const fileInput = document.querySelector('.file-input');
+        const uploadUI = document.querySelector('.upload-ui');
+        const selectedFile = document.querySelector('.selected-file');
+        const filePreview = document.querySelector('.file-preview');
+        const fileName = document.querySelector('.file-name');
+        const removeButton = document.querySelector('.remove-file');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                fileName.textContent = file.name;
+
+                if (file.type.match('image.*')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        filePreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    filePreview.innerHTML = `<i class="fas fa-file"></i>`;
+                }
+
+                uploadUI.style.display = 'none';
+                selectedFile.style.display = 'flex';
+            }
+        });
+
+        removeButton.addEventListener('click', function() {
+            fileInput.value = '';
+            uploadUI.style.display = 'flex';
+            selectedFile.style.display = 'none';
+            filePreview.innerHTML = '';
+            fileName.textContent = 'No file selected';
+        });
+
+        // Make the entire upload area clickable
+        uploadUI.addEventListener('click', function() {
+            fileInput.click();
+        });
+    });
+</script>
 {% endblock %}
