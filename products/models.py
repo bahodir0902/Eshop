@@ -40,7 +40,18 @@ def validate_image_size(image):
 def unique_image_path(instance, filename):
     ext = filename.split('.')[-1]  # Get file extension
     unique_filename = f"{int(time.time())}_{uuid.uuid4().hex}.{ext}"  # Generate unique name with timestamp
-    return os.path.join('product_images/', unique_filename)
+    return str(os.path.join('product_images/', unique_filename))
+
+class Inventory(BaseModel):
+    name = models.CharField(max_length=255, null=True, blank=True, default=None)
+    stock_count = models.IntegerField()
+    reserved_quantity = models.IntegerField(default=0, blank=True)
+    warehouse_location = models.CharField(max_length=255)
+
+    @override
+    def __str__(self):
+        return f'{self.name} - {self.warehouse_location}'
+
 
 class Product(BaseModel):
     name = models.CharField(max_length=255)
@@ -60,7 +71,7 @@ class Product(BaseModel):
     is_approved = models.BooleanField(default=False)
     approved_by = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product_category', null=True, blank=True)
-
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, related_name='product')
     objects = models.Manager()
     available_products = AvailableProducts()
     approved_products = ApprovedProducts()
@@ -70,12 +81,14 @@ class Product(BaseModel):
     def __str__(self):
         return f'{self.name} - {self.price}'
 
+    @override
+    def save(self, *args, user=None, **kwargs):
+        if user:
+            pass
+            # print(user.first_name, user.email)
 
-class Inventory(BaseModel):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='inventory_products')
-    stock_count = models.IntegerField()
-    reserved_quantity = models.IntegerField(default=0, blank=True)
-    warehouse_location = models.CharField(max_length=255)
+        super().save(*args, **kwargs)
+
 
 
 
