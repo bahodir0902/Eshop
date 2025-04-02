@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="activate-container">
+    <h2 class="activate-title">Verify Your New Email 🔄</h2>
+    <p class="activate-message">
+        We've sent a verification code to your new email address <b>{{ new_email }}</b>. Please check your inbox (and
+        spam folder just in
+        case) and enter the code below to confirm your email change.
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p style="color: red;">{{ error }}</p>
+        {% endfor %}
+        {% endif %}
+
+        <!-- Display field-specific errors -->
+        {% if messages %}
+        <div class="error-messages">
+            {% for message in messages %}
+            <p class="error-message">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <input type="text" name="code" class="activate-input" placeholder="Enter verification code"
+               maxlength="4" required>
+        <button type="submit" class="activate-button">Verify</button>
+    </form>
+
+    <p class="activate-note">
+        Didn’t receive the email? <a href="{% url 'accounts:profile_edit' %}" class="activate-link">Resend
+        Verification Code</a>.
+    </p>
+</div>
+
+<style>
+    .activate-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        text-align: center;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .activate-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .activate-message {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .activate-input {
+        width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        text-align: center;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .activate-button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        color: white;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .activate-button:hover {
+        background-color: #218838;
+    }
+
+    .activate-note {
+        font-size: 14px;
+        color: #777;
+        margin-top: 15px;
+    }
+
+    .activate-link {
+        color: #007BFF;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .activate-link:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
