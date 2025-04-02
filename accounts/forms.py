@@ -1,7 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
-from accounts.models import User
+from accounts.models import User, Address
 from accounts.utils import get_random_username
 
 class UserLoginForm(forms.Form):
@@ -37,5 +36,16 @@ class UserRegisterForm(forms.ModelForm):
 class UserForgotPasswordForm(forms.Form):
     email = forms.EmailField()
 
-class UserForgotPasswordPasscodeForm(forms.Form):
-    code = forms.CharField(max_length=4)
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+        widgets = {
+            'password': forms.PasswordInput()
+        }
+
+class UserAddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = "__all__"
+        exclude = ['user']

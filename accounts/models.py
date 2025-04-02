@@ -51,6 +51,11 @@ class Address(BaseModel):
     postal_code = models.CharField(max_length=50)
     is_primary = models.BooleanField(default=True)
 
+    @override
+    def __str__(self):
+        return f'{self.user.first_name} - {self.address_line_1} - {self.address_line_2} - {self.city} - {self.country}'
+
+
 def default_expire_date():
     return timezone.now() + timedelta(minutes=1)
 
