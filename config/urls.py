@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', include('eshop.urls')),
-    path('accounts/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls')),
+    path('cart/', include('carts.urls'))
 ]
 
 from django.conf import settings

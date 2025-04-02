@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="cart-wrapper">
+    <div class="cart-container">
+        <!-- Header Section -->
+        <div class="cart-header">
+            <h1 class="cart-title">Your Shopping Cart</h1>
+            <div class="cart-progress">
+                <div class="progress-step active">
+                    <div class="step-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <span>Cart</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <div class="step-icon">
+                        <i class="fa-solid fa-address-card"></i>
+                    </div>
+                    <span>Details</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <div class="step-icon">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <span>Payment</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <div class="step-icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <span>Confirmation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Cart Content Section -->
+        <div class="cart-content">
+            <!-- Items Section -->
+            <div class="cart-items-section">
+                <div class="items-header">
+                    <h2>Items in Your Cart</h2>
+                    <span class="items-count">{{ cart_items|length }} Items</span>
+                </div>
+
+                <!-- Empty Cart Message -->
+                {% if not cart_items %}
+                <div class="empty-cart">
+                    <div class="empty-cart-illustration">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <div class="empty-cart-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <h3>Your cart is empty</h3>
+                    <p>Looks like you haven't added any products to your cart yet.</p>
+                    <a href="{% url 'shop:list_products' %}" class="btn-continue-shopping">Continue Shopping</a>
+                </div>
+                {% else %}
+                <div class="cart-items-list">
+                    {% for item in cart_items %}
+                    <div class="cart-item" data-product-id="{{ item.product.id }}">
+                        <div class="item-image">
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                            {% else %}
+                            <div class="no-image">
+                                <i class="fa-solid fa-image"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="item-info">
+                            <h3 class="item-name">{{ item.product.name }}</h3>
+                            <p class="item-shop">{{ item.product.shop }}</p>
+                            {% if item.product.is_discounted %}
+                            <div class="item-discount-badge">
+                                <i class="fa-solid fa-tag"></i> DISCOUNTED
+                            </div>
+                            {% endif %}
+                            <div class="item-category">
+                                {% if item.product.category %}
+                                <span>{{ item.product.category }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="qty-btn decrease-quantity" data-action="decrease">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <input type="number" class="quantity-input" value="{{ item.quantity }}" min="1" max="99"
+                                   readonly>
+                            <button class="qty-btn increase-quantity" data-action="increase">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="item-price">
+                            <span class="price-value">${{ item.product.price }}</span>
+                            <span class="price-total">${{ item.total_price|floatformat:2 }}</span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="remove-item" title="Remove item">
+                                <i class="fa-solid fa-trash-alt"></i>
+                            </button>
+                            <button class="save-for-later" title="Save for later">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="cart-actions">
+                    <button class="btn-clear-cart">
+                        <i class="fa-solid fa-broom"></i> Clear Cart
+                    </button>
+                    <a href="{% url 'shop:list_products' %}" class="btn-continue-shopping">
+                        <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Order Summary Section -->
+            {% if cart_items %}
+            <div class="order-summary">
+                <div class="summary-header">
+                    <h2>Order Summary</h2>
+                    <div class="summary-toggle">
+                        <span>Details</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <div class="summary-content">
+                    <div class="summary-row">
+                        <span>Subtotal ({{ cart_items|length }} items)</span>
+                        <span class="subtotal-amount">$<span id="subtotal">0.00</span></span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>Calculated at checkout</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span>Calculated at checkout</span>
+                    </div>
+                    <div class="summary-row discount-row">
+                        <div class="promo-input">
+                            <input type="text" placeholder="Promo Code">
+                            <button class="btn-apply">Apply</button>
+                        </div>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row total-row">
+                        <span>Total</span>
+                        <span class="total-amount">$<span id="total">0.00</span></span>
+                    </div>
+
+                    <button class="btn-checkout">
+                        <span>Proceed to Checkout</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    <div class="payment-methods">
+                        <span>We Accept</span>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fab fa-cc-amex"></i>
+                            <i class="fab fa-cc-paypal"></i>
+                            <i class="fab fa-apple-pay"></i>
+                            <i class="fab fa-google-pay"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Custom JS -->
+<script src="{% static 'js/my_cart.js' %}"></script>
+<!-- Include Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/my_cart.css' %}">
+{% endblock %}

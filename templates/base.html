@@ -52,7 +52,7 @@
                             <h6>{{ request.user.first_name }} {{ request.user.last_name }}</h6>
                             <p>{{ request.user.email }}</p>
                         </div>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                        <li><a class="dropdown-item" href="{% url 'cart:list' %}"><i class="fas fa-shopping-cart"></i> Cart</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> My Orders</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Favourites</a></li>
                         <li><hr class="dropdown-divider"></li>

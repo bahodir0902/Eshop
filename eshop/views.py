@@ -5,6 +5,7 @@ from products.models import Product, Inventory, Category
 from products.forms import AddProductModelForm, UpdateProductModelForm
 from accounts.utils import is_admin, is_seller, restrict_user
 from django.contrib.auth.decorators import login_required
+from carts.models import CartItems, Cart
 
 def home(request):
     return render(request, 'home.html')
@@ -56,7 +57,18 @@ def list_product(request):
     data = {
         'products': products
     }
+
+    cart = None
+    if request.user.is_authenticated:
+        cart = Cart.objects.filter(user=request.user).first()
+
+    if cart:
+        cart_items = CartItems.objects.filter(cart=cart)
+        data['cart_items'] = cart_items
+
+
     return render(request, 'list_products.html', context=data)
+
 
 @restrict_user(is_admin, is_seller)
 def add_product(request):
