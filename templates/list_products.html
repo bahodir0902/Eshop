@@ -1,95 +1,128 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cart_filters %}
 {% block title %}
-    Product Showcase
+Product Showcase
 {% endblock %}
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/products.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="products-container">
-        <header class="products-header">
-            <h1>Product Collection</h1>
-            <div class="header-controls">
-                <form class="search-form" method="get" action="{% url 'shop:list_products' %}">
-                    <div class="search-container">
-                        <input type="text" name="q" placeholder="Search products..." class="search-input" value="{{ request.GET.q|default:'' }}">
-                        <button type="submit" class="search-button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </form>
-                <div class="view-controls">
-                    <button class="view-btn active" data-view="grid">
-                        <i class="fa fa-th"></i>
+<div class="products-container">
+    <header class="products-header">
+        <h1>Product Collection</h1>
+        <div class="header-controls">
+            <form class="search-form" method="get" action="{% url 'shop:list_products' %}">
+                <div class="search-container">
+                    <input type="text" name="q" placeholder="Search products..." class="search-input"
+                           value="{{ request.GET.q|default:'' }}">
+                    <button type="submit" class="search-button">
+                        <i class="fa fa-search"></i>
                     </button>
-                    <button class="view-btn" data-view="list">
-                        <i class="fa fa-list"></i>
-                    </button>
+                </div>
+            </form>
+            <div class="view-controls">
+                <button class="view-btn active" data-view="grid">
+                    <i class="fa fa-th"></i>
+                </button>
+                <button class="view-btn" data-view="list">
+                    <i class="fa fa-list"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="products-grid">
+        {% for product in products %}
+        <div class="product-card" data-product-id="{{ product.id }}">
+            {% csrf_token %}
+            <div class="product-image">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
+                     alt="{{ product.name }}">
+
+                <div class="product-badges">
+                    {% if product.is_new %}
+                    <span class="badge new">New</span>
+                    {% endif %}
+                    {% if product.discount > 0 %}
+                    <span class="badge sale">-{{ product.discount }}%</span>
+                    {% endif %}
+
+                    <!-- New badge for cart items -->
+                    {% for cart_item in cart_items %}
+                        {% if cart_item.product.id == product.id %}
+                        <span class="badge in-cart">In Cart ({{ cart_item.quantity }})</span>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
-        </header>
-
-        <div class="products-grid">
-            {% for product in products %}
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}" alt="{{ product.name }}">
-
-                        <div class="product-badges">
-                            {% if product.is_new %}
-                                <span class="badge new">New</span>
-                            {% endif %}
-                            {% if product.discount > 0 %}
-                                <span class="badge sale">-{{ product.discount }}%</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-title">{{ product.name }}</h2>
-                        <div class="product-price">
-                            <span class="current-price">${{ product.price }}</span>
-                        </div>
-                        <p class="product-description">{{ product.description }}</p>
-                        <div class="product-meta">
-                            <span class="product-date">Added {{ product.created_at|date:"M d, Y" }}</span>
-                            {% if product.rating %}
-                                <div class="product-rating">
-                                    {% for i in "12345" %}
-                                        {% if forloop.counter <= product.rating %}
-                                            <i class="fa fa-star"></i>
-                                        {% else %}
-                                            <i class="fa fa-star-o"></i>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="product-actions">
-                        <button type="button" class="btn btn-primary buy-now">
-                            <i class="fa fa-credit-card"></i> Buy Now
-                        </button>
-                        <button type="button" class="btn btn-outline add-to-cart">
-                            <i class="fa fa-shopping-cart"></i> Add to Cart
-                        </button>
-                        <button type="button" class="btn btn-icon wishlist">
-                            <i class="fa fa-heart-o"></i>
-                        </button>
-                    </div>
+            <div class="product-info">
+                <h2 class="product-title">{{ product.name }}</h2>
+                <div class="product-price">
+                    <span class="current-price">${{ product.price }}</span>
                 </div>
-            {% empty %}
-                <div class="empty-state">
-                    <i class="fa fa-shopping-bag empty-icon"></i>
-                    <h3>No Products Available</h3>
-                    <p>Check back soon for new additions to our catalog.</p>
+                <p class="product-description">{{ product.description }}</p>
+                <div class="product-meta">
+                    <span class="product-date">Added {{ product.created_at|date:"M d, Y" }}</span>
+                    {% if product.rating %}
+                    <div class="product-rating">
+                        {% for i in "12345" %}
+                        {% if forloop.counter <= product.rating %}
+                        <i class="fa fa-star"></i>
+                        {% else %}
+                        <i class="fa fa-star-o"></i>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
-            {% endfor %}
+            </div>
+            <div class="product-actions">
+                {% for cart_item in cart_items %}
+                    {% if cart_item.product.id == product.id %}
+                    <div class="in-cart-indicator">
+                        <span><i class="fa fa-shopping-cart"></i> In your cart: <strong>{{ cart_item.quantity }}</strong></span>
+                        <button type="button" class="btn btn-danger remove-from-cart" data-item-id="{{ cart_item.id }}">
+                            <i class="fa fa-trash"></i> Remove
+                        </button>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- Buy Now button -->
+                <button type="button" class="btn btn-primary buy-now">
+                    <i class="fa fa-credit-card"></i> Buy Now
+                </button>
+
+                <!-- Add to Cart button - show different text based on cart status -->
+                {% if product|in_cart:cart_items %}
+                    <button type="button" class="btn btn-success update-cart" data-product-id="{{ product.id }}">
+                        <i class="fa fa-refresh"></i> Update Cart
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-outline add-to-cart">
+                        <i class="fa fa-shopping-cart"></i> Add to Cart
+                    </button>
+                {% endif %}
+
+                <!-- Wishlist button -->
+                <button type="button" class="btn btn-icon wishlist">
+                    <i class="fa fa-heart-o"></i>
+                </button>
+            </div>
         </div>
-
-        {% include 'page.html' with page=products %}
+        {% empty %}
+        <div class="empty-state">
+            <i class="fa fa-shopping-bag empty-icon"></i>
+            <h3>No Products Available</h3>
+            <p>Check back soon for new additions to our catalog.</p>
+        </div>
+        {% endfor %}
     </div>
 
-    <link rel="stylesheet" href="{% static 'css/products.css' %}">
-    <script src="{% static 'js/products.js' %}"></script>
+    {% include 'page.html' with page=products %}
+</div>
+
+<link rel="stylesheet" href="{% static 'css/products.css' %}">
+<script src="{% static 'js/products.js' %}"></script>
 {% endblock %}
