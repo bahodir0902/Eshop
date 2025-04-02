@@ -3,9 +3,8 @@ from django.db.models import Q, Sum
 from django.shortcuts import render, redirect
 from products.models import Product, Inventory, Category
 from products.forms import AddProductModelForm, UpdateProductModelForm
-
-
-# Create your views here.
+from accounts.utils import is_admin, is_seller, restrict_user
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'home.html')
@@ -49,6 +48,7 @@ def fetch_product(q, page, per_page=6, category_id=None, status=None, sort='name
 
 
 def list_product(request):
+    print(request.user.has_perm('products.add_product'))
     q = request.GET.get('q')
     page_number = request.GET.get('page')
     products = fetch_product(q, page_number)
@@ -58,7 +58,7 @@ def list_product(request):
     }
     return render(request, 'list_products.html', context=data)
 
-
+@restrict_user(is_admin, is_seller)
 def add_product(request):
     form = AddProductModelForm()
     if request.method == 'POST':
@@ -74,7 +74,7 @@ def add_product(request):
 
     return render(request, 'add_product_form.html', {'form': form})
 
-
+@restrict_user(is_admin, is_seller)
 def edit_product(request, pk):
     product = Product.objects.filter(pk=pk).first()
     if request.method == 'POST':
@@ -89,7 +89,30 @@ def edit_product(request, pk):
     form = UpdateProductModelForm(instance=product)
     return render(request, 'edit_product.html', {'form': form})
 
+def dashboard_statistics():
+    products = Product.objects.all()
+    total_products = Product.objects.all().count()
+    total_active = Product.available_products.all().count()
+    categories = Category.objects.filter(parent_category=None)
 
+    value = 0
+    total_out_of_stock = 0
+    for product in products:
+        if product.inventory.stock_count == 0:
+            total_out_of_stock += 1
+        value += product.price * product.inventory.stock_count
+
+    data = {
+        'total_products': total_products,
+        'total_active': total_active,
+        'total_inventory_value': value,
+        'out_of_stock': total_out_of_stock,
+        'categories': categories
+    }
+    return data
+
+
+@restrict_user(is_admin, is_seller)
 def find_and_edit_product(request):
     q = request.GET.get('q')
     page_number = request.GET.get('page')
@@ -102,29 +125,12 @@ def find_and_edit_product(request):
         per_page = 6
 
     products = fetch_product(q, page_number, per_page, category, status, sort)
+    data = dashboard_statistics()
+    data['products'] = products
 
-    total_products = Product.objects.all().count()
-    total_active = Product.available_products.all().count()
-    inventory = Inventory.objects.all().distinct()
-    categories = Category.objects.filter(parent_category=None)
-
-    value = 0
-    total_out_of_stock = 0
-    for product in products:
-        if product.inventory.stock_count == 0:
-            total_out_of_stock += 1
-        value += product.price * product.inventory.stock_count
-
-    data = {
-        'products': products,
-        'total_products': total_products,
-        'total_active': total_active,
-        'total_inventory_value': value,
-        'out_of_stock': total_out_of_stock,
-        'categories': categories
-    }
     return render(request, 'find_and_edit_product.html', context=data)
 
+@restrict_user(is_admin, is_seller)
 def find_and_delete_product(request):
     q = request.GET.get('q')
     page_number = request.GET.get('page')
@@ -142,6 +148,7 @@ def find_and_delete_product(request):
     }
     return render(request, 'find_and_delete_product.html', {'products': products})
 
+@restrict_user(is_admin, is_seller)
 def delete_product(request, pk):
     product = Product.objects.filter(pk=pk).update(is_available=False)
     return redirect('shop:find_and_delete_product')
