@@ -9,6 +9,11 @@ Product Showcase
 {% endblock %}
 {% block content %}
 <div class="products-container">
+    {% if favourite_items %}
+    {% for item in favourite_items %}
+    <input type="hidden" class="favourite-item-id" value="{{ item.product.id }}">
+    {% endfor %}
+    {% endif %}
     <header class="products-header">
         <h1>Product Collection</h1>
         <div class="header-controls">
@@ -50,9 +55,9 @@ Product Showcase
 
                     <!-- New badge for cart items -->
                     {% for cart_item in cart_items %}
-                        {% if cart_item.product.id == product.id %}
-                        <span class="badge in-cart">In Cart ({{ cart_item.quantity }})</span>
-                        {% endif %}
+                    {% if cart_item.product.id == product.id %}
+                    <span class="badge in-cart">In Cart ({{ cart_item.quantity }})</span>
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -79,14 +84,15 @@ Product Showcase
             </div>
             <div class="product-actions">
                 {% for cart_item in cart_items %}
-                    {% if cart_item.product.id == product.id %}
-                    <div class="in-cart-indicator">
-                        <span><i class="fa fa-shopping-cart"></i> In your cart: <strong>{{ cart_item.quantity }}</strong></span>
-                        <button type="button" class="btn btn-danger remove-from-cart" data-item-id="{{ cart_item.id }}">
-                            <i class="fa fa-trash"></i> Remove
-                        </button>
-                    </div>
-                    {% endif %}
+                {% if cart_item.product.id == product.id %}
+                <div class="in-cart-indicator">
+                    <span><i
+                            class="fa fa-shopping-cart"></i> In your cart: <strong>{{ cart_item.quantity }}</strong></span>
+                    <button type="button" class="btn btn-danger remove-from-cart" data-item-id="{{ cart_item.id }}">
+                        <i class="fa fa-trash"></i> Remove
+                    </button>
+                </div>
+                {% endif %}
                 {% endfor %}
 
                 <!-- Buy Now button -->
@@ -96,13 +102,13 @@ Product Showcase
 
                 <!-- Add to Cart button - show different text based on cart status -->
                 {% if product|in_cart:cart_items %}
-                    <button type="button" class="btn btn-success update-cart" data-product-id="{{ product.id }}">
-                        <i class="fa fa-refresh"></i> Update Cart
-                    </button>
+                <button type="button" class="btn btn-success update-cart" data-product-id="{{ product.id }}">
+                    <i class="fa fa-refresh"></i> Update Cart
+                </button>
                 {% else %}
-                    <button type="button" class="btn btn-outline add-to-cart">
-                        <i class="fa fa-shopping-cart"></i> Add to Cart
-                    </button>
+                <button type="button" class="btn btn-outline add-to-cart">
+                    <i class="fa fa-shopping-cart"></i> Add to Cart
+                </button>
                 {% endif %}
 
                 <!-- Wishlist button -->
