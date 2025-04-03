@@ -16,17 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.conf import settings
+from django.conf.urls.static import static
+from eshop.views import FavouriteView, AddFavouriteItem, RemoveFavouriteItem, ClearFavourites
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', include('eshop.urls')),
     path('accounts/', include('accounts.urls')),
-    path('cart/', include('carts.urls'))
+    path('cart/', include('carts.urls')),
+    path('favourites/', FavouriteView.as_view(), name='favourites'),
+    path('add_favourite_item/<int:pk>', AddFavouriteItem.as_view(), name='add_favourite_item'),
+    path('remove_favourite_item/<int:pk>', RemoveFavouriteItem.as_view(), name='remove_favourite_item'),
+    path('clear_favourites/', ClearFavourites.as_view(), name='clear_favourites')
 ]
-
-from django.conf import settings
-from django.conf.urls.static import static
 
 
 if settings.DEBUG:

@@ -1,13 +1,11 @@
+import json
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.template.defaultfilters import first
 from django.views import View
 from carts.models import Cart, CartItems
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import F, Sum, ExpressionWrapper, FloatField
+from django.db.models import F, Q, ExpressionWrapper, FloatField
 from products.models import Product
-from django.db.models import Q
-from django.views.decorators.http import require_POST
 
 class CartView(LoginRequiredMixin, View):
     def get(self, request):
@@ -21,28 +19,38 @@ class CartView(LoginRequiredMixin, View):
 
 class AddCartItem(LoginRequiredMixin, View):
     def post(self, request, pk):
-        cart = Cart.objects.filter(user=request.user).first()
-        quantity = request.POST.get('quantity', 1)
+        quantity = request.POST.get('quantity', None)
+        if not quantity:
+            try:
+                data = json.loads(request.body)
+                quantity = data.get('quantity', 1)
+            except json.JSONDecodeError:
+                quantity = 1
 
-        if not cart:
-            cart = Cart.objects.create(user=request.user)
+        try:
+            quantity = int(quantity)
+        except (ValueError, TypeError):
+            quantity = 1
 
+        cart, _ = Cart.objects.get_or_create(user=request.user)
         product = Product.objects.filter(pk=pk).first()
         if not product:
-            return JsonResponse({'success': False, 'error': 'Product id not found. Please try again later.'})
+            return JsonResponse({'success': False, 'error': 'Product not found'})
 
-        if not CartItems.objects.filter(Q(cart=cart) & Q(product=product)).exists():
-            item = CartItems.objects.create(cart=cart, quantity=quantity, product=product)
-            return JsonResponse({'success': True, 'item_id': item.pk})
+        item, created = CartItems.objects.get_or_create(
+            cart=cart, product=product, defaults={'quantity': quantity}
+        )
+        if not created:
+            item.quantity += quantity
+            item.save()
 
-        item = CartItems.objects.filter(Q(cart=cart) & Q(product=product)).first()
-        if not item:
-            return JsonResponse({'success': False, 'error': 'Fatal Internal Server error.'})
-
-        item.quantity += int(quantity)
-        item.save()
-
-        return JsonResponse({'success': True, 'item_id': item.pk})
+        cart_items_count = CartItems.objects.filter(cart=cart).count()
+        return JsonResponse({
+            'success': True,
+            'item_id': item.pk,
+            'quantity': item.quantity,
+            'cart_count': cart_items_count
+        })
 
 
 class UpdateCartItem(LoginRequiredMixin, View):
@@ -64,9 +72,11 @@ class UpdateCartItem(LoginRequiredMixin, View):
         item = CartItems.objects.filter(Q(cart=cart) & Q(product=product)).first()
         if not item:
             return JsonResponse({'success': False, 'error': 'Fatal Internal Server error.'})
-        print(f'{quantity=}')
-        item.quantity = int(quantity)
-        item.save()
+        try:
+            item.quantity = int(quantity)
+            item.save()
+        except (ValueError, TypeError) as e:
+            return JsonResponse({'success': F, 'error': 'quantity is not integer object'})
 
         return JsonResponse({'success': True})
 
@@ -78,8 +88,8 @@ class RemoveCartItem(LoginRequiredMixin, View):
             return JsonResponse({'success': False, 'error': 'Fatal Internal Server error.'})
 
         CartItems.objects.filter(Q(cart=cart) & Q(product__id=pk)).delete()
-        print('salom')
-        return JsonResponse({'success': True})
+        cart_items_count = CartItems.objects.filter(cart=cart).count()
+        return JsonResponse({'success': True, 'cart_count': cart_items_count})
 
 
 class ClearCartItem(LoginRequiredMixin, View):
@@ -94,12 +104,12 @@ class ClearCartItem(LoginRequiredMixin, View):
         return JsonResponse({'success': True})
 
 
-
 def remove_cart_item_in_list(request, pk):
     try:
         cart_item = CartItems.objects.get(id=pk, cart__user=request.user)
         cart_item.delete()
-        return JsonResponse({'success': True})
+        cart_items_count = CartItems.objects.filter(cart__user=request.user).count()
+        return JsonResponse({'success': True, 'cart_count': cart_items_count})
     except CartItems.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Item not found'})
     except Exception as e:

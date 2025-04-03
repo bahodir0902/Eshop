@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/favourites.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="favorites-container">
+    <div id="cart-data" data-cart-items='{{ cart_items_json|safe }}' style="display: none;"></div>
+    <div class="favorites-header">
+        <div class="header-content">
+            <h1 class="title">My Cosmic Collection</h1>
+            <p class="subtitle">Your universe of favorite items</p>
+
+            {% if favourite_items %}
+            <button id="clear-all" class="clear-button">
+                <span class="button-text">Disintegrate All</span>
+                <i class="fas fa-trash-alt"></i>
+            </button>
+            {% endif %}
+        </div>
+        <div class="nebula"></div>
+    </div>
+
+    <div class="favorites-grid">
+        {% if favourite_items %}
+        {% for item in favourite_items %}
+        <div class="favorite-card" data-id="{{ item.product.id }}">
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="image-container">
+                        {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="product-image">
+                        {% else %}
+                        <div class="no-image">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        {% endif %}
+                        <div class="price-tag {% if item.product.is_discounted %}discounted{% endif %}">
+                            ${{ item.product.price }}
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">{{ item.product.name }}</h3>
+                        <div class="shop-name">{{ item.product.shop.name }}</div>
+                        {% if item.product.is_available %}
+                        <span class="availability available">In Stock</span>
+                        {% else %}
+                        <span class="availability unavailable">Out of Stock</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-actions">
+                        <button class="remove-button" data-id="{{ item.product.id }}">
+                            <i class="fas fa-heart-broken"></i>
+                        </button>
+                        <button class="details-button">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                        <button class="add-to-cart-button" data-id="{{ item.product.id }}">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-back">
+                    <h3>{{ item.product.name }}</h3>
+                    <p class="description">{{ item.product.description|truncatechars:150 }}</p>
+                    <div class="category">
+                        {% if item.product.category %}
+                        <span class="category-label">Category:</span>
+                        <span class="category-name">{{ item.product.category.name }}</span>
+                        {% endif %}
+                    </div>
+                    <button class="flip-back-button">
+                        <i class="fas fa-undo"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-animation">
+                <div class="planet"></div>
+                <div class="astronaut">
+                    <i class="fas fa-user-astronaut"></i>
+                </div>
+            </div>
+            <h2>Your Cosmic Collection Is Empty</h2>
+            <p>Start adding your favorite products to create your personal galaxy of amazing items!</p>
+            <a href="{% url 'shop:list_products' %}" class="explore-button">
+                <span class="button-text">Explore Products</span>
+                <i class="fas fa-rocket"></i>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="floating-particles">
+        {% for i in "123456789" %}
+        <div class="particle p{{i}}"></div>
+        {% endfor %}
+    </div>
+
+    <div class="toast-container">
+        <div id="toast" class="toast">
+            <div class="toast-content">
+                <i class="toast-icon"></i>
+                <div class="toast-message"></div>
+            </div>
+            <div class="toast-progress"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="{% static 'js/favourites.js' %}"></script>
+{% endblock %}

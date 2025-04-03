@@ -54,7 +54,7 @@
                         </div>
                         <li><a class="dropdown-item" href="{% url 'cart:list' %}"><i class="fas fa-shopping-cart"></i> Cart</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> My Orders</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Favourites</a></li>
+                        <li><a class="dropdown-item" href="{% url 'favourites' %}"><i class="fas fa-heart"></i> Favourites</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="fas fa-user-circle"></i> Profile</a></li>
                         <li><a class="dropdown-item logout-btn" href="{% url 'accounts:logout' %}">
