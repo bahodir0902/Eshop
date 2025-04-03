@@ -37,22 +37,140 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Wishlist button toggle
+    // UPDATED: Wishlist button toggle with AJAX functionality
     const wishlistButtons = document.querySelectorAll('.wishlist');
     wishlistButtons.forEach(button => {
         button.addEventListener('click', function () {
             const icon = this.querySelector('i');
-            if (icon.classList.contains('fa-heart-o')) {
-                icon.classList.remove('fa-heart-o');
-                icon.classList.add('fa-heart');
-                this.style.color = '#f72585';
-                this.style.borderColor = '#f72585';
-            } else {
-                icon.classList.remove('fa-heart');
-                icon.classList.add('fa-heart-o');
-                this.style.color = '';
-                this.style.borderColor = '';
-            }
+            const productCard = this.closest('.product-card');
+            const productId = productCard.getAttribute('data-product-id');
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            // Store original button content for reverting if needed
+            const originalHTML = this.innerHTML;
+            const originalColor = this.style.color;
+            const originalBorderColor = this.style.borderColor;
+
+            // Show loading state
+            this.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+            this.disabled = true;
+
+            // Determine if we're adding or removing
+            const isAdding = icon.classList.contains('fa-heart-o');
+
+            // Set the URL based on action
+            const url = isAdding
+                ? `/add_favourite_item/${productId}`
+                : `/remove_favourite_item/${productId}`;
+
+            // Send AJAX request
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Reset button but with toggled state
+                    if (isAdding) {
+                        // Was added to favorites
+                        this.innerHTML = '<i class="fa fa-heart"></i>';
+                        this.style.color = '#f72585';
+                        this.style.borderColor = '#f72585';
+
+                        // Show notification
+                        const notification = document.createElement('div');
+                        notification.className = 'product-notification success';
+                        notification.innerHTML = '<i class="fa fa-check"></i> Added to favorites';
+                        document.body.appendChild(notification);
+
+                        setTimeout(() => {
+                            notification.style.opacity = '0';
+                            setTimeout(() => {
+                                notification.remove();
+                            }, 300);
+                        }, 2000);
+
+                        // Add favorites badge if not exists
+                        let favBadge = productCard.querySelector('.badge.favorite');
+                        if (!favBadge) {
+                            const badgeContainer = productCard.querySelector('.product-badges');
+                            favBadge = document.createElement('span');
+                            favBadge.className = 'badge favorite';
+                            favBadge.textContent = 'Favorite';
+                            badgeContainer.appendChild(favBadge);
+                        }
+                    } else {
+                        // Was removed from favorites
+                        this.innerHTML = '<i class="fa fa-heart-o"></i>';
+                        this.style.color = '';
+                        this.style.borderColor = '';
+
+                        // Show notification
+                        const notification = document.createElement('div');
+                        notification.className = 'product-notification success';
+                        notification.innerHTML = '<i class="fa fa-check"></i> Removed from favorites';
+                        document.body.appendChild(notification);
+
+                        setTimeout(() => {
+                            notification.style.opacity = '0';
+                            setTimeout(() => {
+                                notification.remove();
+                            }, 300);
+                        }, 2000);
+
+                        // Remove favorites badge if exists
+                        const favBadge = productCard.querySelector('.badge.favorite');
+                        if (favBadge) {
+                            favBadge.remove();
+                        }
+                    }
+                } else {
+                    // Error handling
+                    this.innerHTML = originalHTML;
+                    this.style.color = originalColor;
+                    this.style.borderColor = originalBorderColor;
+
+                    // Show error notification
+                    const notification = document.createElement('div');
+                    notification.className = 'product-notification error';
+                    notification.innerHTML = `<i class="fa fa-exclamation-circle"></i> ${data.error || 'Error updating favorites'}`;
+                    document.body.appendChild(notification);
+
+                    setTimeout(() => {
+                        notification.style.opacity = '0';
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 300);
+                    }, 2000);
+                }
+                this.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Reset button to original state
+                this.innerHTML = originalHTML;
+                this.style.color = originalColor;
+                this.style.borderColor = originalBorderColor;
+                this.disabled = false;
+
+                // Show error notification
+                const notification = document.createElement('div');
+                notification.className = 'product-notification error';
+                notification.innerHTML = '<i class="fa fa-exclamation-circle"></i> Network error';
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }, 2000);
+            });
         });
     });
 
@@ -395,7 +513,46 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Additional CSS for notifications
+    // Initialize favorite buttons if favorites data is available
+    initializeFavoriteButtons();
+
+    // Function to initialize favorite buttons based on server data
+    function initializeFavoriteButtons() {
+        // Find all favourite items from hidden inputs
+        const favouriteItemElements = document.querySelectorAll('.favourite-item-id');
+        if (favouriteItemElements.length === 0) return;
+
+        const favouriteItemIds = Array.from(favouriteItemElements).map(el => parseInt(el.value));
+
+        // Find all product cards
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            const productId = parseInt(card.getAttribute('data-product-id'));
+            const wishlistBtn = card.querySelector('.wishlist');
+
+            // If product is in favorites, update the button
+            if (favouriteItemIds.includes(productId) && wishlistBtn) {
+                const icon = wishlistBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-heart-o');
+                    icon.classList.add('fa-heart');
+                    wishlistBtn.style.color = '#f72585';
+                    wishlistBtn.style.borderColor = '#f72585';
+                }
+
+                // Add favorite badge if not exists
+                const badgeContainer = card.querySelector('.product-badges');
+                if (badgeContainer && !card.querySelector('.badge.favorite')) {
+                    const favBadge = document.createElement('span');
+                    favBadge.className = 'badge favorite';
+                    favBadge.textContent = 'Favorite';
+                    badgeContainer.appendChild(favBadge);
+                }
+            }
+        });
+    }
+
+    // Additional CSS for notifications and new favorite styles
     const style = document.createElement('style');
     style.innerHTML = `
     .product-notification {
@@ -499,8 +656,22 @@ document.addEventListener('DOMContentLoaded', function () {
         color: white;
     }
     
+    .badge.favorite {
+        background-color: #f72585;
+        color: white;
+    }
+    
     .cart-updated {
         animation: pulse 1s;
+    }
+    
+    .btn.wishlist {
+        transition: all 0.3s ease;
+    }
+    
+    .btn.wishlist:disabled {
+        opacity: 0.7;
+        cursor: wait;
     }
     
     @keyframes pulse {
