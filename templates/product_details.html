@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{ product.name }} | Product Details
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product_details.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Add Django template variables for JavaScript -->
+<script>
+    var favouriteItems = [];
+    {% if favourite_items %}
+    {% for item in favourite_items %}
+    favouriteItems.push({
+        product_id: {{ item.product.id }}
+    });
+    {% endfor %}
+    {% endif %}
+
+    var cartItems = [];
+    {% if cart_items %}
+    {% for item in cart_items %}
+    cartItems.push({
+        product_id: {{ item.product.id }},
+        quantity: {{ item.quantity }}
+    });
+    {% endfor %}
+    {% endif %}
+</script>
+
+<div class="product-details-container">
+    <div class="breadcrumb">
+        <a href="{% url 'shop:home' %}">Home</a> /
+        <a href="{% url 'shop:list_products' %}">Products</a> /
+        <span>{{ product.name }}</span>
+    </div>
+
+    <div class="product-showcase">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/600x400{% endif %}"
+                     alt="{{ product.name }}" id="main-product-image">
+
+                {% if product.is_discounted %}
+                <span class="detail-badge sale">-{{ product.discount }}%</span>
+                {% endif %}
+
+                {% if product.is_featured %}
+                <span class="detail-badge featured">Featured</span>
+                {% endif %}
+            </div>
+
+            <div class="image-thumbnails">
+                <!-- Main image as thumbnail -->
+                <div class="thumbnail active">
+                    <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/120x80{% endif %}"
+                         alt="{{ product.name }}">
+                </div>
+
+                <!-- Additional images would go here in a real implementation -->
+                <div class="thumbnail placeholder">
+                    <img src="https://via.placeholder.com/120x80?text=View+1" alt="Additional view">
+                </div>
+                <div class="thumbnail placeholder">
+                    <img src="https://via.placeholder.com/120x80?text=View+2" alt="Additional view">
+                </div>
+                <div class="thumbnail placeholder">
+                    <img src="https://via.placeholder.com/120x80?text=View+3" alt="Additional view">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-info">
+            <div class="product-header">
+                <h1>{{ product.name }}</h1>
+
+                {% if product.rating %}
+                <div class="product-rating">
+                    {% for i in "12345" %}
+                    {% if forloop.counter <= product.rating %}
+                    <i class="fa fa-star"></i>
+                    {% else %}
+                    <i class="fa fa-star-o"></i>
+                    {% endif %}
+                    {% endfor %}
+                    <span class="rating-count">({{ product.rating }})</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="product-pricing">
+                <div class="price">
+                    <span class="current-price">${{ product.price }}</span>
+                    {% if product.is_discounted %}
+                    <span class="original-price">${{ product.original_price }}</span>
+                    <span class="discount-percentage">{{ product.discount }}% off</span>
+                    {% endif %}
+                </div>
+
+                <div class="availability">
+                    {% if product.inventory.stock_count > 0 %}
+                    <span class="in-stock"><i class="fa fa-check-circle"></i> In Stock</span>
+                    <span class="stock-count">{{ product.inventory.stock_count }} available</span>
+                    {% else %}
+                    <span class="out-of-stock"><i class="fa fa-times-circle"></i> Out of Stock</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="product-description">
+                <h3>Description</h3>
+                <p>{{ product.description }}</p>
+            </div>
+
+           <div class="product-actions">
+                <div class="quantity-selector" id="quantity-selector">
+                    <button class="qty-btn minus" id="decrease-qty"><i class="fas fa-minus"></i></button>
+                    <input type="number" value="1" min="1" max="{{ product.inventory.stock_count }}" id="product-quantity">
+                    <button class="qty-btn plus" id="increase-qty"><i class="fas fa-plus"></i></button>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary add-to-cart-detail" data-product-id="{{ product.id }}">
+                        <i class="fa fa-shopping-cart"></i> Add to Cart
+                    </button>
+                    <span id="in-cart-message" style="display: none;">
+                        In cart: <span id="cart-quantity"></span> items
+                        <button class="btn btn-sm btn-danger remove-from-cart" data-product-id="{{ product.id }}" style="margin-left: 5px;">
+                            <i class="fa fa-trash"></i> Remove
+                        </button>
+                    </span>
+                    <button class="btn btn-outline buy-now-detail">
+                        <i class="fa fa-bolt"></i> Buy Now
+                    </button>
+                    <button class="btn btn-icon add-to-wishlist" data-product-id="{{ product.id }}">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-meta">
+                <div class="meta-item">
+                    <span class="meta-label">SKU:</span>
+                    <span class="meta-value">{{ product.id }}</span>
+                </div>
+
+                <div class="meta-item">
+                    <span class="meta-label">Category:</span>
+                    <span class="meta-value">{% if product.category %}{{ product.category.name }}{% else %}Uncategorized{% endif %}</span>
+                </div>
+
+                <div class="meta-item">
+                    <span class="meta-label">Shop:</span>
+                    <span class="meta-value">{{ product.shop.name }}</span>
+                </div>
+
+                <div class="meta-item">
+                    <span class="meta-label">Added:</span>
+                    <span class="meta-value">{{ product.created_at|date:"M d, Y" }}</span>
+                </div>
+            </div>
+
+            <div class="product-share">
+                <span class="share-label">Share this product:</span>
+                <div class="share-buttons">
+                    <a href="#" class="social-share facebook"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="social-share twitter"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="social-share pinterest"><i class="fa fa-pinterest"></i></a>
+                    <a href="#" class="social-share email"><i class="fa fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-tabs">
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-tab="details">Details</button>
+            <button class="tab-btn" data-tab="specifications">Specifications</button>
+            <button class="tab-btn" data-tab="reviews">Reviews</button>
+            <button class="tab-btn" data-tab="shipping">Shipping & Returns</button>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="details-tab">
+                <h3>Product Details</h3>
+                <p>{{ product.description }}</p>
+
+                <div class="feature-list">
+                    <h4>Key Features</h4>
+                    <ul>
+                        <li>Premium quality product</li>
+                        <li>Exclusive design</li>
+                        <li>Made with the finest materials</li>
+                        <li>Available in multiple variations</li>
+                        <li>Backed by our satisfaction guarantee</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="specifications-tab">
+                <h3>Product Specifications</h3>
+                <table class="specs-table">
+                    <tbody>
+                    <tr>
+                        <th>Material</th>
+                        <td>Premium Quality</td>
+                    </tr>
+                    <tr>
+                        <th>Dimensions</th>
+                        <td>Custom Size</td>
+                    </tr>
+                    <tr>
+                        <th>Weight</th>
+                        <td>Lightweight</td>
+                    </tr>
+                    <tr>
+                        <th>Color</th>
+                        <td>Multiple Options</td>
+                    </tr>
+                    <tr>
+                        <th>Warranty</th>
+                        <td>1 Year Limited</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane" id="reviews-tab">
+                <h3>Customer Reviews</h3>
+                <div class="reviews-summary">
+                    <div class="overall-rating">
+                        <div class="rating-value">{% if product.rating %}{{ product.rating }}{% else %}0{% endif %}
+                        </div>
+                        <div class="rating-stars">
+                            {% for i in "12345" %}
+                            {% if product.rating and forloop.counter <= product.rating %}
+                            <i class="fa fa-star"></i>
+                            {% else %}
+                            <i class="fa fa-star-o"></i>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="rating-count">Based on {{ product.rating|default:0 }} reviews</div>
+                    </div>
+
+                    <div class="rating-bars">
+                        {% for i in "54321" %}
+                        <div class="rating-bar">
+                            <div class="rating-label">{{ i }} star</div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ forloop.counter }}0%;"></div>
+                            </div>
+                            <div class="rating-percent">{{ forloop.counter }}0%</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="reviews-list">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer">John Doe</div>
+                            <div class="review-date">March 15, 2025</div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="review-content">
+                            <p>Absolutely love this product! The quality is outstanding and it exceeded all my
+                                expectations. Highly recommend it to anyone looking for a premium experience.</p>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer">Jane Smith</div>
+                            <div class="review-date">March 10, 2025</div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <div class="review-content">
+                            <p>Very happy with my purchase. The product is well-made and looks exactly as pictured.
+                                Shipping was fast and customer service was great. Would buy again.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="write-review">
+                    <h4>Write a Review</h4>
+                    <form class="review-form">
+                        <div class="form-group">
+                            <label>Rating</label>
+                            <div class="rating-select">
+                                <i class="fa fa-star-o rating-star" data-rating="1"></i>
+                                <i class="fa fa-star-o rating-star" data-rating="2"></i>
+                                <i class="fa fa-star-o rating-star" data-rating="3"></i>
+                                <i class="fa fa-star-o rating-star" data-rating="4"></i>
+                                <i class="fa fa-star-o rating-star" data-rating="5"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="review-title">Title</label>
+                            <input type="text" id="review-title" class="form-control"
+                                   placeholder="Summarize your experience">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="review-content">Review</label>
+                            <textarea id="review-content" class="form-control" rows="4"
+                                      placeholder="Share your experience with this product"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="shipping-tab">
+                <h3>Shipping & Returns</h3>
+                <div class="shipping-info">
+                    <h4>Shipping Policy</h4>
+                    <p>We offer standard shipping that typically takes 3-5 business days. Express shipping options are
+                        available at checkout for faster delivery.</p>
+
+                    <h4>Return Policy</h4>
+                    <p>If you're not completely satisfied with your purchase, you can return it within 30 days for a
+                        full refund. Items must be in original condition with all packaging and tags.</p>
+
+                    <h4>International Shipping</h4>
+                    <p>We ship to most countries worldwide. International shipping times may vary depending on your
+                        location and local customs processing.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="related-products">
+        <h2>You May Also Like</h2>
+        <div class="related-products-grid">
+            <!-- This would be populated with actual related products in a real implementation -->
+            {% for related_product in related_products %}
+                <div class="related-product">
+                <div class="related-product-image">
+                    <a href="{% url 'shop:products:product_detail' slug=related_product.slug %}">
+                    <img src="{% if related_product.image %}{{ related_product.image.url }}{% else %}https://via.placeholder.com/600x400{% endif %}" alt="Related Product">
+                    </a>
+                    </div>
+                <h3>
+                    <a href="{% url 'shop:products:product_detail' slug=product.slug %}">{{ related_product.name }}</a>
+                </h3>
+                <div class="related-product-price">${{ related_product.price }}</div>
+<!--                <button class="btn btn-sm btn-outline">Add to Cart</button>-->
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="recently-viewed">
+        <h2>Recently Viewed</h2>
+        <div class="recently-viewed-grid">
+            <!-- This would be populated with actual recently viewed products in a real implementation -->
+            <div class="viewed-product">
+                <div class="viewed-product-image">
+                    <img src="https://via.placeholder.com/150x150" alt="Viewed Product">
+                </div>
+                <h4>Viewed Product 1</h4>
+                <div class="viewed-product-price">$39.99</div>
+            </div>
+
+            <div class="viewed-product">
+                <div class="viewed-product-image">
+                    <img src="https://via.placeholder.com/150x150" alt="Viewed Product">
+                </div>
+                <h4>Viewed Product 2</h4>
+                <div class="viewed-product-price">$45.99</div>
+            </div>
+
+            <div class="viewed-product">
+                <div class="viewed-product-image">
+                    <img src="https://via.placeholder.com/150x150" alt="Viewed Product">
+                </div>
+                <h4>Viewed Product 3</h4>
+                <div class="viewed-product-price">$29.99</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/product_details.js' %}"></script>
+{% endblock %}

@@ -59,13 +59,13 @@ class Product(BaseModel):
     is_available = models.BooleanField(default=True)
     description = models.TextField()
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='products')
+    slug = models.SlugField(unique=True)
     image = models.ImageField(
         upload_to=unique_image_path,
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']), validate_image_size],
         null=True,
         blank=True
     )
-    slug = models.SlugField(unique=True)
     is_discounted = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
@@ -81,14 +81,18 @@ class Product(BaseModel):
     def __str__(self):
         return f'{self.name} - {self.price}'
 
-    @override
-    def save(self, *args, user=None, **kwargs):
-        if user:
-            pass
-            # print(user.first_name, user.email)
-
-        super().save(*args, **kwargs)
-
+# class ProductImage(models.Model):
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+#     image = models.ImageField(
+#         upload_to=unique_image_path,
+#         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']), validate_image_size],
+#         null=True,
+#         blank=True
+#     )
+#
+#     @override
+#     def __str__(self):
+#         return f'Image for {self.product.name}'
 
 
 

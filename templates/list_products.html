@@ -42,27 +42,31 @@ Product Showcase
         <div class="product-card" data-product-id="{{ product.id }}">
             {% csrf_token %}
             <div class="product-image">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
-                     alt="{{ product.name }}">
+                <a href="{% url 'shop:products:product_detail' slug=product.slug %}">
 
-                <div class="product-badges">
-                    {% if product.is_new %}
-                    <span class="badge new">New</span>
-                    {% endif %}
-                    {% if product.discount > 0 %}
-                    <span class="badge sale">-{{ product.discount }}%</span>
-                    {% endif %}
+                    <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
+                         alt="{{ product.name }}">
 
-                    <!-- New badge for cart items -->
-                    {% for cart_item in cart_items %}
-                    {% if cart_item.product.id == product.id %}
-                    <span class="badge in-cart">In Cart ({{ cart_item.quantity }})</span>
-                    {% endif %}
-                    {% endfor %}
-                </div>
+                    <div class="product-badges">
+                        {% if product.is_new %}
+                        <span class="badge new">New</span>
+                        {% endif %}
+                        {% if product.discount > 0 %}
+                        <span class="badge sale">-{{ product.discount }}%</span>
+                        {% endif %}
+
+                        <!-- New badge for cart items -->
+                        {% for cart_item in cart_items %}
+                        {% if cart_item.product.id == product.id %}
+                        <span class="badge in-cart">In Cart ({{ cart_item.quantity }})</span>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
             </div>
             <div class="product-info">
-                <h2 class="product-title">{{ product.name }}</h2>
+                <h2 class="product-title">
+                    <a href="{% url 'shop:products:product_detail' slug=product.slug %}">{{ product.name }}</a>
+                </h2>
                 <div class="product-price">
                     <span class="current-price">${{ product.price }}</span>
                 </div>
