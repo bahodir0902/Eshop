@@ -1,5 +1,4 @@
 import json
-
 from django.core.paginator import Paginator
 from django.db.models import Q, Sum, ExpressionWrapper, F, FloatField
 from django.http import HttpResponse, JsonResponse
