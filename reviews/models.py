@@ -28,9 +28,10 @@ def unique_image_path(instance, filename):
 
 class FeedBack(BaseModel):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='feedbacks')
     rating = models.SmallIntegerField(validators=[check_rating])
     comment = models.TextField()
+    is_anonymous = models.BooleanField(default=False)
     image = models.ImageField(
         upload_to=unique_image_path,
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']), validate_image_size],
