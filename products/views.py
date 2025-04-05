@@ -6,7 +6,7 @@ from eshop.models import Favourite, FavouriteItem
 from activity.models import RecentProducts
 from reviews.models import FeedBack
 from django.db.models import Avg
-
+import re
 
 
 class ProductDetailView(View):
@@ -32,6 +32,19 @@ class ProductDetailView(View):
             if not current_item:
                 RecentProducts.objects.create(user=request.user, product=product)
 
+        features = product.key_features.split(',') #features = [f.strip() for f in product.key_features.split(',') if f.strip()]
+
+
+        raw_specifications = product.specifications
+
+
+        items = re.split(r'[,\n]+', raw_specifications)
+        specifications = {}
+        for item in items:
+            item = item.strip()
+            if ':' in item:
+                key, value = item.split(':', 1)  # only split on the first colon
+                specifications[key.strip()] = value.strip()
 
         data = {
             'product': product,
@@ -43,7 +56,9 @@ class ProductDetailView(View):
             'average_rating':  feedbacks.get('average_rating').get('average_rating', 0),
             'total_feedbacks': feedbacks.get('total_feedbacks'),
             'stars': feedbacks.get('stars'),
-            'percentages': feedbacks.get('percentages')
+            'percentages': feedbacks.get('percentages'),
+            'features': features,
+            'specifications': specifications
         }
 
         return render(request, 'product_details.html', context=data)
