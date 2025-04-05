@@ -32,7 +32,8 @@
                 <div class="card-front">
                     <div class="image-container">
                         {% if item.product.image %}
-                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="product-image">
+                        <a href="{% url 'shop:products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="product-image"></a>
                         {% else %}
                         <div class="no-image">
                             <i class="fas fa-image"></i>
@@ -43,7 +44,10 @@
                         </div>
                     </div>
                     <div class="product-info">
-                        <h3 class="product-name">{{ item.product.name }}</h3>
+                        <h3 class="product-name">
+                            <a href="{% url 'shop:products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                            {{ item.product.name }}</a>
+                        </h3>
                         <div class="shop-name">{{ item.product.shop.name }}</div>
                         {% if item.product.is_available %}
                         <span class="availability available">In Stock</span>

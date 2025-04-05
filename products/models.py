@@ -1,7 +1,6 @@
 from django.db import models
 from common.models import BaseModel
 from shops.models import Shop
-from django.contrib.auth import get_user_model
 from typing import override
 from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError

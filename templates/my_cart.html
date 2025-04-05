@@ -66,7 +66,8 @@
                     <div class="cart-item" data-product-id="{{ item.product.id }}">
                         <div class="item-image">
                             {% if item.product.image %}
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                            <a href="{% url 'shop:products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"></a>
                             {% else %}
                             <div class="no-image">
                                 <i class="fa-solid fa-image"></i>
@@ -74,7 +75,10 @@
                             {% endif %}
                         </div>
                         <div class="item-info">
-                            <h3 class="item-name">{{ item.product.name }}</h3>
+                            <h3 class="item-name">
+                                <a href="{% url 'shop:products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                                {{ item.product.name }}</a>
+                            </h3>
                             <p class="item-shop">{{ item.product.shop }}</p>
                             {% if item.product.is_discounted %}
                             <div class="item-discount-badge">
