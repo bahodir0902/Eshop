@@ -130,16 +130,21 @@ Product Management
                         <input type="checkbox" class="product-select" data-id="{{ product.pk }}">
                     </td>
                     <td class="image-cell">
+                        <a href="{% url 'shop:products:product_detail' slug=product.slug %}" class="btn-icon" title="View">
                         {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}">
                         {% else %}
+
                         <div class="no-image">
                             <i class="fa fa-image"></i>
                         </div>
-                        {% endif %}
+                        {% endif %}</a>
                     </td>
                     <td class="name-cell">
-                        <span class="product-name">{{ product.name }}</span>
+                        <span class="product-name" id="product_name">
+                            <a href="{% url 'shop:products:product_detail' slug=product.slug %}" class="btn-icon" title="View">
+                            {{ product.name }}</a>
+                        </span>
                         <span class="product-description">{{ product.description|truncatechars:60 }}</span>
                     </td>
                     <td>{{ product.id|default:"—" }}</td>

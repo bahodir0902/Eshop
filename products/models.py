@@ -56,9 +56,12 @@ class Product(BaseModel):
     name = models.CharField(max_length=255)
     price = models.DecimalField(decimal_places=2, max_digits=10, validators=[get_positive_quantity])
     is_available = models.BooleanField(default=True)
-    description = models.TextField()
+    short_description = models.CharField(max_length=255, null=True, blank=True, default='None description', help_text="Short catchy description for the product page.")
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='products')
     slug = models.SlugField(unique=True)
+    full_description = models.TextField(null=True, blank=True, help_text="Detailed product description with marketing tone.")
+    key_features = models.TextField(null=True, blank=True, help_text='List of key features.')
+    specifications = models.TextField(null=True, blank=True, help_text="Key-value technical specs.")
     image = models.ImageField(
         upload_to=unique_image_path,
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']), validate_image_size],
