@@ -159,14 +159,15 @@ Product Management
                     <td class="actions-cell">
                         <div class="action-buttons">
                             <a href="#" class="btn-icon" title="View">
+                                <a href="{% url 'shop:products:product_detail' slug=product.slug %}" class="btn-icon" title="View">
                                 <i class="fa fa-eye"></i>
                             </a>
                             <a href="{% url 'shop:edit_product' product.pk %}" class="btn-icon" title="Edit">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <button class="btn-icon delete-product" data-id="{{ product.pk }}" title="Delete">
+                            <a href="{% url 'shop:delete_product' pk=product.pk %}" class="btn-icon" data-id="{{ product.pk }}" title="Delete">
                                 <i class="fa fa-trash"></i>
-                            </button>
+                            </a>
                         </div>
                     </td>
                 </tr>

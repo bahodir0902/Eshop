@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (data.success) {
                             showNotification('Redirecting to checkout...');
                             // Redirect to checkout page
-                            window.location.href = "/checkout/";
+                            window.location.href = "/cart/";
                         } else {
                             showNotification('Error: ' + (data.error || 'Could not proceed to checkout.'));
                         }

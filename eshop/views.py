@@ -88,7 +88,7 @@ def add_product(request):
         if form.is_valid():
             product = form.save(commit=False)
 
-            product.save(user=request.user)
+            product.save()
             return redirect('shop:list_products')
         form.add_error(None, 'Please enter valid data.')
         print(form.errors)
@@ -172,7 +172,7 @@ def find_and_delete_product(request):
 
 @restrict_user(is_admin, is_seller)
 def delete_product(request, pk):
-    product = Product.objects.filter(pk=pk).update(is_available=False)
+    Product.objects.filter(pk=pk).delete()
     return redirect('shop:find_and_delete_product')
 
 
