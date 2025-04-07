@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Q, ExpressionWrapper, FloatField
 from products.models import Product
 
+
 class CartView(LoginRequiredMixin, View):
     def get(self, request):
         cart = Cart.objects.filter(user=request.user).first()

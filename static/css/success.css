@@ -1,0 +1,264 @@
+/* Success Page Specific Styles */
+:root {
+  --primary-color: #6366f1;
+  --primary-light: #818cf8;
+  --primary-dark: #4f46e5;
+  --accent-color: #f43f5e;
+  --success-color: #10b981;
+  --success-light: #d1fae5;
+  --text-dark: #1e293b;
+  --text-light: #64748b;
+  --bg-light: #f8fafc;
+  --bg-dark: #0f172a;
+  --border-color: #e2e8f0;
+  --card-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+}
+
+/* Success Section */
+.success-section {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: var(--card-shadow);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+/* Success Animation */
+.success-animation {
+  margin-bottom: 1rem;
+}
+
+.checkmark-circle {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  background: var(--success-light);
+  border-radius: 50%;
+  box-shadow: 0 6px 20px -8px var(--success-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.checkmark-circle.animated {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.checkmark-icon {
+  width: 60px;
+  height: 60px;
+  background-color: var(--success-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark-icon i {
+  color: white;
+  font-size: 2rem;
+}
+
+/* Success Message */
+.success-message {
+  max-width: 500px;
+}
+
+.success-message h2 {
+  color: var(--text-dark);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.order-number {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--success-color);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.confirmation-message,
+.email-notification {
+  color: var(--text-light);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+/* Delivery Info */
+.delivery-info {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+  background-color: var(--bg-light);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+}
+
+.info-icon {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-icon i {
+  color: white;
+  font-size: 1.25rem;
+}
+
+.info-content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.delivery-estimate,
+.delivery-address {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-bottom: 0.35rem;
+  line-height: 1.5;
+}
+
+/* Purchase Actions */
+.purchase-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-action {
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.view-order {
+  background-color: white;
+  color: var(--primary-dark);
+  border: 2px solid var(--primary-dark);
+}
+
+.view-order:hover {
+  background-color: rgba(99, 102, 241, 0.05);
+  transform: translateY(-2px);
+}
+
+.continue-shopping {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+
+.continue-shopping:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(79, 70, 229, 0.3);
+}
+
+/* Corrected styling for the active and completed step */
+.progress-step.completed.active {
+  color: var(--text-dark); /* Keep text color normal */
+  border-color: transparent; /* Remove border */
+  background-color: transparent; /* Remove background from the whole step */
+}
+
+.progress-step.completed.active .step-icon {
+  background-color: var(--success-color);
+  border-color: white;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2); /* Add a subtle glow effect */
+}
+
+.progress-step.completed.active .step-icon i {
+  color: white;
+}
+
+/* Additional animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-message, .delivery-info, .purchase-actions {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+.success-message {
+  animation-delay: 0.2s;
+}
+
+.delivery-info {
+  animation-delay: 0.4s;
+}
+
+.purchase-actions {
+  animation-delay: 0.6s;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .purchase-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-action {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .success-section {
+    padding: 1.5rem;
+  }
+
+  .checkmark-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .checkmark-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .success-message h2 {
+    font-size: 1.5rem;
+  }
+}
