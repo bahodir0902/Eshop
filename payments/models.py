@@ -1,5 +1,4 @@
 from typing import override
-
 from django.db import models
 from common.models import BaseModel
 from orders.models import Order
