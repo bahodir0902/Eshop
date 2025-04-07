@@ -89,7 +89,19 @@
           </ul>
         {% endif %}
       </div>
-      
+
+    <div class="form-group">
+        <label for="{{ address_form.state_or_province.id_for_label }}">State/Province</label>
+        {{ address_form.state_or_province }}
+        {% if address_form.state_or_province.errors %}
+          <ul class="errorlist">
+            {% for error in address_form.state_or_province.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
       <div class="form-group">
         <label for="{{ address_form.country.id_for_label }}">Country</label>
         {{ address_form.country }}

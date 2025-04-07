@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - Success{% endblock %}
+
+{% block content %}
+    <div class="cart-wrapper">
+        <div class="cart-container">
+            <!-- Header Section -->
+            <div class="cart-header">
+                <h1 class="cart-title">Checkout</h1>
+                <div class="cart-progress">
+                    <div class="progress-step completed">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <span>Cart</span>
+                    </div>
+                    <div class="progress-line completed"></div>
+                    <div class="progress-step completed">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-address-card"></i>
+                        </div>
+                        <span>Details</span>
+                    </div>
+                    <div class="progress-line completed"></div>
+                    <div class="progress-step completed">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-credit-card"></i>
+                        </div>
+                        <span>Payment</span>
+                    </div>
+                    <div class="progress-line completed"></div>
+                    <div class="progress-step active completed">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <span>Confirmation</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Section -->
+            <div class="cart-content">
+                <!-- Success Section -->
+                <div class="success-section">
+                    <div class="success-animation">
+                        <div class="checkmark-circle">
+                            <div class="checkmark-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="success-message">
+                        <h2>Thank You for Your Order!</h2>
+                        <p class="order-number">Order ID: <span id="order-reference">{{ order_number }}</span></p>
+                        <p class="confirmation-message">
+                            Your payment has been successfully processed and your order is confirmed.
+                        </p>
+                        <p class="email-notification">
+                            We've sent a confirmation email to <strong>{{ email }}</strong> with your order details.
+                        </p>
+                    </div>
+
+                    <div class="delivery-info">
+                        <div class="info-box">
+                            <div class="info-icon">
+                                <i class="fa-solid fa-truck-fast"></i>
+                            </div>
+                            <div class="info-content">
+                                <h3>Delivery Details</h3>
+                                <p class="delivery-estimate">Estimated delivery: <strong>up to {{ delivery_date.date }}</strong>
+                                </p>
+                                <p class="delivery-address">
+                                    Shipping to: {{ address_line_1 }}, {% if address_line_2 %}{{ address_line_2 }},
+                                    {% endif %} {{ postal_code }} Postal code, {{ city }}, {{ state }}, {{ country }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="purchase-actions">
+                        <a href="#" class="btn-action view-order">
+                            <i class="fa-solid fa-receipt"></i> View Order Details
+                        </a>
+                        <a href="{% url 'shop:list_products' %}" class="btn-action continue-shopping">
+                            <i class="fa-solid fa-store"></i> Continue Shopping
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Order Summary Section -->
+                <div class="order-summary">
+                    <div class="summary-header">
+                        <h2>Order Summary</h2>
+                        <div class="summary-toggle">
+                            <span>Details</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    <div class="summary-content">
+                        <!-- Order Items -->
+                        <div class="summary-items">
+                            {% for item in order_details %}
+                                <div class="summary-item">
+                                    <div class="item-thumbnail">
+                                        {% if item.product.image %}
+                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                        {% else %}
+                                            <div class="no-image-small">
+                                                <i class="fa-solid fa-image"></i>
+                                            </div>
+                                        {% endif %}
+                                        <span class="item-quantity">{{ item.quantity }}</span>
+                                    </div>
+                                    <div class="item-summary-details">
+                                        <div class="item-summary-name">{{ item.product.name }}</div>
+                                        <div class="item-summary-shop">{{ item.product.shop }}</div>
+                                    </div>
+                                    <div class="item-summary-price">${{ item.total_price|floatformat:2 }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <!-- Cost Breakdown -->
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span class="subtotal-amount">${{ subtotal_order_price|floatformat:2 }}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span id="shipping-cost">${{ shipping_cost|floatformat:2 }}</span>
+                        </div>
+
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total-row">
+                            <span>Total</span>
+                            <span class="total-amount">${{ total_order_cost|floatformat:2 }}</span>
+                        </div>
+
+                        <div class="payment-methods">
+                            <span>Secure Payment</span>
+                            <div class="payment-icons">
+                                <i class="fab fa-cc-visa"></i>
+                                <i class="fab fa-cc-mastercard"></i>
+                                <i class="fab fa-cc-amex"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/my_cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+    <link rel="stylesheet" href="{% static 'css/success.css' %}">
+    <script src="{% static 'js/checkout.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Animate success checkmark
+            setTimeout(function () {
+                document.querySelector('.checkmark-circle').classList.add('animated');
+            }, 200);
+
+            // Toggle order summary on mobile devices
+            const summaryToggle = document.querySelector('.summary-toggle');
+            const summaryContent = document.querySelector('.summary-content');
+            if (summaryToggle && summaryContent) {
+                summaryToggle.addEventListener('click', function () {
+                    summaryContent.classList.toggle('collapsed');
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            }
+        });
+    </script>
+{% endblock %}

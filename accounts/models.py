@@ -47,6 +47,7 @@ class Address(BaseModel):
     address_line_1 = models.CharField(max_length=255)
     address_line_2 = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=100)
+    state_or_province = models.CharField(max_length=100, default="City")
     country = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=50)
     is_primary = models.BooleanField(default=True)

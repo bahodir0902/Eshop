@@ -1,0 +1,539 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - Payment{% endblock %}
+
+{% block content %}
+    <div class="cart-wrapper">
+        <div class="cart-container">
+            <!-- Header Section -->
+            <div class="cart-header">
+                <h1 class="cart-title">Checkout</h1>
+                <div class="cart-progress">
+                    <div class="progress-step completed">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <span>Cart</span>
+                    </div>
+                    <div class="progress-line completed"></div>
+                    <div class="progress-step completed">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-address-card"></i>
+                        </div>
+                        <span>Details</span>
+                    </div>
+                    <div class="progress-line completed"></div>
+                    <div class="progress-step active">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-credit-card"></i>
+                        </div>
+                        <span>Payment</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-icon">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <span>Confirmation</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Section -->
+            <div class="cart-content">
+                <!-- Payment Section -->
+                <div class="cart-items-section">
+                    <div class="items-header">
+                        <h2>Payment Information</h2>
+                        <span class="items-count">Step 3 of 4</span>
+                    </div>
+
+                    <div class="details-form">
+                        <form id="payment-form" method="post">
+                            {% csrf_token %}
+                            {% if field_errors %}
+                                {% comment %}Pass the field-specific errors from the view into JS{% endcomment %}
+                                <script id="fieldErrors" type="application/json">
+                                    {{ field_errors|json_script:"fieldErrors" }}
+                                </script>
+                            {% endif %}
+
+                            <div class="form-section">
+                                <h3 class="section-title">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                    Payment Method
+                                </h3>
+                                <div class="payment-methods-selector">
+                                    <div class="payment-method-option">
+                                        <input type="radio" id="credit_card" name="payment_method" value="credit_card" checked>
+                                        <label for="credit_card">
+                                            <div class="method-details">
+                                                <div class="method-icons">
+                                                    <i class="fab fa-cc-visa"></i>
+                                                    <i class="fab fa-cc-mastercard"></i>
+                                                    <i class="fab fa-cc-amex"></i>
+                                                </div>
+                                                <div class="method-name">Credit Card</div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="credit-card-form" class="form-section">
+                                <h3 class="section-title">
+                                    <i class="fa-solid fa-lock"></i>
+                                    Card Details
+                                </h3>
+                                <div class="form-group">
+                                    <label for="id_card_name">Card Holder's First and Last Name</label>
+                                    <input type="text" id="id_card_name" name="card_name" placeholder="Enter cardholder's first name and last name as it appears on card" required>
+                                    <span class="error-message" id="error_card_name"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_card_number">Card Number</label>
+                                    <div class="card-number-input">
+                                        <input type="text" id="id_card_number" name="card_number" placeholder="1234 5678 9012 3456" required>
+                                        <div class="card-type-icon">
+                                            <i class="fab fa-cc-visa"></i>
+                                        </div>
+                                            <span class="error-message" id="error_card_name"></span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="id_expiry_date">Expiry Date</label>
+                                        <input type="text" id="id_expiry_date" name="expiry_date" placeholder="MM/YY" required>
+                                        <span class="error-message" id="error_card_name"></span>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_cvv">CVV</label>
+                                        <div class="cvv-input">
+                                            <input type="text" id="id_cvv" name="cvv" placeholder="123" required>
+                                            <span class="cvv-tooltip" title="The 3-digit security code on the back of your card">
+                                                <i class="fa-solid fa-circle-question"></i>
+                                            </span>
+                                            <span class="error-message" id="error_card_name"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <a href="{% url 'orders:checkout' %}" class="btn-back">
+                                    <i class="fa-solid fa-arrow-left"></i> Back to Details
+                                </a>
+                                <button type="submit" class="btn-continue">
+                                    Pay and Complete Order <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Order Summary Section -->
+                <div class="order-summary">
+                    <div class="summary-header">
+                        <h2>Order Summary</h2>
+                        <div class="summary-toggle">
+                            <span>Details</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    <div class="summary-content">
+                        <!-- Order Items -->
+                        <div class="summary-items">
+                            {% for item in order_details %}
+                                <div class="summary-item">
+                                    <div class="item-thumbnail">
+                                        {% if item.product.image %}
+                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                        {% else %}
+                                            <div class="no-image-small">
+                                                <i class="fa-solid fa-image"></i>
+                                            </div>
+                                        {% endif %}
+                                        <span class="item-quantity">{{ item.quantity }}</span>
+                                    </div>
+                                    <div class="item-summary-details">
+                                        <div class="item-summary-name">{{ item.product.name }}</div>
+                                        <div class="item-summary-shop">{{ item.product.shop }}</div>
+                                    </div>
+                                    <div class="item-summary-price">${{ item.total_price|floatformat:2 }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="summary-divider"></div>
+
+                        <!-- Cost Breakdown -->
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span class="subtotal-amount">${{ subtotal_order_price|floatformat:2 }}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span id="shipping-cost">${{ shipping_cost|floatformat:2 }}</span>
+                        </div>
+
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total-row">
+                            <span>Total</span>
+                            <span class="total-amount">${{ total_order_cost|floatformat:2 }}</span>
+                        </div>
+
+                        <div class="payment-methods">
+                            <span>Secure Checkout</span>
+                            <div class="payment-icons">
+                                <i class="fab fa-cc-visa"></i>
+                                <i class="fab fa-cc-mastercard"></i>
+                                <i class="fab fa-cc-amex"></i>
+                            </div>
+                            <div class="security-badges">
+                                <div class="security-badge">
+                                    <i class="fa-solid fa-lock"></i>
+                                    <span>SSL Secured</span>
+                                </div>
+                                <div class="security-badge">
+                                    <i class="fa-solid fa-shield-alt"></i>
+                                    <span>Protected</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/my_cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+    <script src="{% static 'js/checkout.js' %}"></script>
+    <script src="{% static 'js/payment.js' %}"></script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#{% extends 'base.html' %}#}
+{#{% load static %}#}
+{##}
+{#{% block title %}Checkout - Payment{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#    <div class="cart-wrapper">#}
+{#        <div class="cart-container">#}
+{#            <!-- Header Section -->#}
+{#            <div class="cart-header">#}
+{#                <h1 class="cart-title">Checkout</h1>#}
+{#                <div class="cart-progress">#}
+{#                    <div class="progress-step completed">#}
+{#                        <div class="step-icon">#}
+{#                            <i class="fa-solid fa-cart-shopping"></i>#}
+{#                        </div>#}
+{#                        <span>Cart</span>#}
+{#                    </div>#}
+{#                    <div class="progress-line completed"></div>#}
+{#                    <div class="progress-step completed">#}
+{#                        <div class="step-icon">#}
+{#                            <i class="fa-solid fa-address-card"></i>#}
+{#                        </div>#}
+{#                        <span>Details</span>#}
+{#                    </div>#}
+{#                    <div class="progress-line completed"></div>#}
+{#                    <div class="progress-step active">#}
+{#                        <div class="step-icon">#}
+{#                            <i class="fa-solid fa-credit-card"></i>#}
+{#                        </div>#}
+{#                        <span>Payment</span>#}
+{#                    </div>#}
+{#                    <div class="progress-line"></div>#}
+{#                    <div class="progress-step">#}
+{#                        <div class="step-icon">#}
+{#                            <i class="fa-solid fa-check"></i>#}
+{#                        </div>#}
+{#                        <span>Confirmation</span>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- Main Content Section -->#}
+{#            <div class="cart-content">#}
+{#                <!-- Payment Section -->#}
+{#                <div class="cart-items-section">#}
+{#                    <div class="items-header">#}
+{#                        <h2>Payment Information</h2>#}
+{#                        <span class="items-count">Step 3 of 4</span>#}
+{#                    </div>#}
+{##}
+{#                    <div class="details-form">#}
+{#                        <form id="payment-form" method="post">#}
+{#                            {% csrf_token %}#}
+{##}
+{#                            <div class="form-section">#}
+{#                                <h3 class="section-title">#}
+{#                                    <i class="fa-solid fa-credit-card"></i>#}
+{#                                    Payment Method#}
+{#                                </h3>#}
+{#                                <div class="payment-methods-selector">#}
+{#                                    <div class="payment-method-option">#}
+{#                                        <input type="radio" id="credit_card" name="payment_method" value="credit_card" checked>#}
+{#                                        <label for="credit_card">#}
+{#                                            <div class="method-details">#}
+{#                                                <div class="method-icons">#}
+{#                                                    <i class="fab fa-cc-visa"></i>#}
+{#                                                    <i class="fab fa-cc-mastercard"></i>#}
+{#                                                    <i class="fab fa-cc-amex"></i>#}
+{#                                                </div>#}
+{#                                                <div class="method-name">Credit Card</div>#}
+{#                                            </div>#}
+{#                                        </label>#}
+{#                                    </div>#}
+{#                                    <div class="payment-method-option">#}
+{#                                        <input type="radio" id="paypal" name="payment_method" value="paypal">#}
+{#                                        <label for="paypal">#}
+{#                                            <div class="method-details">#}
+{#                                                <div class="method-icons">#}
+{#                                                    <i class="fab fa-cc-paypal"></i>#}
+{#                                                </div>#}
+{#                                                <div class="method-name">PayPal</div>#}
+{#                                            </div>#}
+{#                                        </label>#}
+{#                                    </div>#}
+{#                                    <div class="payment-method-option">#}
+{#                                        <input type="radio" id="wallet" name="payment_method" value="wallet">#}
+{#                                        <label for="wallet">#}
+{#                                            <div class="method-details">#}
+{#                                                <div class="method-icons">#}
+{#                                                    <i class="fab fa-apple-pay"></i>#}
+{#                                                    <i class="fab fa-google-pay"></i>#}
+{#                                                </div>#}
+{#                                                <div class="method-name">Digital Wallet</div>#}
+{#                                            </div>#}
+{#                                        </label>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div id="credit-card-form" class="form-section">#}
+{#                                <h3 class="section-title">#}
+{#                                    <i class="fa-solid fa-lock"></i>#}
+{#                                    Card Details#}
+{#                                </h3>#}
+{#                                <div class="form-group">#}
+{#                                    <label for="id_card_name">Name on Card</label>#}
+{#                                    <input type="text" id="id_card_name" name="card_name" placeholder="Enter name as it appears on card" required>#}
+{#                                </div>#}
+{#                                <div class="form-group">#}
+{#                                    <label for="id_card_number">Card Number</label>#}
+{#                                    <div class="card-number-input">#}
+{#                                        <input type="text" id="id_card_number" name="card_number" placeholder="1234 5678 9012 3456" required>#}
+{#                                        <div class="card-type-icon">#}
+{#                                            <i class="fab fa-cc-visa"></i>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="form-row">#}
+{#                                    <div class="form-group">#}
+{#                                        <label for="id_expiry_date">Expiry Date</label>#}
+{#                                        <input type="text" id="id_expiry_date" name="expiry_date" placeholder="MM/YY" required>#}
+{#                                    </div>#}
+{#                                    <div class="form-group">#}
+{#                                        <label for="id_cvv">CVV</label>#}
+{#                                        <div class="cvv-input">#}
+{#                                            <input type="text" id="id_cvv" name="cvv" placeholder="123" required>#}
+{#                                            <span class="cvv-tooltip" title="The 3-digit security code on the back of your card">#}
+{#                                                <i class="fa-solid fa-circle-question"></i>#}
+{#                                            </span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-section">#}
+{#                                <h3 class="section-title">#}
+{#                                    <i class="fa-solid fa-shield-alt"></i>#}
+{#                                    Billing Address#}
+{#                                </h3>#}
+{#                                <div class="form-group beautiful-checkbox">#}
+{#                                    <label class="custom-checkbox">#}
+{#                                        <input type="checkbox" name="same_address" id="id_same_address" checked>#}
+{#                                        <span class="checkmark"></span>#}
+{#                                        Same as shipping address#}
+{#                                    </label>#}
+{#                                </div>#}
+{#                                <div id="billing-address-form" style="display: none;">#}
+{#                                    <!-- Billing address fields would go here, similar to shipping address -->#}
+{#                                    <div class="form-row">#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="id_billing_first_name">First Name</label>#}
+{#                                            <input type="text" id="id_billing_first_name" name="billing_first_name" placeholder="Enter first name">#}
+{#                                        </div>#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="id_billing_last_name">Last Name</label>#}
+{#                                            <input type="text" id="id_billing_last_name" name="billing_last_name" placeholder="Enter last name">#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="form-group">#}
+{#                                        <label for="id_billing_address_line_1">Address Line 1</label>#}
+{#                                        <input type="text" id="id_billing_address_line_1" name="billing_address_line_1" placeholder="Enter address line 1">#}
+{#                                    </div>#}
+{#                                    <div class="form-group">#}
+{#                                        <label for="id_billing_address_line_2">Address Line 2 (Optional)</label>#}
+{#                                        <input type="text" id="id_billing_address_line_2" name="billing_address_line_2" placeholder="Enter address line 2">#}
+{#                                    </div>#}
+{#                                    <div class="form-row">#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="id_billing_city">City</label>#}
+{#                                            <input type="text" id="id_billing_city" name="billing_city" placeholder="Enter city">#}
+{#                                        </div>#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="id_billing_state">State/Province</label>#}
+{#                                            <input type="text" id="id_billing_state" name="billing_state" placeholder="Enter state/province">#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="form-row">#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="id_billing_postal_code">Postal Code</label>#}
+{#                                            <input type="text" id="id_billing_postal_code" name="billing_postal_code" placeholder="Enter postal code">#}
+{#                                        </div>#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="id_billing_country">Country</label>#}
+{#                                            <select id="id_billing_country" name="billing_country">#}
+{#                                                <option value="US">United States</option>#}
+{#                                                <option value="CA">Canada</option>#}
+{#                                                <option value="UK">United Kingdom</option>#}
+{#                                                <option value="AU">Australia</option>#}
+{#                                                <!-- Add more countries as needed -->#}
+{#                                            </select>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-actions">#}
+{#                                <a href="{% url 'orders:checkout' %}" class="btn-back">#}
+{#                                    <i class="fa-solid fa-arrow-left"></i> Back to Details#}
+{#                                </a>#}
+{#                                <button type="submit" class="btn-continue">#}
+{#                                    Pay and Complete Order <i class="fa-solid fa-arrow-right"></i>#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <!-- Order Summary Section -->#}
+{#                <div class="order-summary">#}
+{#                    <div class="summary-header">#}
+{#                        <h2>Order Summary</h2>#}
+{#                        <div class="summary-toggle">#}
+{#                            <span>Details</span>#}
+{#                            <i class="fa-solid fa-chevron-down"></i>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="summary-content">#}
+{#                        <!-- Order Items -->#}
+{#                        <div class="summary-items">#}
+{#                            {% for item in order_details %}#}
+{#                                <div class="summary-item">#}
+{#                                    <div class="item-thumbnail">#}
+{#                                        {% if item.product.image %}#}
+{#                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">#}
+{#                                        {% else %}#}
+{#                                            <div class="no-image-small">#}
+{#                                                <i class="fa-solid fa-image"></i>#}
+{#                                            </div>#}
+{#                                        {% endif %}#}
+{#                                        <span class="item-quantity">{{ item.quantity }}</span>#}
+{#                                    </div>#}
+{#                                    <div class="item-summary-details">#}
+{#                                        <div class="item-summary-name">{{ item.product.name }}</div>#}
+{#                                        <div class="item-summary-shop">{{ item.product.shop }}</div>#}
+{#                                    </div>#}
+{#                                    <div class="item-summary-price">${{ item.total_price|floatformat:2 }}</div>#}
+{#                                </div>#}
+{#                            {% endfor %}#}
+{#                        </div>#}
+{##}
+{#                        <div class="summary-divider"></div>#}
+{##}
+{#                        <!-- Cost Breakdown -->#}
+{#                        <div class="summary-row">#}
+{#                            <span>Subtotal</span>#}
+{#                            <span class="subtotal-amount">${{ subtotal_order_price|floatformat:2 }}</span>#}
+{#                        </div>#}
+{#                        <div class="summary-row">#}
+{#                            <span>Shipping</span>#}
+{#                            <span id="shipping-cost">${{ shipping_cost|floatformat:2 }}</span>#}
+{#                        </div>#}
+{##}
+{#                        <div class="summary-divider"></div>#}
+{#                        <div class="summary-row total-row">#}
+{#                            <span>Total</span>#}
+{#                            <span class="total-amount">${{ total_order_cost|floatformat:3 }}</span>#}
+{#                        </div>#}
+{##}
+{#                        <div class="payment-methods">#}
+{#                            <span>Secure Checkout</span>#}
+{#                            <div class="payment-icons">#}
+{#                                <i class="fab fa-cc-visa"></i>#}
+{#                                <i class="fab fa-cc-mastercard"></i>#}
+{#                                <i class="fab fa-cc-amex"></i>#}
+{#                                <i class="fab fa-cc-paypal"></i>#}
+{#                                <i class="fab fa-apple-pay"></i>#}
+{#                                <i class="fab fa-google-pay"></i>#}
+{#                            </div>#}
+{#                            <div class="security-badges">#}
+{#                                <div class="security-badge">#}
+{#                                    <i class="fa-solid fa-lock"></i>#}
+{#                                    <span>SSL Secured</span>#}
+{#                                </div>#}
+{#                                <div class="security-badge">#}
+{#                                    <i class="fa-solid fa-shield-alt"></i>#}
+{#                                    <span>Protected</span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <!-- Include Font Awesome -->#}
+{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">#}
+{#    <link rel="stylesheet" href="{% static 'css/my_cart.css' %}">#}
+{#    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">#}
+{#    <link rel="stylesheet" href="{% static 'css/payment.css' %}">#}
+{#    <script src="{% static 'js/checkout.js' %}"></script>#}
+{#    <script src="{% static 'js/payment.js' %}"></script>#}
+{#{% endblock %}#}

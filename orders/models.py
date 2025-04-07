@@ -4,6 +4,7 @@ from common.models import BaseModel
 from products.models import Product
 from accounts.models import Address
 from django.contrib.auth import get_user_model
+
 class Order(BaseModel):
     class OrderStatus(models.TextChoices):
         PENDING = 'pending', 'Pending'
