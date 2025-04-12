@@ -29,10 +29,12 @@ urlpatterns = [
     path('add_favourite_item/<int:pk>', AddFavouriteItem.as_view(), name='add_favourite_item'),
     path('remove_favourite_item/<int:pk>', RemoveFavouriteItem.as_view(), name='remove_favourite_item'),
     path('clear_favourites/', ClearFavourites.as_view(), name='clear_favourites'),
-    path('checkout/', include('orders.urls')),
-    path('payment/', include('payments.urls'))
+    # path('checkout/', include('orders.urls')),
+    path('payment/', include('payments.urls')),
+    path('orders/', include('orders.urls')),
+    path('feedbacks/', include('reviews.urls')),
+    path('common/', include('common.urls'))
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

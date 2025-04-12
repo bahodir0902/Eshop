@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Simulate processing
             setTimeout(() => {
-                window.location.href = '/checkout/'; // Redirect to checkout page
+                window.location.href = '/orders/checkout'; // Redirect to checkout page
             }, 1500);
         });
     }

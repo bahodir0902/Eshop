@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load order_tags %}
+{% block title %}My Orders{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/my_orders.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="orders-container">
+  <div class="orders-header">
+    <h1>My Orders</h1>
+    <div class="filter-container">
+      <button class="filter-btn active" data-status="all">All Orders</button>
+      <button class="filter-btn" data-status="processing">Processing</button>
+      <button class="filter-btn" data-status="shipped">Shipped</button>
+      <button class="filter-btn" data-status="delivered">Delivered</button>
+      <button class="filter-btn" data-status="returned">Returned</button>
+    </div>
+  </div>
+
+  <div class="orders-timeline">
+    {% for item in items %}
+      {% with order=item.0.order %}
+        <div class="order-card" data-status="{{ order.status }}">
+          <div class="order-header">
+            <div class="order-info">
+              <h3>Order #{{ order.id }}</h3>
+              <span class="order-date">{{ order.created_at|date:"F j, Y" }}</span>
+            </div>
+            <div class="order-status status-{{ order.status }}">
+              <span class="status-indicator"></span>
+              <span class="status-text">{{ order.get_status_display }}</span>
+            </div>
+          </div>
+
+          <div class="order-progress-bar">
+            {% if order.status == 'paid' or order.status == 'processing' %}
+              <div class="progress-step active">
+                <div class="step-icon"><i class="fas fa-check"></i></div>
+                <div class="step-label">Order Placed</div>
+              </div>
+              <div class="progress-step {% if order.status == 'processing' %}active{% endif %}">
+                <div class="step-icon"><i class="fas fa-cog"></i></div>
+                <div class="step-label">Processing</div>
+              </div>
+              <div class="progress-step">
+                <div class="step-icon"><i class="fas fa-truck"></i></div>
+                <div class="step-label">Shipped</div>
+              </div>
+              <div class="progress-step">
+                <div class="step-icon"><i class="fas fa-home"></i></div>
+                <div class="step-label">Delivered</div>
+              </div>
+            {% elif order.status == 'packing' or order.status == 'shipped' or order.status == 'in_delivery' %}
+              <div class="progress-step active">
+                <div class="step-icon"><i class="fas fa-check"></i></div>
+                <div class="step-label">Order Placed</div>
+              </div>
+              <div class="progress-step active">
+                <div class="step-icon"><i class="fas fa-cog"></i></div>
+                <div class="step-label">Processing</div>
+              </div>
+              <div class="progress-step {% if order.status == 'shipped' or order.status == 'in_delivery' %}active{% endif %}">
+                <div class="step-icon"><i class="fas fa-truck"></i></div>
+                <div class="step-label">Shipped</div>
+              </div>
+              <div class="progress-step">
+                <div class="step-icon"><i class="fas fa-home"></i></div>
+                <div class="step-label">Delivered</div>
+              </div>
+            {% elif order.status == 'delivered' %}
+              <div class="progress-step active">
+                <div class="step-icon"><i class="fas fa-check"></i></div>
+                <div class="step-label">Order Placed</div>
+              </div>
+              <div class="progress-step active">
+                <div class="step-icon"><i class="fas fa-cog"></i></div>
+                <div class="step-label">Processing</div>
+              </div>
+              <div class="progress-step active">
+                <div class="step-icon"><i class="fas fa-truck"></i></div>
+                <div class="step-label">Shipped</div>
+              </div>
+              <div class="progress-step active">
+                <div class="step-icon"><i class="fas fa-home"></i></div>
+                <div class="step-label">Delivered</div>
+              </div>
+            {% elif order.status == 'return_requested' or order.status == 'returned' or order.status == 'refunded' %}
+              <div class="return-progress">
+                <div class="progress-step active">
+                  <div class="step-icon"><i class="fas fa-undo"></i></div>
+                  <div class="step-label">Return Requested</div>
+                </div>
+                <div class="progress-step {% if order.status == 'returned' or order.status == 'refunded' %}active{% endif %}">
+                  <div class="step-icon"><i class="fas fa-box"></i></div>
+                  <div class="step-label">Returned</div>
+                </div>
+                <div class="progress-step {% if order.status == 'refunded' %}active{% endif %}">
+                  <div class="step-icon"><i class="fas fa-money-bill"></i></div>
+                  <div class="step-label">Refunded</div>
+                </div>
+              </div>
+            {% elif order.status == 'canceled' or order.status == 'failed' %}
+              <div class="canceled-status">
+                <div class="step-icon"><i class="fas fa-times-circle"></i></div>
+                <div class="step-label">{{ order.get_status_display }}</div>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="order-details">
+            <div class="shipping-info">
+              <h4>Shipping Address</h4>
+              {% if order.shipping_address %}
+                <p>{{ order.shipping_address.address_line_1 }}, {{ order.shipping_address.city }}{{ order.shipping_address.country }}</p>
+                <p>{{ order.shipping_address.address_line_2 }}{{ order.shipping_address.state_or_province }}, {{ order.shipping_address.postal_code }}</p>
+              {% else %}
+                <p>No shipping address provided</p>
+              {% endif %}
+              <p><strong>Method:</strong> {{ order.shipping_method }}</p>
+            </div>
+
+            <div class="order-items">
+              <h4>Items</h4>
+              <div class="items-list">
+                {% for order_detail in item %}
+                  <div class="item">
+                    <div class="item-image">
+                      {% if order_detail.product.image %}
+                        <img src="{{ order_detail.product.image.url }}" alt="{{ order_detail.product.name }}">
+                      {% else %}
+                        <div class="no-image">No Image</div>
+                      {% endif %}
+                    </div>
+                    <div class="item-details">
+                      <h5>{{ order_detail.product.name }}</h5>
+                      <p class="item-price">${{ order_detail.product.price }}</p>
+                      <p class="item-quantity">Qty: {{ order_detail.quantity }}</p>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <div class="order-summary">
+            <div class="summary-item">
+              <span>Subtotal:</span>
+              <span>${% calculate_subtotal item %}</span>
+            </div>
+            <div class="summary-item">
+              <span>Shipping:</span>
+              <span>${{ order.shipping_cost }}</span>
+            </div>
+            {% if order.discount_code != 'None' %}
+            <div class="summary-item discount">
+              <span>Discount ({{ order.discount_code }}):</span>
+              <span>-$XX.XX</span>
+            </div>
+            {% endif %}
+            <div class="summary-item total">
+              <span>Total:</span>
+              <span>${% calculate_total item order.shipping_cost %}</span>
+            </div>
+          </div>
+
+          <div class="order-actions">
+            {% if order.status == 'delivered' %}
+              <button class="action-btn return-btn">Return Items</button>
+            {% endif %}
+            <button class="action-btn details-btn">View Details</button>
+            {% if order.status == 'pending' or order.status == 'paid' or order.status == 'processing' %}
+              <button class="action-btn cancel-btn">Cancel Order</button>
+            {% endif %}
+          </div>
+        </div>
+      {% endwith %}
+    {% empty %}
+      <div class="empty-orders">
+        <div class="empty-icon">
+          <i class="far fa-shopping-bag"></i>
+        </div>
+        <h2>You don't have any orders yet</h2>
+        <p>When you place orders, they will appear here</p>
+        <a href="{% url 'shop:list_products' %}" class="shop-now-btn">Shop Now</a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Order Details Modal -->
+<div id="orderDetailsModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div id="modalContent"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/my_orders.js' %}"></script>
+{% endblock %}

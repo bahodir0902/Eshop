@@ -1,6 +1,6 @@
 import json
 from django.core.paginator import Paginator
-from django.db.models import Q, Sum, ExpressionWrapper, F, FloatField
+from django.db.models import Q, Sum, ExpressionWrapper, F, FloatField, Avg, Count
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from products.models import Product, Inventory, Category
@@ -11,7 +11,7 @@ from carts.models import CartItems, Cart
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from eshop.models import Favourite, FavouriteItem
-
+from reviews.models import FeedBack
 def home(request):
     return render(request, 'home.html')
 
@@ -31,7 +31,11 @@ def fetch_product(q, page, per_page=6, category_id=None, status=None, sort='name
         products = products.filter(is_available=True)
 
     if q and q != 'None':
-        products = products.filter(Q(name__icontains=q) | Q(description__icontains=q))
+        products = products.filter(
+            Q(name__icontains=q) |
+            Q(short_description__icontains=q) |
+            Q(full_description__icontains=q)
+        )
 
     if sort == 'price_high':
         products = products.order_by('-price')
@@ -47,14 +51,17 @@ def fetch_product(q, page, per_page=6, category_id=None, status=None, sort='name
         products = products.order_by('created_at')
 
     products = products.annotate(stock_count=Sum('inventory__stock_count'))
+    products = products.annotate(rating=Avg('feedbacks__rating'))
+    products = products.annotate(total_ordered=Count('ordered_product'))
 
     paginator = Paginator(products, per_page)
     products = paginator.get_page(page)
+
+
     return products
 
 
 def list_product(request):
-    print(request.user.has_perm('products.add_product'))
     q = request.GET.get('q')
     page_number = request.GET.get('page')
     products = fetch_product(q, page_number)
@@ -76,6 +83,9 @@ def list_product(request):
     if favourite:
         favourite_items = FavouriteItem.objects.filter(favourite=favourite)
         data['favourite_items'] = favourite_items
+
+
+
 
     return render(request, 'list_products.html', context=data)
 
