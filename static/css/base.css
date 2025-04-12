@@ -1,264 +1,685 @@
-/* Reset and Base Styles */
+/* === Base Styles - Modern Revamp === */
+
+/* --- Variables & Base --- */
+:root {
+    --primary-color: #4f46e5; /* Indigo */
+    --primary-color-hover: #4338ca;
+    --secondary-color: #1532ce; /* Emerald */
+    --danger-color: #ef4444; /* Red */
+    --warning-color: #f59e0b; /* Amber */
+    --text-primary: #1f2937; /* Dark Gray */
+    --text-secondary: #4b5563; /* Medium Gray */
+    --text-light: #6b7280; /* Light Gray */
+    --border-color: #e5e7eb; /* Very Light Gray */
+    --background-light: #f9fafb; /* Lightest Gray */
+    --background-white: #ffffff;
+    --navbar-height: 65px; /* Define navbar height */
+
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    --radius-sm: 0.25rem; /* 4px */
+    --radius-md: 0.5rem;  /* 8px */
+    --radius-lg: 0.75rem; /* 12px */
+    --radius-full: 9999px;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+    --transition-base: all 0.2s ease-in-out;
+}
+
+/* Base Body Styles */
+html {
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
 body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #f8f9fa; /* Light gray background for modern feel */
+    font-family: var(--font-sans);
+    background-color: var(--background-white); /* Cleaner background */
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensures footer sticks to bottom */
+    min-height: 100vh;
+    line-height: 1.6;
+    padding-top: var(--navbar-height); /* Prevent content overlap with fixed navbar */
 }
 
-main {
-    flex: 1; /* Allows main content to expand and push footer down */
+main.main-content {
+    flex: 1; /* Allows main content to expand */
+    padding-top: 1.5rem; /* Add some space below navbar */
+    padding-bottom: 3rem; /* Space above footer */
 }
 
-/* Custom Navbar Styles */
-.custom-navbar {
-    background-color: #2c3e50; /* Dark blue for a sleek, modern look */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition-base);
+}
+a:hover {
+    color: var(--primary-color-hover);
+    text-decoration: underline;
+}
+
+/* --- Header & Navbar --- */
+#page-header {
+    position: fixed; /* Fixed navbar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030; /* Ensure it's above other content */
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    background-color: var(--background-white); /* Start with white bg */
+    border-bottom: 1px solid transparent; /* Start transparent */
+}
+
+/* Style for when scrolled (added by JS) */
+#page-header.navbar-scrolled {
+    box-shadow: var(--shadow-md);
+    border-bottom-color: var(--border-color);
+}
+
+.navbar {
+    height: var(--navbar-height);
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .navbar-brand {
-    font-weight: 600; /* Bolder brand text */
-}
-
-.nav-link {
-    position: relative;
-    color: white !important; /* Ensure visibility on dark background */
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #00d4ff; /* Light blue underline for hover effect */
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.nav-link:hover::after {
-    transform: scaleX(1); /* Sliding underline effect */
-}
-
-/* Profile Dropdown (Existing Styles Preserved) */
-.profile-dropdown {
-    position: relative;
-    display: flex;
+    font-weight: 700; /* Bolder brand */
+    font-size: 1.3rem;
+    color: var(--text-primary) !important; /* Override Bootstrap */
+    display: inline-flex;
     align-items: center;
 }
-
-.profile-avatar {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-    overflow: hidden;
-    border: 2px solid #007bff;
+.navbar-brand i {
+    color: var(--primary-color);
+    font-size: 1.2em; /* Make icon slightly larger */
 }
 
+.navbar-toggler {
+    border: none;
+    padding: 0.5rem 0.75rem;
+}
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 2px var(--primary-color-hover);
+}
+.navbar-toggler-icon {
+     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(31, 41, 55, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* Custom darker icon */
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-secondary) !important; /* Slightly lighter text for links */
+    font-weight: 500;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-md);
+    transition: var(--transition-base);
+    display: inline-flex;
+    align-items: center;
+    position: relative; /* For potential future ::after effects */
+}
+.navbar-nav .nav-link i {
+    /* margin-right: 0.5rem; */ /* Added margin directly in HTML */
+    font-size: 1em; /* Match text size */
+    width: 1.2em; /* Consistent icon width */
+    text-align: center;
+    opacity: 0.8;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+    color: var(--primary-color) !important;
+    background-color: rgba(79, 70, 229, 0.05); /* Very light primary bg */
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+     background-color: rgba(79, 70, 229, 0.1); /* Slightly darker active bg */
+}
+
+/* Icon links (Cart, Wishlist) */
+.nav-icon-link {
+    position: relative; /* For badge positioning */
+    padding: 0.6rem 0.8rem !important; /* Slightly tighter padding */
+    margin-left: 0.25rem;
+}
+.nav-icon-link i {
+    font-size: 1.2rem;
+    width: auto;
+    opacity: 1; /* Full opacity for icons */
+}
+.nav-icon-link .badge {
+    position: absolute;
+    top: 0px;
+    right: -5px;
+    font-size: 0.65rem;
+    padding: 0.2em 0.5em;
+    line-height: 1;
+}
+.nav-icon-link .badge.bg-primary { background-color: var(--primary-color) !important; }
+.nav-icon-link .badge.bg-danger { background-color: var(--danger-color) !important; }
+
+.nav-separator {
+    color: var(--border-color);
+    font-weight: 300;
+}
+
+/* Profile Dropdown */
+.profile-dropdown .profile-trigger {
+    display: flex;
+    align-items: center;
+    padding-top: 0.5rem; /* Adjust vertical padding */
+    padding-bottom: 0.5rem;
+}
+.profile-avatar {
+    width: 36px; /* Slightly smaller */
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition-base);
+    overflow: hidden;
+    border: 2px solid transparent; /* subtle border */
+}
+.profile-trigger:hover .profile-avatar,
+.profile-trigger:focus .profile-avatar {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(79, 70, 229, 0.3);
+}
 .profile-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.profile-avatar:hover {
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-}
-
 .dropdown-menu {
-    margin-top: 10px;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    min-width: 230px;
-    overflow: hidden;
+    margin-top: 0.5rem !important; /* Closer to navbar */
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg); /* More pronounced shadow */
+    border: 1px solid var(--border-color);
+    min-width: 240px;
+    overflow: hidden; /* Prevents content overflow */
+    padding-top: 0; /* Remove default padding */
+    padding-bottom: 0;
 }
 
+/* Simplified Profile Header */
 .profile-menu-header {
-    padding: 15px;
+    padding: 1rem 1.25rem;
     text-align: center;
-    background: linear-gradient(135deg, #007bff, #00d4ff);
-    color: white;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: var(--background-light); /* Light background */
+    border-bottom: 1px solid var(--border-color);
 }
-
+.profile-menu-header .profile-pic {
+    width: 50px; /* Smaller pic */
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--background-white); /* White border */
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 0.75rem;
+}
 .profile-menu-header h6 {
-    margin-bottom: 5px;
+    margin-bottom: 0.1rem;
     font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
 }
-
 .profile-menu-header p {
     margin-bottom: 0;
     font-size: 0.8rem;
-    opacity: 0.8;
-}
-
-.profile-menu-header .profile-pic {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid white;
-    margin-bottom: 10px;
+    color: var(--text-light);
 }
 
 .dropdown-menu .dropdown-item {
-    padding: 12px 20px;
-    font-size: 0.95rem;
-    transition: all 0.3s;
+    padding: 0.75rem 1.25rem; /* Consistent padding */
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition-base);
     display: flex;
     align-items: center;
+    color: var(--text-secondary);
 }
-
 .dropdown-menu .dropdown-item i {
-    margin-right: 12px;
-    font-size: 1.2rem;
-    width: 20px;
-    text-align: center;
+    /* margin-right: 1rem; */ /* Using fa-fw and me-2 in HTML */
+    font-size: 1rem; /* Slightly smaller icons */
+    color: var(--text-light);
+    transition: var(--transition-base);
 }
 
-.dropdown-menu .dropdown-item:hover {
-    background-color: rgba(0, 123, 255, 0.1);
-    padding-left: 25px;
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+    background-color: rgba(79, 70, 229, 0.05); /* Light primary hover */
+    color: var(--primary-color);
+}
+.dropdown-menu .dropdown-item:hover i,
+.dropdown-menu .dropdown-item:focus i {
+    color: var(--primary-color);
 }
 
-.logout-btn {
-    color: red !important;
-    font-weight: bold;
+.dropdown-menu .dropdown-divider {
+    margin: 0.5rem 0;
+    border-top-color: var(--border-color);
 }
 
-.logout-btn:hover {
-    background: rgba(255, 0, 0, 0.1) !important;
-    color: darkred !important;
-}
-
-/* Button Styles */
-.btn-gradient {
-    background: linear-gradient(135deg, #007bff, #00d4ff);
-    color: white;
+.dropdown-item.logout-link {
+    color: var(--danger-color);
     font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 25px;
-    transition: all 0.3s;
+}
+.dropdown-item.logout-link i {
+    color: var(--danger-color);
+}
+.dropdown-item.logout-link:hover,
+.dropdown-item.logout-link:focus {
+    background-color: rgba(239, 68, 68, 0.05); /* Light danger hover */
+    color: var(--danger-color);
+}
+.dropdown-item.logout-link:hover i,
+.dropdown-item.logout-link:focus i {
+     color: var(--danger-color);
+}
+
+/* Navbar Auth Buttons */
+.navbar .btn-sm { /* Override default BS small */
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+}
+.navbar .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--background-white);
+}
+.navbar .btn-primary:hover {
+     background-color: var(--primary-color-hover);
+     border-color: var(--primary-color-hover);
+     color: var(--background-white);
+}
+.navbar .btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.navbar .btn-outline-primary:hover {
+     background-color: var(--primary-color);
+     color: var(--background-white);
+}
+
+/* --- Footer --- */
+.page-footer {
+    background-color: var(--background-light); /* Light background */
+    color: var(--text-secondary);
+    padding: 3rem 0 1.5rem 0; /* More top padding */
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.footer-heading {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    display: inline-flex; /* Align icon with text */
+    align-items: center;
+}
+.footer-heading i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+    font-size: 1.1em;
+}
+
+.footer-text {
+    color: var(--text-light);
+    margin-bottom: 1rem; /* Add space below text */
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+.footer-links a {
+    color: var(--text-secondary);
     text-decoration: none;
 }
-
-.btn-gradient:hover {
-    background: linear-gradient(135deg, #0056b3, #0099cc);
-    color: white;
-    transform: scale(1.05);
+.footer-links a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
-.btn-outline-primary {
-    font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: 2px solid #007bff;
-    color: #007bff;
-    transition: all 0.3s;
-    text-decoration: none;
-}
-
-.btn-outline-primary:hover {
-    background: #007bff;
-    color: white;
-    transform: scale(1.05);
-}
-
-/* Footer Styles */
-footer {
-    background-color: #34495e; /* Slightly lighter dark blue */
-    color: white;
-    padding: 40px 0;
-}
-
-footer a {
-    color: white;
-    text-decoration: none;
-}
-
-footer a:hover {
-    color: #00d4ff; /* Matching hover color with navbar */
-}
-
-footer h5 {
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-footer ul li {
-    margin-bottom: 10px;
-}
-
-/* Ensure responsiveness */
-@media (max-width: 767px) {
-    footer .col-md-4 {
-        margin-bottom: 30px;
-    }
-}
-
-/* Pagination Styles */
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.pagination .page-item {
-    margin: 0 5px;
-}
-
-.pagination .page-link {
-    display: flex;
+.social-links a {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    color: #007bff;
-    font-size: 1.2rem;
-    transition: all 0.3s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.pagination .page-item:not(.page-arrow) .page-link {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
+    background-color: var(--border-color);
+    color: var(--text-light);
+    margin-right: 0.5rem;
+    transition: var(--transition-base);
 }
-
-.pagination .page-arrow .page-link {
-    padding: 0 15px;
-    border-radius: 20px;
-}
-
-.pagination .page-link:hover {
-    background-color: #e9ecef;
-    color: #0056b3;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+.social-links a:hover {
+    background-color: var(--primary-color);
+    color: var(--background-white);
     transform: translateY(-2px);
+    text-decoration: none; /* Remove underline */
+}
+.social-links i {
+    font-size: 1rem;
 }
 
-.pagination .page-item.active .page-link {
-    background: linear-gradient(135deg, #007bff, #00d4ff);
-    border-color: #007bff;
-    color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.footer-divider {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    border-top-color: var(--border-color);
 }
 
-.pagination .page-item.active .page-link:hover {
-    transform: none;
+.footer-copyright {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+.footer-copyright a {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+.footer-copyright a:hover {
+     color: var(--primary-color);
 }
 
-.pagination .page-item.disabled .page-link {
-    color: #6c757d;
-    background-color: #fff;
-    border-color: #dee2e6;
-    box-shadow: none;
+/* --- Removing/Replacing Old Styles --- */
+/* Get rid of old gradient button if not used elsewhere */
+.btn-gradient { display: none; }
+/* Get rid of old outline button if replaced by standard */
+.btn-outline-primary { /* Use default or override if needed */ }
+/* Remove old custom navbar background */
+.custom-navbar { background-color: transparent !important; }
+/* Remove old nav-link underline effect */
+.nav-link::after { display: none; }
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        margin-top: 0.5rem;
+        border-top: 1px solid var(--border-color);
+        padding-top: 0.5rem;
+    }
+    .navbar-nav .nav-link {
+        padding: 0.6rem 0.5rem; /* Adjust padding for vertical layout */
+    }
+    .navbar-nav .ms-auto { /* Ensure right-aligned items stack nicely */
+        padding-top: 0.5rem;
+        border-top: 1px dashed var(--border-color);
+        margin-top: 0.5rem;
+    }
+     .nav-icon-link { margin-left: 0; }
+     .nav-separator { display: none; }
 }
 
-.pagination .page-link:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+@media (max-width: 767.98px) {
+    .page-footer .text-lg-end { text-align: left !important; } /* Align left on medium */
+     .footer-copyright { font-size: 0.8rem; }
 }
+/*!* Reset and Base Styles *!*/
+/*body {*/
+/*    font-family: 'Montserrat', sans-serif;*/
+/*    background-color: #f8f9fa; !* Light gray background for modern feel *!*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    min-height: 100vh; !* Ensures footer sticks to bottom *!*/
+/*}*/
+
+/*main {*/
+/*    flex: 1; !* Allows main content to expand and push footer down *!*/
+/*}*/
+
+/*!* Custom Navbar Styles *!*/
+/*.custom-navbar {*/
+/*    background-color: #2c3e50; !* Dark blue for a sleek, modern look *!*/
+/*}*/
+
+/*.navbar-brand {*/
+/*    font-weight: 600; !* Bolder brand text *!*/
+/*}*/
+
+/*.nav-link {*/
+/*    position: relative;*/
+/*    color: white !important; !* Ensure visibility on dark background *!*/
+/*}*/
+
+/*.nav-link::after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 2px;*/
+/*    background-color: #00d4ff; !* Light blue underline for hover effect *!*/
+/*    transform: scaleX(0);*/
+/*    transition: transform 0.3s ease;*/
+/*}*/
+
+/*.nav-link:hover::after {*/
+/*    transform: scaleX(1); !* Sliding underline effect *!*/
+/*}*/
+
+/*!* Profile Dropdown (Existing Styles Preserved) *!*/
+/*.profile-dropdown {*/
+/*    position: relative;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.profile-avatar {*/
+/*    width: 45px;*/
+/*    height: 45px;*/
+/*    border-radius: 50%;*/
+/*    cursor: pointer;*/
+/*    transition: 0.3s;*/
+/*    overflow: hidden;*/
+/*    border: 2px solid #007bff;*/
+/*}*/
+
+/*.profile-avatar img {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*.profile-avatar:hover {*/
+/*    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);*/
+/*}*/
+
+/*.dropdown-menu {*/
+/*    margin-top: 10px;*/
+/*    border-radius: 10px;*/
+/*    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);*/
+/*    min-width: 230px;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.profile-menu-header {*/
+/*    padding: 15px;*/
+/*    text-align: center;*/
+/*    background: linear-gradient(135deg, #007bff, #00d4ff);*/
+/*    color: white;*/
+/*    border-bottom: 1px solid rgba(255, 255, 255, 0.2);*/
+/*}*/
+
+/*.profile-menu-header h6 {*/
+/*    margin-bottom: 5px;*/
+/*    font-weight: 600;*/
+/*}*/
+
+/*.profile-menu-header p {*/
+/*    margin-bottom: 0;*/
+/*    font-size: 0.8rem;*/
+/*    opacity: 0.8;*/
+/*}*/
+
+/*.profile-menu-header .profile-pic {*/
+/*    width: 60px;*/
+/*    height: 60px;*/
+/*    border-radius: 50%;*/
+/*    object-fit: cover;*/
+/*    border: 3px solid white;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*.dropdown-menu .dropdown-item {*/
+/*    padding: 12px 20px;*/
+/*    font-size: 0.95rem;*/
+/*    transition: all 0.3s;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.dropdown-menu .dropdown-item i {*/
+/*    margin-right: 12px;*/
+/*    font-size: 1.2rem;*/
+/*    width: 20px;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.dropdown-menu .dropdown-item:hover {*/
+/*    background-color: rgba(0, 123, 255, 0.1);*/
+/*    padding-left: 25px;*/
+/*}*/
+
+/*.logout-btn {*/
+/*    color: red !important;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*.logout-btn:hover {*/
+/*    background: rgba(255, 0, 0, 0.1) !important;*/
+/*    color: darkred !important;*/
+/*}*/
+
+/*!* Button Styles *!*/
+/*.btn-gradient {*/
+/*    background: linear-gradient(135deg, #007bff, #00d4ff);*/
+/*    color: white;*/
+/*    font-weight: 600;*/
+/*    padding: 10px 20px;*/
+/*    border-radius: 25px;*/
+/*    transition: all 0.3s;*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*.btn-gradient:hover {*/
+/*    background: linear-gradient(135deg, #0056b3, #0099cc);*/
+/*    color: white;*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/*.btn-outline-primary {*/
+/*    font-weight: 600;*/
+/*    padding: 10px 20px;*/
+/*    border-radius: 25px;*/
+/*    border: 2px solid #007bff;*/
+/*    color: #007bff;*/
+/*    transition: all 0.3s;*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*.btn-outline-primary:hover {*/
+/*    background: #007bff;*/
+/*    color: white;*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/*!* Footer Styles *!*/
+/*footer {*/
+/*    background-color: #34495e; !* Slightly lighter dark blue *!*/
+/*    color: white;*/
+/*    padding: 40px 0;*/
+/*}*/
+
+/*footer a {*/
+/*    color: white;*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*footer a:hover {*/
+/*    color: #00d4ff; !* Matching hover color with navbar *!*/
+/*}*/
+
+/*footer h5 {*/
+/*    font-weight: 600;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*footer ul li {*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*!* Ensure responsiveness *!*/
+/*@media (max-width: 767px) {*/
+/*    footer .col-md-4 {*/
+/*        margin-bottom: 30px;*/
+/*    }*/
+/*}*/
+
+/*!* Pagination Styles *!*/
+/*.pagination {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    margin-top: 20px;*/
+/*}*/
+
+/*.pagination .page-item {*/
+/*    margin: 0 5px;*/
+/*}*/
+
+/*.pagination .page-link {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    background-color: #fff;*/
+/*    border: 1px solid #dee2e6;*/
+/*    color: #007bff;*/
+/*    font-size: 1.2rem;*/
+/*    transition: all 0.3s;*/
+/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.pagination .page-item:not(.page-arrow) .page-link {*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    border-radius: 50%;*/
+/*}*/
+
+/*.pagination .page-arrow .page-link {*/
+/*    padding: 0 15px;*/
+/*    border-radius: 20px;*/
+/*}*/
+
+/*.pagination .page-link:hover {*/
+/*    background-color: #e9ecef;*/
+/*    color: #0056b3;*/
+/*    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);*/
+/*    transform: translateY(-2px);*/
+/*}*/
+
+/*.pagination .page-item.active .page-link {*/
+/*    background: linear-gradient(135deg, #007bff, #00d4ff);*/
+/*    border-color: #007bff;*/
+/*    color: white;*/
+/*    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);*/
+/*}*/
+
+/*.pagination .page-item.active .page-link:hover {*/
+/*    transform: none;*/
+/*}*/
+
+/*.pagination .page-item.disabled .page-link {*/
+/*    color: #6c757d;*/
+/*    background-color: #fff;*/
+/*    border-color: #dee2e6;*/
+/*    box-shadow: none;*/
+/*}*/
+
+/*.pagination .page-link:focus {*/
+/*    outline: none;*/
+/*    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);*/
+/*}*/
