@@ -12,6 +12,20 @@ from accounts.forms import UserAddressForm
 from payments.models import Payment
 
 
+class MyOrdersView(LoginRequiredMixin, View):
+    def get(self, request):
+        orders = Order.objects.filter(user=request.user).exclude(status='pending')
+        items = []
+        for order in orders:
+            items.append(OrderDetails.objects.filter(order=order))
+
+        data = {
+            'items': items
+        }
+
+        return render(request, "my_orders.html", context=data)
+
+
 class CheckoutView(LoginRequiredMixin, View):
     def get(self, request):
         cart = Cart.objects.filter(user=request.user).first()
@@ -73,7 +87,7 @@ class CheckoutView(LoginRequiredMixin, View):
             if phone_number:
                 User.objects.filter(pk=request.user.pk).update(phone_number=phone_number)
 
-            # order = Order.objects.filter(user=request.user, status='pending').delete()
+            Order.objects.filter(user=request.user, status='pending').delete()
             order = Order.objects.create(
                 user=request.user,
                 shipping_address=old_address if save_primary else new_address,
@@ -103,5 +117,4 @@ class CheckoutView(LoginRequiredMixin, View):
         }
 
         return render(request, 'checkout.html', context=data)
-
 

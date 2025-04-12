@@ -34,7 +34,7 @@ class Order(BaseModel):
 
 class OrderDetails(BaseModel):
     order= models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ordered_product')
     quantity = models.IntegerField()
 
     @override

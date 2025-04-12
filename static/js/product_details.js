@@ -92,38 +92,31 @@ document.addEventListener('DOMContentLoaded', function () {
     // Review star rating selector
     const ratingStars = document.querySelectorAll('.rating-star');
 
-    ratingStars.forEach((star, index) => {
-        star.addEventListener('click', () => {
-            // Reset all stars
-            ratingStars.forEach(s => {
-                s.classList.remove('active');
-                s.classList.remove('fa-star');
-                s.classList.add('fa-star-o');
-            });
-
-            // Fill stars up to the clicked one
-            for (let i = 0; i <= index; i++) {
-                ratingStars[i].classList.add('active');
-                ratingStars[i].classList.remove('fa-star-o');
-                ratingStars[i].classList.add('fa-star');
-            }
+    ratingStars.forEach(star => {
+        star.addEventListener('click', function () {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            selectedRating.value = rating;
+            updateStars(rating);
         });
 
-        // Hover effect
-        star.addEventListener('mouseover', () => {
-            for (let i = 0; i <= index; i++) {
-                ratingStars[i].classList.add('fa-star');
-                ratingStars[i].classList.remove('fa-star-o');
-            }
-        });
-
-        star.addEventListener('mouseout', () => {
-            ratingStars.forEach((s, i) => {
-                if (!s.classList.contains('active')) {
-                    s.classList.remove('fa-star');
-                    s.classList.add('fa-star-o');
+        // Hover effect: show filled stars up to hovered position
+        star.addEventListener('mouseover', function () {
+            const hoverRating = parseInt(this.getAttribute('data-rating'));
+            ratingStars.forEach((s, index) => {
+                if (index < hoverRating) {
+                    s.classList.remove('far');
+                    s.classList.add('fas');
+                } else {
+                    s.classList.remove('fas');
+                    s.classList.add('far');
                 }
             });
+        });
+
+        // Mouseout: revert to selected rating
+        star.addEventListener('mouseout', function () {
+            const currentRating = parseInt(selectedRating.value) || 0;
+            updateStars(currentRating);
         });
     });
 
@@ -131,72 +124,72 @@ document.addEventListener('DOMContentLoaded', function () {
     // const addToCartBtn = document.querySelector('.add-to-cart-detail');
 
     addToCartBtn.addEventListener('click', function () {
-    const productId = this.getAttribute('data-product-id');
-    const csrfToken = getCSRFToken();
+        const productId = this.getAttribute('data-product-id');
+        const csrfToken = getCSRFToken();
 
-    if (this.innerHTML.includes('Add to Cart')) {
-        // Add item to cart
-        const quantity = parseInt(quantityInput.value);
-        fetch(`/cart/add_item/${productId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
-            },
-            body: JSON.stringify({ quantity: quantity })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showNotification('Product added to your cart successfully!');
-                if (data.cart_count && document.querySelector('.cart-count')) {
-                    document.querySelector('.cart-count').textContent = data.cart_count;
-                }
-                cartQuantitySpan.textContent = data.quantity;
-                inCartMessage.style.display = 'inline';
-                this.innerHTML = '<i class="fa fa-shopping-cart"></i> Update Cart';
-                hideQuantitySelector(); // Hide selector after adding
-            } else {
-                showNotification('Error: ' + (data.error || 'Could not add product to cart.'));
-            }
-        })
-        .catch(error => {
-            console.error('Error adding to cart:', error);
-            showNotification('Error adding product to cart. Please try again.');
-        });
-    } else if (this.innerHTML.includes('Update Cart')) {
-        // Show quantity selector for updating
-        const currentQuantity = parseInt(cartQuantitySpan.textContent);
-        showQuantitySelector(currentQuantity);
-        this.innerHTML = '<i class="fa fa-shopping-cart"></i> Confirm Update';
-    } else if (this.innerHTML.includes('Confirm Update')) {
-        // Update item in cart
-        const quantity = parseInt(quantityInput.value);
-        fetch(`/cart/update_item/${productId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken
-            },
-            body: JSON.stringify({ quantity: quantity })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showNotification('Cart updated successfully!');
-                cartQuantitySpan.textContent = quantity;
-                this.innerHTML = '<i class="fa fa-shopping-cart"></i> Update Cart';
-                hideQuantitySelector(); // Hide selector after update
-            } else {
-                showNotification('Error: ' + (data.error || 'Could not update cart.'));
-            }
-        })
-        .catch(error => {
-            console.error('Error updating cart:', error);
-            showNotification('Error updating cart. Please try again.');
-        });
-    }
-});
+        if (this.innerHTML.includes('Add to Cart')) {
+            // Add item to cart
+            const quantity = parseInt(quantityInput.value);
+            fetch(`/cart/add_item/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({quantity: quantity})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showNotification('Product added to your cart successfully!');
+                        if (data.cart_count && document.querySelector('.cart-count')) {
+                            document.querySelector('.cart-count').textContent = data.cart_count;
+                        }
+                        cartQuantitySpan.textContent = data.quantity;
+                        inCartMessage.style.display = 'inline';
+                        this.innerHTML = '<i class="fa fa-shopping-cart"></i> Update Cart';
+                        hideQuantitySelector(); // Hide selector after adding
+                    } else {
+                        showNotification('Error: ' + (data.error || 'Could not add product to cart.'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding to cart:', error);
+                    showNotification('Error adding product to cart. Please try again.');
+                });
+        } else if (this.innerHTML.includes('Update Cart')) {
+            // Show quantity selector for updating
+            const currentQuantity = parseInt(cartQuantitySpan.textContent);
+            showQuantitySelector(currentQuantity);
+            this.innerHTML = '<i class="fa fa-shopping-cart"></i> Confirm Update';
+        } else if (this.innerHTML.includes('Confirm Update')) {
+            // Update item in cart
+            const quantity = parseInt(quantityInput.value);
+            fetch(`/cart/update_item/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({quantity: quantity})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showNotification('Cart updated successfully!');
+                        cartQuantitySpan.textContent = quantity;
+                        this.innerHTML = '<i class="fa fa-shopping-cart"></i> Update Cart';
+                        hideQuantitySelector(); // Hide selector after update
+                    } else {
+                        showNotification('Error: ' + (data.error || 'Could not update cart.'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating cart:', error);
+                    showNotification('Error updating cart. Please try again.');
+                });
+        }
+    });
 
     // Buy now button
     const buyNowBtn = document.querySelector('.buy-now-detail');
@@ -248,24 +241,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Check if the product is already in wishlist
     function checkIfInWishlist() {
-    if (!wishlistBtn) return;
-    const productId = wishlistBtn.getAttribute('data-product-id');
-    const heartIcon = wishlistBtn.querySelector('i');
-    if (typeof favouriteItems !== 'undefined' && Array.isArray(favouriteItems)) {
-        const isInFavourites = favouriteItems.some(item => item.product_id === parseInt(productId));
-        if (isInFavourites) {
-            heartIcon.classList.remove('fa-heart-o');
-            heartIcon.classList.add('fa-heart');
-            wishlistBtn.style.color = '#f27474'; // Filled heart, red color
+        if (!wishlistBtn) return;
+        const productId = wishlistBtn.getAttribute('data-product-id');
+        const heartIcon = wishlistBtn.querySelector('i');
+        if (typeof favouriteItems !== 'undefined' && Array.isArray(favouriteItems)) {
+            const isInFavourites = favouriteItems.some(item => item.product_id === parseInt(productId));
+            if (isInFavourites) {
+                heartIcon.classList.remove('fa-heart-o');
+                heartIcon.classList.add('fa-heart');
+                wishlistBtn.style.color = '#f27474'; // Filled heart, red color
+            } else {
+                heartIcon.classList.remove('fa-heart');
+                heartIcon.classList.add('fa-heart-o');
+                wishlistBtn.style.color = ''; // Outline heart, default color
+            }
         } else {
-            heartIcon.classList.remove('fa-heart');
-            heartIcon.classList.add('fa-heart-o');
-            wishlistBtn.style.color = ''; // Outline heart, default color
+            console.warn('favouriteItems is not defined or not an array');
         }
-    } else {
-        console.warn('favouriteItems is not defined or not an array');
     }
-}
 
     // Check if the product is already in cart
     function checkIfInCart() {
@@ -374,68 +367,163 @@ document.addEventListener('DOMContentLoaded', function () {
         reviewForm.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const reviewTitle = document.getElementById('review-title').value;
-            const reviewContent = document.getElementById('review-content').value;
-            const ratingValue = document.querySelectorAll('.rating-star.active').length;
-            const productId = addToCartBtn ? addToCartBtn.getAttribute('data-product-id') : null;
+            const productId = document.getElementById('product-id').value;
+            const rating = parseInt(selectedRating.value);
+            const comment = document.getElementById('review-content').value;
+            const isAnonymous = document.getElementById('is-anonymous').checked;
+            const reviewImage = document.getElementById('review-image').files[0];
             const csrfToken = getCSRFToken();
 
-            if (ratingValue === 0) {
+            // Validation
+            if (!rating) {
                 showNotification('Please select a rating before submitting your review.');
                 return;
             }
 
-            if (!reviewTitle || !reviewContent) {
-                showNotification('Please fill in all review fields.');
+            if (!comment.trim()) {
+                showNotification('Please enter a review comment.');
                 return;
             }
 
-            // Here you could add an AJAX call to submit the review to your backend
-            // Example AJAX implementation (assuming you have a review submission endpoint):
-            /*
-            fetch(`/products/${productId}/reviews/add/`, {
+            // Create FormData object for file upload
+            const formData = new FormData();
+            formData.append('rating', rating);
+            formData.append('comment', comment);
+            formData.append('is_anonymous', isAnonymous);
+            if (reviewImage) {
+                formData.append('image', reviewImage);
+            }
+
+            // Submit the review via AJAX
+            fetch(`/feedbacks/feedback/${productId}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'X-CSRFToken': csrfToken
                 },
-                body: JSON.stringify({
-                    title: reviewTitle,
-                    content: reviewContent,
-                    rating: ratingValue
-                })
+                body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Reset form
-                    reviewForm.reset();
-                    document.querySelectorAll('.rating-star').forEach(star => {
-                        star.classList.remove('active');
-                        star.classList.remove('fa-star');
-                        star.classList.add('fa-star-o');
-                    });
-                    showNotification('Your review has been submitted. Thank you!');
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        showNotification('Your review has been submitted. Thank you!');
 
-                    // Optionally, refresh the reviews section or add the new review dynamically
+                        // Reload the page to show the updated review
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        showNotification('Error: ' + (data.error || 'Could not submit review.'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error submitting review:', error);
+                    showNotification('Error submitting review. Please try again.');
+                });
+        });
+    }
+
+    const selectedRating = document.getElementById('selected-rating');
+
+    // Initialize rating stars based on existing rating (if editing)
+    if (selectedRating && selectedRating.value) {
+        const rating = parseInt(selectedRating.value);
+        updateStars(rating);
+    }
+
+    // Rating star click functionality
+    ratingStars.forEach(star => {
+        star.addEventListener('click', function () {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            updateStars(rating);
+            selectedRating.value = rating;
+        });
+
+        // Hover effects for stars
+        star.addEventListener('mouseover', function () {
+            const rating = parseInt(this.getAttribute('data-rating'));
+
+            ratingStars.forEach((s, index) => {
+                if (index < rating) {
+                    s.classList.add('hover');
                 } else {
-                    showNotification('Error: ' + (data.error || 'Could not submit review.'));
+                    s.classList.remove('hover');
+                }
+            });
+        });
+
+        star.addEventListener('mouseout', function () {
+            ratingStars.forEach(s => {
+                s.classList.remove('hover');
+            });
+        });
+    });
+
+    // Function to update stars display
+    function updateStars(rating) {
+        ratingStars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.remove('far');
+                star.classList.add('fas');
+                star.classList.add('active');
+            } else {
+                star.classList.remove('fas');
+                star.classList.remove('active');
+                star.classList.add('far');
+            }
+        });
+    }
+
+    // Review form submission
+
+
+    // Delete review functionality
+    const deleteReviewBtn = document.getElementById('delete-review');
+
+    if (deleteReviewBtn) {
+        deleteReviewBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            if (!confirm('Are you sure you want to delete your review?')) {
+                return;
+            }
+
+            const productId = document.getElementById('product-id').value;
+            const csrfToken = getCSRFToken();
+
+            fetch(`/feedbacks/feedback/${productId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json'
                 }
             })
-            .catch(error => {
-                console.error('Error submitting review:', error);
-                showNotification('Error submitting review. Please try again.');
-            });
-            */
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        showNotification('Your review has been deleted.');
 
-            // For now, just show a success message and reset the form
-            reviewForm.reset();
-            document.querySelectorAll('.rating-star').forEach(star => {
-                star.classList.remove('active');
-                star.classList.remove('fa-star');
-                star.classList.add('fa-star-o');
-            });
-            showNotification('Your review has been submitted. Thank you!');
+                        // Reload the page to update the UI
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        showNotification('Error: ' + (data.error || 'Could not delete review.'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting review:', error);
+                    showNotification('Error deleting review. Please try again.');
+                });
         });
     }
 
@@ -704,10 +792,19 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
         document.head.appendChild(cartItemsScript);
     }
-
+    function initializeRating() {
+        if (selectedRating && selectedRating.value) {
+            updateStars(parseInt(selectedRating.value));
+        }
+    }
 // Check wishlist and cart status after a short delay to ensure scripts are loaded
     setTimeout(() => {
         checkIfInCart();
         checkIfInWishlist(); // Add this to check favorites
     }, 100);
+    // Rating star selection
+    initializeRating();
+
 });
+
+

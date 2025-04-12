@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.template.context_processors import request
 from django.views import View
 from products.models import Product, Category
 from carts.models import CartItems, Cart
@@ -7,18 +8,22 @@ from activity.models import RecentProducts
 from reviews.models import FeedBack
 from django.db.models import Avg
 import re
+from orders.models import Order, OrderDetails
 
 
 class ProductDetailView(View):
     def get(self,request, slug):
         product = get_object_or_404(Product, slug=slug)
         related_products = Product.objects.exclude(pk=product.pk).filter(category=product.category)
+
         feedbacks = self.get_feedbacks(product)
 
-
+        can_submit_review = False
+        user_feedback = None
         cart_items = None
         favourite_items = None
         recent_products = None
+
         if request.user.is_authenticated:
             favourite = Favourite.objects.filter(user=request.user).first()
             favourite_items = FavouriteItem.objects.filter(favourite=favourite)
@@ -31,6 +36,13 @@ class ProductDetailView(View):
 
             if not current_item:
                 RecentProducts.objects.create(user=request.user, product=product)
+
+            orders = Order.objects.filter(user=request.user)
+            for order in orders:
+                if OrderDetails.objects.filter(order=order, product=product).exists():
+                    can_submit_review = True
+
+                    user_feedback = FeedBack.objects.filter(product=product, user=request.user).first()
 
         features = product.key_features.split(',') #features = [f.strip() for f in product.key_features.split(',') if f.strip()]
 
@@ -58,7 +70,9 @@ class ProductDetailView(View):
             'stars': feedbacks.get('stars'),
             'percentages': feedbacks.get('percentages'),
             'features': features,
-            'specifications': specifications
+            'specifications': specifications,
+            'can_submit_review': can_submit_review,
+            'user_feedback': user_feedback
         }
 
         return render(request, 'product_details.html', context=data)
@@ -92,4 +106,6 @@ class ProductDetailView(View):
             'stars': stars,
             'percentages': percentages
         }
+
+
         return data
