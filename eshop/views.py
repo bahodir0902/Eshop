@@ -16,7 +16,7 @@ def home(request):
     return render(request, 'home.html')
 
 
-def fetch_product(q, page, per_page=6, category_id=None, status=None, sort='name'):
+def fetch_product(q, page, per_page=8, category_id=None, status=None, sort='name'):
     products = Product.objects.all().order_by('-is_available', 'name', 'created_at')
 
     if category_id:
@@ -83,6 +83,13 @@ def list_product(request):
     if favourite:
         favourite_items = FavouriteItem.objects.filter(favourite=favourite)
         data['favourite_items'] = favourite_items
+
+    categories = Category.objects.all().annotate(product_count=Count('product_category'))
+    # categories = Category.objects.filter(parent_category=None).annotate(product_count=Count('product_category'))
+    # for category in categories:
+    #     pass
+
+    data['categories'] = categories
 
 
 

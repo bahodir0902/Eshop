@@ -37,17 +37,227 @@
             </div>
         </header>
 
+        <!-- New Filter Bar with Categories Dropdown -->
+        <div class="filter-bar">
+            <div class="filters-wrapper">
+                <div class="filter-section">
+                    <button class="filter-toggle">
+                        <i class="fa fa-filter"></i>
+                        <span>Filters</span>
+                    </button>
+
+                    <!-- Categories Dropdown (positioned to the RIGHT of filter button) -->
+                    <div class="categories-dropdown">
+                        <button class="categories-toggle">
+                            <i class="fa fa-tag"></i>
+                            <span>Categories</span>
+                            <i class="fa fa-chevron-down dropdown-arrow"></i>
+                        </button>
+                        <div class="categories-dropdown-content">
+                            <div class="categories-header">
+                                <h4>Product Categories</h4>
+                                <button class="close-categories"><i class="fa fa-times"></i></button>
+                            </div>
+                            <div class="categories-list scrollable-options">
+                                {% for category in categories %}
+                                    <label class="filter-option">
+                                        <input type="checkbox" name="category" value="{{ category.id }}"
+                                               data-form-submit="true"
+                                               {% if category.id|stringformat:"s" in request.GET.category|default:'' %}checked{% endif %}>
+                                        <span>{{ category.name }}</span>
+                                        <span class="count">({{ category.product_count }})</span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            <div class="categories-actions">
+                                <button type="button" class="btn btn-primary apply-categories">Apply</button>
+                                <button type="button" class="btn btn-outline reset-categories">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-overlay"></div>
+
+                    <!-- Filter Panel (Categories removed) -->
+                    <div class="filter-panel">
+                        <div class="filter-header">
+                            <h3>Filter Products</h3>
+                            <button class="close-filters"><i class="fa fa-times"></i></button>
+                        </div>
+
+                        <form id="filter-form" method="get" action="{% url 'shop:list_products' %}">
+                            <!-- Keep any existing GET parameters -->
+                            {% if request.GET.q %}
+                                <input type="hidden" name="q" value="{{ request.GET.q }}">
+                            {% endif %}
+                            <!-- Hidden category inputs for filter form -->
+                            <div class="hidden-category-inputs">
+                                {% for category_id in request.GET.category|default:'' %}
+                                    <input type="hidden" name="category" value="{{ category_id }}">
+                                {% endfor %}
+                            </div>
+
+                            <div class="filter-content">
+                                <div class="filter-group">
+                                    <h4>Sort By</h4>
+                                    <div class="filter-options sort-options">
+                                        <label class="filter-option">
+                                            <input type="radio" name="sort" value="price_asc"
+                                                {% if request.GET.sort == 'price_asc' %}checked{% endif %}>
+                                            <span>Price: Low to High</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="radio" name="sort" value="price_desc"
+                                                {% if request.GET.sort == 'price_desc' %}checked{% endif %}>
+                                            <span>Price: High to Low</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="radio" name="sort" value="orders_asc"
+                                                {% if request.GET.sort == 'orders_asc' %}checked{% endif %}>
+                                            <span>Orders: Low to High</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="radio" name="sort" value="orders_desc"
+                                                {% if request.GET.sort == 'orders_desc' %}checked{% endif %}>
+                                            <span>Orders: High to Low</span>
+                                        </label>
+                                        <label class="filter-option">
+                                            <input type="radio" name="sort" value="newest"
+                                                {% if request.GET.sort == 'newest' %}checked{% endif %}>
+                                            <span>Newest First</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="filter-group">
+                                    <h4>Price Range</h4>
+                                    <div class="price-range-inputs">
+                                        <div class="price-input">
+                                            <label for="min_price">Min $</label>
+                                            <input type="number" id="min_price" name="min_price" min="0"
+                                                value="{{ request.GET.min_price|default:'' }}" placeholder="0">
+                                        </div>
+                                        <div class="price-range-separator">-</div>
+                                        <div class="price-input">
+                                            <label for="max_price">Max $</label>
+                                            <input type="number" id="max_price" name="max_price" min="0"
+                                                value="{{ request.GET.max_price|default:'' }}" placeholder="1000">
+                                        </div>
+                                    </div>
+                                    <div class="price-range-slider">
+                                        <div id="price-slider"></div>
+                                    </div>
+                                </div>
+
+                                <div class="filter-group">
+                                    <h4>Rating</h4>
+                                    <div class="rating-filter">
+                                        {% for i in "54321" %}
+                                            <label class="filter-option rating-option">
+                                                <input type="checkbox" name="rating" value="{{ i }}"
+                                                    {% if i in request.GET.rating|default:'' %}checked{% endif %}>
+                                                <span class="star-rating">
+                                                    {% for j in "12345" %}
+                                                        {% if forloop.counter <= i %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% else %}
+                                                            <i class="far fa-star"></i>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <span class="rating-text">{{ i }} & Up</span>
+                                                </span>
+                                            </label>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="filter-actions">
+                                <button type="submit" class="btn btn-primary apply-filters">Apply Filters</button>
+                                <button type="button" class="btn btn-outline reset-filters">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Filters Display -->
+            <div class="active-filters">
+                {% if request.GET.sort or request.GET.min_price or request.GET.max_price or request.GET.rating or request.GET.category %}
+                    <div class="active-filters-list">
+                        {% if request.GET.sort %}
+                            <div class="active-filter">
+                <span>
+                    {% if request.GET.sort == 'price_asc' %}Price: Low to High
+                    {% elif request.GET.sort == 'price_desc' %}Price: High to Low
+                    {% elif request.GET.sort == 'orders_asc' %}Orders: Low to High
+                    {% elif request.GET.sort == 'orders_desc' %}Orders: High to Low
+                    {% elif request.GET.sort == 'newest' %}Newest First
+                    {% endif %}
+                </span>
+                                <button class="remove-filter" data-param="sort"><i class="fa fa-times"></i></button>
+                            </div>
+                        {% endif %}
+
+                        {% if request.GET.min_price or request.GET.max_price %}
+                            <div class="active-filter">
+                                <span>Price: ${{ request.GET.min_price|default:'0' }} - ${{ request.GET.max_price|default:'∞' }}</span>
+                                <button class="remove-filter" data-param="price"><i class="fa fa-times"></i></button>
+                            </div>
+                        {% endif %}
+
+                        {% if request.GET.rating %}
+                            <div class="active-filter">
+                                <span>Rating: {{ request.GET.rating }}+ stars</span>
+                                <button class="remove-filter" data-param="rating"><i class="fa fa-times"></i></button>
+                            </div>
+                        {% endif %}
+
+                        {% for category in selected_categories %}
+                            <div class="active-filter">
+                                <span>Category: {{ category.name }}</span>
+                                <button class="remove-filter" data-param="category" data-value="{{ category.id }}"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        {% endfor %}
+
+                        <div class="clear-all">
+                            <button class="btn-link clear-all-filters">Clear All</button>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="no-filters">No filters applied</div>
+                {% endif %}
+            </div>
+
+            <!-- Quick Sort Dropdown for Mobile -->
+            <div class="quick-sort">
+                <label for="mobile-sort">Sort by:</label>
+                <select id="mobile-sort" name="mobile-sort">
+                    <option value="">Featured</option>
+                    <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Price: Low to
+                        High
+                    </option>
+                    <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Price: High
+                        to Low
+                    </option>
+                    <option value="orders_desc" {% if request.GET.sort == 'orders_desc' %}selected{% endif %}>Most
+                        Popular
+                    </option>
+                    <option value="newest" {% if request.GET.sort == 'newest' %}selected{% endif %}>Newest First
+                    </option>
+                </select>
+            </div>
+        </div>
+
         <div class="products-grid">
             {% for product in products %}
                 <div class="product-card" data-product-id="{{ product.id }}">
                     {% csrf_token %}
                     <div class="product-image">
                         <a href="{% url 'shop:products:product_detail' slug=product.slug %}">
-
-                            <img src="
-                                    {% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
+                            <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
                                  alt="{{ product.name }}">
-
                             <div class="product-badges">
                                 {% if product.is_new %}
                                     <span class="badge new">New</span>
@@ -63,6 +273,7 @@
                                     {% endif %}
                                 {% endfor %}
                             </div>
+                        </a>
                     </div>
                     <div class="product-info">
                         <h2 class="product-title">
@@ -137,7 +348,6 @@
 
         {% include 'page.html' with page=products %}
     </div>
-
     <link rel="stylesheet" href="{% static 'css/products.css' %}">
     <script src="{% static 'js/products.js' %}"></script>
 {% endblock %}

@@ -72,48 +72,73 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 credentials: 'same-origin'
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Reset button but with toggled state
-                    if (isAdding) {
-                        // Was added to favorites
-                        this.innerHTML = '<i class="fa fa-heart"></i>';
-                        this.style.color = '#f72585';
-                        this.style.borderColor = '#f72585';
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Reset button but with toggled state
+                        if (isAdding) {
+                            // Was added to favorites
+                            this.innerHTML = '<i class="fa fa-heart"></i>';
+                            this.style.color = '#f72585';
+                            this.style.borderColor = '#f72585';
 
-                        // Show notification
-                        const notification = document.createElement('div');
-                        notification.className = 'product-notification success';
-                        notification.innerHTML = '<i class="fa fa-check"></i> Added to favorites';
-                        document.body.appendChild(notification);
+                            // Show notification
+                            const notification = document.createElement('div');
+                            notification.className = 'product-notification success';
+                            notification.innerHTML = '<i class="fa fa-check"></i> Added to favorites';
+                            document.body.appendChild(notification);
 
-                        setTimeout(() => {
-                            notification.style.opacity = '0';
                             setTimeout(() => {
-                                notification.remove();
-                            }, 300);
-                        }, 2000);
+                                notification.style.opacity = '0';
+                                setTimeout(() => {
+                                    notification.remove();
+                                }, 300);
+                            }, 2000);
 
-                        // Add favorites badge if not exists
-                        let favBadge = productCard.querySelector('.badge.favorite');
-                        if (!favBadge) {
-                            const badgeContainer = productCard.querySelector('.product-badges');
-                            favBadge = document.createElement('span');
-                            favBadge.className = 'badge favorite';
-                            favBadge.textContent = 'Favorite';
-                            badgeContainer.appendChild(favBadge);
+                            // Add favorites badge if not exists
+                            let favBadge = productCard.querySelector('.badge.favorite');
+                            if (!favBadge) {
+                                const badgeContainer = productCard.querySelector('.product-badges');
+                                favBadge = document.createElement('span');
+                                favBadge.className = 'badge favorite';
+                                favBadge.textContent = 'Favorite';
+                                badgeContainer.appendChild(favBadge);
+                            }
+                        } else {
+                            // Was removed from favorites
+                            this.innerHTML = '<i class="fa fa-heart-o"></i>';
+                            this.style.color = '';
+                            this.style.borderColor = '';
+
+                            // Show notification
+                            const notification = document.createElement('div');
+                            notification.className = 'product-notification success';
+                            notification.innerHTML = '<i class="fa fa-check"></i> Removed from favorites';
+                            document.body.appendChild(notification);
+
+                            setTimeout(() => {
+                                notification.style.opacity = '0';
+                                setTimeout(() => {
+                                    notification.remove();
+                                }, 300);
+                            }, 2000);
+
+                            // Remove favorites badge if exists
+                            const favBadge = productCard.querySelector('.badge.favorite');
+                            if (favBadge) {
+                                favBadge.remove();
+                            }
                         }
                     } else {
-                        // Was removed from favorites
-                        this.innerHTML = '<i class="fa fa-heart-o"></i>';
-                        this.style.color = '';
-                        this.style.borderColor = '';
+                        // Error handling
+                        this.innerHTML = originalHTML;
+                        this.style.color = originalColor;
+                        this.style.borderColor = originalBorderColor;
 
-                        // Show notification
+                        // Show error notification
                         const notification = document.createElement('div');
-                        notification.className = 'product-notification success';
-                        notification.innerHTML = '<i class="fa fa-check"></i> Removed from favorites';
+                        notification.className = 'product-notification error';
+                        notification.innerHTML = `<i class="fa fa-exclamation-circle"></i> ${data.error || 'Error updating favorites'}`;
                         document.body.appendChild(notification);
 
                         setTimeout(() => {
@@ -122,23 +147,21 @@ document.addEventListener('DOMContentLoaded', function () {
                                 notification.remove();
                             }, 300);
                         }, 2000);
-
-                        // Remove favorites badge if exists
-                        const favBadge = productCard.querySelector('.badge.favorite');
-                        if (favBadge) {
-                            favBadge.remove();
-                        }
                     }
-                } else {
-                    // Error handling
+                    this.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Reset button to original state
                     this.innerHTML = originalHTML;
                     this.style.color = originalColor;
                     this.style.borderColor = originalBorderColor;
+                    this.disabled = false;
 
                     // Show error notification
                     const notification = document.createElement('div');
                     notification.className = 'product-notification error';
-                    notification.innerHTML = `<i class="fa fa-exclamation-circle"></i> ${data.error || 'Error updating favorites'}`;
+                    notification.innerHTML = '<i class="fa fa-exclamation-circle"></i> Network error';
                     document.body.appendChild(notification);
 
                     setTimeout(() => {
@@ -147,30 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             notification.remove();
                         }, 300);
                     }, 2000);
-                }
-                this.disabled = false;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Reset button to original state
-                this.innerHTML = originalHTML;
-                this.style.color = originalColor;
-                this.style.borderColor = originalBorderColor;
-                this.disabled = false;
-
-                // Show error notification
-                const notification = document.createElement('div');
-                notification.className = 'product-notification error';
-                notification.innerHTML = '<i class="fa fa-exclamation-circle"></i> Network error';
-                document.body.appendChild(notification);
-
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    setTimeout(() => {
-                        notification.remove();
-                    }, 300);
-                }, 2000);
-            });
+                });
         });
     });
 
@@ -552,133 +552,431 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Additional CSS for notifications and new favorite styles
-    const style = document.createElement('style');
-    style.innerHTML = `
-    .product-notification {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 12px 20px;
-        border-radius: 8px;
-        font-weight: 600;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        z-index: 1000;
-        opacity: 1;
-        transition: opacity 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+    // === FIXED FILTER SIDEBAR FUNCTIONALITY ===
+
+    // Filter sidebar functionality
+    const filterToggle = document.querySelector('.filter-toggle');
+    const filterPanel = document.querySelector('.filter-panel');
+    const closeFilters = document.querySelector('.close-filters');
+    const filterOverlay = document.querySelector('.filter-overlay');
+    const productsContainer = document.querySelector('.products-container');
+
+    // Update filter count badge
+    function updateFilterCount() {
+        const activeFilters = document.querySelectorAll('.active-filter');
+        const filterCount = activeFilters.length;
+
+        const filterCountBadge = document.querySelector('.filter-count');
+        if (filterCountBadge) {
+            filterCountBadge.textContent = filterCount;
+
+            if (filterCount > 0) {
+                filterCountBadge.classList.add('active');
+            } else {
+                filterCountBadge.classList.remove('active');
+            }
+        }
     }
-    
-    .product-notification.success {
-        background-color: #28a745;
-        color: white;
+
+    // Add filter count badge if it doesn't exist
+    if (filterToggle && !filterToggle.querySelector('.filter-count')) {
+        const filterCountBadge = document.createElement('span');
+        filterCountBadge.className = 'filter-count';
+        filterToggle.appendChild(filterCountBadge);
+
+        // Initialize count
+        updateFilterCount();
     }
-    
-    .product-notification.error {
-        background-color: #dc3545;
-        color: white;
+
+    // Add animation delay to filter groups
+    const filterGroups = document.querySelectorAll('.filter-group');
+    filterGroups.forEach((group, index) => {
+        group.style.setProperty('--index', index);
+    });
+
+    // Function to open filter sidebar
+    function openFilterSidebar() {
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+        filterPanel.classList.add('active');
+        filterOverlay.classList.add('active');
+        filterToggle.classList.add('active');
+
+        // Only add the sidebar-open class on larger screens
+        if (window.innerWidth >= 992) {
+            productsContainer.classList.add('sidebar-open');
+        }
+
+        // Reset animation for filter groups
+        filterGroups.forEach((group) => {
+            group.style.animation = 'none';
+            group.offsetHeight; // Force reflow
+            group.style.animation = null;
+        });
     }
-    
-    .quantity-container {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
-        padding: 8px;
-        background-color: #f8f9fa;
-        border-radius: 4px;
+
+    // Function to close filter sidebar
+    function closeFilterSidebar() {
+        document.body.style.overflow = ''; // Restore scrolling
+        filterPanel.classList.remove('active');
+        filterOverlay.classList.remove('active');
+        filterToggle.classList.remove('active');
+        productsContainer.classList.remove('sidebar-open');
     }
-    
-    .quantity-controls {
-        display: flex;
-        align-items: center;
+
+    // Toggle filter sidebar when clicking the filter button
+    if (filterToggle && filterPanel) {
+        filterToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (filterPanel.classList.contains('active')) {
+                closeFilterSidebar();
+            } else {
+                openFilterSidebar();
+            }
+        });
     }
-    
-    .quantity-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
-        background: #e9ecef;
-        border: 1px solid #ced4da;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+    // Close filter sidebar with close button
+    if (closeFilters) {
+        closeFilters.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeFilterSidebar();
+        });
     }
-    
-    .quantity-btn.minus {
-        border-radius: 4px 0 0 4px;
+
+    // Close filter sidebar when clicking the overlay
+    if (filterOverlay) {
+        filterOverlay.addEventListener('click', function (e) {
+            e.preventDefault();
+            closeFilterSidebar();
+        });
     }
-    
-    .quantity-btn.plus {
-        border-radius: 0 4px 4px 0;
+
+    // Close sidebar with ESC key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && filterPanel.classList.contains('active')) {
+            closeFilterSidebar();
+        }
+    });
+
+    // Prevent filter panel clicks from propagating to overlay
+    if (filterPanel) {
+        filterPanel.addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
     }
-    
-    .quantity-input {
-        width: 50px;
-        height: 30px;
-        text-align: center;
-        border: 1px solid #ced4da;
-        border-left: none;
-        border-right: none;
+
+    // Handle window resize to adjust sidebar behavior
+    window.addEventListener('resize', function () {
+        if (filterPanel.classList.contains('active') && window.innerWidth < 992) {
+            productsContainer.classList.remove('sidebar-open');
+        } else if (filterPanel.classList.contains('active') && window.innerWidth >= 992) {
+            productsContainer.classList.add('sidebar-open');
+        }
+    });
+
+    // Handle removing filters
+    const removeFilterBtns = document.querySelectorAll('.remove-filter');
+    if (removeFilterBtns.length > 0) {
+        removeFilterBtns.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Get the parameter to remove
+                const param = this.getAttribute('data-param');
+                const value = this.getAttribute('data-value');
+
+                // Get the current URL
+                const url = new URL(window.location.href);
+                const searchParams = url.searchParams;
+
+                // Handle different types of parameters
+                if (param === 'price') {
+                    searchParams.delete('min_price');
+                    searchParams.delete('max_price');
+                } else if (param === 'category' && value) {
+                    // For multiple selection parameters, only remove the specific value
+                    const currentValues = searchParams.getAll(param);
+                    searchParams.delete(param);
+
+                    currentValues.forEach(val => {
+                        if (val !== value) {
+                            searchParams.append(param, val);
+                        }
+                    });
+                } else {
+                    searchParams.delete(param);
+                }
+
+                // Redirect to the updated URL
+                window.location.href = url.toString();
+
+                // Update count after a brief delay
+                setTimeout(updateFilterCount, 100);
+            });
+        });
     }
-    
-    .btn-confirm-cart {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 6px 12px;
-        border-radius: 4px;
-        cursor: pointer;
+
+    // Clear all filters
+    const clearAllBtn = document.querySelector('.clear-all-filters');
+    if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Get the current URL
+            const url = new URL(window.location.href);
+            const searchParams = url.searchParams;
+
+            // Keep only the search query if it exists
+            const searchQuery = searchParams.get('q');
+
+            // Clear all parameters
+            url.search = '';
+
+            // Add back the search query if it existed
+            if (searchQuery) {
+                url.searchParams.set('q', searchQuery);
+            }
+
+            // Redirect to the updated URL
+            window.location.href = url.toString();
+
+            // Update count after a brief delay
+            setTimeout(updateFilterCount, 100);
+        });
     }
-    
-    .in-cart-indicator {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #e8f4ff;
-        padding: 8px 12px;
-        border-radius: 4px;
-        margin-bottom: 10px;
-        font-size: 14px;
+
+    // Mobile quick sort functionality
+    const mobileSort = document.getElementById('mobile-sort');
+    if (mobileSort) {
+        mobileSort.addEventListener('change', function () {
+            const form = document.getElementById('filter-form');
+            if (form) {
+                const sortInput = form.querySelector('input[name="sort"]:checked');
+                if (sortInput) {
+                    sortInput.checked = false;
+                }
+
+                const newSort = this.value;
+                if (newSort) {
+                    const newSortInput = form.querySelector(`input[name="sort"][value="${newSort}"]`);
+                    if (newSortInput) {
+                        newSortInput.checked = true;
+                    }
+                    form.submit();
+                }
+            }
+        });
     }
-    
-    .in-cart-indicator span {
-        display: flex;
-        align-items: center;
-        gap: 5px;
+
+    function initializeCartButtons() {
+        // Find all product cards
+        const productCards = document.querySelectorAll('.product-card');
+
+        productCards.forEach(card => {
+            const productId = card.getAttribute('data-product-id');
+            const inCartIndicator = card.querySelector('.in-cart-indicator');
+            const addToCartBtn = card.querySelector('.add-to-cart');
+            const updateCartBtn = card.querySelector('.update-cart');
+
+            // If this product has an in-cart indicator, it should show "Update Cart"
+            if (inCartIndicator) {
+                // Hide "Add to Cart" if it exists
+                if (addToCartBtn) {
+                    addToCartBtn.style.display = 'none';
+                }
+
+                // Show "Update Cart" if it exists
+                if (updateCartBtn) {
+                    updateCartBtn.style.display = 'flex';
+                }
+                // If "Update Cart" button doesn't exist but should, create it from "Add to Cart"
+                else if (addToCartBtn) {
+                    addToCartBtn.innerHTML = '<i class="fa fa-refresh"></i> Update Cart';
+                    addToCartBtn.className = 'btn btn-success update-cart';
+                    addToCartBtn.style.display = 'flex';
+                }
+            }
+        });
     }
-    
-    .badge.in-cart {
-        background-color: #007bff;
-        color: white;
+
+    initializeCartButtons();
+
+
+    const categoriesToggle = document.querySelector('.categories-toggle');
+    const categoriesDropdown = document.querySelector('.categories-dropdown-content');
+    const closeCategories = document.querySelector('.close-categories');
+    const applyCategories = document.querySelector('.apply-categories');
+    const resetCategories = document.querySelector('.reset-categories');
+    const categoryCheckboxes = document.querySelectorAll('.categories-list input[type="checkbox"]');
+    const filterForm = document.getElementById('filter-form');
+    const hiddenCategoryInputs = document.querySelector('.hidden-category-inputs');
+
+    // Function to toggle categories dropdown
+    function toggleCategoriesDropdown(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const isActive = categoriesDropdown.classList.contains('active');
+
+        if (isActive) {
+            closeDropdown();
+        } else {
+            openDropdown();
+        }
     }
-    
-    .badge.favorite {
-        background-color: #f72585;
-        color: white;
+
+    // Function to open dropdown
+    function openDropdown() {
+        categoriesDropdown.classList.add('active');
+        categoriesToggle.classList.add('active');
+
+        // Close when clicking outside
+        document.addEventListener('click', handleOutsideClick);
     }
-    
-    .cart-updated {
-        animation: pulse 1s;
+
+    // Function to close dropdown
+    function closeDropdown() {
+        categoriesDropdown.classList.remove('active');
+        categoriesToggle.classList.remove('active');
+
+        // Remove outside click listener
+        document.removeEventListener('click', handleOutsideClick);
     }
-    
-    .btn.wishlist {
-        transition: all 0.3s ease;
+
+    // Handle clicks outside the dropdown
+    function handleOutsideClick(event) {
+        if (!categoriesDropdown.contains(event.target) && !categoriesToggle.contains(event.target)) {
+            closeDropdown();
+        }
     }
-    
-    .btn.wishlist:disabled {
-        opacity: 0.7;
-        cursor: wait;
+
+    // Toggle dropdown when clicking the toggle button
+    if (categoriesToggle && categoriesDropdown) {
+        categoriesToggle.addEventListener('click', toggleCategoriesDropdown);
     }
-    
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
+
+    // Close dropdown with close button
+    if (closeCategories) {
+        closeCategories.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeDropdown();
+        });
     }
-  `;
-    document.head.appendChild(style);
+
+    // Handle Apply button
+    if (applyCategories) {
+        applyCategories.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Get current URL and params
+            const url = new URL(window.location.href);
+            const searchParams = url.searchParams;
+
+            // Clear all category parameters
+            searchParams.delete('category');
+
+            // Add selected categories
+            categoryCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    searchParams.append('category', checkbox.value);
+                }
+            });
+
+            // Redirect to the updated URL
+            window.location.href = url.toString();
+        });
+    }
+
+    // Handle Reset button
+    if (resetCategories) {
+        resetCategories.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Uncheck all checkboxes
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Apply changes immediately
+            if (applyCategories) {
+                applyCategories.click();
+            }
+        });
+    }
+
+    // Handle direct checkbox changes with data-form-submit attribute
+    categoryCheckboxes.forEach(checkbox => {
+        if (checkbox.getAttribute('data-form-submit') === 'true') {
+            checkbox.addEventListener('change', function () {
+                // Update hidden inputs in the main filter form
+                updateHiddenCategoryInputs();
+            });
+        }
+    });
+
+    // Function to update hidden category inputs in the main filter form
+    function updateHiddenCategoryInputs() {
+        if (hiddenCategoryInputs) {
+            // Clear existing inputs
+            hiddenCategoryInputs.innerHTML = '';
+
+            // Add inputs for selected categories
+            categoryCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'category';
+                    hiddenInput.value = checkbox.value;
+                    hiddenCategoryInputs.appendChild(hiddenInput);
+                }
+            });
+        }
+    }
+
+    // Initialize hidden inputs
+    updateHiddenCategoryInputs();
+
+    // Close dropdown with ESC key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && categoriesDropdown.classList.contains('active')) {
+            closeDropdown();
+        }
+    });
+
+    // Update active category count badge
+    function updateCategoryCount() {
+        const activeCategoriesCount = document.querySelectorAll('.categories-list input[type="checkbox"]:checked').length;
+
+        if (activeCategoriesCount > 0) {
+            // Create or update the count badge
+            let countBadge = categoriesToggle.querySelector('.category-count');
+            if (!countBadge) {
+                countBadge = document.createElement('span');
+                countBadge.className = 'category-count';
+                categoriesToggle.appendChild(countBadge);
+            }
+
+            countBadge.textContent = activeCategoriesCount;
+            countBadge.style.display = 'flex';
+        } else {
+            // Remove the count badge if no categories selected
+            const countBadge = categoriesToggle.querySelector('.category-count');
+            if (countBadge) {
+                countBadge.style.display = 'none';
+            }
+        }
+    }
+
+    // Run once on page load
+    updateCategoryCount();
+
+    // Update when checkboxes change
+    categoryCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateCategoryCount);
+    });
+
+
 });
