@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 from carts.models import CartItems, Cart
-from eshop.models import Favourite, FavouriteItem
+from favourites.models import Favourite, FavouriteItem
 
 
 class GetCounts(View):

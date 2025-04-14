@@ -35,8 +35,8 @@
 
     <div class="product-details-container">
     <div class="breadcrumb">
-        <a href="{% url 'shop:home' %}">Home</a> /
-        <a href="{% url 'shop:list_products' %}">Products</a> /
+        <a href="{% url 'home' %}">Home</a> /
+        <a href="{% url 'products:products' %}">Products</a> /
         <span>{{ product.name }}</span>
     </div>
 
@@ -424,7 +424,7 @@
                 {% for related_product in related_products %}
                     <div class="related-product">
                         <div class="related-product-image">
-                            <a href="{% url 'shop:products:product_detail' slug=related_product.slug %}">
+                            <a href="{% url 'products:product_detail' slug=related_product.slug %}">
                                 <img src="
 
 
@@ -438,7 +438,7 @@
                             </a>
                         </div>
                         <h3>
-                            <a href="{% url 'shop:products:product_detail' slug=product.slug %}">{{ related_product.name }}</a>
+                            <a href="{% url 'products:product_detail' slug=product.slug %}">{{ related_product.name }}</a>
                         </h3>
                         <div class="related-product-price">${{ related_product.price }}</div>
                         <!--                <button class="btn btn-sm btn-outline">Add to Cart</button>-->
@@ -455,7 +455,7 @@
                 {% for recent_product in recent_products %}
                     <div class="viewed-product">
                         <div class="viewed-product-image">
-                            <a href="{% url 'shop:products:product_detail' slug=recent_product.product.slug %}">
+                            <a href="{% url 'products:product_detail' slug=recent_product.product.slug %}">
                                 <img src="
 
 
@@ -468,7 +468,7 @@
                             </a>
                         </div>
                         <h4>
-                            <a href="{% url 'shop:products:product_detail' slug=recent_product.product.slug %}">
+                            <a href="{% url 'products:product_detail' slug=recent_product.product.slug %}">
                                 {{ recent_product.product.name }}</a>
                         </h4>
                         <div class="viewed-product-price">${{ recent_product.product.price }}</div>

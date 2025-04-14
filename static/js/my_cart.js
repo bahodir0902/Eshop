@@ -282,7 +282,7 @@ function checkEmptyCart() {
             </div>
             <h3>Your cart is empty</h3>
             <p>Looks like you haven't added any products to your cart yet.</p>
-            <a href="/shop/list" class="btn-continue-shopping">Continue Shopping</a>
+            <a href="/products/" class="btn-continue-shopping">Continue Shopping</a>
         `;
 
         // Clear existing content and add empty cart message

@@ -32,7 +32,7 @@
                 <div class="card-front">
                     <div class="image-container">
                         {% if item.product.image %}
-                        <a href="{% url 'shop:products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                        <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
                             <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="product-image"></a>
                         {% else %}
                         <div class="no-image">
@@ -45,7 +45,7 @@
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">
-                            <a href="{% url 'shop:products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                            <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
                             {{ item.product.name }}</a>
                         </h3>
                         <div class="shop-name">{{ item.product.shop.name }}</div>
@@ -93,7 +93,7 @@
             </div>
             <h2>Your Cosmic Collection Is Empty</h2>
             <p>Start adding your favorite products to create your personal galaxy of amazing items!</p>
-            <a href="{% url 'shop:list_products' %}" class="explore-button">
+            <a href="{% url 'products:products' %}" class="explore-button">
                 <span class="button-text">Explore Products</span>
                 <i class="fas fa-rocket"></i>
             </a>

@@ -298,8 +298,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // AJAX call to add/remove from wishlist
             const url = isCurrentlyInWishlist
-                ? `/remove_favourite_item/${productId}`
-                : `/add_favourite_item/${productId}`;
+                ? `/favourites/remove_favourite_item/${productId}`
+                : `/favourites/add_favourite_item/${productId}`;
 
             fetch(url, {
                 method: 'POST',

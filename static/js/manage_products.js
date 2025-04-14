@@ -43,76 +43,99 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('productSearch');
+
+    if (searchForm) {
+        searchForm.addEventListener('submit', function (e) {
+            if (!searchInput.value.trim()) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    // The reset button functionality
+    const resetFilters = document.getElementById('resetFilters');
+    if (resetFilters) {
+        resetFilters.addEventListener('click', function () {
+            // Clear ALL query parameters including search
+            window.location.href = window.location.pathname;
+        });
+    }
+
     // Filter Functionality
     const categoryFilter = document.getElementById('categoryFilter');
     const statusFilter = document.getElementById('statusFilter');
     const sortOrder = document.getElementById('sortOrder');
-    const resetFilters = document.getElementById('resetFilters');
+    const perPageSelect = document.getElementById('per_page');
 
+    // Category filter change
     if (categoryFilter) {
         categoryFilter.addEventListener('change', function () {
-            redirectWithFilter();
+            let url = new URL(window.location.href);
+            if (this.value) {
+                url.searchParams.set('category', this.value);
+            } else {
+                url.searchParams.delete('category');
+            }
+            window.location.href = url.toString();
         });
     }
 
+    // Status filter change
     if (statusFilter) {
         statusFilter.addEventListener('change', function () {
-            redirectWithFilter();
+            let url = new URL(window.location.href);
+            if (this.value) {
+                url.searchParams.set('status', this.value);
+            } else {
+                url.searchParams.delete('status');
+            }
+            window.location.href = url.toString();
         });
     }
 
+    // Sort order change
     if (sortOrder) {
         sortOrder.addEventListener('change', function () {
-            redirectWithFilter();
+            let url = new URL(window.location.href);
+            if (this.value) {
+                url.searchParams.set('sort', this.value);
+            } else {
+                url.searchParams.delete('sort');
+            }
+            window.location.href = url.toString();
         });
     }
 
-    function redirectWithFilter() {
-        let url = new URL(window.location.href);
-
-        // Update category filter
-        if (categoryFilter && categoryFilter.value) {
-            url.searchParams.set('category', categoryFilter.value);
-        } else {
-            url.searchParams.delete('category');
-        }
-
-        // Update status filter
-        if (statusFilter && statusFilter.value) {
-            url.searchParams.set('status', statusFilter.value);
-        } else {
-            url.searchParams.delete('status');
-        }
-
-        // Update sort order
-        if (sortOrder && sortOrder.value) {
-            url.searchParams.set('sort', sortOrder.value);
-        } else {
-            url.searchParams.delete('sort');
-        }
-
-        window.location.href = url.toString();
-    }
-
-    if (resetFilters) {
-        resetFilters.addEventListener('click', function () {
+    // Per page change
+    if (perPageSelect) {
+        perPageSelect.addEventListener('change', function () {
             let url = new URL(window.location.href);
-            url.search = ''; // Clear all query parameters
+            if (this.value) {
+                url.searchParams.set('per_page', this.value);
+            } else {
+                url.searchParams.delete('per_page');
+            }
             window.location.href = url.toString();
         });
     }
 
     // Delete Product Functionality
-    const deleteButtons = document.querySelectorAll('.delete-product');
+    const deleteButtons = document.querySelectorAll('.actions-cell .fa-trash');
     const deleteModal = document.getElementById('deleteModal');
     const closeModal = document.querySelector('.close-modal');
     const cancelDelete = document.getElementById('cancelDelete');
     const confirmDelete = document.getElementById('confirmDelete');
-    let productToDelete = null;
+    let deleteUrl = null;
 
     deleteButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            productToDelete = this.getAttribute('data-id');
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const deleteLink = this.closest('a');
+            deleteUrl = deleteLink.getAttribute('href');
+
             if (deleteModal) {
                 deleteModal.style.display = 'block';
             }
@@ -131,20 +154,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Confirm deletion
     if (confirmDelete) {
         confirmDelete.addEventListener('click', function () {
-            if (productToDelete) {
-                // Optional: Send an AJAX request here to delete the product on the server.
-                // For demonstration, remove the product row from the table.
-                const productCheckbox = document.querySelector(`.product-select[data-id="${productToDelete}"]`);
-                if (productCheckbox) {
-                    const productRow = productCheckbox.closest('tr');
-                    if (productRow) {
-                        productRow.remove();
-                    }
-                }
-                // Update selection count and check for empty state
-                updateSelectedCount();
-                productToDelete = null;
-                closeDeleteModal();
+            if (deleteUrl) {
+                window.location.href = deleteUrl;
             }
         });
     }
@@ -153,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (deleteModal) {
             deleteModal.style.display = 'none';
         }
-        productToDelete = null;
+        deleteUrl = null;
     }
 
     // Close the modal if clicking outside of the modal content

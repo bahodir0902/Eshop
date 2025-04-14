@@ -407,7 +407,7 @@ function removeFromFavorites(productId) {
         duration: 0.5,
         onComplete: () => {
             // Send AJAX request to remove from favorites
-            const url = `/remove_favourite_item/${productId}`;
+            const url = `/favourites/remove_favourite_item/${productId}`;
 
             fetch(url, {
                 method: 'POST',
@@ -474,7 +474,7 @@ function clearAllFavorites() {
         duration: 0.5,
         onComplete: () => {
             // Send AJAX request to clear all favorites
-            fetch('/clear_favourites/', {
+            fetch('/favourites/clear_favourites/', {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': getCsrfToken(),
@@ -822,7 +822,7 @@ function showEmptyState() {
         </div>
         <h2>Your Cosmic Collection Is Empty</h2>
         <p>Start adding your favorite products to create your personal galaxy of amazing items!</p>
-        <a href="/shop/list/" class="explore-button">
+        <a href="/products/" class="explore-button">
             <span class="button-text">Explore Products</span>
             <i class="fas fa-rocket"></i>
         </a>
@@ -908,7 +908,7 @@ function getCsrfToken() {
 
 // Add product to favorites (for potential future use)
 function addToFavorites(productId) {
-    const url = `/add_favourite_item/${productId}`;
+    const url = `/favourites/add_favourite_item/${productId}`;
 
     fetch(url, {
         method: 'POST',

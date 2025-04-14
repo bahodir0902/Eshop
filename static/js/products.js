@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Set the URL based on action
             const url = isAdding
-                ? `/add_favourite_item/${productId}`
-                : `/remove_favourite_item/${productId}`;
+                ? `/favourites/add_favourite_item/${productId}`
+                : `/favourites/remove_favourite_item/${productId}`;
 
             // Send AJAX request
             fetch(url, {
