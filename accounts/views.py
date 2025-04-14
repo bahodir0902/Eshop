@@ -26,7 +26,7 @@ class Login(View):
                 return render(request, 'login.html', {'form': form})
 
             login(request, user)
-            return redirect('shop:list_products')
+            return redirect('products:products')
 
         return redirect('accounts:login')
 
@@ -50,7 +50,7 @@ class Register(View):
 class Logout(View):
     def get(self, request):
         logout(request)
-        return redirect('shop:list_products')
+        return redirect('products:products')
 
 
 class VerifyRegistration(View):

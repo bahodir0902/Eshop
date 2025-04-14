@@ -18,22 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from eshop.views import FavouriteView, AddFavouriteItem, RemoveFavouriteItem, ClearFavourites
+from eshop.views import home
+from favourites.views import FavouriteView, AddFavouriteItem, RemoveFavouriteItem, ClearFavourites
 
 urlpatterns = [
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
     path('shop/', include('eshop.urls')),
+    path('products/', include('products.urls')),
     path('accounts/', include('accounts.urls')),
     path('cart/', include('carts.urls')),
-    path('favourites/', FavouriteView.as_view(), name='favourites'),
-    path('add_favourite_item/<int:pk>', AddFavouriteItem.as_view(), name='add_favourite_item'),
-    path('remove_favourite_item/<int:pk>', RemoveFavouriteItem.as_view(), name='remove_favourite_item'),
-    path('clear_favourites/', ClearFavourites.as_view(), name='clear_favourites'),
-    # path('checkout/', include('orders.urls')),
     path('payment/', include('payments.urls')),
     path('orders/', include('orders.urls')),
     path('feedbacks/', include('reviews.urls')),
-    path('common/', include('common.urls'))
+    path('common/', include('common.urls')),
+    path('favourites/', include('favourites.urls'))
 ]
 
 if settings.DEBUG:
