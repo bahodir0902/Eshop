@@ -17,7 +17,7 @@
         <header class="products-header">
             <h1>Product Collection</h1>
             <div class="header-controls">
-                <form class="search-form" method="get" action="{% url 'shop:list_products' %}">
+                <form class="search-form" method="get" action="{% url 'products:products' %}">
                     <div class="search-container">
                         <input type="text" name="q" placeholder="Search products..." class="search-input"
                                value="{{ request.GET.q|default:'' }}">
@@ -85,7 +85,7 @@
                             <button class="close-filters"><i class="fa fa-times"></i></button>
                         </div>
 
-                        <form id="filter-form" method="get" action="{% url 'shop:list_products' %}">
+                        <form id="filter-form" method="get" action="{% url 'products:products' %}">
                             <!-- Keep any existing GET parameters -->
                             {% if request.GET.q %}
                                 <input type="hidden" name="q" value="{{ request.GET.q }}">
@@ -255,7 +255,7 @@
                 <div class="product-card" data-product-id="{{ product.id }}">
                     {% csrf_token %}
                     <div class="product-image">
-                        <a href="{% url 'shop:products:product_detail' slug=product.slug %}">
+                        <a href="{% url 'products:product_detail' slug=product.slug %}">
                             <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
                                  alt="{{ product.name }}">
                             <div class="product-badges">
@@ -277,12 +277,12 @@
                     </div>
                     <div class="product-info">
                         <h2 class="product-title">
-                            <a href="{% url 'shop:products:product_detail' slug=product.slug %}">{{ product.name }}</a>
+                            <a href="{% url 'products:product_detail' slug=product.slug %}">{{ product.name }}</a>
                         </h2>
                         <div class="product-price">
                             <span class="current-price">${{ product.price }}</span>
                         </div>
-                        <p class="product-description">{{ product.description }}</p>
+                        <p class="product-description">{{ product.short_description }}</p>
                         <div class="product-meta">
                             <span class="product-date">Added {{ product.created_at|date:"M d, Y" }}</span>
                             {% if product.rating %}
