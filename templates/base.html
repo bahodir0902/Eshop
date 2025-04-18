@@ -36,23 +36,7 @@
                         </li>
                         <li><a class="btn btn-danger" href="{% url 'shop:find_and_delete_product' %}">Delete product</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            {#                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"#}
-                            {#                               data-bs-toggle="dropdown" aria-expanded="false">#}
-                            {#                                Dropdown#}
-                            {#                            </a>#}
-
-                            {#                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-                            {#                                <li><a class="dropdown-item" href="#">Action</a></li>#}
-                            {#                                <li><a class="dropdown-item" href="#">Another action</a></li>#}
-                            {#                                <li>#}
-                            {#                                    <hr class="dropdown-divider">#}
-                            {#                                </li>#}
-                            {#                                <li><a class="dropdown-item" href="#">Something else here</a></li>#}
-                            {#                            </ul>#}
-                        </li>
-                    </ul>
-                    <form class="d-flex" method="get" action="
+                        <form class="d-flex" method="get" action="
                             {% if request.path == '/shop/find_and_edit_product' %}
                                 {% url 'shop:find_and_edit_product' %}
                             {% elif request.path == '/shop/find_and_delete_product' %}
@@ -60,10 +44,17 @@
                             {% else %}
                                 {% url 'shop:list_products' %}
                             {% endif %}">
-                        <input class="form-control me-2" name="q" value="{{ q }}" type="search" placeholder="Search"
-                               aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                            <input class="form-control me-2" name="q" value="{{ q }}" type="search" placeholder="Search"
+                                   aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                        <li class="nav-item dropdown">
+
+                        </li>
+
+                    </ul>
+
+
                 </div>
             </div>
         </nav>
