@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 {% load static %}
+{% load i18n %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {# Added Viewport for responsiveness #}
-    <title>{% block title %} E-Shop {% endblock %}</title> {# Changed default title #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {# Added Viewport for responsiveness #}
+    <title>{% block title %} {% trans 'E-Shop' %} {% endblock %}</title> {# Changed default title #}
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <!-- Google Font: Inter (Consistent with Product Page) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,90 +32,146 @@
 <body>
 <header id="page-header"> {# Added ID for JS hook #}
     {% block header %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light"> {# Changed to navbar-light, bg-light #}
-        <div class="container"> {# Use container for better padding control #}
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <i class="fas fa-store me-2"></i> {# Added simple icon #}
-                E-Shop
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'products' %}active{% endif %}" href="{% url 'products:products' %}">
-                            <i class="fas fa-boxes-stacked me-1"></i> Products
-                        </a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="#"> {# Placeholder link #}
-                            <i class="fas fa-tags me-1"></i> Deals
-                        </a>
-                    </li>
-                    {% if perms.products.change_product %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'manage_products' %}active{% endif %}" href="{% url 'products:manage_products' %}">
-                             <i class="fas fa-edit me-1"></i> Manage Products
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center"> {# Use ms-auto for right alignment #}
-                    <!-- Cart Icon Link -->
-                    <li class="nav-item">
-                         <a class="nav-link nav-icon-link {% if request.resolver_match.url_name == 'list' and request.resolver_match.app_name == 'cart' %}active{% endif %}" href="{% url 'cart:list' %}" aria-label="View Shopping Cart">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="badge rounded-pill bg-primary cart-count">{% if cart_items_count %}{{ cart_items_count }}{% else %}0{% endif %}</span> {# Add cart count logic here if available #}
-                        </a>
-                    </li>
-                     <!-- Wishlist Icon Link -->
-                    <li class="nav-item">
-                         <a class="nav-link nav-icon-link {% if request.resolver_match.url_name == 'favourites' %}active{% endif %}" href="{% url 'favourites:favourites' %}" aria-label="View Wishlist">
-                            <i class="fas fa-heart"></i>
-                             <span class="badge rounded-pill bg-danger wishlist-count">{% if fav_items_count %}{{ fav_items_count }}{% else %}0{% endif %}</span> {# Add wishlist count logic if available #}
-                        </a>
-                    </li>
-
-                    <!-- Separator -->
-                    <li class="nav-item d-none d-lg-block mx-2"><span class="nav-separator">|</span></li>
-
-                    <!-- User Auth Section -->
-                    {% if request.user.is_authenticated %}
-                    <li class="nav-item dropdown profile-dropdown">
-                        <a class="nav-link dropdown-toggle profile-trigger" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="profile-avatar" src="{% static 'images/default-avatar.png' %}" alt="My Account">
-                             <span class="d-none d-lg-inline ms-1">{{ request.user.first_name|default:request.user.username }}</span> {# Show name on larger screens #}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                            <li class="profile-menu-header">
-                                 <img class="profile-pic" src="{% static 'images/default-avatar.png' %}" alt="User">
-                                <h6>{{ request.user.first_name }} {{ request.user.last_name }}</h6>
-                                <p>{{ request.user.email }}</p>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light"> {# Changed to navbar-light, bg-light #}
+            <div class="container"> {# Use container for better padding control #}
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <i class="fas fa-store me-2"></i> {# Added simple icon #}
+                    {% trans 'E-Shop' %}
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'products' %}active{% endif %}"
+                               href="{% url 'products:products' %}">
+                                <i class="fas fa-boxes-stacked me-1"></i> {% trans 'Products' %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"> {# Placeholder link #}
+                                <i class="fas fa-tags me-1"></i> {% trans 'Deals' %}
+                            </a>
+                        </li>
+                        {% if perms.products.change_product %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'manage_products' %}active{% endif %}"
+                                   href="{% url 'products:manage_products' %}">
+                                    <i class="fas fa-edit me-1"></i> {% trans 'Manage Products' %}
+                                </a>
                             </li>
-                             <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="fas fa-user-circle fa-fw me-2"></i>My Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'orders:my_orders' %}"><i class="fas fa-receipt fa-fw me-2"></i>My Orders</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item logout-link" href="{% url 'accounts:logout' %}">
-                                <i class="fas fa-sign-out-alt fa-fw me-2"></i>Logout
-                            </a></li>
+                        {% endif %}
+                    </ul>
+
+                    <!-- Add this right before the cart icon in the navbar -->
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                        <!-- Language Selector -->
+                        <li class="nav-item dropdown language-selector">
+                            <a class="nav-link dropdown-toggle language-dropdown-toggle" href="#" id="languageDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-globe me-1"></i>
+                                <span class="current-language">{{ LANGUAGE_CODE|upper }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end language-dropdown-menu"
+                                 aria-labelledby="languageDropdown">
+                                <h6 class="dropdown-header">{% trans 'Select Language' %}</h6>
+                                <div class="language-items-container">
+                                    <form action="{% url 'set_language' %}" method="post" id="language-form">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{ request.path }}">
+                                        {% get_available_languages as LANGUAGES %}
+                                        {% for lang_code, lang_name in LANGUAGES %}
+                                            {% get_language_info for lang_code as lang_info %}
+                                            <button type="submit" name="language" value="{{ lang_code }}"
+                                                    class="dropdown-item language-item {% if LANGUAGE_CODE == lang_code %}active{% endif %}">
+                                                <span class="language-flag">{{ lang_code|upper }}</span>
+                                                <span class="language-name">{{ lang_info.name_local }}</span>
+                                                <span class="language-status"><i class="fas fa-check"></i></span>
+                                            </button>
+                                        {% endfor %}
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Cart Icon Link (existing) -->
+
+
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                            {# Use ms-auto for right alignment #}
+                            <!-- Cart Icon Link -->
+                            <li class="nav-item">
+                                <a class="nav-link nav-icon-link {% if request.resolver_match.url_name == 'list' and request.resolver_match.app_name == 'cart' %}active{% endif %}"
+                                   href="{% url 'cart:list' %}" aria-label="{% trans 'View Shopping Cart' %}">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span class="badge rounded-pill bg-primary cart-count">{% if cart_items_count %}
+                                        {{ cart_items_count }}{% else %}0{% endif %}</span>
+                                    {# Add cart count logic here if available #}
+                                </a>
+                            </li>
+                            <!-- Wishlist Icon Link -->
+                            <li class="nav-item">
+                                <a class="nav-link nav-icon-link {% if request.resolver_match.url_name == 'favourites' %}active{% endif %}"
+                                   href="{% url 'favourites:favourites' %}" aria-label="{% trans 'View Wishlist' %}">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="badge rounded-pill bg-danger wishlist-count">{% if fav_items_count %}
+                                        {{ fav_items_count }}{% else %}0{% endif %}</span>
+                                    {# Add wishlist count logic if available #}
+                                </a>
+                            </li>
+
+                            <!-- Separator -->
+                            <li class="nav-item d-none d-lg-block mx-2"><span class="nav-separator">|</span></li>
+
+                            <!-- User Auth Section -->
+                            {% if request.user.is_authenticated %}
+                                <li class="nav-item dropdown profile-dropdown">
+                                    <a class="nav-link dropdown-toggle profile-trigger" href="#" id="profileDropdown"
+                                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img class="profile-avatar" src="{% static 'images/default-avatar.png' %}"
+                                             alt="{% trans 'My Account' %}">
+                                        <span class="d-none d-lg-inline ms-1">{{ request.user.first_name|default:request.user.username }}</span>
+                                        {# Show name on larger screens #}
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                        <li class="profile-menu-header">
+                                            <img class="profile-pic" src="{% static 'images/default-avatar.png' %}"
+                                                 alt="{% trans 'User' %}">
+                                            <h6>{{ request.user.first_name }} {{ request.user.last_name }}</h6>
+                                            <p>{{ request.user.email }}</p>
+                                        </li>
+                                        <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i
+                                                class="fas fa-user-circle fa-fw me-2"></i>{% trans 'My Profile' %}</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="{% url 'orders:my_orders' %}"><i
+                                                class="fas fa-receipt fa-fw me-2"></i>{% trans 'My Orders' %}</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item logout-link" href="{% url 'accounts:logout' %}">
+                                            <i class="fas fa-sign-out-alt fa-fw me-2"></i>{% trans 'Logout' %}
+                                        </a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a href="{% url 'accounts:login' %}"
+                                       class="btn btn-outline-primary btn-sm me-2">{% trans 'Log In' %}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'accounts:register' %}"
+                                       class="btn btn-primary btn-sm">{% trans 'Sign Up' %}</a>
+                                </li>
+                            {% endif %}
                         </ul>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary btn-sm me-2">Log In</a>
-                    </li>
-                     <li class="nav-item">
-                        <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-sm">Sign Up</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div> {# End navbar-collapse #}
-        </div> {# End container #}
-    </nav>
+                </div>
+                {# End navbar-collapse #}
+            </div>
+            {# End container #}
+        </nav>
     {% endblock %}
 </header>
 
@@ -120,61 +181,68 @@
 
 <footer id="page-footer" class="page-footer"> {# Added ID and class #}
     {% block footer %}
-    <div class="container">
-        <div class="row gy-4"> {# Added gy-4 for vertical gap on small screens #}
-            <div class="col-lg-4 col-md-6">
-                <h5 class="footer-heading">
-                    <i class="fas fa-store me-2"></i> E-Shop
-                </h5>
-                <p class="footer-text">
-                    Your one-stop shop for amazing products. We focus on quality, affordability, and customer satisfaction.
-                </p>
-            </div>
-            <div class="col-lg-2 col-md-3 col-6">
-                <h5 class="footer-heading">Quick Links</h5>
-                <ul class="list-unstyled footer-links">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'products:products' %}">Products</a></li>
-                    <li><a href="#">Deals</a></li>
-                     <li><a href="#">About Us</a></li>
+        <div class="container">
+            <div class="row gy-4"> {# Added gy-4 for vertical gap on small screens #}
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-heading">
+                        <i class="fas fa-store me-2"></i> {% trans 'E-Shop' %}
+                    </h5>
+                    <p class="footer-text">
+                        {% trans 'Your one-stop shop for amazing products. We focus on quality, affordability, and customer satisfaction.' %}
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-3 col-6">
+                    <h5 class="footer-heading">{% trans 'Quick Links' %}</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
+                        <li><a href="{% url 'products:products' %}">{% trans 'Products' %}</a></li>
+                        <li><a href="#">{% trans 'Deals' %}</a></li>
+                        <li><a href="#">{% trans 'About Us' %}</a></li>
 
-                </ul>
-            </div>
-            <div class="col-lg-2 col-md-3 col-6">
-                <h5 class="footer-heading">Account</h5>
-                <ul class="list-unstyled footer-links">
-                    {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
-                    {% else %}
-                        <li><a href="{% url 'accounts:login' %}">Log In</a></li>
-                        <li><a href="{% url 'accounts:register' %}">Sign Up</a></li>
-                    {% endif %}
-                    <li><a href="{% url 'cart:list' %}">My Cart</a></li>
-                    <li><a href="{% url 'favourites:favourites' %}">Wishlist</a></li>
-                    <li><a href="{% url 'orders:my_orders' %}">Order History</a></li>
-                </ul>
-            </div>
-             <div class="col-lg-4 col-md-12 text-md-start text-lg-end"> {# Adjusted alignment #}
-                <h5 class="footer-heading">Stay Connected</h5>
-                <p class="footer-text">Follow us on social media for updates and offers.</p>
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-3 col-6">
+                    <h5 class="footer-heading">{% trans 'Account' %}</h5>
+                    <ul class="list-unstyled footer-links">
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'accounts:logout' %}">{% trans 'Logout' %}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'accounts:login' %}">{% trans 'Log In' %}</a></li>
+                            <li><a href="{% url 'accounts:register' %}">{% trans 'Sign Up' %}</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'cart:list' %}">{% trans 'My Cart' %}</a></li>
+                        <li><a href="{% url 'favourites:favourites' %}">{% trans 'Wishlist' %}</a></li>
+                        <li><a href="{% url 'orders:my_orders' %}">{% trans 'Order History' %}</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-12 text-md-start text-lg-end"> {# Adjusted alignment #}
+                    <h5 class="footer-heading">{% trans 'Stay Connected' %}</h5>
+                    <p class="footer-text">{% trans 'Follow us on social media for updates and offers.' %}</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="{% trans 'Facebook' %}" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="{% trans 'Twitter' %}" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="{% trans 'Instagram' %}" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="{% trans 'LinkedIn' %}" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
             </div>
+            <hr class="footer-divider">
+            <div class="text-center footer-copyright">
+                © {% now "Y" %} {% trans 'E-Shop' %}. {% trans 'All Rights Reserved.' %} | <a
+                    href="#">{% trans 'Privacy Policy' %}</a> | <a href="#">{% trans 'Terms of Service' %}</a>
+            </div>
         </div>
-        <hr class="footer-divider">
-        <div class="text-center footer-copyright">
-            © {% now "Y" %} E-Shop. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-        </div>
-    </div>
     {% endblock %}
 </footer>
 
 <!-- Bootstrap JS Bundle (includes Popper) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"
+        defer></script>
 
 <!-- Base Custom JS -->
 <script src="{% static 'js/base.js' %}" defer></script>

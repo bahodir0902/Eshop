@@ -1,41 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Checkout - Success{% endblock %}
+{% block title %}{% trans 'Checkout - Success' %}{% endblock %}
 
 {% block content %}
     <div class="cart-wrapper">
         <div class="cart-container">
             <!-- Header Section -->
             <div class="cart-header">
-                <h1 class="cart-title">Checkout</h1>
+                <h1 class="cart-title">{% trans 'Checkout' %}</h1>
                 <div class="cart-progress">
                     <div class="progress-step completed">
                         <div class="step-icon">
                             <i class="fa-solid fa-cart-shopping"></i>
                         </div>
-                        <span>Cart</span>
+                        <span>{% trans 'Cart' %}</span>
                     </div>
                     <div class="progress-line completed"></div>
                     <div class="progress-step completed">
                         <div class="step-icon">
                             <i class="fa-solid fa-address-card"></i>
                         </div>
-                        <span>Details</span>
+                        <span>{% trans 'Details' %}</span>
                     </div>
                     <div class="progress-line completed"></div>
                     <div class="progress-step completed">
                         <div class="step-icon">
                             <i class="fa-solid fa-credit-card"></i>
                         </div>
-                        <span>Payment</span>
+                        <span>{% trans 'Payment' %}</span>
                     </div>
                     <div class="progress-line completed"></div>
                     <div class="progress-step active completed">
                         <div class="step-icon">
                             <i class="fa-solid fa-check"></i>
                         </div>
-                        <span>Confirmation</span>
+                        <span>{% trans 'Confirmation' %}</span>
                     </div>
                 </div>
             </div>
@@ -53,13 +54,13 @@
                     </div>
 
                     <div class="success-message">
-                        <h2>Thank You for Your Order!</h2>
-                        <p class="order-number">Order ID: <span id="order-reference">{{ order_number }}</span></p>
+                        <h2>{% trans 'Thank You for Your Order!' %}</h2>
+                        <p class="order-number">{% trans 'Order ID:' %} <span id="order-reference">{{ order_number }}</span></p>
                         <p class="confirmation-message">
-                            Your payment has been successfully processed and your order is confirmed.
+                            {% trans 'Your payment has been successfully processed and your order is confirmed.' %}
                         </p>
                         <p class="email-notification">
-                            We've sent a confirmation email to <strong>{{ email }}</strong> with your order details.
+                            {% trans "We\'ve sent a confirmation email to" %} <strong>{{ email }}</strong> {% trans "with your order details." %}
                         </p>
                     </div>
 
@@ -69,12 +70,12 @@
                                 <i class="fa-solid fa-truck-fast"></i>
                             </div>
                             <div class="info-content">
-                                <h3>Delivery Details</h3>
-                                <p class="delivery-estimate">Estimated delivery: <strong>up to {{ delivery_date.date }}</strong>
+                                <h3>{% trans 'Delivery Details' %}</h3>
+                                <p class="delivery-estimate">{% trans 'Estimated delivery:' %} <strong>{% trans 'up to' %} {{ delivery_date.date }}</strong>
                                 </p>
                                 <p class="delivery-address">
-                                    Shipping to: {{ address_line_1 }}, {% if address_line_2 %}{{ address_line_2 }},
-                                    {% endif %} {{ postal_code }} Postal code, {{ city }}, {{ state }}, {{ country }}
+                                    {% trans 'Shipping to:' %} {{ address_line_1 }}, {% if address_line_2 %}{{ address_line_2 }},
+                                    {% endif %} {{ postal_code }} {% trans 'Postal code' %}, {{ city }}, {{ state }}, {{ country }}
                                 </p>
                             </div>
                         </div>
@@ -82,10 +83,10 @@
 
                     <div class="purchase-actions">
                         <a href="#" class="btn-action view-order">
-                            <i class="fa-solid fa-receipt"></i> View Order Details
+                            <i class="fa-solid fa-receipt"></i> {% trans 'View Order Details' %}
                         </a>
                         <a href="{% url 'products:products' %}" class="btn-action continue-shopping">
-                            <i class="fa-solid fa-store"></i> Continue Shopping
+                            <i class="fa-solid fa-store"></i> {% trans 'Continue Shopping' %}
                         </a>
                     </div>
                 </div>
@@ -93,9 +94,9 @@
                 <!-- Order Summary Section -->
                 <div class="order-summary">
                     <div class="summary-header">
-                        <h2>Order Summary</h2>
+                        <h2>{% trans 'Order Summary' %}</h2>
                         <div class="summary-toggle">
-                            <span>Details</span>
+                            <span>{% trans 'Details' %}</span>
                             <i class="fa-solid fa-chevron-down"></i>
                         </div>
                     </div>
@@ -128,22 +129,22 @@
 
                         <!-- Cost Breakdown -->
                         <div class="summary-row">
-                            <span>Subtotal</span>
+                            <span>{% trans 'Subtotal' %}</span>
                             <span class="subtotal-amount">${{ subtotal_order_price|floatformat:2 }}</span>
                         </div>
                         <div class="summary-row">
-                            <span>Shipping</span>
+                            <span>{% trans 'Shipping' %}</span>
                             <span id="shipping-cost">${{ shipping_cost|floatformat:2 }}</span>
                         </div>
 
                         <div class="summary-divider"></div>
                         <div class="summary-row total-row">
-                            <span>Total</span>
+                            <span>{% trans 'Total' %}</span>
                             <span class="total-amount">${{ total_order_cost|floatformat:2 }}</span>
                         </div>
 
                         <div class="payment-methods">
-                            <span>Secure Payment</span>
+                            <span>{% trans 'Secure Payment' %}</span>
                             <div class="payment-icons">
                                 <i class="fab fa-cc-visa"></i>
                                 <i class="fab fa-cc-mastercard"></i>

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block extra_css %}
 <style>
@@ -112,55 +113,55 @@
 
   <div class="profile-section">
     <div class="section-header">
-      <h2>Personal Information</h2>
-      <a href="{% url 'accounts:profile_edit' %}" class="edit-button">Edit</a>
+      <h2>{% trans 'Personal Information' %}</h2>
+      <a href="{% url 'accounts:profile_edit' %}" class="edit-button">{% trans 'Edit' %}</a>
     </div>
 
     <div class="info-group">
-      <div class="info-label">First Name</div>
+      <div class="info-label">{% trans 'First Name' %}</div>
       <div class="info-value">{{ request.user.first_name }}</div>
 
-      <div class="info-label">Last Name</div>
+      <div class="info-label">{% trans 'Last Name' %}</div>
       <div class="info-value">{{ request.user.last_name }}</div>
 
-      <div class="info-label">Email</div>
+      <div class="info-label">{% trans 'Email' %}</div>
       <div class="info-value">{{ request.user.email }}</div>
     </div>
   </div>
 
   <div class="profile-section">
     <div class="section-header">
-      <h2>Address Details</h2>
-      <a href="{% url 'accounts:profile_edit' %}" class="edit-button">Edit</a>
+      <h2>{% trans 'Address Details' %}</h2>
+      <a href="{% url 'accounts:profile_edit' %}" class="edit-button">{% trans 'Edit' %}</a>
     </div>
 
     {% if address_form.instance.id %}
     <div class="info-group">
-      <div class="info-label">Address Line 1</div>
+      <div class="info-label">{% trans 'Address Line 1' %}</div>
       <div class="info-value">{{ address_form.instance.address_line_1 }}</div>
 
       {% if address_form.instance.address_line_2 %}
-      <div class="info-label">Address Line 2</div>
+      <div class="info-label">{% trans 'Address Line 2' %}</div>
       <div class="info-value">{{ address_form.instance.address_line_2 }}</div>
       {% endif %}
 
-      <div class="info-label">City</div>
+      <div class="info-label">{% trans 'City' %}</div>
       <div class="info-value">{{ address_form.instance.city }}</div>
 
-      <div class="info-label">State/Province</div>
+      <div class="info-label">{% trans 'State/Province' %}</div>
       <div class="info-value">{{ address_form.instance.state_or_province }}</div>
 
-      <div class="info-label">Country</div>
+      <div class="info-label">{% trans 'Country' %}</div>
       <div class="info-value">{{ address_form.instance.country }}</div>
 
-      <div class="info-label">Postal Code</div>
+      <div class="info-label">{% trans 'Postal Code' %}</div>
       <div class="info-value">{{ address_form.instance.postal_code }}</div>
 
-      <div class="info-label">Is primary address</div>
+      <div class="info-label">{% trans 'Is primary address' %}</div>
       <div class="info-value">{{ address_form.instance.is_primary }}</div>
     </div>
     {% else %}
-    <p>No address information has been added yet. <a href="{% url 'accounts:profile_edit' %}">Add address details</a></p>
+    <p>{% trans 'No address information has been added yet.' %} <a href="{% url 'accounts:profile_edit' %}">{% trans 'Add address details' %}</a></p>
     {% endif %}
   </div>
 </div>

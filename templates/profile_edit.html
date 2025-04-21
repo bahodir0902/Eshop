@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="edit-container">
   <div class="edit-header">
-    <h1 class="edit-title">Edit Profile</h1>
-    <p>Update your personal information and address details</p>
+    <h1 class="edit-title">{% trans 'Edit Profile' %}</h1>
+    <p>{% trans 'Update your personal information and address details' %}</p>
   </div>
-  
+
   <form method="post" action="{% url 'accounts:profile_edit' %}">
     {% csrf_token %}
-    
+
     <div class="form-section">
-      <h2 class="section-title">Personal Information</h2>
-      
+      <h2 class="section-title">{% trans 'Personal Information' %}</h2>
+
       <div class="form-group">
-        <label for="{{ profile_form.first_name.id_for_label }}">First Name</label>
+        <label for="{{ profile_form.first_name.id_for_label }}">{% trans 'First Name' %}</label>
         {{ profile_form.first_name }}
         {% if profile_form.first_name.errors %}
           <ul class="errorlist">
@@ -25,9 +26,9 @@
           </ul>
         {% endif %}
       </div>
-      
+
       <div class="form-group">
-        <label for="{{ profile_form.last_name.id_for_label }}">Last Name</label>
+        <label for="{{ profile_form.last_name.id_for_label }}">{% trans 'Last Name' %}</label>
         {{ profile_form.last_name }}
         {% if profile_form.last_name.errors %}
           <ul class="errorlist">
@@ -37,9 +38,9 @@
           </ul>
         {% endif %}
       </div>
-      
+
       <div class="form-group">
-        <label for="{{ profile_form.email.id_for_label }}">Email</label>
+        <label for="{{ profile_form.email.id_for_label }}">{% trans 'Email' %}</label>
         {{ profile_form.email }}
         {% if profile_form.email.errors %}
           <ul class="errorlist">
@@ -50,12 +51,12 @@
         {% endif %}
       </div>
     </div>
-    
+
     <div class="form-section">
-      <h2 class="section-title">Address Details</h2>
-      
+      <h2 class="section-title">{% trans 'Address Details' %}</h2>
+
       <div class="form-group">
-        <label for="{{ address_form.address_line_1.id_for_label }}">Address Line 1</label>
+        <label for="{{ address_form.address_line_1.id_for_label }}">{% trans 'Address Line 1' %}</label>
         {{ address_form.address_line_1 }}
         {% if address_form.address_line_1.errors %}
           <ul class="errorlist">
@@ -65,9 +66,9 @@
           </ul>
         {% endif %}
       </div>
-      
+
       <div class="form-group">
-        <label for="{{ address_form.address_line_2.id_for_label }}">Address Line 2 (Optional)</label>
+        <label for="{{ address_form.address_line_2.id_for_label }}">{% trans 'Address Line 2 (Optional)' %}</label>
         {{ address_form.address_line_2 }}
         {% if address_form.address_line_2.errors %}
           <ul class="errorlist">
@@ -77,9 +78,9 @@
           </ul>
         {% endif %}
       </div>
-      
+
       <div class="form-group">
-        <label for="{{ address_form.city.id_for_label }}">City</label>
+        <label for="{{ address_form.city.id_for_label }}">{% trans 'City' %}</label>
         {{ address_form.city }}
         {% if address_form.city.errors %}
           <ul class="errorlist">
@@ -90,8 +91,8 @@
         {% endif %}
       </div>
 
-    <div class="form-group">
-        <label for="{{ address_form.state_or_province.id_for_label }}">State/Province</label>
+      <div class="form-group">
+        <label for="{{ address_form.state_or_province.id_for_label }}">{% trans 'State/Province' %}</label>
         {{ address_form.state_or_province }}
         {% if address_form.state_or_province.errors %}
           <ul class="errorlist">
@@ -103,7 +104,7 @@
       </div>
 
       <div class="form-group">
-        <label for="{{ address_form.country.id_for_label }}">Country</label>
+        <label for="{{ address_form.country.id_for_label }}">{% trans 'Country' %}</label>
         {{ address_form.country }}
         {% if address_form.country.errors %}
           <ul class="errorlist">
@@ -113,9 +114,9 @@
           </ul>
         {% endif %}
       </div>
-      
+
       <div class="form-group">
-        <label for="{{ address_form.postal_code.id_for_label }}">Postal Code</label>
+        <label for="{{ address_form.postal_code.id_for_label }}">{% trans 'Postal Code' %}</label>
         {{ address_form.postal_code }}
         {% if address_form.postal_code.errors %}
           <ul class="errorlist">
@@ -127,15 +128,15 @@
       </div>
 
       <div class="form-group">
-        <label for="{{ address_form.is_primary.id_for_label }}">Is primary address</label>
+        <label for="{{ address_form.is_primary.id_for_label }}">{% trans 'Is primary address' %}</label>
         {{ address_form.is_primary }}
       </div>
 
     </div>
-    
+
     <div class="button-group">
-      <a href="{% url 'accounts:profile' %}" class="cancel-button">Cancel</a>
-      <button type="submit" class="save-button">Save Changes</button>
+      <a href="{% url 'accounts:profile' %}" class="cancel-button">{% trans 'Cancel' %}</a>
+      <button type="submit" class="save-button">{% trans 'Save Changes' %}</button>
     </div>
   </form>
 </div>

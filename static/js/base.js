@@ -1,6 +1,6 @@
 // static/js/base.js
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const header = document.getElementById('page-header');
     const scrollThreshold = 50; // Pixels to scroll before changing navbar style
 
@@ -18,7 +18,22 @@ document.addEventListener('DOMContentLoaded', function() {
     handleScroll();
 
     // Add scroll event listener
-    window.addEventListener('scroll', handleScroll, { passive: true }); // Use passive listener for performance
+    window.addEventListener('scroll', handleScroll, {passive: true}); // Use passive listener for performance
+
+
+    const languageItems = document.querySelectorAll('.language-item');
+
+    languageItems.forEach(item => {
+        item.addEventListener('mouseover', () => {
+            item.style.transform = 'translateX(5px)';
+        });
+
+        item.addEventListener('mouseout', () => {
+            item.style.transform = 'translateX(0)';
+        });
+    });
+
+
 
     // Optional: Update cart/wishlist counts if needed via AJAX after certain actions
     // Example function (replace with your actual logic)
@@ -39,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => console.error('Error fetching counts:', error));
     }
+
     updateCounts(); // Call on page load or after relevant actions
 
 });

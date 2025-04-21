@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Edit Product{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'Edit Product' %}{% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/add_product.css' %}">
     <style>
@@ -52,29 +53,29 @@
     <div class="container">
         <div class="product-form-card">
             <div class="form-header">
-                <h1>Edit Product</h1>
-                <p class="subtitle">Update product information</p>
+                <h1>{% trans 'Edit Product' %}</h1>
+                <p class="subtitle">{% trans 'Update product information' %}</p>
             </div>
             <form method="post" enctype="multipart/form-data" class="product-form">
                 {% csrf_token %}
 
                 <div class="form-section">
-                    <h2 class="section-title">Basic Information</h2>
+                    <h2 class="section-title">{% trans 'Basic Information' %}</h2>
 
                     <!-- Product Name -->
                     <div class="form-group">
-                        <label for="{{ form.name.id_for_label }}">Product Name</label>
+                        <label for="{{ form.name.id_for_label }}">{% trans 'Product Name' %}</label>
                         {{ form.name }}
                         {% if form.name.errors %}
                             <div class="form-error">{{ form.name.errors }}</div>
                         {% endif %}
-                        <span class="form-hint">Choose a descriptive name for your product</span>
+                        <span class="form-hint">{% trans 'Choose a descriptive name for your product' %}</span>
                     </div>
 
                     <div class="form-row">
                         <!-- Price -->
                         <div class="form-group">
-                            <label for="{{ form.price.id_for_label }}">Price</label>
+                            <label for="{{ form.price.id_for_label }}">{% trans 'Price' %}</label>
                             <div class="input-with-icon">
                                 <i class="fas fa-dollar-sign"></i>
                                 {{ form.price }}
@@ -86,7 +87,7 @@
 
                         <!-- URL Slug -->
                         <div class="form-group">
-                            <label for="{{ form.slug.id_for_label }}">URL Slug</label>
+                            <label for="{{ form.slug.id_for_label }}">{% trans 'URL Slug' %}</label>
                             <div class="input-with-icon">
                                 <i class="fas fa-link"></i>
                                 {{ form.slug }}
@@ -94,13 +95,13 @@
                             {% if form.slug.errors %}
                                 <div class="form-error">{{ form.slug.errors }}</div>
                             {% endif %}
-                            <span class="form-hint">Used in product URL: example-product</span>
+                            <span class="form-hint">{% trans 'Used in product URL: example-product' %}</span>
                         </div>
                     </div>
 
                     <!-- Stock Count -->
                     <div class="form-group half-width">
-                        <label for="{{ form.stock_count.id_for_label }}">Stock Count</label>
+                        <label for="{{ form.stock_count.id_for_label }}">{% trans 'Stock Count' %}</label>
                         <div class="input-with-icon">
                             <i class="fas fa-cubes"></i>
                             {{ form.stock_count }}
@@ -112,12 +113,12 @@
                 </div>
 
                 <div class="form-section">
-                    <h2 class="section-title">Classification</h2>
+                    <h2 class="section-title">{% trans 'Classification' %}</h2>
 
                     <div class="form-row">
                         <!-- Category -->
                         <div class="form-group">
-                            <label for="{{ form.category.id_for_label }}">Category</label>
+                            <label for="{{ form.category.id_for_label }}">{% trans 'Category' %}</label>
                             <div class="select-container">
                                 <i class="fas fa-tag"></i>
                                 {{ form.category }}
@@ -130,7 +131,7 @@
 
                         <!-- Shop -->
                         <div class="form-group">
-                            <label for="{{ form.shop.id_for_label }}">Shop</label>
+                            <label for="{{ form.shop.id_for_label }}">{% trans 'Shop' %}</label>
                             <div class="select-container">
                                 <i class="fas fa-store"></i>
                                 {{ form.shop }}
@@ -144,7 +145,7 @@
 
                     <!-- Inventory -->
                     <div class="form-group">
-                        <label for="{{ form.inventory.id_for_label }}">Inventory</label>
+                        <label for="{{ form.inventory.id_for_label }}">{% trans 'Inventory' %}</label>
                         <div class="select-container">
                             <i class="fas fa-warehouse"></i>
                             {{ form.inventory }}
@@ -157,53 +158,53 @@
                 </div>
 
                 <div class="form-section">
-                    <h2 class="section-title">Product Details</h2>
+                    <h2 class="section-title">{% trans 'Product Details' %}</h2>
 
                     <!-- Short Description -->
                     <div class="form-group">
-                        <label for="{{ form.short_description.id_for_label }}">Short Description</label>
+                        <label for="{{ form.short_description.id_for_label }}">{% trans 'Short Description' %}</label>
                         {{ form.short_description }}
                         {% if form.short_description.errors %}
                             <div class="form-error">{{ form.short_description.errors }}</div>
                         {% endif %}
-                        <span class="form-hint">Short catchy description for product listings (max 255 characters)</span>
+                        <span class="form-hint">{% trans 'Short catchy description for product listings (max 255 characters)' %}</span>
                     </div>
 
                     <!-- Full Description -->
                     <div class="form-group">
-                        <label for="{{ form.full_description.id_for_label }}">Full Description</label>
+                        <label for="{{ form.full_description.id_for_label }}">{% trans 'Full Description' %}</label>
                         {{ form.full_description }}
                         {% if form.full_description.errors %}
                             <div class="form-error">{{ form.full_description.errors }}</div>
                         {% endif %}
-                        <span class="form-hint">Detailed product description with marketing tone</span>
+                        <span class="form-hint">{% trans 'Detailed product description with marketing tone' %}</span>
                     </div>
 
                     <!-- Key Features -->
                     <div class="form-group">
-                        <label for="{{ form.key_features.id_for_label }}">Key Features</label>
+                        <label for="{{ form.key_features.id_for_label }}">{% trans 'Key Features' %}</label>
                         {{ form.key_features }}
                         {% if form.key_features.errors %}
                             <div class="form-error">{{ form.key_features.errors }}</div>
                         {% endif %}
-                        <span class="form-hint">Enter features separated by comma</span>
-                        <span class="form-hint-code">Feature 1, Feature 2, Feature 3</span>
+                        <span class="form-hint">{% trans 'Enter features separated by comma' %}</span>
+                        <span class="form-hint-code">{% trans 'Feature 1, Feature 2, Feature 3' %}</span>
                     </div>
 
                     <!-- Specifications -->
                     <div class="form-group">
-                        <label for="{{ form.specifications.id_for_label }}">Specifications</label>
+                        <label for="{{ form.specifications.id_for_label }}">{% trans 'Specifications' %}</label>
                         {{ form.specifications }}
                         {% if form.specifications.errors %}
                             <div class="form-error">{{ form.specifications.errors }}</div>
                         {% endif %}
-                        <span class="form-hint">Enter specifications as a key-value pair separated by comma</span>
-                        <span class="form-hint-code">Weight: 2.5kg, Dimensions: 10 x 15 x 5 cm, Material: Aluminum}</span>
+                        <span class="form-hint">{% trans 'Enter specifications as a key-value pair separated by comma' %}</span>
+                        <span class="form-hint-code">{% trans 'Weight: 2.5kg, Dimensions: 10 x 15 x 5 cm, Material: Aluminum' %}</span>
                     </div>
 
                     <!-- Image Upload -->
                     <div class="form-group">
-                        <label>Product Image</label>
+                        <label>{% trans 'Product Image' %}</label>
                         <div class="image-upload-container">
                             <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}"
                                    class="file-input">
@@ -212,15 +213,15 @@
                                     <i class="fas fa-cloud-upload-alt"></i>
                                 </div>
                                 <div class="upload-text">
-                                    <span class="primary-text">Drop your image here or click to browse</span>
-                                    <span class="secondary-text">Supports: JPG, PNG, GIF (Max 5MB)</span>
+                                    <span class="primary-text">{% trans 'Drop your image here or click to browse' %}</span>
+                                    <span class="secondary-text">{% trans 'Supports: JPG, PNG, GIF (Max 5MB)' %}</span>
                                 </div>
                             </div>
                             <div class="selected-file">
                                 <div class="file-preview"></div>
                                 <div class="file-info">
-                                    <span class="file-name">No file selected</span>
-                                    <button type="button" class="remove-file">Remove</button>
+                                    <span class="file-name">{% trans 'No file selected' %}</span>
+                                    <button type="button" class="remove-file">{% trans 'Remove' %}</button>
                                 </div>
                             </div>
                         </div>
@@ -229,7 +230,7 @@
                         {% endif %}
                         {% if form.instance.image %}
                             <div class="current-image">
-                                <span class="current-image-label">Current image:</span>
+                                <span class="current-image-label">{% trans 'Current image:' %}</span>
                                 <div class="current-image-preview">
                                     <img src="{{ form.instance.image.url }}" alt="{{ form.instance.name }}">
                                 </div>
@@ -239,14 +240,14 @@
                 </div>
 
                 <div class="form-section">
-                    <h2 class="section-title">Product Status</h2>
+                    <h2 class="section-title">{% trans 'Product Status' %}</h2>
 
                     <div class="toggle-options">
                         <!-- Available Toggle -->
                         <div class="toggle-option">
                             <div class="toggle-label">
-                                <span>Available for Purchase</span>
-                                <span class="status-hint">Make product visible to customers</span>
+                                <span>{% trans 'Available for Purchase' %}</span>
+                                <span class="status-hint">{% trans 'Make product visible to customers' %}</span>
                             </div>
                             <label class="toggle-switch">
                                 {{ form.is_available }}
@@ -260,8 +261,8 @@
                         <!-- Featured Toggle -->
                         <div class="toggle-option">
                             <div class="toggle-label">
-                                <span>Featured Product</span>
-                                <span class="status-hint">Show in featured sections</span>
+                                <span>{% trans 'Featured Product' %}</span>
+                                <span class="status-hint">{% trans 'Show in featured sections' %}</span>
                             </div>
                             <label class="toggle-switch">
                                 {{ form.is_featured }}
@@ -275,8 +276,8 @@
                         <!-- Discounted Toggle -->
                         <div class="toggle-option">
                             <div class="toggle-label">
-                                <span>Discounted</span>
-                                <span class="status-hint">Apply discount to this product</span>
+                                <span>{% trans 'Discounted' %}</span>
+                                <span class="status-hint">{% trans 'Apply discount to this product' %}</span>
                             </div>
                             <label class="toggle-switch">
                                 {{ form.is_discounted }}
@@ -290,10 +291,10 @@
                 </div>
 
                 <div class="form-actions">
-                    <a href="{% url 'products:manage_products' %}" class="btn btn-secondary">Cancel</a>
+                    <a href="{% url 'products:manage_products' %}" class="btn btn-secondary">{% trans 'Cancel' %}</a>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i>
-                        <span>Save Changes</span>
+                        <span>{% trans 'Save Changes' %}</span>
                     </button>
                 </div>
             </form>
@@ -302,6 +303,9 @@
 {% endblock %}
 {% block extra_js %}
     <script>
+        // For translating JavaScript messages
+        const noFileSelected = "{% trans 'No file selected' %}";
+
         document.addEventListener('DOMContentLoaded', function () {
             // File upload preview
             const fileInput = document.querySelector('.file-input');
@@ -319,7 +323,7 @@
                     if (file.type.match('image.*')) {
                         const reader = new FileReader();
                         reader.onload = function (e) {
-                            filePreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                            filePreview.innerHTML = `<img src="${e.target.result}" alt="{% trans 'Preview' %}">`;
                         }
                         reader.readAsDataURL(file);
                     } else {
@@ -336,7 +340,7 @@
                 uploadUI.style.display = 'flex';
                 selectedFile.style.display = 'none';
                 filePreview.innerHTML = '';
-                fileName.textContent = 'No file selected';
+                fileName.textContent = noFileSelected;
             });
 
             // Make the entire upload area clickable

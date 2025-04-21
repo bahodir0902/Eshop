@@ -1,16 +1,17 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="verify-container">
-    <h2 class="verify-title">Verify Your Email 📩</h2>
+    <h2 class="verify-title">{% trans 'Verify Your Email 📩' %}</h2>
     <p class="verify-message">
-        We've sent you a 4-digit passcode to verify your email address. Please check your inbox (and spam folder just in case) and enter the code below to proceed.
+        {% trans "We've sent you a 4-digit passcode to verify your email address. Please check your inbox (and spam folder just in case) and enter the code below to proceed." %}
     </p>
 
     <form method="POST" >
         {% csrf_token %}
-        <input type="text" name="verification_code" class="verify-input" placeholder="Enter 4-digit code" maxlength="4" required>
-        <button type="submit" class="verify-button">Verify</button>
+        <input type="text" name="verification_code" class="verify-input" placeholder="{% trans 'Enter 4-digit code' %}" maxlength="4" required>
+        <button type="submit" class="verify-button">{% trans 'Verify' %}</button>
         {% if messages %}
         <div class="error-messages">
             {% for message in messages %}
@@ -21,7 +22,7 @@
     </form>
 
     <p class="verify-note">
-        Didn’t receive the email? <a href="" class="verify-link">Try again</a>.
+        {% trans "Didn't receive the email?" %} <a href="" class="verify-link">{% trans 'Try again' %}</a>.
     </p>
 </div>
 
