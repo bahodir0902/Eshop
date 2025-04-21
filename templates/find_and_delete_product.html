@@ -1,30 +1,31 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}
-    Product lists
+    {% trans 'Product lists' %}
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1 class="text-center m-3">Products lists</h1>
+        <h1 class="text-center m-3">{% trans 'Products lists' %}</h1>
         <div class="cart-container d-flex gap-5 justify-content-center ">
             {% for product in products %}
                 <div class="card" style="width: 18rem; border: 2px solid gray;">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">Description: {{ product.description }}</p>
+                        <p class="card-text">{% trans 'Description:' %} {{ product.description }}</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Price: {{ product.price }}$</li>
-                        <li class="list-group-item">Created at: {{ product.created_at }}</li>
+                        <li class="list-group-item">{% trans 'Price:' %} {{ product.price }}$</li>
+                        <li class="list-group-item">{% trans 'Created at:' %} {{ product.created_at }}</li>
                     </ul>
                     <div class="card-body">
-                        <a class="btn btn-danger" href="{% url 'shop:delete_product' product.pk %}">Delete product</a>
+                        <a class="btn btn-danger" href="{% url 'shop:delete_product' product.pk %}">{% trans 'Delete product' %}</a>
 
                     </div>
                 </div>
                 <br>
             {% empty %}
-                <p>No products available</p>
+                <p>{% trans 'No products available' %}</p>
             {% endfor %}
         </div>
     </div>

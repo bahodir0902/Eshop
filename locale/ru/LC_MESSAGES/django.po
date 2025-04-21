@@ -1,0 +1,261 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-21 02:34+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\accounts\forms.py:66
+#, fuzzy
+#| msgid "First name:"
+msgid "first_name"
+msgstr "Имя:"
+
+#: .\accounts\forms.py:67
+#, fuzzy
+#| msgid "Last name:"
+msgid "last_name"
+msgstr "Фамилия:"
+
+#: .\accounts\forms.py:68
+#, fuzzy
+#| msgid "Email"
+msgid "email"
+msgstr "Электронная почта"
+
+#: .\accounts\forms.py:69
+#, fuzzy
+#| msgid "Phone:"
+msgid "phone"
+msgstr "Телефон:"
+
+#: .\accounts\forms.py:70 .\accounts\models.py:39
+msgid "bio"
+msgstr "биография"
+
+#: .\accounts\forms.py:71
+msgid "image"
+msgstr "фотография"
+
+#: .\accounts\models.py:8
+msgid "name"
+msgstr "имя НАПРЯМУЮ ИЗ FORMS"
+
+#: .\accounts\models.py:38
+msgid "Image"
+msgstr "Фотография"
+
+#: .\accounts\models.py:40
+msgid "phone number"
+msgstr "номер телефона"
+
+#: .\config\settings.py:127
+msgid "English"
+msgstr "Английский"
+
+#: .\config\settings.py:128
+msgid "Russian"
+msgstr "Русский"
+
+#: .\config\settings.py:129
+msgid "Uzbek"
+msgstr "Узбекский"
+
+#: .\templates\add_product_form.html:4 .\templates\add_product_form.html:13
+#: .\templates\base.html:464
+msgid "Add Product"
+msgstr "Добавить продукт"
+
+#: .\templates\add_product_form.html:9
+msgid "Add a New Product"
+msgstr "Добавить новый продукт"
+
+#: .\templates\base.html:450
+msgid "Home"
+msgstr "Главная"
+
+#: .\templates\base.html:456
+msgid "Products"
+msgstr "Продукты"
+
+#: .\templates\base.html:470
+msgid "Edit Product"
+msgstr "Редактировать продукт"
+
+#: .\templates\base.html:476
+msgid "Delete Product"
+msgstr "Удалить продукт"
+
+#: .\templates\base.html:492
+msgid "Search products"
+msgstr "Поиск продуктов"
+
+#: .\templates\base.html:494
+msgid "Search"
+msgstr "Поиск"
+
+#: .\templates\base.html:529
+msgid "My Profile"
+msgstr "Мой профиль"
+
+#: .\templates\base.html:534
+msgid "Logout"
+msgstr "Выйти"
+
+#: .\templates\base.html:540 .\templates\login.html:9 .\templates\login.html:18
+msgid "Login"
+msgstr "Войти"
+
+#: .\templates\base.html:543 .\templates\register.html:8
+#: .\templates\register.html:15
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: .\templates\check-email.html:7
+msgid "Verification code"
+msgstr "Код подтверждения"
+
+#: .\templates\check-email.html:8
+msgid "Enter 4-digit code"
+msgstr "Введите 4-значный код"
+
+#: .\templates\check-email.html:13
+msgid "Submit"
+msgstr "Отправить"
+
+#: .\templates\create-new-password.html:7
+msgid "New password"
+msgstr "Новый пароль"
+
+#: .\templates\create-new-password.html:10
+msgid "Confirm password"
+msgstr "Подтвердите пароль"
+
+#: .\templates\create-new-password.html:18
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+#: .\templates\edit_product.html:8
+msgid "Save Changes"
+msgstr "Сохранить изменения"
+
+#: .\templates\edit_product.html:9 .\templates\profile.html:141
+msgid "Cancel"
+msgstr "Отмена"
+
+#: .\templates\find_and_delete_product.html:4
+#: .\templates\find_and_edit_product.html:4 .\templates\list_products.html:4
+msgid "Product lists"
+msgstr "Списки продуктов"
+
+#: .\templates\find_and_delete_product.html:9
+#: .\templates\find_and_edit_product.html:9 .\templates\list_products.html:9
+msgid "Products lists"
+msgstr "Списки продуктов"
+
+#: .\templates\find_and_delete_product.html:15
+#: .\templates\find_and_edit_product.html:15 .\templates\list_products.html:15
+msgid "Description:"
+msgstr "Описание:"
+
+#: .\templates\find_and_delete_product.html:18
+#: .\templates\find_and_edit_product.html:18 .\templates\list_products.html:18
+msgid "Price:"
+msgstr "Цена:"
+
+#: .\templates\find_and_delete_product.html:19
+#: .\templates\find_and_edit_product.html:19 .\templates\list_products.html:19
+msgid "Created at:"
+msgstr "Создано:"
+
+#: .\templates\find_and_delete_product.html:22
+msgid "Delete product"
+msgstr "Удалить продукт"
+
+#: .\templates\find_and_delete_product.html:28
+#: .\templates\find_and_edit_product.html:28 .\templates\list_products.html:29
+msgid "No products available"
+msgstr "Нет доступных продуктов"
+
+#: .\templates\find_and_edit_product.html:22
+msgid "Edit product"
+msgstr "Редактировать продукт"
+
+#: .\templates\forgot-password.html:8
+msgid "Email"
+msgstr "Электронная почта"
+
+#: .\templates\forgot-password.html:9
+msgid "Enter your email address"
+msgstr "Введите ваш адрес электронной почты"
+
+#: .\templates\forgot-password.html:15
+msgid "Send Verification Code"
+msgstr "Отправить код подтверждения"
+
+#: .\templates\list_products.html:22
+msgid "Buy"
+msgstr "Купить"
+
+#: .\templates\list_products.html:23
+msgid "Add to Cart"
+msgstr "Добавить в корзину"
+
+#: .\templates\login.html:20 .\templates\register.html:17
+msgid "Continue with google"
+msgstr "Продолжить с Google"
+
+#: .\templates\login.html:21
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: .\templates\profile.html:105
+msgid "Profile Photo"
+msgstr "Фото профиля"
+
+#: .\templates\profile.html:116
+msgid "Personal Information"
+msgstr "Личная информация"
+
+#: .\templates\profile.html:121
+msgid "First name:"
+msgstr "Имя:"
+
+#: .\templates\profile.html:123
+msgid "Last name:"
+msgstr "Фамилия:"
+
+#: .\templates\profile.html:125
+msgid "Phone:"
+msgstr "Телефон:"
+
+#: .\templates\profile.html:127
+msgid "Biography:"
+msgstr "Биография:"
+
+#: .\templates\profile.html:129
+msgid "Profile Image:"
+msgstr "Изображение профиля:"
+
+#: .\templates\profile.html:131
+msgid "Email address:"
+msgstr "Адрес электронной почты:"
+
+#: .\templates\profile.html:140
+msgid "Save changes"
+msgstr "Сохранить изменения"

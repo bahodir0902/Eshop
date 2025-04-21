@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="edit-container">
+        <div class="edit-header">
+            <h1 class="edit-title">Edit Profile</h1>
+            <p>Update your personal information and address details</p>
+        </div>
+
+        <form method="post" action="">
+            <div class="form-section">
+                <h2 class="section-title">Personal Information</h2>
+
+                <div class="form-group">
+                    <label for="">First Name</label>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="">Last Name</label>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="">Email</label>
+
+                    {% if profile_form.email.errors %}
+                        <ul class="errorlist">
+                            {% for error in profile_form.email.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <div class="button-group">
+                <a href="" class="cancel-button">Cancel</a>
+                <button type="submit" class="save-button">Save Changes</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .edit-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .edit-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .edit-title {
+            margin: 0 0 10px 0;
+            color: #343a40;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .cancel-button {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .save-button {
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .save-button:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        .cancel-button:hover {
+            background-color: #e9ecef;
+            color: #212529;
+        }
+
+        .errorlist {
+            color: #dc3545;
+            list-style-type: none;
+            padding: 0;
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .edit-container {
+                padding: 20px;
+                margin: 20px;
+            }
+        }
+    </style>
+{% endblock %}

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block content %}
     <form action="{% url 'accounts:check_email' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <label for="code">Verification code</label>
-            <input type="text" maxlength="4" id="code" name="code" placeholder="Enter 4-digit code..." required>
+            <label for="code">{% trans 'Verification code' %}</label>
+            <input type="text" maxlength="4" id="code" name="code" placeholder="{% trans 'Enter 4-digit code' %}..." required>
             {% for message in messages %}
                 <p style="color: red; font-size: 13px;">{{ message }}</p>
             {% endfor %}
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">{% trans 'Submit' %}</button>
     </form>
 {% endblock %}

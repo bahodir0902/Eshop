@@ -1,0 +1,259 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-21 02:34+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\accounts\forms.py:66
+#, fuzzy
+#| msgid "First name:"
+msgid "first_name"
+msgstr "Ism:"
+
+#: .\accounts\forms.py:67
+#, fuzzy
+#| msgid "Last name:"
+msgid "last_name"
+msgstr "Familiya:"
+
+#: .\accounts\forms.py:68
+#, fuzzy
+#| msgid "Email"
+msgid "email"
+msgstr "Elektron pochta"
+
+#: .\accounts\forms.py:69
+#, fuzzy
+#| msgid "Phone:"
+msgid "phone"
+msgstr "Telefon:"
+
+#: .\accounts\forms.py:70 .\accounts\models.py:39
+msgid "bio"
+msgstr "biografiya"
+
+#: .\accounts\forms.py:71
+msgid "image"
+msgstr "rasm"
+
+#: .\accounts\models.py:8
+msgid "name"
+msgstr "ism"
+
+#: .\accounts\models.py:38
+msgid "Image"
+msgstr "Rasm"
+
+#: .\accounts\models.py:40
+msgid "phone number"
+msgstr "Telefon raqami"
+
+#: .\config\settings.py:127
+msgid "English"
+msgstr "Inglizcha"
+
+#: .\config\settings.py:128
+msgid "Russian"
+msgstr "Ruscha"
+
+#: .\config\settings.py:129
+msgid "Uzbek"
+msgstr "O'zbekcha"
+
+#: .\templates\add_product_form.html:4 .\templates\add_product_form.html:13
+#: .\templates\base.html:464
+msgid "Add Product"
+msgstr "Mahsulot qo'shish"
+
+#: .\templates\add_product_form.html:9
+msgid "Add a New Product"
+msgstr "Yangi mahsulot qo'shish"
+
+#: .\templates\base.html:450
+msgid "Home"
+msgstr "Bosh sahifa"
+
+#: .\templates\base.html:456
+msgid "Products"
+msgstr "Mahsulotlar"
+
+#: .\templates\base.html:470
+msgid "Edit Product"
+msgstr "Mahsulotni tahrirlash"
+
+#: .\templates\base.html:476
+msgid "Delete Product"
+msgstr "Mahsulotni o'chirish"
+
+#: .\templates\base.html:492
+msgid "Search products"
+msgstr "Mahsulotlarni izlash"
+
+#: .\templates\base.html:494
+msgid "Search"
+msgstr "Izlash"
+
+#: .\templates\base.html:529
+msgid "My Profile"
+msgstr "Mening Profilim"
+
+#: .\templates\base.html:534
+msgid "Logout"
+msgstr "Chiqish"
+
+#: .\templates\base.html:540 .\templates\login.html:9 .\templates\login.html:18
+msgid "Login"
+msgstr "Kirish"
+
+#: .\templates\base.html:543 .\templates\register.html:8
+#: .\templates\register.html:15
+msgid "Register"
+msgstr "Ro'yxatdan o'tish"
+
+#: .\templates\check-email.html:7
+msgid "Verification code"
+msgstr "Tasdiqlash kodi"
+
+#: .\templates\check-email.html:8
+msgid "Enter 4-digit code"
+msgstr "4 raqamli kodni kiriting"
+
+#: .\templates\check-email.html:13
+msgid "Submit"
+msgstr "Yuborish"
+
+#: .\templates\create-new-password.html:7
+msgid "New password"
+msgstr "Yangi parol"
+
+#: .\templates\create-new-password.html:10
+msgid "Confirm password"
+msgstr "Parolni tasdiqlang"
+
+#: .\templates\create-new-password.html:18
+msgid "Change Password"
+msgstr "Parolni o'zgartirish"
+
+#: .\templates\edit_product.html:8
+msgid "Save Changes"
+msgstr "O'zgarishlarni saqlash"
+
+#: .\templates\edit_product.html:9 .\templates\profile.html:141
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+#: .\templates\find_and_delete_product.html:4
+#: .\templates\find_and_edit_product.html:4 .\templates\list_products.html:4
+msgid "Product lists"
+msgstr "Mahsulotlar ro'yxati"
+
+#: .\templates\find_and_delete_product.html:9
+#: .\templates\find_and_edit_product.html:9 .\templates\list_products.html:9
+msgid "Products lists"
+msgstr "Mahsulotlar ro'yxati"
+
+#: .\templates\find_and_delete_product.html:15
+#: .\templates\find_and_edit_product.html:15 .\templates\list_products.html:15
+msgid "Description:"
+msgstr "Tavsif:"
+
+#: .\templates\find_and_delete_product.html:18
+#: .\templates\find_and_edit_product.html:18 .\templates\list_products.html:18
+msgid "Price:"
+msgstr "Narxi:"
+
+#: .\templates\find_and_delete_product.html:19
+#: .\templates\find_and_edit_product.html:19 .\templates\list_products.html:19
+msgid "Created at:"
+msgstr "Yaratilgan sana:"
+
+#: .\templates\find_and_delete_product.html:22
+msgid "Delete product"
+msgstr "Mahsulotni o'chirish"
+
+#: .\templates\find_and_delete_product.html:28
+#: .\templates\find_and_edit_product.html:28 .\templates\list_products.html:29
+msgid "No products available"
+msgstr "Mavjud mahsulotlar yo'q"
+
+#: .\templates\find_and_edit_product.html:22
+msgid "Edit product"
+msgstr "Mahsulotni tahrirlash"
+
+#: .\templates\forgot-password.html:8
+msgid "Email"
+msgstr "Elektron pochta"
+
+#: .\templates\forgot-password.html:9
+msgid "Enter your email address"
+msgstr "Elektron pochta manzilingizni kiriting"
+
+#: .\templates\forgot-password.html:15
+msgid "Send Verification Code"
+msgstr "Tasdiqlash kodini yuborish"
+
+#: .\templates\list_products.html:22
+msgid "Buy"
+msgstr "Sotib olish"
+
+#: .\templates\list_products.html:23
+msgid "Add to Cart"
+msgstr "Savatga qo'shish"
+
+#: .\templates\login.html:20 .\templates\register.html:17
+msgid "Continue with google"
+msgstr "Google orqali davom etish"
+
+#: .\templates\login.html:21
+msgid "Forgot password?"
+msgstr "Parolni unutdingizmi?"
+
+#: .\templates\profile.html:105
+msgid "Profile Photo"
+msgstr "Profil rasmi"
+
+#: .\templates\profile.html:116
+msgid "Personal Information"
+msgstr "Shaxsiy ma'lumotlar"
+
+#: .\templates\profile.html:121
+msgid "First name:"
+msgstr "Ism:"
+
+#: .\templates\profile.html:123
+msgid "Last name:"
+msgstr "Familiya:"
+
+#: .\templates\profile.html:125
+msgid "Phone:"
+msgstr "Telefon:"
+
+#: .\templates\profile.html:127
+msgid "Biography:"
+msgstr "Tarjimai hol:"
+
+#: .\templates\profile.html:129
+msgid "Profile Image:"
+msgstr "Profil rasmi:"
+
+#: .\templates\profile.html:131
+msgid "Email address:"
+msgstr "Elektron pochta manzili:"
+
+#: .\templates\profile.html:140
+msgid "Save changes"
+msgstr "O'zgarishlarni saqlash"

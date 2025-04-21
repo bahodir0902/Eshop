@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +29,7 @@
             --warning: #f59e0b;
             --light: #f8f9fa;
             --dark: #212529;
+            --navbar-height: 72px;
         }
 
         body {
@@ -43,23 +45,31 @@
             padding: 2rem 0;
         }
 
+        /* Navbar Styles */
         .navbar {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 0.75rem 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 0.75rem 0;
             background-color: white !important;
+            min-height: var(--navbar-height);
         }
 
         .navbar-brand {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1.5rem;
             color: var(--primary) !important;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            transform: translateY(-1px);
         }
 
         .nav-link {
             font-weight: 500;
             padding: 0.5rem 1rem;
             color: var(--dark);
-            transition: color 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .nav-link:hover {
@@ -70,17 +80,45 @@
             color: var(--primary);
         }
 
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link.active::after,
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Action Buttons Styles */
         .action-buttons {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
             margin: 0 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .btn-primary {
             background-color: var(--primary);
             border-color: var(--primary);
-            padding: 0.5rem 1rem;
-            font-weight: 500;
         }
 
         .btn-primary:hover {
@@ -91,27 +129,33 @@
         .btn-secondary {
             background-color: var(--secondary);
             border-color: var(--secondary);
-            padding: 0.5rem 1rem;
-            font-weight: 500;
         }
 
         .btn-danger {
             background-color: var(--danger);
             border-color: var(--danger);
-            padding: 0.5rem 1rem;
-            font-weight: 500;
         }
 
+        /* Search Form Styles */
         .search-form {
             position: relative;
-            margin-left: auto;
+            flex: 1;
+            max-width: 400px;
+            margin: 0 1rem;
         }
 
         .search-form .form-control {
-            padding-left: 2.5rem;
+            padding-left: 2.75rem;
+            padding-right: 1rem;
             border-radius: 50px;
-            border: 1px solid #e2e8f0;
+            border: 2px solid #e2e8f0;
             box-shadow: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-form .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
         }
 
         .search-form .search-icon {
@@ -120,21 +164,28 @@
             top: 50%;
             transform: translateY(-50%);
             color: #a0aec0;
+            font-size: 1.1rem;
         }
 
         .search-form .btn {
             border-radius: 50px;
-            padding: 0.375rem 1rem;
+            padding: 0.375rem 1.5rem;
+            font-weight: 500;
+            box-shadow: none;
         }
 
+        /* Auth Buttons and User Profile Styles */
         .auth-buttons {
             display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .auth-buttons .btn {
             font-weight: 500;
-            padding: 0.5rem 1rem;
-            transition: all 0.2s ease;
+            padding: 0.5rem 1.25rem;
+            transition: all 0.3s ease;
+            border-radius: 50px;
         }
 
         .auth-buttons .btn-outline-primary {
@@ -147,18 +198,159 @@
             color: white;
         }
 
+        .auth-buttons .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Language Dropdown Styles */
+        .language-dropdown {
+            margin-left: 0.5rem;
+        }
+
+        .language-dropdown .dropdown-toggle {
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+        }
+
+        .language-dropdown .dropdown-toggle:hover {
+            background-color: #f8f9fa;
+        }
+
+        .language-dropdown .dropdown-toggle i {
+            margin-right: 0.25rem;
+        }
+
+        .language-dropdown .dropdown-menu {
+            min-width: 140px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 0.5rem;
+        }
+
+        .language-dropdown .dropdown-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .language-dropdown .dropdown-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        .language-dropdown .dropdown-item i {
+            margin-right: 0.5rem;
+            width: 16px;
+        }
+
+        /* User Profile Dropdown Styles */
+        .user-profile-dropdown {
+            position: relative;
+        }
+
+        .user-profile-button {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 50px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile-button:hover {
+            background-color: #f8f9fa;
+            border-color: var(--primary);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        .user-profile-dropdown .dropdown-menu {
+            right: 0;
+            left: auto;
+            min-width: 200px;
+            padding: 0.75rem;
+            border: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            margin-top: 0.5rem;
+        }
+
+        .user-profile-dropdown .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .user-profile-dropdown .dropdown-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        .user-profile-dropdown .dropdown-item i {
+            margin-right: 0.75rem;
+            width: 16px;
+            color: var(--secondary);
+        }
+
+        .user-profile-dropdown .dropdown-divider {
+            margin: 0.5rem 0;
+            border-color: #e2e8f0;
+        }
+
+        .user-profile-dropdown .dropdown-item.text-danger i {
+            color: var(--danger);
+        }
+
+        /* Footer Styles */
         .footer {
             background-color: white;
-            padding: 2rem 0;
+            padding: 3rem 0 1.5rem;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-            margin-top: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid #e2e8f0;
         }
 
         .footer-brand {
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             color: var(--primary);
             text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-brand:hover {
+            color: var(--primary-dark);
         }
 
         .footer-links {
@@ -168,17 +360,19 @@
         }
 
         .footer-links li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .footer-links a {
-            color: var(--dark);
+            color: #4b5563;
             text-decoration: none;
-            transition: color 0.2s ease;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
 
         .footer-links a:hover {
             color: var(--primary);
+            padding-left: 5px;
         }
 
         .social-icons {
@@ -187,13 +381,49 @@
         }
 
         .social-icons a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f3f4f6;
             color: var(--dark);
-            font-size: 1.25rem;
-            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
         }
 
         .social-icons a:hover {
-            color: var(--primary);
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 0.5rem 0;
+            }
+
+            .action-buttons {
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            .search-form {
+                margin: 1rem 0;
+                max-width: 100%;
+            }
+
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+                margin: 1rem 0;
+            }
+
+            .nav-link::after {
+                display: none;
+            }
         }
     </style>
     {% block extra_css %} {% endblock %}
@@ -205,7 +435,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'shop:home' %}">
-                    <i class="fas fa-store me-2"></i>ShopName
+                    <i class="fas fa-store me-2"></i>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -217,31 +447,33 @@
                         <li class="nav-item">
                             <a class="nav-link {% if request.path == '/shop/home/' %}active{% endif %}"
                                href="{% url 'shop:home' %}">
-                                <i class="fas fa-home me-1"></i> Home
+                                <i class="fas fa-home me-1"></i> {% trans 'Home' %}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if request.path == '/shop/list_products/' %}active{% endif %}"
                                href="{% url 'shop:list_products' %}">
-                                <i class="fas fa-box-open me-1"></i> Products
+                                <i class="fas fa-box-open me-1"></i>{% trans 'Products' %}
                             </a>
                         </li>
                     </ul>
                     {% if request.user.is_authenticated %}
                         <div class="action-buttons">
                             {% if 'eshop.add_product' in request.user.get_all_permissions %}
-                                <a class="btn btn-primary" href="{% url 'shop:add_product' %}">
-                                    <i class="fas fa-plus me-1"></i> Add
+                                <a class="btn btn-primary" href="{% url 'shop:add_product' %}" style="font-size: 12px;">
+                                    <i class="fas fa-plus me-1"></i> {% trans 'Add Product' %}
                                 </a>
                             {% endif %}
                             {% if 'eshop.change_product' in request.user.get_all_permissions %}
-                                <a class="btn btn-secondary" href="{% url 'shop:find_and_edit_product' %}">
-                                    <i class="fas fa-edit me-1"></i> Edit
+                                <a class="btn btn-secondary" href="{% url 'shop:find_and_edit_product' %}"
+                                   style="font-size: 12px;">
+                                    <i class="fas fa-edit me-1"></i> {% trans 'Edit Product' %}
                                 </a>
                             {% endif %}
                             {% if 'eshop.delete_product' in request.user.get_all_permissions %}
-                                <a class="btn btn-danger" href="{% url 'shop:find_and_delete_product' %}">
-                                    <i class="fas fa-trash me-1"></i> Delete
+                                <a class="btn btn-danger" href="{% url 'shop:find_and_delete_product' %}"
+                                   style="font-size: 12px;">
+                                    <i class="fas fa-trash me-1"></i> {% trans 'Delete Product' %}
                                 </a>
                             {% endif %}
                         </div>
@@ -256,19 +488,62 @@
                             {% url 'shop:list_products' %}
                         {% endif %}">
                         <span class="search-icon"><i class="fas fa-search"></i></span>
-                        <input class="form-control me-2" name="q" value="{{ q }}" type="search"
-                               placeholder="Search products..."
+                        <input class="form-control" name="q" value="{{ q }}" type="search"
+                               placeholder="{% trans 'Search products' %}..."
                                aria-label="Search">
-                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                        <button class="btn btn-outline-primary" type="submit">{% trans 'Search' %}</button>
                     </form>
-                    {% if request.user.is_authenticated %}
-                        {{ request.user.first_name }}
-                        <button><a href="{% url 'accounts:logout' %}">Logout</a></button>
-                    {% else %}
-                        <button><a href="{% url 'accounts:login' %}">Login</a></button>
-                        <button><a href="{% url 'accounts:register' %}">Register</a></button>
-                    {% endif %}
 
+                    <!-- Language Dropdown -->
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <label for="select-language">Language</label>
+                        <select name="language" id="select-language">
+                            <option value="en"{% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                            <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>Русский</option>
+                            <option value="uz" {% if LANGUAGE_CODE == 'uz' %}selected{% endif %}>O'zbek</option>
+                        </select>
+                        <input type="submit" value="Change language">
+                    </form>
+
+                    <!-- Auth Section -->
+                    <div class="auth-buttons">
+                        {% if request.user.is_authenticated %}
+                            <div class="user-profile-dropdown dropdown">
+                                <button class="user-profile-button dropdown-toggle" type="button" id="userDropdown"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="user-avatar">
+                                        {{ request.user.first_name.0|upper }}
+                                    </div>
+                                    <span class="user-name">{{ request.user.first_name }}</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li>
+                                        <h6 class="dropdown-header">{{ request.user.get_full_name }}</h6>
+                                        <small class="dropdown-header text-muted">{{ request.user.email }}</small>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i
+                                            class="fas fa-user"></i>{% trans 'My Profile' %}</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item text-danger" href="{% url 'accounts:logout' %}">
+                                        <i class="fas fa-sign-out-alt"></i> {% trans 'Logout' %}
+                                    </a></li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <a class="btn btn-outline-primary" href="{% url 'accounts:login' %}">
+                                <i class="fas fa-sign-in-alt me-1"></i> {% trans 'Login' %}
+                            </a>
+                            <a class="btn btn-primary" href="{% url 'accounts:register' %}">
+                                <i class="fas fa-user-plus me-1"></i> {% trans 'Register' %}
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </nav>
@@ -290,7 +565,7 @@
                     <a href="{% url 'shop:home' %}" class="footer-brand">
                         <i class="fas fa-store me-2"></i>ShopName
                     </a>
-                    <p class="mt-3">
+                    <p class="mt-3 text-muted">
                         Your one-stop shop for quality products and excellent service.
                     </p>
                     <div class="social-icons mt-3">
@@ -301,7 +576,7 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                    <h5 class="mb-3">Shop</h5>
+                    <h5 class="mb-3 fw-bold">Shop</h5>
                     <ul class="footer-links">
                         <li><a href="{% url 'shop:list_products' %}">All Products</a></li>
                         <li><a href="#">New Arrivals</a></li>
@@ -310,7 +585,7 @@
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
-                    <h5 class="mb-3">Company</h5>
+                    <h5 class="mb-3 fw-bold">Company</h5>
                     <ul class="footer-links">
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Contact Us</a></li>
@@ -319,8 +594,8 @@
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-4">
-                    <h5 class="mb-3">Newsletter</h5>
-                    <p>Subscribe to our newsletter for updates and promotions.</p>
+                    <h5 class="mb-3 fw-bold">Newsletter</h5>
+                    <p class="text-muted">Subscribe to our newsletter for updates and promotions.</p>
                     <form class="mt-3">
                         <div class="input-group">
                             <input type="email" class="form-control" placeholder="Your email address">
@@ -332,13 +607,13 @@
             <hr class="my-4">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0">© 2025 ShopName. All rights reserved.</p>
+                    <p class="mb-0 text-muted">© 2025 ShopName. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <p class="mb-0">
-                        <a href="#" class="text-decoration-none me-3">Privacy Policy</a>
-                        <a href="#" class="text-decoration-none me-3">Terms of Service</a>
-                        <a href="#" class="text-decoration-none">Cookie Policy</a>
+                        <a href="#" class="text-decoration-none me-3 text-muted">Privacy Policy</a>
+                        <a href="#" class="text-decoration-none me-3 text-muted">Terms of Service</a>
+                        <a href="#" class="text-decoration-none text-muted">Cookie Policy</a>
                     </p>
                 </div>
             </div>
@@ -350,5 +625,29 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+
+<script>
+    // Language dropdown functionality
+    document.querySelectorAll('.language-dropdown .dropdown-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            const lang = this.dataset.lang;
+            // Here you would typically make an AJAX request to change the language
+            // For now, we'll just update the UI
+            fetch(`/change-language/${lang}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                }
+            });
+        });
+    });
+</script>
+{% block extra_js %} {% endblock %}
 </body>
 </html>

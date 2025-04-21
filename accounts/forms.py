@@ -1,9 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
-from accounts.models import User
+from accounts.models import User, Profile
 from accounts.utils import get_random_username
-
+from django.utils.translation import gettext_lazy as _
 
 class LoginForm(forms.Form):
     email = forms.EmailField()
@@ -54,6 +53,33 @@ class RegisterForm(forms.ModelForm):
         # re_password = self.cleaned_data.pop('re_password')
 
         return User.objects.create_user(**self.cleaned_data, username=get_random_username())
+
+class UserProfileForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=255)
+    last_name = forms.CharField(max_length=255)
+    email = forms.EmailField()
+
+    class Meta:
+        model = Profile
+        fields = ['image', 'phone', 'bio']
+        labels = {
+            'first_name': _('first_name'),
+            'last_name': _('last_name'),
+            'email': _('email'),
+            'phone': _('phone'),
+            'bio': _('bio'),
+            'image': _('image'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None) # shu yerga user keladi
+        print(f'{self.user=}')
+        super().__init__(*args, **kwargs)
+        if self.user:
+            self.fields['first_name'].initial = self.user.first_name
+            self.fields['last_name'].initial = self.user.last_name
+            self.fields['email'].initial = self.user.email
+
 
 
 

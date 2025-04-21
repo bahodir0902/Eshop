@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}Login{% endblock %}
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <div class="auth-container">
-        <h1>Login</h1>
+        <h1>{% trans 'Login' %}</h1>
         <form id="login-form" action="{% url 'accounts:login' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -14,10 +15,10 @@
             {% for message in messages %}
                 {{ message }}
             {% endfor %}
-            <button type="submit">Login</button>
+            <button type="submit">{% trans 'Login' %}</button>
         </form>
-    <button><a href="{% url 'accounts:google_login' %}">Continue with google</a></button>
-    <button><a href="{% url 'accounts:forgot_password' %}">Forgot password?</a></button>
+    <button><a href="{% url 'accounts:google_login' %}">{% trans 'Continue with google' %}</a></button>
+    <button><a href="{% url 'accounts:forgot_password' %}">{% trans 'Forgot password?' %}</a></button>
     </div>
 
 {% endblock %}

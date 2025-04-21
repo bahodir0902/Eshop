@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}Register{% endblock %}
 {% block content %}
     <link rel="stylesheet" href="{% static 'css/register.css' %}">
     <div class="auth-container">
-        <h1>Register</h1>
+        <h1>{% trans 'Register' %}</h1>
         <form id="register-form" action="{% url 'accounts:register' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 {{ form.as_p }}
             </div>
 
-            <button type="submit">Register</button>
+            <button type="submit">{% trans 'Register' %}</button>
         </form>
-        <button><a href="{% url 'accounts:google_login' %}">Continue with google</a></button>
+        <button><a href="{% url 'accounts:google_login' %}">{% trans 'Continue with google' %}</a></button>
     </div>
 {% endblock %}

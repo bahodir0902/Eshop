@@ -3,15 +3,17 @@ from django.db.models.fields import return_None
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from accounts.forms import LoginForm, RegisterForm
+from accounts.forms import LoginForm, RegisterForm, UserProfileForm
 from django.contrib.auth import login, authenticate, logout
-from accounts.models import User, CodePassword
+from accounts.models import User, CodePassword, Profile
 from django.contrib import messages
 from django.conf import settings
 import requests
 from accounts.utils import get_random_username
 from accounts.services import send_email_verification
 from django.utils import timezone
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class LoginView(View):
     def get(self, request):
@@ -182,7 +184,6 @@ class CreateNewPasswordView(View):
             messages.error(request, "You have removed email from session. Hacker!")
             return render(request, 'create-new-password.html')
 
-
         password = request.POST.get('password')
         re_password = request.POST.get('re-password')
 
@@ -203,3 +204,32 @@ class CreateNewPasswordView(View):
         user.save()
         request.session.pop('restore_email')
         return redirect('accounts:login')
+
+
+class ProfileView(LoginRequiredMixin, View):
+    def get(self, request):
+        profile = request.user.profile
+        form = UserProfileForm(user=request.user, instance=profile)
+        return render(request, 'profile.html', context={'form': form, 'profile': profile})
+
+    def post(self, request):
+        profile = request.user.profile
+        form = UserProfileForm(request.POST, request.FILES, user=request.user, instance=profile)
+        if form.is_valid():
+            user = request.user
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            user.save()
+
+            if form.instance.pk:
+                form.save()
+                print("yangilandi")
+            else:
+                print('yaratildi')
+                profile = form.save(commit=False)
+                profile.user = user
+                profile.save()
+
+            return redirect('shop:list_products')
+
+        return render(request, 'profile.html', context={'form': form})

@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 
 {% block content %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-    <button class="btn btn-success" type="submit">Save Changes</button>
-    <a href="{% url 'shop:find_and_edit_product' %}" class="btn btn-danger">Cancel</a>
+    <button class="btn btn-success" type="submit">{% trans 'Save Changes' %}</button>
+    <a href="{% url 'shop:find_and_edit_product' %}" class="btn btn-danger">{% trans 'Cancel' %}</a>
     </form>
 
 {% endblock %}
