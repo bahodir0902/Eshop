@@ -1,3 +1,41 @@
+function getLanguagePrefix() {
+    // Extract from URL path
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+
+    // Check if the first segment is a language code (typically 2-5 characters)
+    if (pathSegments.length > 0 && /^[a-z]{2}(-[a-z]{2,3})?$/i.test(pathSegments[0])) {
+        return `/${pathSegments[0]}`;
+    }
+
+    // If no language in path, check if there's a language in HTML tag
+    const htmlLang = document.documentElement.lang;
+    if (htmlLang && htmlLang !== 'en') {
+        return `/${htmlLang}`;
+    }
+
+    // Default (no language prefix)
+    return '';
+}
+
+// Function to ensure URL has the correct language prefix
+function ensureLanguagePrefix(url) {
+    // Don't modify absolute URLs or URLs that already start with the language prefix
+    if (url.startsWith('http') || url.startsWith('//')) {
+        return url;
+    }
+
+    const langPrefix = getLanguagePrefix();
+
+    // If we have a language prefix and the URL doesn't already have it
+    if (langPrefix && !url.startsWith(langPrefix)) {
+        // Make sure we don't add the prefix to URLs that already have it
+        const urlWithoutLeadingSlash = url.startsWith('/') ? url.substring(1) : url;
+        return `${langPrefix}/${urlWithoutLeadingSlash}`;
+    }
+
+    return url;
+}
+
 // Wait for DOM to fully load
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize GSAP
@@ -409,7 +447,7 @@ function removeFromFavorites(productId) {
             // Send AJAX request to remove from favorites
             const url = `/favourites/remove_favourite_item/${productId}`;
 
-            fetch(url, {
+            fetch(ensureLanguagePrefix(url), {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': getCsrfToken(),
@@ -474,7 +512,7 @@ function clearAllFavorites() {
         duration: 0.5,
         onComplete: () => {
             // Send AJAX request to clear all favorites
-            fetch('/favourites/clear_favourites/', {
+            fetch(ensureLanguagePrefix('/favourites/clear_favourites/'), {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': getCsrfToken(),
@@ -525,7 +563,7 @@ function addToCart(productId, quantity, quantitySelector, button) {
     confirmBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Adding...';
     confirmBtn.disabled = true;
 
-    fetch(url, {
+    fetch(ensureLanguagePrefix(url), {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCsrfToken(),

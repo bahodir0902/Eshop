@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans 'Login' %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
@@ -18,26 +19,26 @@
                 <div class="wave"></div>
             </div>
             <div class="brand">
-                <h1>Welcome Back</h1>
-                <p>Sign in to continue your shopping journey</p>
+                <h1>{% trans 'Welcome Back' %}</h1>
+                <p>{% trans 'Sign in to continue your shopping journey' %}</p>
             </div>
         </div>
         <div class="card-side card-right">
             <div class="form-header">
-                <h2>Login</h2>
-                <p>Please enter your credentials</p>
+                <h2>{% trans 'Login' %}</h2>
+                <p>{% trans 'Please enter your credentials' %}</p>
             </div>
             <form method="post">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="{{ form.email.id_for_label }}">Email Address</label>
+                    <label for="{{ form.email.id_for_label }}">{% trans 'Email Address' %}</label>
                     <div class="input-icon">
                         <i class="fas fa-envelope"></i>
                     </div>
                     {{ form.email }}
                 </div>
                 <div class="form-group">
-                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    <label for="{{ form.password.id_for_label }}">{% trans 'Password' %}</label>
                     <div class="input-icon">
                         <i class="fas fa-lock"></i>
                     </div>
@@ -47,20 +48,20 @@
                 <div class="form-options">
                     <div class="remember-me">
                         <input type="checkbox" id="remember">
-                        <label for="remember">Remember me</label>
+                        <label for="remember">{% trans 'Remember me' %}</label>
                     </div>
-                    <a href="{% url 'accounts:forgot_password' %}" class="forgot-password">Forgot Password?</a>
+                    <a href="{% url 'accounts:forgot_password' %}" class="forgot-password">{% trans 'Forgot Password?' %}</a>
                 </div>
                 <button type="submit" class="login-btn">
-                    <span>Log In</span>
+                    <span>{% trans 'Log In' %}</span>
                     <i class="fas fa-arrow-right"></i>
                 </button>
                 <div class="register-link">
-                    Don't have an account? <a href="{% url 'accounts:register' %}">Register</a>
+                    {% trans 'Don\'t have an account?' %} <a href="{% url 'accounts:register' %}">{% trans 'Register' %}</a>
                 </div>
             </form>
             <div class="social-login">
-                <span>Or login with</span>
+                <span>{% trans 'Or login with' %}</span>
                 <div class="social-buttons">
                     <button class="social-btn google">
                         <i class="fab fa-google"></i>

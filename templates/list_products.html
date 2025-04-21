@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load cart_filters %}
+{% load i18n %}
 {% block title %}
-    Product Showcase
+    {% trans 'Product Showcase' %}
 {% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/products.css' %}">
@@ -15,11 +16,11 @@
             {% endfor %}
         {% endif %}
         <header class="products-header">
-            <h1>Product Collection</h1>
+            <h1>{% trans 'Product Collection' %}</h1>
             <div class="header-controls">
                 <form class="search-form" method="get" action="{% url 'products:products' %}">
                     <div class="search-container">
-                        <input type="text" name="q" placeholder="Search products..." class="search-input"
+                        <input type="text" name="q" placeholder="{% trans 'Search products...' %}" class="search-input"
                                value="{{ request.GET.q|default:'' }}">
                         <button type="submit" class="search-button">
                             <i class="fa fa-search"></i>
@@ -43,19 +44,19 @@
                 <div class="filter-section">
                     <button class="filter-toggle">
                         <i class="fa fa-filter"></i>
-                        <span>Filters</span>
+                        <span>{% trans 'Filters' %}</span>
                     </button>
 
                     <!-- Categories Dropdown (positioned to the RIGHT of filter button) -->
                     <div class="categories-dropdown">
                         <button class="categories-toggle">
                             <i class="fa fa-tag"></i>
-                            <span>Categories</span>
+                            <span>{% trans 'Categories' %}</span>
                             <i class="fa fa-chevron-down dropdown-arrow"></i>
                         </button>
                         <div class="categories-dropdown-content">
                             <div class="categories-header">
-                                <h4>Product Categories</h4>
+                                <h4>{% trans 'Product Categories' %}</h4>
                                 <button class="close-categories"><i class="fa fa-times"></i></button>
                             </div>
                             <div class="categories-list scrollable-options">
@@ -70,8 +71,10 @@
                                 {% endfor %}
                             </div>
                             <div class="categories-actions">
-                                <button type="button" class="btn btn-primary apply-categories">Apply</button>
-                                <button type="button" class="btn btn-outline reset-categories">Reset</button>
+                                <button type="button"
+                                        class="btn btn-primary apply-categories">{% trans 'Apply' %}</button>
+                                <button type="button"
+                                        class="btn btn-outline reset-categories">{% trans 'Reset' %}</button>
                             </div>
                         </div>
                     </div>
@@ -81,7 +84,7 @@
                     <!-- Filter Panel (Categories removed) -->
                     <div class="filter-panel">
                         <div class="filter-header">
-                            <h3>Filter Products</h3>
+                            <h3>{% trans 'Filter Products' %}</h3>
                             <button class="close-filters"><i class="fa fa-times"></i></button>
                         </div>
 
@@ -99,49 +102,49 @@
 
                             <div class="filter-content">
                                 <div class="filter-group">
-                                    <h4>Sort By</h4>
+                                    <h4>{% trans 'Sort By' %}</h4>
                                     <div class="filter-options sort-options">
                                         <label class="filter-option">
                                             <input type="radio" name="sort" value="price_asc"
-                                                {% if request.GET.sort == 'price_asc' %}checked{% endif %}>
-                                            <span>Price: Low to High</span>
+                                                   {% if request.GET.sort == 'price_asc' %}checked{% endif %}>
+                                            <span>{% trans 'Price: Low to High' %}</span>
                                         </label>
                                         <label class="filter-option">
                                             <input type="radio" name="sort" value="price_desc"
-                                                {% if request.GET.sort == 'price_desc' %}checked{% endif %}>
-                                            <span>Price: High to Low</span>
+                                                   {% if request.GET.sort == 'price_desc' %}checked{% endif %}>
+                                            <span>{% trans 'Price: High to Low' %}</span>
                                         </label>
                                         <label class="filter-option">
                                             <input type="radio" name="sort" value="orders_asc"
-                                                {% if request.GET.sort == 'orders_asc' %}checked{% endif %}>
-                                            <span>Orders: Low to High</span>
+                                                   {% if request.GET.sort == 'orders_asc' %}checked{% endif %}>
+                                            <span>{% trans 'Orders: Low to High' %}</span>
                                         </label>
                                         <label class="filter-option">
                                             <input type="radio" name="sort" value="orders_desc"
-                                                {% if request.GET.sort == 'orders_desc' %}checked{% endif %}>
-                                            <span>Orders: High to Low</span>
+                                                   {% if request.GET.sort == 'orders_desc' %}checked{% endif %}>
+                                            <span>{% trans 'Orders: High to Low' %}</span>
                                         </label>
                                         <label class="filter-option">
                                             <input type="radio" name="sort" value="newest"
-                                                {% if request.GET.sort == 'newest' %}checked{% endif %}>
-                                            <span>Newest First</span>
+                                                   {% if request.GET.sort == 'newest' %}checked{% endif %}>
+                                            <span>{% trans 'Newest First' %}</span>
                                         </label>
                                     </div>
                                 </div>
 
                                 <div class="filter-group">
-                                    <h4>Price Range</h4>
+                                    <h4>{% trans 'Price Range' %}</h4>
                                     <div class="price-range-inputs">
                                         <div class="price-input">
-                                            <label for="min_price">Min $</label>
+                                            <label for="min_price">{% trans 'Min $' %}</label>
                                             <input type="number" id="min_price" name="min_price" min="0"
-                                                value="{{ request.GET.min_price|default:'' }}" placeholder="0">
+                                                   value="{{ request.GET.min_price|default:'' }}" placeholder="0">
                                         </div>
                                         <div class="price-range-separator">-</div>
                                         <div class="price-input">
-                                            <label for="max_price">Max $</label>
+                                            <label for="max_price">{% trans 'Max $' %}</label>
                                             <input type="number" id="max_price" name="max_price" min="0"
-                                                value="{{ request.GET.max_price|default:'' }}" placeholder="1000">
+                                                   value="{{ request.GET.max_price|default:'' }}" placeholder="1000">
                                         </div>
                                     </div>
                                     <div class="price-range-slider">
@@ -150,12 +153,12 @@
                                 </div>
 
                                 <div class="filter-group">
-                                    <h4>Rating</h4>
+                                    <h4>{% trans 'Rating' %}</h4>
                                     <div class="rating-filter">
                                         {% for i in "54321" %}
                                             <label class="filter-option rating-option">
                                                 <input type="checkbox" name="rating" value="{{ i }}"
-                                                    {% if i in request.GET.rating|default:'' %}checked{% endif %}>
+                                                       {% if i in request.GET.rating|default:'' %}checked{% endif %}>
                                                 <span class="star-rating">
                                                     {% for j in "12345" %}
                                                         {% if forloop.counter <= i %}
@@ -164,8 +167,7 @@
                                                             <i class="far fa-star"></i>
                                                         {% endif %}
                                                     {% endfor %}
-                                                    <span class="rating-text">{{ i }} & Up</span>
-                                                </span>
+                                                    <span class="rating-text">{{ i }} & Up</span>                                                </span>
                                             </label>
                                         {% endfor %}
                                     </div>
@@ -173,8 +175,9 @@
                             </div>
 
                             <div class="filter-actions">
-                                <button type="submit" class="btn btn-primary apply-filters">Apply Filters</button>
-                                <button type="button" class="btn btn-outline reset-filters">Reset</button>
+                                <button type="submit"
+                                        class="btn btn-primary apply-filters">{% trans 'Apply Filters' %}</button>
+                                <button type="button" class="btn btn-outline reset-filters">{% trans 'Reset' %}</button>
                             </div>
                         </form>
                     </div>
@@ -188,11 +191,11 @@
                         {% if request.GET.sort %}
                             <div class="active-filter">
                 <span>
-                    {% if request.GET.sort == 'price_asc' %}Price: Low to High
-                    {% elif request.GET.sort == 'price_desc' %}Price: High to Low
-                    {% elif request.GET.sort == 'orders_asc' %}Orders: Low to High
-                    {% elif request.GET.sort == 'orders_desc' %}Orders: High to Low
-                    {% elif request.GET.sort == 'newest' %}Newest First
+                    {% if request.GET.sort == 'price_asc' %}{% trans 'Price: Low to High' %}
+                        {% elif request.GET.sort == 'price_desc' %}{% trans 'Price: High to Low' %}
+                        {% elif request.GET.sort == 'orders_asc' %}{% trans 'Orders: Low to High' %}
+                        {% elif request.GET.sort == 'orders_desc' %}{% trans 'Orders: High to Low' %}
+                        {% elif request.GET.sort == 'newest' %}{% trans 'Newest First' %}
                     {% endif %}
                 </span>
                                 <button class="remove-filter" data-param="sort"><i class="fa fa-times"></i></button>
@@ -201,50 +204,54 @@
 
                         {% if request.GET.min_price or request.GET.max_price %}
                             <div class="active-filter">
-                                <span>Price: ${{ request.GET.min_price|default:'0' }} - ${{ request.GET.max_price|default:'∞' }}</span>
+                                <span>{% trans 'Price' %}: ${{ request.GET.min_price|default:'0' }} - ${{ request.GET.max_price|default:'∞' }}</span>
+
                                 <button class="remove-filter" data-param="price"><i class="fa fa-times"></i></button>
                             </div>
                         {% endif %}
 
                         {% if request.GET.rating %}
                             <div class="active-filter">
-                                <span>Rating: {{ request.GET.rating }}+ stars</span>
+                                <span>{% blocktrans with rating=request.GET.rating %}Rating: {{ rating }}+
+                                    stars{% endblocktrans %}</span>
                                 <button class="remove-filter" data-param="rating"><i class="fa fa-times"></i></button>
                             </div>
                         {% endif %}
 
                         {% for category in selected_categories %}
                             <div class="active-filter">
-                                <span>Category: {{ category.name }}</span>
+                                <span>{% blocktrans with name=category.name %}Category:
+                                    {{ name }}{% endblocktrans %}</span>
                                 <button class="remove-filter" data-param="category" data-value="{{ category.id }}"><i
                                         class="fa fa-times"></i></button>
                             </div>
                         {% endfor %}
 
                         <div class="clear-all">
-                            <button class="btn-link clear-all-filters">Clear All</button>
+                            <button class="btn-link clear-all-filters">{% trans 'Clear All' %}</button>
                         </div>
                     </div>
                 {% else %}
-                    <div class="no-filters">No filters applied</div>
+                    <div class="no-filters">{% trans 'No filters applied' %}</div>
                 {% endif %}
             </div>
 
             <!-- Quick Sort Dropdown for Mobile -->
             <div class="quick-sort">
-                <label for="mobile-sort">Sort by:</label>
+                <label for="mobile-sort">{% trans 'Sort by:' %}</label>
                 <select id="mobile-sort" name="mobile-sort">
-                    <option value="">Featured</option>
-                    <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Price: Low to
-                        High
+                    <option value="">{% trans 'Featured' %}</option>
+                    <option value="price_asc"
+                            {% if request.GET.sort == 'price_asc' %}selected{% endif %}>{% trans 'Price: Low to High' %}
                     </option>
-                    <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Price: High
-                        to Low
+                    <option value="price_desc"
+                            {% if request.GET.sort == 'price_desc' %}selected{% endif %}>{% trans 'Price: High to Low' %}
                     </option>
-                    <option value="orders_desc" {% if request.GET.sort == 'orders_desc' %}selected{% endif %}>Most
-                        Popular
+                    <option value="orders_desc"
+                            {% if request.GET.sort == 'orders_desc' %}selected{% endif %}>{% trans 'Most Popular' %}
                     </option>
-                    <option value="newest" {% if request.GET.sort == 'newest' %}selected{% endif %}>Newest First
+                    <option value="newest"
+                            {% if request.GET.sort == 'newest' %}selected{% endif %}>{% trans 'Newest First' %}
                     </option>
                 </select>
             </div>
@@ -256,11 +263,13 @@
                     {% csrf_token %}
                     <div class="product-image">
                         <a href="{% url 'products:product_detail' slug=product.slug %}">
-                            <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
+                            <img src="
+
+                                    {% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
                                  alt="{{ product.name }}">
                             <div class="product-badges">
                                 {% if product.is_new %}
-                                    <span class="badge new">New</span>
+                                    <span class="badge new">{% trans 'New' %}</span>
                                 {% endif %}
                                 {% if product.discount > 0 %}
                                     <span class="badge sale">-{{ product.discount }}%</span>
@@ -269,7 +278,8 @@
                                 <!-- New badge for cart items -->
                                 {% for cart_item in cart_items %}
                                     {% if cart_item.product.id == product.id %}
-                                        <span class="badge in-cart">In Cart ({{ cart_item.quantity }})</span>
+                                        <span class="badge in-cart">{% blocktrans with quantity=cart_item.quantity %}In
+                                            Cart ({{ quantity }}){% endblocktrans %}</span>
                                     {% endif %}
                                 {% endfor %}
                             </div>
@@ -284,7 +294,8 @@
                         </div>
                         <p class="product-description">{{ product.short_description }}</p>
                         <div class="product-meta">
-                            <span class="product-date">Added {{ product.created_at|date:"M d, Y" }}</span>
+                            <span class="product-date">{% blocktrans with date=product.created_at|date:"M d, Y" %}Added
+                                {{ date }}{% endblocktrans %}</span>
                             {% if product.rating %}
                                 <div class="product-rating">
                                     {% if product.rating %}{{ product.rating|floatformat:2 }}{% else %}0{% endif %}
@@ -298,17 +309,18 @@
                                 </div>
                             {% endif %}
                         </div>
-                        <p>{{ product.total_ordered }} Ordered</p>
+                        <p>{% blocktrans with total=product.total_ordered %}{{ total }} Ordered{% endblocktrans %}</p>
                     </div>
                     <div class="product-actions">
                         {% for cart_item in cart_items %}
                             {% if cart_item.product.id == product.id %}
                                 <div class="in-cart-indicator">
-                    <span><i
-                            class="fa fa-shopping-cart"></i> In your cart: <strong>{{ cart_item.quantity }}</strong></span>
+                                    <span><i class="fa fa-shopping-cart"></i>
+                                        {% blocktrans with quantity=cart_item.quantity %}In your cart:
+                                            <strong>{{ quantity }}</strong>{% endblocktrans %}</span>
                                     <button type="button" class="btn btn-danger remove-from-cart"
                                             data-item-id="{{ cart_item.id }}">
-                                        <i class="fa fa-trash"></i> Remove
+                                        <i class="fa fa-trash"></i> {% trans 'Remove' %}
                                     </button>
                                 </div>
                             {% endif %}
@@ -316,18 +328,18 @@
 
                         <!-- Buy Now button -->
                         <button type="button" class="btn btn-primary buy-now">
-                            <i class="fa fa-credit-card"></i> Buy Now
+                            <i class="fa fa-credit-card"></i> {% trans 'Buy Now' %}
                         </button>
 
                         <!-- Add to Cart button - show different text based on cart status -->
                         {% if product|in_cart:cart_items %}
                             <button type="button" class="btn btn-success update-cart"
                                     data-product-id="{{ product.id }}">
-                                <i class="fa fa-refresh"></i> Update Cart
+                                <i class="fa fa-refresh"></i> {% trans 'Update Cart' %}
                             </button>
                         {% else %}
                             <button type="button" class="btn btn-outline add-to-cart">
-                                <i class="fa fa-shopping-cart"></i> Add to Cart
+                                <i class="fa fa-shopping-cart"></i> {% trans 'Add to Cart' %}
                             </button>
                         {% endif %}
 
@@ -340,8 +352,8 @@
             {% empty %}
                 <div class="empty-state">
                     <i class="fa fa-shopping-bag empty-icon"></i>
-                    <h3>No Products Available</h3>
-                    <p>Check back soon for new additions to our catalog.</p>
+                    <h3>{% trans 'No Products Available' %}</h3>
+                    <p>{% trans 'Check back soon for new additions to our catalog.' %}</p>
                 </div>
             {% endfor %}
         </div>

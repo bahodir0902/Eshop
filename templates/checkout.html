@@ -1,41 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Checkout - Details{% endblock %}
+{% block title %}{% trans 'Checkout - Details' %}{% endblock %}
 
 {% block content %}
     <div class="cart-wrapper">
         <div class="cart-container">
             <!-- Header Section -->
             <div class="cart-header">
-                <h1 class="cart-title">Checkout</h1>
+                <h1 class="cart-title">{% trans 'Checkout' %}</h1>
                 <div class="cart-progress">
                     <div class="progress-step completed">
                         <div class="step-icon">
                             <i class="fa-solid fa-cart-shopping"></i>
                         </div>
-                        <span>Cart</span>
+                        <span>{% trans 'Cart' %}</span>
                     </div>
                     <div class="progress-line completed"></div>
                     <div class="progress-step active">
                         <div class="step-icon">
                             <i class="fa-solid fa-address-card"></i>
                         </div>
-                        <span>Details</span>
+                        <span>{% trans 'Details' %}</span>
                     </div>
                     <div class="progress-line"></div>
                     <div class="progress-step">
                         <div class="step-icon">
                             <i class="fa-solid fa-credit-card"></i>
                         </div>
-                        <span>Payment</span>
+                        <span>{% trans 'Payment' %}</span>
                     </div>
                     <div class="progress-line"></div>
                     <div class="progress-step">
                         <div class="step-icon">
                             <i class="fa-solid fa-check"></i>
                         </div>
-                        <span>Confirmation</span>
+                        <span>{% trans 'Confirmation' %}</span>
                     </div>
                 </div>
             </div>
@@ -45,8 +46,8 @@
                 <!-- Customer Details Section -->
                 <div class="cart-items-section">
                     <div class="items-header">
-                        <h2>Delivery Details</h2>
-                        <span class="items-count">Step 2 of 4</span>
+                        <h2>{% trans 'Delivery Details' %}</h2>
+                        <span class="items-count">{% trans 'Step 2 of 4' %}</span>
                     </div>
 
                     <div class="details-form">
@@ -56,18 +57,18 @@
                             <div class="form-section">
                                 <h3 class="section-title">
                                     <i class="fa-solid fa-user"></i>
-                                    Contact Information
+                                    {% trans 'Contact Information' %}
                                 </h3>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="id_email">Email Address</label>
-                                        <input type="email" id="id_email" name="email" placeholder="Enter your email"
+                                        <label for="id_email">{% trans 'Email Address' %}</label>
+                                        <input type="email" id="id_email" name="email" placeholder="{% trans 'Enter your email' %}"
                                                value="{{ request.user.email }}" readonly required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="id_phone">Phone Number</label>
+                                        <label for="id_phone">{% trans 'Phone Number' %}</label>
                                         <input type="tel" id="id_phone" name="phone"
-                                               placeholder="Enter your phone number"
+                                               placeholder="{% trans 'Enter your phone number' %}"
                                                value="{{ request.user.phone_number }}" required>
                                     </div>
                                 </div>
@@ -76,66 +77,65 @@
                             <div class="form-section">
                                 <h3 class="section-title">
                                     <i class="fa-solid fa-map-location-dot"></i>
-                                    Shipping Address
+                                    {% trans 'Shipping Address' %}
                                 </h3>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="id_first_name">First Name</label>
+                                        <label for="id_first_name">{% trans 'First Name' %}</label>
                                         <input type="text" id="id_first_name" name="first_name"
-                                               placeholder="Enter your first name"
+                                               placeholder="{% trans 'Enter your first name' %}"
                                                value="{{ request.user.first_name }}" readonly required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="id_last_name">Last Name</label>
+                                        <label for="id_last_name">{% trans 'Last Name' %}</label>
                                         <input type="text" id="id_last_name" name="last_name"
-                                               placeholder="Enter your last name"
+                                               placeholder="{% trans 'Enter your last name' %}"
                                                value="{{ request.user.last_name }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="{{ address_form.address_line_1.id_for_label }}">Address Line 1</label>
+                                    <label for="{{ address_form.address_line_1.id_for_label }}">{% trans 'Address Line 1' %}</label>
                                     {{ address_form.address_line_1 }}
                                 </div>
                                 <div class="form-group">
-                                    <label for="{{ address_form.address_line_2.id_for_label }}">Address Line 2
-                                        (Optional)</label>
+                                    <label for="{{ address_form.address_line_2.id_for_label }}">{% trans 'Address Line 2 (Optional)' %}</label>
                                     {{ address_form.address_line_2 }}
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="{{ address_form.city.id_for_label }}">City</label>
+                                        <label for="{{ address_form.city.id_for_label }}">{% trans 'City' %}</label>
                                         {{ address_form.city }}
                                     </div>
                                     <div class="form-group">
-                                        <label for="{{ address_form.city.id_for_label }}">State/Province</label>
+                                        <label for="{{ address_form.city.id_for_label }}">{% trans 'State/Province' %}</label>
                                         {{ address_form.state_or_province }}
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="{{ address_form.postal_code.id_for_label }}">Postal Code</label>
+                                        <label for="{{ address_form.postal_code.id_for_label }}">{% trans 'Postal Code' %}</label>
                                         {{ address_form.postal_code }}
                                     </div>
                                     <div class="form-group">
-                                        <label for="{{ address_form.country.id_for_label }}">Country</label>
+                                        <label for="{{ address_form.country.id_for_label }}">{% trans 'Country' %}</label>
                                         {{ address_form.country }}
                                     </div>
                                 </div>
-                                 <div class="form-group beautiful-checkbox">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" name="save_primary" id="id_save_primary" checked>
-                                    <span class="checkmark"></span>
-                                    Save this address to my profile and set as primary address?
-                                    <span title="We'll save this address for your future orders.">🛈</span>
-                                </label>
-                            </div>
+                                <div class="form-group beautiful-checkbox">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="save_primary" id="id_save_primary" checked>
+                                        <span class="checkmark"></span>
+                                        {% trans 'Save this address to my profile and set as primary address?' %}
+                                        <span title="{% trans 'We\'ll save this address for your future orders.' %}">🛈</span>
+                                    </label>
+                                </div>
                             </div>
 
 
                             <div class="form-section">
                                 <h3 class="section-title">
                                     <i class="fa-solid fa-truck-fast"></i>
-                                    Delivery Options
+                                    {% trans 'Delivery Options' %}
                                 </h3>
                                 <div class="delivery-options">
                                     <div class="delivery-option">
@@ -143,8 +143,8 @@
                                                checked>
                                         <label for="standard">
                                             <div class="option-details">
-                                                <div class="option-name">Standard Delivery</div>
-                                                <div class="option-description">3-5 business days</div>
+                                                <div class="option-name">{% trans 'Standard Delivery' %}</div>
+                                                <div class="option-description">{% trans '3-5 business days' %}</div>
                                             </div>
                                             <div class="option-price">$5.99</div>
                                         </label>
@@ -153,8 +153,8 @@
                                         <input type="radio" id="express" name="delivery_option" value="express">
                                         <label for="express">
                                             <div class="option-details">
-                                                <div class="option-name">Express Delivery</div>
-                                                <div class="option-description">1-2 business days</div>
+                                                <div class="option-name">{% trans 'Express Delivery' %}</div>
+                                                <div class="option-description">{% trans '1-2 business days' %}</div>
                                             </div>
                                             <div class="option-price">$12.99</div>
                                         </label>
@@ -163,8 +163,8 @@
                                         <input type="radio" id="next_day" name="delivery_option" value="next_day">
                                         <label for="next_day">
                                             <div class="option-details">
-                                                <div class="option-name">Next Day Delivery</div>
-                                                <div class="option-description">Next business day</div>
+                                                <div class="option-name">{% trans 'Next Day Delivery' %}</div>
+                                                <div class="option-description">{% trans 'Next business day' %}</div>
                                             </div>
                                             <div class="option-price">$19.99</div>
                                         </label>
@@ -174,10 +174,10 @@
 
                             <div class="form-actions">
                                 <a href="{% url 'cart:list' %}" class="btn-back">
-                                    <i class="fa-solid fa-arrow-left"></i> Back to Cart
+                                    <i class="fa-solid fa-arrow-left"></i> {% trans 'Back to Cart' %}
                                 </a>
                                 <button type="submit" class="btn-continue">
-                                    Continue to Payment <i class="fa-solid fa-arrow-right"></i>
+                                    {% trans 'Continue to Payment' %} <i class="fa-solid fa-arrow-right"></i>
                                 </button>
                             </div>
                         </form>
@@ -187,9 +187,9 @@
                 <!-- Order Summary Section -->
                 <div class="order-summary">
                     <div class="summary-header">
-                        <h2>Order Summary</h2>
+                        <h2>{% trans 'Order Summary' %}</h2>
                         <div class="summary-toggle">
-                            <span>Details</span>
+                            <span>{% trans 'Details' %}</span>
                             <i class="fa-solid fa-chevron-down"></i>
                         </div>
                     </div>
@@ -222,27 +222,27 @@
 
                         <!-- Cost Breakdown -->
                         <div class="summary-row">
-                            <span>Subtotal</span>
+                            <span>{% trans 'Subtotal' %}</span>
                             <span class="subtotal-amount">$<span id="subtotal">{{ subtotal }}</span></span>
                         </div>
                         <div class="summary-row">
-                            <span>Shipping</span>
+                            <span>{% trans 'Shipping' %}</span>
                             <span id="shipping-cost">$5.99</span>
                         </div>
 {#                        <div class="summary-row discount-row">#}
 {#                            <div class="promo-input">#}
-{#                                <input type="text" placeholder="Promo Code">#}
-{#                                <button class="btn-apply">Apply</button>#}
+{#                                <input type="text" placeholder="{% trans 'Promo Code' %}">#}
+{#                                <button class="btn-apply">{% trans 'Apply' %}</button>#}
 {#                            </div>#}
 {#                        </div>#}
                         <div class="summary-divider"></div>
                         <div class="summary-row total-row">
-                            <span>Total</span>
+                            <span>{% trans 'Total' %}</span>
                             <span class="total-amount">$<span id="total">0.00</span></span>
                         </div>
 
                         <div class="payment-methods">
-                            <span>We Accept</span>
+                            <span>{% trans 'We Accept' %}</span>
                             <div class="payment-icons">
                                 <i class="fab fa-cc-visa"></i>
                                 <i class="fab fa-cc-mastercard"></i>

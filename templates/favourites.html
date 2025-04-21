@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/favourites.css' %}">
@@ -11,12 +12,12 @@
     <div id="cart-data" data-cart-items='{{ cart_items_json|safe }}' style="display: none;"></div>
     <div class="favorites-header">
         <div class="header-content">
-            <h1 class="title">My Cosmic Collection</h1>
-            <p class="subtitle">Your universe of favorite items</p>
+            <h1 class="title">{% trans 'My Cosmic Collection' %}</h1>
+            <p class="subtitle">{% trans 'Your universe of favorite items' %}</p>
 
             {% if favourite_items %}
             <button id="clear-all" class="clear-button">
-                <span class="button-text">Disintegrate All</span>
+                <span class="button-text">{% trans 'Disintegrate All' %}</span>
                 <i class="fas fa-trash-alt"></i>
             </button>
             {% endif %}
@@ -32,7 +33,7 @@
                 <div class="card-front">
                     <div class="image-container">
                         {% if item.product.image %}
-                        <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                        <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="{% trans 'View' %}">
                             <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="product-image"></a>
                         {% else %}
                         <div class="no-image">
@@ -45,24 +46,24 @@
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">
-                            <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                            <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="{% trans 'View' %}">
                             {{ item.product.name }}</a>
                         </h3>
                         <div class="shop-name">{{ item.product.shop.name }}</div>
                         {% if item.product.is_available %}
-                        <span class="availability available">In Stock</span>
+                        <span class="availability available">{% trans 'In Stock' %}</span>
                         {% else %}
-                        <span class="availability unavailable">Out of Stock</span>
+                        <span class="availability unavailable">{% trans 'Out of Stock' %}</span>
                         {% endif %}
                     </div>
                     <div class="card-actions">
-                        <button class="remove-button" data-id="{{ item.product.id }}">
+                        <button class="remove-button" data-id="{{ item.product.id }}" title="{% trans 'Remove from favorites' %}">
                             <i class="fas fa-heart-broken"></i>
                         </button>
-                        <button class="details-button">
+                        <button class="details-button" title="{% trans 'View details' %}">
                             <i class="fas fa-info-circle"></i>
                         </button>
-                        <button class="add-to-cart-button" data-id="{{ item.product.id }}">
+                        <button class="add-to-cart-button" data-id="{{ item.product.id }}" title="{% trans 'Add to cart' %}">
                             <i class="fas fa-shopping-cart"></i>
                         </button>
                     </div>
@@ -72,12 +73,12 @@
                     <p class="description">{{ item.product.description|truncatechars:150 }}</p>
                     <div class="category">
                         {% if item.product.category %}
-                        <span class="category-label">Category:</span>
+                        <span class="category-label">{% trans 'Category:' %}</span>
                         <span class="category-name">{{ item.product.category.name }}</span>
                         {% endif %}
                     </div>
                     <button class="flip-back-button">
-                        <i class="fas fa-undo"></i> Back
+                        <i class="fas fa-undo"></i> {% trans 'Back' %}
                     </button>
                 </div>
             </div>
@@ -91,10 +92,10 @@
                     <i class="fas fa-user-astronaut"></i>
                 </div>
             </div>
-            <h2>Your Cosmic Collection Is Empty</h2>
-            <p>Start adding your favorite products to create your personal galaxy of amazing items!</p>
+            <h2>{% trans 'Your Cosmic Collection Is Empty' %}</h2>
+            <p>{% trans 'Start adding your favorite products to create your personal galaxy of amazing items!' %}</p>
             <a href="{% url 'products:products' %}" class="explore-button">
-                <span class="button-text">Explore Products</span>
+                <span class="button-text">{% trans 'Explore Products' %}</span>
                 <i class="fas fa-rocket"></i>
             </a>
         </div>

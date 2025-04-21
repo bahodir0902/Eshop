@@ -1,3 +1,42 @@
+function getLanguagePrefix() {
+    // Extract from URL path
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+
+    // Check if the first segment is a language code (typically 2-5 characters)
+    if (pathSegments.length > 0 && /^[a-z]{2}(-[a-z]{2,3})?$/i.test(pathSegments[0])) {
+        return `/${pathSegments[0]}`;
+    }
+
+    // If no language in path, check if there's a language in HTML tag
+    const htmlLang = document.documentElement.lang;
+    if (htmlLang && htmlLang !== 'en') {
+        return `/${htmlLang}`;
+    }
+
+    // Default (no language prefix)
+    return '';
+}
+
+// Function to ensure URL has the correct language prefix
+function ensureLanguagePrefix(url) {
+    // Don't modify absolute URLs or URLs that already start with the language prefix
+    if (url.startsWith('http') || url.startsWith('//')) {
+        return url;
+    }
+
+    const langPrefix = getLanguagePrefix();
+
+    // If we have a language prefix and the URL doesn't already have it
+    if (langPrefix && !url.startsWith(langPrefix)) {
+        // Make sure we don't add the prefix to URLs that already have it
+        const urlWithoutLeadingSlash = url.startsWith('/') ? url.substring(1) : url;
+        return `${langPrefix}/${urlWithoutLeadingSlash}`;
+    }
+
+    return url;
+}
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // Quantity selector functionality
     const decreaseBtn = document.getElementById('decrease-qty');
@@ -126,11 +165,19 @@ document.addEventListener('DOMContentLoaded', function () {
     addToCartBtn.addEventListener('click', function () {
         const productId = this.getAttribute('data-product-id');
         const csrfToken = getCSRFToken();
+        const currentAction = this.getAttribute('data-action') || 'add';
 
-        if (this.innerHTML.includes('Add to Cart')) {
+        // Handle different actions based on the data-action attribute
+        if (currentAction === 'add') {
             // Add item to cart
             const quantity = parseInt(quantityInput.value);
-            fetch(`/cart/add_item/${productId}`, {
+
+            // Show loading state
+            const originalButtonHtml = this.innerHTML;
+            this.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+            this.disabled = true;
+
+            fetch(ensureLanguagePrefix(`/cart/add_item/${productId}`), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -147,25 +194,42 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                         cartQuantitySpan.textContent = data.quantity;
                         inCartMessage.style.display = 'inline';
+
+                        // Update button state to 'update'
+                        this.setAttribute('data-action', 'update');
                         this.innerHTML = '<i class="fa fa-shopping-cart"></i> Update Cart';
+
                         hideQuantitySelector(); // Hide selector after adding
                     } else {
                         showNotification('Error: ' + (data.error || 'Could not add product to cart.'));
+                        this.innerHTML = originalButtonHtml; // Restore original button state
                     }
+                    this.disabled = false;
                 })
                 .catch(error => {
                     console.error('Error adding to cart:', error);
                     showNotification('Error adding product to cart. Please try again.');
+                    this.innerHTML = originalButtonHtml; // Restore original button state
+                    this.disabled = false;
                 });
-        } else if (this.innerHTML.includes('Update Cart')) {
+        } else if (currentAction === 'update') {
             // Show quantity selector for updating
             const currentQuantity = parseInt(cartQuantitySpan.textContent);
             showQuantitySelector(currentQuantity);
+
+            // Update button state to 'confirm'
+            this.setAttribute('data-action', 'confirm');
             this.innerHTML = '<i class="fa fa-shopping-cart"></i> Confirm Update';
-        } else if (this.innerHTML.includes('Confirm Update')) {
+        } else if (currentAction === 'confirm') {
             // Update item in cart
             const quantity = parseInt(quantityInput.value);
-            fetch(`/cart/update_item/${productId}`, {
+
+            // Show loading state
+            const originalButtonHtml = this.innerHTML;
+            this.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+            this.disabled = true;
+
+            fetch(ensureLanguagePrefix(`/cart/update_item/${productId}`), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -178,15 +242,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.success) {
                         showNotification('Cart updated successfully!');
                         cartQuantitySpan.textContent = quantity;
+
+                        // Update button state back to 'update'
+                        this.setAttribute('data-action', 'update');
                         this.innerHTML = '<i class="fa fa-shopping-cart"></i> Update Cart';
+
                         hideQuantitySelector(); // Hide selector after update
                     } else {
                         showNotification('Error: ' + (data.error || 'Could not update cart.'));
+                        this.innerHTML = originalButtonHtml; // Restore original button state
                     }
+                    this.disabled = false;
                 })
                 .catch(error => {
                     console.error('Error updating cart:', error);
                     showNotification('Error updating cart. Please try again.');
+                    this.innerHTML = originalButtonHtml; // Restore original button state
+                    this.disabled = false;
                 });
         }
     });
@@ -208,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (productId) {
                 // First add to cart
-                fetch(`/cart/add_item/${productId}`, {
+                fetch(ensureLanguagePrefix(`/cart/add_item/${productId}`), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -301,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 ? `/favourites/remove_favourite_item/${productId}`
                 : `/favourites/add_favourite_item/${productId}`;
 
-            fetch(url, {
+            fetch(ensureLanguagePrefix(url), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -395,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Submit the review via AJAX
-            fetch(`/feedbacks/feedback/${productId}`, {
+            fetch(ensureLanguagePrefix(`/feedbacks/feedback/${productId}`), {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': csrfToken
@@ -495,7 +567,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const productId = document.getElementById('product-id').value;
             const csrfToken = getCSRFToken();
 
-            fetch(`/feedbacks/feedback/${productId}`, {
+            fetch(ensureLanguagePrefix(`/feedbacks/feedback/${productId}`), {
                 method: 'DELETE',
                 headers: {
                     'X-CSRFToken': csrfToken,
@@ -545,7 +617,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (productId) {
                 // AJAX call to add related product to cart
-                fetch(`/cart/add_item/${productId}`, {
+                fetch(ensureLanguagePrefix(`/cart/add_item/${productId}`), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -685,7 +757,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.classList.add('clicked');
             setTimeout(() => this.classList.remove('clicked'), 300);
 
-            fetch(`/cart/remove_item/${productId}`, {
+            fetch(ensureLanguagePrefix(`/cart/remove_item/${productId}`), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -792,11 +864,13 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
         document.head.appendChild(cartItemsScript);
     }
+
     function initializeRating() {
         if (selectedRating && selectedRating.value) {
             updateStars(parseInt(selectedRating.value));
         }
     }
+
 // Check wishlist and cart status after a short delay to ensure scripts are loaded
     setTimeout(() => {
         checkIfInCart();

@@ -1,3 +1,41 @@
+function getLanguagePrefix() {
+    // Extract from URL path
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+
+    // Check if the first segment is a language code (typically 2-5 characters)
+    if (pathSegments.length > 0 && /^[a-z]{2}(-[a-z]{2,3})?$/i.test(pathSegments[0])) {
+        return `/${pathSegments[0]}`;
+    }
+
+    // If no language in path, check if there's a language in HTML tag
+    const htmlLang = document.documentElement.lang;
+    if (htmlLang && htmlLang !== 'en') {
+        return `/${htmlLang}`;
+    }
+
+    // Default (no language prefix)
+    return '';
+}
+
+// Function to ensure URL has the correct language prefix
+function ensureLanguagePrefix(url) {
+    // Don't modify absolute URLs or URLs that already start with the language prefix
+    if (url.startsWith('http') || url.startsWith('//')) {
+        return url;
+    }
+
+    const langPrefix = getLanguagePrefix();
+
+    // If we have a language prefix and the URL doesn't already have it
+    if (langPrefix && !url.startsWith(langPrefix)) {
+        // Make sure we don't add the prefix to URLs that already have it
+        const urlWithoutLeadingSlash = url.startsWith('/') ? url.substring(1) : url;
+        return `${langPrefix}/${urlWithoutLeadingSlash}`;
+    }
+
+    return url;
+}
+
 /**
  * Shopping Cart JavaScript
  * Enhances the functionality of the cart page
@@ -375,7 +413,7 @@ function updateCartItemQuantity(productId, quantity) {
     let formData = new FormData();
     formData.append('quantity', quantity);
 
-    fetch(`/cart/update_item/${productId}`, {
+    fetch(ensureLanguagePrefix(`/cart/update_item/${productId}`), {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCookie('csrftoken')  // CSRF protection
@@ -402,7 +440,7 @@ function removeCartItem(productId) {
     let formData = new FormData();
     formData.append('product_id', productId);
 
-    fetch(`/cart/remove_item/${productId}`, {
+    fetch(ensureLanguagePrefix(`/cart/remove_item/${productId}`), {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCookie('csrftoken')  // CSRF token for security
@@ -428,7 +466,7 @@ function clearCart() {
 
     let formData = new FormData();  // Empty form data, as no parameters are needed
 
-    fetch('/cart/clear/', {
+    fetch(ensureLanguagePrefix('/cart/clear/'), {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCookie('csrftoken')  // CSRF token for security

@@ -1,3 +1,41 @@
+function getLanguagePrefix() {
+    // Extract from URL path
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+
+    // Check if the first segment is a language code (typically 2-5 characters)
+    if (pathSegments.length > 0 && /^[a-z]{2}(-[a-z]{2,3})?$/i.test(pathSegments[0])) {
+        return `/${pathSegments[0]}`;
+    }
+
+    // If no language in path, check if there's a language in HTML tag
+    const htmlLang = document.documentElement.lang;
+    if (htmlLang && htmlLang !== 'en') {
+        return `/${htmlLang}`;
+    }
+
+    // Default (no language prefix)
+    return '';
+}
+
+// Function to ensure URL has the correct language prefix
+function ensureLanguagePrefix(url) {
+    // Don't modify absolute URLs or URLs that already start with the language prefix
+    if (url.startsWith('http') || url.startsWith('//')) {
+        return url;
+    }
+
+    const langPrefix = getLanguagePrefix();
+
+    // If we have a language prefix and the URL doesn't already have it
+    if (langPrefix && !url.startsWith(langPrefix)) {
+        // Make sure we don't add the prefix to URLs that already have it
+        const urlWithoutLeadingSlash = url.startsWith('/') ? url.substring(1) : url;
+        return `${langPrefix}/${urlWithoutLeadingSlash}`;
+    }
+
+    return url;
+}
+
 // JavaScript for enhanced product list functionality
 document.addEventListener('DOMContentLoaded', function () {
     // View switching functionality (grid vs list)
@@ -64,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 : `/favourites/remove_favourite_item/${productId}`;
 
             // Send AJAX request
-            fetch(url, {
+            fetch(ensureLanguagePrefix(url), {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': csrfToken,
@@ -260,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
         addButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Adding...';
 
         // Send AJAX request
-        fetch(`/cart/add_item/${productId}`, {
+        fetch(ensureLanguagePrefix(`/cart/add_item/${productId}`), {
             method: 'POST',
             headers: {
                 'X-CSRFToken': csrfToken,
@@ -397,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add animation
         this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Removing...';
         // Send AJAX request to remove item
-        fetch(`/cart/remove_cart_item_in_list/${itemId}`, {
+        fetch(ensureLanguagePrefix(`/cart/remove_cart_item_in_list/${itemId}`), {
             method: 'POST',
             headers: {
                 'X-CSRFToken': csrfToken,

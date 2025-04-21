@@ -1,12 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="activate-container">
-    <h2 class="activate-title">Verify Your New Email 🔄</h2>
+    <h2 class="activate-title">{% trans 'Verify Your New Email' %} 🔄</h2>
     <p class="activate-message">
-        We've sent a verification code to your new email address <b>{{ new_email }}</b>. Please check your inbox (and
-        spam folder just in
-        case) and enter the code below to confirm your email change.
+        {% blocktrans with email=new_email %}We've sent a verification code to your new email address <b>{{ email }}</b>. Please check your inbox (and
+        spam folder just in case) and enter the code below to confirm your email change.{% endblocktrans %}
     </p>
 
     <form method="POST">
@@ -25,14 +25,13 @@
             {% endfor %}
         </div>
         {% endif %}
-        <input type="text" name="code" class="activate-input" placeholder="Enter verification code"
+        <input type="text" name="code" class="activate-input" placeholder="{% trans 'Enter verification code' %}"
                maxlength="4" required>
-        <button type="submit" class="activate-button">Verify</button>
+        <button type="submit" class="activate-button">{% trans 'Verify' %}</button>
     </form>
 
     <p class="activate-note">
-        Didn’t receive the email? <a href="{% url 'accounts:profile_edit' %}" class="activate-link">Resend
-        Verification Code</a>.
+        {% trans "Didn\'t receive the email?" %} <a href="{% url 'accounts:profile_edit' %}" class="activate-link">{% trans 'Resend Verification Code' %}</a>.
     </p>
 </div>
 

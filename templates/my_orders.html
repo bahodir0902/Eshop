@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load order_tags %}
-{% block title %}My Orders{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'My Orders' %}{% endblock %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/my_orders.css' %}">
@@ -10,13 +11,13 @@
 {% block content %}
 <div class="orders-container">
   <div class="orders-header">
-    <h1>My Orders</h1>
+    <h1>{% trans 'My Orders' %}</h1>
     <div class="filter-container">
-      <button class="filter-btn active" data-status="all">All Orders</button>
-      <button class="filter-btn" data-status="processing">Processing</button>
-      <button class="filter-btn" data-status="shipped">Shipped</button>
-      <button class="filter-btn" data-status="delivered">Delivered</button>
-      <button class="filter-btn" data-status="returned">Returned</button>
+      <button class="filter-btn active" data-status="all">{% trans 'All Orders' %}</button>
+      <button class="filter-btn" data-status="processing">{% trans 'Processing' %}</button>
+      <button class="filter-btn" data-status="shipped">{% trans 'Shipped' %}</button>
+      <button class="filter-btn" data-status="delivered">{% trans 'Delivered' %}</button>
+      <button class="filter-btn" data-status="returned">{% trans 'Returned' %}</button>
     </div>
   </div>
 
@@ -26,7 +27,7 @@
         <div class="order-card" data-status="{{ order.status }}">
           <div class="order-header">
             <div class="order-info">
-              <h3>Order #{{ order.id }}</h3>
+              <h3>{% blocktrans with order_id=order.id %}Order #{{ order_id }}{% endblocktrans %}</h3>
               <span class="order-date">{{ order.created_at|date:"F j, Y" }}</span>
             </div>
             <div class="order-status status-{{ order.status }}">
@@ -39,67 +40,67 @@
             {% if order.status == 'paid' or order.status == 'processing' %}
               <div class="progress-step active">
                 <div class="step-icon"><i class="fas fa-check"></i></div>
-                <div class="step-label">Order Placed</div>
+                <div class="step-label">{% trans 'Order Placed' %}</div>
               </div>
               <div class="progress-step {% if order.status == 'processing' %}active{% endif %}">
                 <div class="step-icon"><i class="fas fa-cog"></i></div>
-                <div class="step-label">Processing</div>
+                <div class="step-label">{% trans 'Processing' %}</div>
               </div>
               <div class="progress-step">
                 <div class="step-icon"><i class="fas fa-truck"></i></div>
-                <div class="step-label">Shipped</div>
+                <div class="step-label">{% trans 'Shipped' %}</div>
               </div>
               <div class="progress-step">
                 <div class="step-icon"><i class="fas fa-home"></i></div>
-                <div class="step-label">Delivered</div>
+                <div class="step-label">{% trans 'Delivered' %}</div>
               </div>
             {% elif order.status == 'packing' or order.status == 'shipped' or order.status == 'in_delivery' %}
               <div class="progress-step active">
                 <div class="step-icon"><i class="fas fa-check"></i></div>
-                <div class="step-label">Order Placed</div>
+                <div class="step-label">{% trans 'Order Placed' %}</div>
               </div>
               <div class="progress-step active">
                 <div class="step-icon"><i class="fas fa-cog"></i></div>
-                <div class="step-label">Processing</div>
+                <div class="step-label">{% trans 'Processing' %}</div>
               </div>
               <div class="progress-step {% if order.status == 'shipped' or order.status == 'in_delivery' %}active{% endif %}">
                 <div class="step-icon"><i class="fas fa-truck"></i></div>
-                <div class="step-label">Shipped</div>
+                <div class="step-label">{% trans 'Shipped' %}</div>
               </div>
               <div class="progress-step">
                 <div class="step-icon"><i class="fas fa-home"></i></div>
-                <div class="step-label">Delivered</div>
+                <div class="step-label">{% trans 'Delivered' %}</div>
               </div>
             {% elif order.status == 'delivered' %}
               <div class="progress-step active">
                 <div class="step-icon"><i class="fas fa-check"></i></div>
-                <div class="step-label">Order Placed</div>
+                <div class="step-label">{% trans 'Order Placed' %}</div>
               </div>
               <div class="progress-step active">
                 <div class="step-icon"><i class="fas fa-cog"></i></div>
-                <div class="step-label">Processing</div>
+                <div class="step-label">{% trans 'Processing' %}</div>
               </div>
               <div class="progress-step active">
                 <div class="step-icon"><i class="fas fa-truck"></i></div>
-                <div class="step-label">Shipped</div>
+                <div class="step-label">{% trans 'Shipped' %}</div>
               </div>
               <div class="progress-step active">
                 <div class="step-icon"><i class="fas fa-home"></i></div>
-                <div class="step-label">Delivered</div>
+                <div class="step-label">{% trans 'Delivered' %}</div>
               </div>
             {% elif order.status == 'return_requested' or order.status == 'returned' or order.status == 'refunded' %}
               <div class="return-progress">
                 <div class="progress-step active">
                   <div class="step-icon"><i class="fas fa-undo"></i></div>
-                  <div class="step-label">Return Requested</div>
+                  <div class="step-label">{% trans 'Return Requested' %}</div>
                 </div>
                 <div class="progress-step {% if order.status == 'returned' or order.status == 'refunded' %}active{% endif %}">
                   <div class="step-icon"><i class="fas fa-box"></i></div>
-                  <div class="step-label">Returned</div>
+                  <div class="step-label">{% trans 'Returned' %}</div>
                 </div>
                 <div class="progress-step {% if order.status == 'refunded' %}active{% endif %}">
                   <div class="step-icon"><i class="fas fa-money-bill"></i></div>
-                  <div class="step-label">Refunded</div>
+                  <div class="step-label">{% trans 'Refunded' %}</div>
                 </div>
               </div>
             {% elif order.status == 'canceled' or order.status == 'failed' %}
@@ -112,18 +113,18 @@
 
           <div class="order-details">
             <div class="shipping-info">
-              <h4>Shipping Address</h4>
+              <h4>{% trans 'Shipping Address' %}</h4>
               {% if order.shipping_address %}
                 <p>{{ order.shipping_address.address_line_1 }}, {{ order.shipping_address.city }}{{ order.shipping_address.country }}</p>
                 <p>{{ order.shipping_address.address_line_2 }}{{ order.shipping_address.state_or_province }}, {{ order.shipping_address.postal_code }}</p>
               {% else %}
-                <p>No shipping address provided</p>
+                <p>{% trans 'No shipping address provided' %}</p>
               {% endif %}
-              <p><strong>Method:</strong> {{ order.shipping_method }}</p>
+              <p><strong>{% trans 'Method:' %}</strong> {{ order.shipping_method }}</p>
             </div>
 
             <div class="order-items">
-              <h4>Items</h4>
+              <h4>{% trans 'Items' %}</h4>
               <div class="items-list">
                 {% for order_detail in item %}
                   <div class="item">
@@ -131,13 +132,13 @@
                       {% if order_detail.product.image %}
                         <img src="{{ order_detail.product.image.url }}" alt="{{ order_detail.product.name }}">
                       {% else %}
-                        <div class="no-image">No Image</div>
+                        <div class="no-image">{% trans 'No Image' %}</div>
                       {% endif %}
                     </div>
                     <div class="item-details">
                       <h5>{{ order_detail.product.name }}</h5>
                       <p class="item-price">${{ order_detail.product.price }}</p>
-                      <p class="item-quantity">Qty: {{ order_detail.quantity }}</p>
+                      <p class="item-quantity">{% blocktrans with qty=order_detail.quantity %}Qty: {{ qty }}{% endblocktrans %}</p>
                     </div>
                   </div>
                 {% endfor %}
@@ -147,32 +148,32 @@
 
           <div class="order-summary">
             <div class="summary-item">
-              <span>Subtotal:</span>
+              <span>{% trans 'Subtotal:' %}</span>
               <span>${% calculate_subtotal item %}</span>
             </div>
             <div class="summary-item">
-              <span>Shipping:</span>
+              <span>{% trans 'Shipping:' %}</span>
               <span>${{ order.shipping_cost }}</span>
             </div>
             {% if order.discount_code != 'None' %}
             <div class="summary-item discount">
-              <span>Discount ({{ order.discount_code }}):</span>
+              <span>{% blocktrans with code=order.discount_code %}Discount ({{ code }}):{% endblocktrans %}</span>
               <span>-$XX.XX</span>
             </div>
             {% endif %}
             <div class="summary-item total">
-              <span>Total:</span>
+              <span>{% trans 'Total:' %}</span>
               <span>${% calculate_total item order.shipping_cost %}</span>
             </div>
           </div>
 
           <div class="order-actions">
             {% if order.status == 'delivered' %}
-              <button class="action-btn return-btn">Return Items</button>
+              <button class="action-btn return-btn">{% trans 'Return Items' %}</button>
             {% endif %}
-            <button class="action-btn details-btn">View Details</button>
+            <button class="action-btn details-btn">{% trans 'View Details' %}</button>
             {% if order.status == 'pending' or order.status == 'paid' or order.status == 'processing' %}
-              <button class="action-btn cancel-btn">Cancel Order</button>
+              <button class="action-btn cancel-btn">{% trans 'Cancel Order' %}</button>
             {% endif %}
           </div>
         </div>
@@ -182,9 +183,9 @@
         <div class="empty-icon">
           <i class="far fa-shopping-bag"></i>
         </div>
-        <h2>You don't have any orders yet</h2>
-        <p>When you place orders, they will appear here</p>
-        <a href="{% url 'products:products' %}" class="shop-now-btn">Shop Now</a>
+        <h2>{% trans 'You don\'t have any orders yet' %}</h2>
+        <p>{% trans 'When you place orders, they will appear here' %}</p>
+        <a href="{% url 'products:products' %}" class="shop-now-btn">{% trans 'Shop Now' %}</a>
       </div>
     {% endfor %}
   </div>

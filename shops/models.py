@@ -7,11 +7,12 @@ from common.models import BaseModel
 import os
 import time
 import uuid
+from django.utils.translation import gettext_lazy as _
 
 def validate_image_size(image):
     max_size = 4 * 1024 * 1024
     if image.size > max_size:
-        raise ValidationError('Image size can\'t exceed 4 MB.')
+        raise ValidationError(_('Image size can\'t exceed 4 MB.'))
 
 def unique_image_path(instance, filename):
     ext = filename.split('.')[-1]  # Get file extension
@@ -19,15 +20,20 @@ def unique_image_path(instance, filename):
     return os.path.join('shop_images/', unique_filename)
 
 class Shop(BaseModel):
-    owner = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    description = models.TextField()
+    owner = models.ForeignKey('accounts.User', on_delete=models.CASCADE, verbose_name=_("Owner"))
+    name = models.CharField(_("Name"), max_length=255)
+    description = models.TextField(_("Description"))
     image = models.ImageField(
         upload_to=unique_image_path,
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']), validate_image_size],
         null=True,
-        blank=True
+        blank=True,
+        verbose_name=_("Image")
     )
+
+    class Meta:
+        verbose_name = _("Shop")
+        verbose_name_plural = _("Shops")
 
     @override
     def __str__(self):

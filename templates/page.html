@@ -1,12 +1,13 @@
+{% load i18n %}
 <nav aria-label="Page navigation">
     <ul class="pagination">
         {% if not page.has_previous %}
             <li class="page-item page-arrow disabled">
-                <a class="page-link"><i class="fa fa-arrow-left"></i><span class="visually-hidden">Previous</span></a>
+                <a class="page-link"><i class="fa fa-arrow-left"></i><span class="visually-hidden">{% trans 'Previous' %}</span></a>
             </li>
         {% else %}
             <li class="page-item page-arrow">
-                <a class="page-link" href="?page={{ page.previous_page_number }}&q={{ q }}"><i class="fa fa-arrow-left"></i><span class="visually-hidden">Previous</span></a>
+                <a class="page-link" href="?page={{ page.previous_page_number }}&q={{ q }}"><i class="fa fa-arrow-left"></i><span class="visually-hidden">{% trans 'Previous' %}</span></a>
             </li>
         {% endif %}
 
@@ -22,11 +23,11 @@
 
         {% if not page.has_next %}
             <li class="page-item page-arrow disabled">
-                <a class="page-link"><i class="fa fa-arrow-right"></i><span class="visually-hidden">Next</span></a>
+                <a class="page-link"><i class="fa fa-arrow-right"></i><span class="visually-hidden">{% trans 'Next' %}</span></a>
             </li>
         {% else %}
             <li class="page-item page-arrow">
-                <a class="page-link" href="?page={{ page.next_page_number }}&q={{ q }}"><i class="fa fa-arrow-right"></i><span class="visually-hidden">Next</span></a>
+                <a class="page-link" href="?page={{ page.next_page_number }}&q={{ q }}"><i class="fa fa-arrow-right"></i><span class="visually-hidden">{% trans 'Next' %}</span></a>
             </li>
         {% endif %}
     </ul>

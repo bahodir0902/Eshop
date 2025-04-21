@@ -1,39 +1,40 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="cart-wrapper">
     <div class="cart-container">
         <!-- Header Section -->
         <div class="cart-header">
-            <h1 class="cart-title">Your Shopping Cart</h1>
+            <h1 class="cart-title">{% trans 'Your Shopping Cart' %}</h1>
             <div class="cart-progress">
                 <div class="progress-step active">
                     <div class="step-icon">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </div>
-                    <span>Cart</span>
+                    <span>{% trans 'Cart' %}</span>
                 </div>
                 <div class="progress-line"></div>
                 <div class="progress-step">
                     <div class="step-icon">
                         <i class="fa-solid fa-address-card"></i>
                     </div>
-                    <span>Details</span>
+                    <span>{% trans 'Details' %}</span>
                 </div>
                 <div class="progress-line"></div>
                 <div class="progress-step">
                     <div class="step-icon">
                         <i class="fa-solid fa-credit-card"></i>
                     </div>
-                    <span>Payment</span>
+                    <span>{% trans 'Payment' %}</span>
                 </div>
                 <div class="progress-line"></div>
                 <div class="progress-step">
                     <div class="step-icon">
                         <i class="fa-solid fa-check"></i>
                     </div>
-                    <span>Confirmation</span>
+                    <span>{% trans 'Confirmation' %}</span>
                 </div>
             </div>
         </div>
@@ -43,8 +44,8 @@
             <!-- Items Section -->
             <div class="cart-items-section">
                 <div class="items-header">
-                    <h2>Items in Your Cart</h2>
-                    <span class="items-count">{{ cart_items|length }} Items</span>
+                    <h2>{% trans 'Items in Your Cart' %}</h2>
+                    <span class="items-count">{% blocktrans count counter=cart_items|length %}{{ counter }} Item{% plural %}{{ counter }} Items{% endblocktrans %}</span>
                 </div>
 
                 <!-- Empty Cart Message -->
@@ -56,9 +57,9 @@
                             <span></span><span></span><span></span>
                         </div>
                     </div>
-                    <h3>Your cart is empty</h3>
-                    <p>Looks like you haven't added any products to your cart yet.</p>
-                    <a href="{% url 'products:products' %}" class="btn-continue-shopping">Continue Shopping</a>
+                    <h3>{% trans 'Your cart is empty' %}</h3>
+                    <p>{% trans "Looks like you haven\'t added any products to your cart yet." %}</p>
+                    <a href="{% url 'products:products' %}" class="btn-continue-shopping">{% trans 'Continue Shopping' %}</a>
                 </div>
                 {% else %}
                 <div class="cart-items-list">
@@ -66,7 +67,7 @@
                     <div class="cart-item" data-product-id="{{ item.product.id }}">
                         <div class="item-image">
                             {% if item.product.image %}
-                            <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                            <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="{% trans 'View' %}">
                                 <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"></a>
                             {% else %}
                             <div class="no-image">
@@ -76,13 +77,13 @@
                         </div>
                         <div class="item-info">
                             <h3 class="item-name">
-                                <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="View">
+                                <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="{% trans 'View' %}">
                                 {{ item.product.name }}</a>
                             </h3>
                             <p class="item-shop">{{ item.product.shop }}</p>
                             {% if item.product.is_discounted %}
                             <div class="item-discount-badge">
-                                <i class="fa-solid fa-tag"></i> DISCOUNTED
+                                <i class="fa-solid fa-tag"></i> {% trans 'DISCOUNTED' %}
                             </div>
                             {% endif %}
                             <div class="item-category">
@@ -92,12 +93,12 @@
                             </div>
                         </div>
                         <div class="item-quantity">
-                            <button class="qty-btn decrease-quantity" data-action="decrease">
+                            <button class="qty-btn decrease-quantity" data-action="decrease" title="{% trans 'Decrease quantity' %}">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
                             <input type="number" class="quantity-input" value="{{ item.quantity }}" min="1" max="99"
                                    readonly>
-                            <button class="qty-btn increase-quantity" data-action="increase">
+                            <button class="qty-btn increase-quantity" data-action="increase" title="{% trans 'Increase quantity' %}">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
@@ -106,10 +107,10 @@
                             <span class="price-total">${{ item.total_price|floatformat:2 }}</span>
                         </div>
                         <div class="item-actions">
-                            <button class="remove-item" title="Remove item">
+                            <button class="remove-item" title="{% trans 'Remove item' %}">
                                 <i class="fa-solid fa-trash-alt"></i>
                             </button>
-                            <button class="save-for-later" title="Save for later">
+                            <button class="save-for-later" title="{% trans 'Save for later' %}">
                                 <i class="fa-solid fa-heart"></i>
                             </button>
                         </div>
@@ -119,10 +120,10 @@
 
                 <div class="cart-actions">
                     <button class="btn-clear-cart">
-                        <i class="fa-solid fa-broom"></i> Clear Cart
+                        <i class="fa-solid fa-broom"></i> {% trans 'Clear Cart' %}
                     </button>
                     <a href="{% url 'products:products' %}" class="btn-continue-shopping">
-                        <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+                        <i class="fa-solid fa-arrow-left"></i> {% trans 'Continue Shopping' %}
                     </a>
                 </div>
                 {% endif %}
@@ -132,41 +133,41 @@
             {% if cart_items %}
             <div class="order-summary">
                 <div class="summary-header">
-                    <h2>Order Summary</h2>
+                    <h2>{% trans 'Order Summary' %}</h2>
                     <div class="summary-toggle">
-                        <span>Details</span>
+                        <span>{% trans 'Details' %}</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
                 </div>
 
                 <div class="summary-content">
                     <div class="summary-row">
-                        <span>Subtotal ({{ cart_items|length }} items)</span>
+                        <span>{% blocktrans count counter=cart_items|length %}Subtotal ({{ counter }} item){% plural %}Subtotal ({{ counter }} items){% endblocktrans %}</span>
                         <span class="subtotal-amount">$<span id="subtotal">0.00</span></span>
                     </div>
                     <div class="summary-row">
-                        <span>Shipping</span>
-                        <span>Calculated at checkout</span>
+                        <span>{% trans 'Shipping' %}</span>
+                        <span>{% trans 'Calculated at checkout' %}</span>
                     </div>
                     <div class="summary-row discount-row">
                         <div class="promo-input">
-                            <input type="text" placeholder="Promo Code">
-                            <button class="btn-apply">Apply</button>
+                            <input type="text" placeholder="{% trans 'Promo Code' %}">
+                            <button class="btn-apply">{% trans 'Apply' %}</button>
                         </div>
                     </div>
                     <div class="summary-divider"></div>
                     <div class="summary-row total-row">
-                        <span>Total</span>
+                        <span>{% trans 'Total' %}</span>
                         <span class="total-amount">$<span id="total">0.00</span></span>
                     </div>
 
                     <button class="btn-checkout">
-                        <span>Proceed to Checkout</span>
+                        <span>{% trans 'Proceed to Checkout' %}</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
 
                     <div class="payment-methods">
-                        <span>We Accept</span>
+                        <span>{% trans 'We Accept' %}</span>
                         <div class="payment-icons">
                             <i class="fab fa-cc-visa"></i>
                             <i class="fab fa-cc-mastercard"></i>
