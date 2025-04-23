@@ -32,7 +32,7 @@ class User(AbstractUser):
     email = models.EmailField(_("Email"), unique=True)
     is_verified_email = models.BooleanField(_("Email Verified"), default=False)
     username = models.CharField(_("Username"), max_length=255, unique=True, default=get_random_username)
-
+    google_id = models.CharField(max_length=50, unique=True, null=True, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

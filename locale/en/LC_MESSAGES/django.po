@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 15:51+0500\n"
+"POT-Creation-Date: 2025-04-23 15:23+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,644 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\config\settings.py:137
+#: .\accounts\forms.py:9 .\accounts\forms.py:14 .\accounts\forms.py:34
+#: .\accounts\forms.py:54 .\accounts\forms.py:64 .\accounts\models.py:32
+#: .\accounts\models.py:91 .\templates\profile.html:127
+#: .\templates\profile_edit.html:43
+msgid "Email"
+msgstr "Email"
+
+#: .\accounts\forms.py:10 .\accounts\forms.py:35 .\templates\login.html:65
+#: .\templates\register.html:117
+msgid "Password"
+msgstr "Password"
+
+#: .\accounts\forms.py:20
+#, fuzzy
+#| msgid "Reset Password"
+msgid "Repeat Password"
+msgstr "Reset Password"
+
+#: .\accounts\forms.py:32 .\accounts\forms.py:62 .\templates\checkout.html:84
+#: .\templates\profile.html:121 .\templates\profile_edit.html:19
+#: .\templates\register.html:87
+msgid "First Name"
+msgstr "First Name"
+
+#: .\accounts\forms.py:33 .\accounts\forms.py:63 .\templates\checkout.html:90
+#: .\templates\profile.html:124 .\templates\profile_edit.html:31
+#: .\templates\register.html:94
+msgid "Last Name"
+msgstr "Last Name"
+
+#: .\accounts\forms.py:42 .\accounts\forms.py:43
+#, fuzzy
+#| msgid "Passwords do not match! 🔴"
+msgid "Passwords don't match."
+msgstr "Passwords do not match! 🔴"
+
+#: .\accounts\forms.py:74 .\accounts\models.py:50 .\templates\checkout.html:97
+#: .\templates\profile.html:140 .\templates\profile_edit.html:59
+msgid "Address Line 1"
+msgstr "Address Line 1"
+
+#: .\accounts\forms.py:75 .\accounts\models.py:51 .\templates\profile.html:144
+msgid "Address Line 2"
+msgstr "Address Line 2"
+
+#: .\accounts\forms.py:76 .\accounts\models.py:52 .\templates\checkout.html:106
+#: .\templates\profile.html:148 .\templates\profile_edit.html:83
+msgid "City"
+msgstr "City"
+
+#: .\accounts\forms.py:77
+#, fuzzy
+#| msgid "State/Province"
+msgid "State or Province"
+msgstr "State/Province"
+
+#: .\accounts\forms.py:78 .\accounts\models.py:54 .\templates\checkout.html:120
+#: .\templates\profile.html:154 .\templates\profile_edit.html:107
+msgid "Country"
+msgstr "Country"
+
+#: .\accounts\forms.py:79 .\accounts\models.py:55 .\templates\checkout.html:116
+#: .\templates\profile.html:157 .\templates\profile_edit.html:119
+msgid "Postal Code"
+msgstr "Postal Code"
+
+#: .\accounts\forms.py:80 .\accounts\models.py:56
+#, fuzzy
+#| msgid "Is primary address"
+msgid "Primary Address"
+msgstr "Is primary address"
+
+#: .\accounts\models.py:16
+msgid "The Email field must be set"
+msgstr ""
+
+#: .\accounts\models.py:31 .\templates\checkout.html:69
+msgid "Phone Number"
+msgstr "Phone Number"
+
+#: .\accounts\models.py:33
+#, fuzzy
+#| msgid "Email Verification"
+msgid "Email Verified"
+msgstr "Email Verification"
+
+#: .\accounts\models.py:34
+#, fuzzy
+#| msgid "User"
+msgid "Username"
+msgstr "User"
+
+#: .\accounts\models.py:40 .\accounts\models.py:49 .\accounts\models.py:71
+#: .\activity\models.py:8 .\carts\models.py:10 .\favourites\models.py:9
+#: .\orders\models.py:26 .\reviews\models.py:30 .\templates\base.html:142
+msgid "User"
+msgstr "User"
+
+#: .\accounts\models.py:41
+#, fuzzy
+#| msgid "User"
+msgid "Users"
+msgstr "User"
+
+#: .\accounts\models.py:53 .\templates\checkout.html:110
+#: .\templates\profile.html:151 .\templates\profile_edit.html:95
+msgid "State/Province"
+msgstr "State/Province"
+
+#: .\accounts\models.py:59
+#, fuzzy
+#| msgid "Email Address"
+msgid "Address"
+msgstr "Email Address"
+
+#: .\accounts\models.py:60
+#, fuzzy
+#| msgid "Address Details"
+msgid "Addresses"
+msgstr "Address Details"
+
+#: .\accounts\models.py:72 .\accounts\models.py:90
+msgid "Code"
+msgstr ""
+
+#: .\accounts\models.py:73 .\accounts\models.py:92
+#, fuzzy
+#| msgid "Expiry Date"
+msgid "Expiration Date"
+msgstr "Expiry Date"
+
+#: .\accounts\models.py:74 .\common\models.py:5
+#, fuzzy
+#| msgid "Created"
+msgid "Created At"
+msgstr "Created"
+
+#: .\accounts\models.py:77
+#, fuzzy
+#| msgid "Password"
+msgid "Password Code"
+msgstr "Password"
+
+#: .\accounts\models.py:78
+#, fuzzy
+#| msgid "Password"
+msgid "Password Codes"
+msgstr "Password"
+
+#: .\accounts\models.py:95
+#, fuzzy
+#| msgid "Email Address"
+msgid "Email Code"
+msgstr "Email Address"
+
+#: .\accounts\models.py:96
+#, fuzzy
+#| msgid "Email Address"
+msgid "Email Codes"
+msgstr "Email Address"
+
+#: .\activity\models.py:9 .\carts\models.py:22 .\favourites\models.py:21
+#: .\orders\models.py:46 .\products\models.py:115 .\reviews\models.py:31
+#, fuzzy
+#| msgid "Products"
+msgid "Product"
+msgstr "Products"
+
+#: .\activity\models.py:12
+#, fuzzy
+#| msgid "Related Product"
+msgid "Recent Product"
+msgstr "Related Product"
+
+#: .\activity\models.py:13
+#, fuzzy
+#| msgid "Related Product"
+msgid "Recent Products"
+msgstr "Related Product"
+
+#: .\carts\models.py:13 .\carts\models.py:21 .\templates\checkout.html:18
+#: .\templates\my_cart.html:16 .\templates\payment.html:18
+#: .\templates\payment_success.html:18
+msgid "Cart"
+msgstr "Cart"
+
+#: .\carts\models.py:14
+#, fuzzy
+#| msgid "Cart"
+msgid "Carts"
+msgstr "Cart"
+
+#: .\carts\models.py:23 .\orders\models.py:47
+msgid "Quantity"
+msgstr ""
+
+#: .\carts\models.py:26
+#, fuzzy
+#| msgid "Cart"
+msgid "Cart Item"
+msgstr "Cart"
+
+#: .\carts\models.py:27
+#, fuzzy
+#| msgid "Items"
+msgid "Cart Items"
+msgstr "Items"
+
+#: .\common\models.py:6
+#, fuzzy
+#| msgid "Update Cart"
+msgid "Updated At"
+msgstr "Update Cart"
+
+#: .\common\models.py:10
+#, fuzzy
+#| msgid "Based on"
+msgid "Base Model"
+msgstr "Based on"
+
+#: .\common\models.py:11
+#, fuzzy
+#| msgid "Based on"
+msgid "Base Models"
+msgstr "Based on"
+
+#: .\config\settings.py:139
 msgid "English"
 msgstr "English"
 
-#: .\config\settings.py:138
+#: .\config\settings.py:140
 msgid "Russian"
 msgstr "Russian"
 
-#: .\config\settings.py:139
+#: .\config\settings.py:141
 msgid "Uzbek"
 msgstr "Uzbek"
+
+#: .\favourites\models.py:12 .\favourites\models.py:20
+msgid "Favourite"
+msgstr ""
+
+#: .\favourites\models.py:13
+msgid "Favourites"
+msgstr ""
+
+#: .\favourites\models.py:24
+#, fuzzy
+#| msgid "%(counter)s Item"
+#| msgid_plural "%(counter)s Items"
+msgid "Favourite Item"
+msgstr "%(counter)s Item"
+
+#: .\favourites\models.py:25
+msgid "Favourite Items"
+msgstr ""
+
+#: .\notifications\models.py:8
+#, fuzzy
+#| msgid "User"
+msgid "To User"
+msgstr "User"
+
+#: .\notifications\models.py:9
+msgid "Title"
+msgstr ""
+
+#: .\notifications\models.py:10
+msgid "Message"
+msgstr ""
+
+#: .\notifications\models.py:11
+msgid "Is Read"
+msgstr ""
+
+#: .\notifications\models.py:12
+msgid "Read At"
+msgstr ""
+
+#: .\notifications\models.py:15
+#, fuzzy
+#| msgid "Verification"
+msgid "Notification"
+msgstr "Verification"
+
+#: .\notifications\models.py:16
+#, fuzzy
+#| msgid "Specifications"
+msgid "Notifications"
+msgstr "Specifications"
+
+#: .\orders\models.py:12
+msgid "Pending"
+msgstr ""
+
+#: .\orders\models.py:13
+msgid "Paid"
+msgstr ""
+
+#: .\orders\models.py:14 .\templates\my_orders.html:17
+#: .\templates\my_orders.html:47 .\templates\my_orders.html:64
+#: .\templates\my_orders.html:81
+msgid "Processing"
+msgstr "Processing"
+
+#: .\orders\models.py:15
+msgid "On Hold"
+msgstr ""
+
+#: .\orders\models.py:16
+msgid "Packing"
+msgstr ""
+
+#: .\orders\models.py:17 .\templates\my_orders.html:18
+#: .\templates\my_orders.html:51 .\templates\my_orders.html:68
+#: .\templates\my_orders.html:85
+msgid "Shipped"
+msgstr "Shipped"
+
+#: .\orders\models.py:18
+#, fuzzy
+#| msgid "Standard Delivery"
+msgid "In Delivery"
+msgstr "Standard Delivery"
+
+#: .\orders\models.py:19 .\templates\my_orders.html:19
+#: .\templates\my_orders.html:55 .\templates\my_orders.html:72
+#: .\templates\my_orders.html:89
+msgid "Delivered"
+msgstr "Delivered"
+
+#: .\orders\models.py:20 .\templates\my_orders.html:95
+msgid "Return Requested"
+msgstr "Return Requested"
+
+#: .\orders\models.py:21 .\templates\my_orders.html:20
+#: .\templates\my_orders.html:99
+msgid "Returned"
+msgstr "Returned"
+
+#: .\orders\models.py:22 .\templates\my_orders.html:103
+msgid "Refunded"
+msgstr "Refunded"
+
+#: .\orders\models.py:23
+#, fuzzy
+#| msgid "Cancel"
+msgid "Canceled"
+msgstr "Cancel"
+
+#: .\orders\models.py:24
+msgid "Failed"
+msgstr ""
+
+#: .\orders\models.py:28 .\templates\checkout.html:80
+#: .\templates\my_orders.html:116
+msgid "Shipping Address"
+msgstr "Shipping Address"
+
+#: .\orders\models.py:29 .\payments\models.py:17
+#: .\templates\manage_products.html:133
+msgid "Status"
+msgstr "Status"
+
+#: .\orders\models.py:30
+#, fuzzy
+#| msgid "Shipping to:"
+msgid "Shipping Method"
+msgstr "Shipping to:"
+
+#: .\orders\models.py:31
+#, fuzzy
+#| msgid "Shipping to:"
+msgid "Shipping Cost"
+msgstr "Shipping to:"
+
+#: .\orders\models.py:32
+#, fuzzy
+#| msgid "Discounted"
+msgid "Discount Code"
+msgstr "Discounted"
+
+#: .\orders\models.py:35 .\orders\models.py:44 .\payments\models.py:14
+#, fuzzy
+#| msgid "My Orders"
+msgid "Order"
+msgstr "My Orders"
+
+#: .\orders\models.py:36
+#, fuzzy
+#| msgid "My Orders"
+msgid "Orders"
+msgstr "My Orders"
+
+#: .\orders\models.py:50
+#, fuzzy
+#| msgid "View Order Details"
+msgid "Order Detail"
+msgstr "View Order Details"
+
+#: .\orders\models.py:51
+#, fuzzy
+#| msgid "View Order Details"
+msgid "Order Details"
+msgstr "View Order Details"
+
+#: .\payments\models.py:10
+msgid "Cash"
+msgstr ""
+
+#: .\payments\models.py:11 .\templates\payment.html:79
+msgid "Credit Card"
+msgstr "Credit Card"
+
+#: .\payments\models.py:12
+#, fuzzy
+#| msgid "Credit Card"
+msgid "Debit Card"
+msgstr "Credit Card"
+
+#: .\payments\models.py:15 .\templates\payment.html:67
+msgid "Payment Method"
+msgstr "Payment Method"
+
+#: .\payments\models.py:16
+#, fuzzy
+#| msgid "Account"
+msgid "Amount"
+msgstr "Account"
+
+#: .\payments\models.py:18
+msgid "Currency"
+msgstr ""
+
+#: .\payments\models.py:21 .\templates\checkout.html:32
+#: .\templates\my_cart.html:30 .\templates\payment.html:32
+#: .\templates\payment_success.html:32
+msgid "Payment"
+msgstr "Payment"
+
+#: .\payments\models.py:22
+#, fuzzy
+#| msgid "Payment"
+msgid "Payments"
+msgstr "Payment"
+
+#: .\products\models.py:22 .\products\models.py:51 .\products\models.py:66
+#: .\shops\models.py:24 .\templates\manage_products.html:128
+msgid "Name"
+msgstr "Name"
+
+#: .\products\models.py:24
+#, fuzzy
+#| msgid "Category"
+msgid "Parent Category"
+msgstr "Category"
+
+#: .\products\models.py:27 .\products\models.py:108
+#: .\templates\add_product_form.html:110 .\templates\edit_product.html:121
+#: .\templates\manage_products.html:132
+msgid "Category"
+msgstr "Category"
+
+#: .\products\models.py:28 .\templates\list_products.html:54
+msgid "Categories"
+msgstr "Categories"
+
+#: .\products\models.py:43 .\reviews\models.py:22 .\shops\models.py:15
+msgid "Image size can't exceed 4 MB."
+msgstr ""
+
+#: .\products\models.py:52 .\templates\add_product_form.html:96
+#: .\templates\edit_product.html:104
+msgid "Stock Count"
+msgstr "Stock Count"
+
+#: .\products\models.py:53
+#, fuzzy
+#| msgid "Decrease quantity"
+msgid "Reserved Quantity"
+msgstr "Decrease quantity"
+
+#: .\products\models.py:54
+msgid "Warehouse Location"
+msgstr ""
+
+#: .\products\models.py:57 .\products\models.py:109
+#: .\templates\add_product_form.html:131 .\templates\edit_product.html:148
+msgid "Inventory"
+msgstr "Inventory"
+
+#: .\products\models.py:58
+#, fuzzy
+#| msgid "Inventory"
+msgid "Inventories"
+msgstr "Inventory"
+
+#: .\products\models.py:67 .\templates\add_product_form.html:76
+#: .\templates\edit_product.html:78 .\templates\list_products.html:207
+#: .\templates\manage_products.html:130
+msgid "Price"
+msgstr "Price"
+
+#: .\products\models.py:68
+#, fuzzy
+#| msgid "available"
+msgid "Is Available"
+msgstr "available"
+
+#: .\products\models.py:70 .\templates\add_product_form.html:145
+#: .\templates\edit_product.html:165
+msgid "Short Description"
+msgstr "Short Description"
+
+#: .\products\models.py:75
+#, fuzzy
+#| msgid "Short catchy description for product listings (max 255 characters)"
+msgid "Short catchy description for the product page."
+msgstr "Short catchy description for product listings (max 255 characters)"
+
+#: .\products\models.py:77 .\shops\models.py:35
+#: .\templates\add_product_form.html:120 .\templates\edit_product.html:134
+msgid "Shop"
+msgstr "Shop"
+
+#: .\products\models.py:78
+#, fuzzy
+#| msgid "URL Slug"
+msgid "Slug"
+msgstr "URL Slug"
+
+#: .\products\models.py:80 .\templates\add_product_form.html:152
+#: .\templates\edit_product.html:175
+msgid "Full Description"
+msgstr "Full Description"
+
+#: .\products\models.py:83
+#, fuzzy
+#| msgid "Detailed product description with marketing tone"
+msgid "Detailed product description with marketing tone."
+msgstr "Detailed product description with marketing tone"
+
+#: .\products\models.py:86 .\templates\add_product_form.html:159
+#: .\templates\edit_product.html:185 .\templates\product_details.html:190
+msgid "Key Features"
+msgstr "Key Features"
+
+#: .\products\models.py:89
+#, fuzzy
+#| msgid "Key Features"
+msgid "List of key features."
+msgstr "Key Features"
+
+#: .\products\models.py:92 .\templates\add_product_form.html:167
+#: .\templates\edit_product.html:196 .\templates\product_details.html:178
+msgid "Specifications"
+msgstr "Specifications"
+
+#: .\products\models.py:95
+msgid "Key-value technical specs."
+msgstr ""
+
+#: .\products\models.py:102 .\reviews\models.py:40 .\shops\models.py:31
+#: .\templates\manage_products.html:127
+msgid "Image"
+msgstr "Image"
+
+#: .\products\models.py:104
+#, fuzzy
+#| msgid "Discounted"
+msgid "Is Discounted"
+msgstr "Discounted"
+
+#: .\products\models.py:105
+#, fuzzy
+#| msgid "Featured"
+msgid "Is Featured"
+msgstr "Featured"
+
+#: .\products\models.py:106
+msgid "Is Approved"
+msgstr ""
+
+#: .\products\models.py:107
+msgid "Approved By"
+msgstr ""
+
+#: .\products\models.py:116 .\templates\base.html:51 .\templates\base.html:198
+#: .\templates\product_details.html:41
+msgid "Products"
+msgstr "Products"
+
+#: .\reviews\models.py:15
+msgid "FeedBack rating should be between 1 and 5."
+msgstr ""
+
+#: .\reviews\models.py:32 .\templates\list_products.html:156
+#: .\templates\product_details.html:313
+msgid "Rating"
+msgstr "Rating"
+
+#: .\reviews\models.py:33
+msgid "Comment"
+msgstr ""
+
+#: .\reviews\models.py:34
+#, fuzzy
+#| msgid "Anonymous"
+msgid "Is Anonymous"
+msgstr "Anonymous"
+
+#: .\reviews\models.py:42
+#, fuzzy
+#| msgid "Delete"
+msgid "Is Deleted"
+msgstr "Delete"
+
+#: .\reviews\models.py:45
+msgid "Feedback"
+msgstr ""
+
+#: .\reviews\models.py:46
+msgid "Feedbacks"
+msgstr ""
+
+#: .\shops\models.py:23
+msgid "Owner"
+msgstr ""
+
+#: .\shops\models.py:25 .\templates\product_details.html:118
+msgid "Description"
+msgstr "Description"
+
+#: .\shops\models.py:36
+#, fuzzy
+#| msgid "Shop"
+msgid "Shops"
+msgstr "Shop"
 
 #: .\templates\add_product_form.html:4 .\templates\manage_products.html:201
 msgid "Add Product"
@@ -54,11 +681,6 @@ msgstr "Product Name"
 msgid "Choose a descriptive name for your product"
 msgstr "Choose a descriptive name for your product"
 
-#: .\templates\add_product_form.html:76 .\templates\edit_product.html:78
-#: .\templates\list_products.html:207 .\templates\manage_products.html:130
-msgid "Price"
-msgstr "Price"
-
 #: .\templates\add_product_form.html:85 .\templates\edit_product.html:90
 msgid "URL Slug"
 msgstr "URL Slug"
@@ -67,52 +689,22 @@ msgstr "URL Slug"
 msgid "Used in product URL: example-product"
 msgstr "Used in product URL: example-product"
 
-#: .\templates\add_product_form.html:96 .\templates\edit_product.html:104
-msgid "Stock Count"
-msgstr "Stock Count"
-
 #: .\templates\add_product_form.html:105 .\templates\edit_product.html:116
 msgid "Classification"
 msgstr "Classification"
-
-#: .\templates\add_product_form.html:110 .\templates\edit_product.html:121
-#: .\templates\manage_products.html:132
-msgid "Category"
-msgstr "Category"
-
-#: .\templates\add_product_form.html:120 .\templates\edit_product.html:134
-msgid "Shop"
-msgstr "Shop"
-
-#: .\templates\add_product_form.html:131 .\templates\edit_product.html:148
-msgid "Inventory"
-msgstr "Inventory"
 
 #: .\templates\add_product_form.html:141 .\templates\edit_product.html:161
 #: .\templates\product_details.html:7 .\templates\product_details.html:185
 msgid "Product Details"
 msgstr "Product Details"
 
-#: .\templates\add_product_form.html:145 .\templates\edit_product.html:165
-msgid "Short Description"
-msgstr "Short Description"
-
 #: .\templates\add_product_form.html:147 .\templates\edit_product.html:170
 msgid "Short catchy description for product listings (max 255 characters)"
 msgstr "Short catchy description for product listings (max 255 characters)"
 
-#: .\templates\add_product_form.html:152 .\templates\edit_product.html:175
-msgid "Full Description"
-msgstr "Full Description"
-
 #: .\templates\add_product_form.html:154 .\templates\edit_product.html:180
 msgid "Detailed product description with marketing tone"
 msgstr "Detailed product description with marketing tone"
-
-#: .\templates\add_product_form.html:159 .\templates\edit_product.html:185
-#: .\templates\product_details.html:190
-msgid "Key Features"
-msgstr "Key Features"
 
 #: .\templates\add_product_form.html:161 .\templates\edit_product.html:190
 msgid "Enter features separated by comma"
@@ -121,11 +713,6 @@ msgstr "Enter features separated by comma"
 #: .\templates\add_product_form.html:162 .\templates\edit_product.html:191
 msgid "Feature 1, Feature 2, Feature 3"
 msgstr "Feature 1, Feature 2, Feature 3"
-
-#: .\templates\add_product_form.html:167 .\templates\edit_product.html:196
-#: .\templates\product_details.html:178
-msgid "Specifications"
-msgstr "Specifications"
 
 #: .\templates\add_product_form.html:169 .\templates\edit_product.html:201
 msgid "Enter specifications as a key-value pair separated by comma"
@@ -194,67 +781,62 @@ msgstr "Cancel"
 msgid "Launch Product"
 msgstr "Launch Product"
 
-#: .\templates\base.html:8 .\templates\base.html:35 .\templates\base.html:128
-#: .\templates\base.html:171
+#: .\templates\base.html:9 .\templates\base.html:39 .\templates\base.html:188
+#: .\templates\base.html:235
 msgid "E-Shop"
 msgstr "E-Shop"
 
-#: .\templates\base.html:39
+#: .\templates\base.html:43
 msgid "Toggle navigation"
 msgstr "Toggle navigation"
 
-#: .\templates\base.html:46 .\templates\base.html:138
-#: .\templates\product_details.html:41
-msgid "Products"
-msgstr "Products"
-
-#: .\templates\base.html:51 .\templates\base.html:139
+#: .\templates\base.html:56 .\templates\base.html:199
 msgid "Deals"
 msgstr "Deals"
 
-#: .\templates\base.html:57
+#: .\templates\base.html:63
 msgid "Manage Products"
 msgstr "Manage Products"
 
-#: .\templates\base.html:66
+#: .\templates\base.html:80
+msgid "Select Language"
+msgstr ""
+
+#: .\templates\base.html:108
 msgid "View Shopping Cart"
 msgstr "View Shopping Cart"
 
-#: .\templates\base.html:73
+#: .\templates\base.html:118
 msgid "View Wishlist"
 msgstr "View Wishlist"
 
-#: .\templates\base.html:86
+#: .\templates\base.html:135
 msgid "My Account"
 msgstr "My Account"
 
-#: .\templates\base.html:91
-msgid "User"
-msgstr "User"
-
-#: .\templates\base.html:95
+#: .\templates\base.html:147
 msgid "My Profile"
 msgstr "My Profile"
 
-#: .\templates\base.html:96 .\templates\my_orders.html:5
+#: .\templates\base.html:150 .\templates\my_orders.html:5
 #: .\templates\my_orders.html:14
 msgid "My Orders"
 msgstr "My Orders"
 
-#: .\templates\base.html:99 .\templates\base.html:148
+#: .\templates\base.html:155 .\templates\base.html:208
 msgid "Logout"
 msgstr "Logout"
 
-#: .\templates\base.html:105 .\templates\base.html:150
-#: .\templates\login.html:56 .\templates\register.html:196
+#: .\templates\base.html:162 .\templates\base.html:210
+#: .\templates\login.html:80 .\templates\register.html:216
 msgid "Log In"
 msgstr "Log In"
 
-#: .\templates\base.html:108 .\templates\base.html:151
+#: .\templates\base.html:166 .\templates\base.html:211
 msgid "Sign Up"
 msgstr "Sign Up"
 
-#: .\templates\base.html:131
+#: .\templates\base.html:191
 msgid ""
 "Your one-stop shop for amazing products. We focus on quality, affordability, "
 "and customer satisfaction."
@@ -262,67 +844,67 @@ msgstr ""
 "Your one-stop shop for amazing products. We focus on quality, affordability, "
 "and customer satisfaction."
 
-#: .\templates\base.html:135
+#: .\templates\base.html:195
 msgid "Quick Links"
 msgstr "Quick Links"
 
-#: .\templates\base.html:137 .\templates\product_details.html:40
+#: .\templates\base.html:197 .\templates\product_details.html:40
 msgid "Home"
 msgstr "Home"
 
-#: .\templates\base.html:140
+#: .\templates\base.html:200
 msgid "About Us"
 msgstr "About Us"
 
-#: .\templates\base.html:145
+#: .\templates\base.html:205
 msgid "Account"
 msgstr "Account"
 
-#: .\templates\base.html:153
+#: .\templates\base.html:213
 msgid "My Cart"
 msgstr "My Cart"
 
-#: .\templates\base.html:154
+#: .\templates\base.html:214
 msgid "Wishlist"
 msgstr "Wishlist"
 
-#: .\templates\base.html:155
+#: .\templates\base.html:215
 msgid "Order History"
 msgstr "Order History"
 
-#: .\templates\base.html:159
+#: .\templates\base.html:219
 msgid "Stay Connected"
 msgstr "Stay Connected"
 
-#: .\templates\base.html:160
+#: .\templates\base.html:220
 msgid "Follow us on social media for updates and offers."
 msgstr "Follow us on social media for updates and offers."
 
-#: .\templates\base.html:162
+#: .\templates\base.html:222
 msgid "Facebook"
 msgstr "Facebook"
 
-#: .\templates\base.html:163
+#: .\templates\base.html:224
 msgid "Twitter"
 msgstr "Twitter"
 
-#: .\templates\base.html:164
+#: .\templates\base.html:226
 msgid "Instagram"
 msgstr "Instagram"
 
-#: .\templates\base.html:165
+#: .\templates\base.html:228
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: .\templates\base.html:171
+#: .\templates\base.html:235
 msgid "All Rights Reserved."
 msgstr "All Rights Reserved."
 
-#: .\templates\base.html:171
+#: .\templates\base.html:236
 msgid "Privacy Policy"
 msgstr "Privacy Policy"
 
-#: .\templates\base.html:171 .\templates\register.html:138
+#: .\templates\base.html:236 .\templates\register.html:158
 msgid "Terms of Service"
 msgstr "Terms of Service"
 
@@ -366,11 +948,6 @@ msgstr "Checkout - Details"
 msgid "Checkout"
 msgstr "Checkout"
 
-#: .\templates\checkout.html:18 .\templates\my_cart.html:16
-#: .\templates\payment.html:18 .\templates\payment_success.html:18
-msgid "Cart"
-msgstr "Cart"
-
 #: .\templates\checkout.html:25 .\templates\checkout.html:192
 #: .\templates\my_cart.html:23 .\templates\my_cart.html:138
 #: .\templates\payment.html:25 .\templates\payment.html:143
@@ -378,11 +955,6 @@ msgstr "Cart"
 #: .\templates\product_details.html:177
 msgid "Details"
 msgstr "Details"
-
-#: .\templates\checkout.html:32 .\templates\my_cart.html:30
-#: .\templates\payment.html:32 .\templates\payment_success.html:32
-msgid "Payment"
-msgstr "Payment"
 
 #: .\templates\checkout.html:39 .\templates\my_cart.html:37
 #: .\templates\payment.html:39 .\templates\payment_success.html:39
@@ -401,8 +973,8 @@ msgstr "Step 2 of 4"
 msgid "Contact Information"
 msgstr "Contact Information"
 
-#: .\templates\checkout.html:64 .\templates\login.html:34
-#: .\templates\register.html:90 .\templates\reset_password.html:16
+#: .\templates\checkout.html:64 .\templates\login.html:58
+#: .\templates\register.html:110 .\templates\reset_password.html:16
 msgid "Email Address"
 msgstr "Email Address"
 
@@ -410,64 +982,21 @@ msgstr "Email Address"
 msgid "Enter your email"
 msgstr "Enter your email"
 
-#: .\templates\checkout.html:69
-msgid "Phone Number"
-msgstr "Phone Number"
-
 #: .\templates\checkout.html:71
 msgid "Enter your phone number"
 msgstr "Enter your phone number"
-
-#: .\templates\checkout.html:80 .\templates\my_orders.html:116
-msgid "Shipping Address"
-msgstr "Shipping Address"
-
-#: .\templates\checkout.html:84 .\templates\profile.html:121
-#: .\templates\profile_edit.html:19 .\templates\register.html:67
-msgid "First Name"
-msgstr "First Name"
 
 #: .\templates\checkout.html:86
 msgid "Enter your first name"
 msgstr "Enter your first name"
 
-#: .\templates\checkout.html:90 .\templates\profile.html:124
-#: .\templates\profile_edit.html:31 .\templates\register.html:74
-msgid "Last Name"
-msgstr "Last Name"
-
 #: .\templates\checkout.html:92
 msgid "Enter your last name"
 msgstr "Enter your last name"
 
-#: .\templates\checkout.html:97 .\templates\profile.html:140
-#: .\templates\profile_edit.html:59
-msgid "Address Line 1"
-msgstr "Address Line 1"
-
 #: .\templates\checkout.html:101 .\templates\profile_edit.html:71
 msgid "Address Line 2 (Optional)"
 msgstr "Address Line 2 (Optional)"
-
-#: .\templates\checkout.html:106 .\templates\profile.html:148
-#: .\templates\profile_edit.html:83
-msgid "City"
-msgstr "City"
-
-#: .\templates\checkout.html:110 .\templates\profile.html:151
-#: .\templates\profile_edit.html:95
-msgid "State/Province"
-msgstr "State/Province"
-
-#: .\templates\checkout.html:116 .\templates\profile.html:157
-#: .\templates\profile_edit.html:119
-msgid "Postal Code"
-msgstr "Postal Code"
-
-#: .\templates\checkout.html:120 .\templates\profile.html:154
-#: .\templates\profile_edit.html:107
-msgid "Country"
-msgstr "Country"
 
 #: .\templates\checkout.html:128
 msgid "Save this address to my profile and set as primary address?"
@@ -549,7 +1078,7 @@ msgstr "Enter a new password to update your account."
 msgid "New Password"
 msgstr "New Password"
 
-#: .\templates\create_new_password.html:19 .\templates\register.html:104
+#: .\templates\create_new_password.html:19 .\templates\register.html:124
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
@@ -631,8 +1160,8 @@ msgstr "Add to cart"
 msgid "Category:"
 msgstr "Category:"
 
-#: .\templates\favourites.html:81 .\templates\register.html:109
-#: .\templates\register.html:157 .\templates\register.html:186
+#: .\templates\favourites.html:81 .\templates\register.html:129
+#: .\templates\register.html:177 .\templates\register.html:206
 msgid "Back"
 msgstr "Back"
 
@@ -671,10 +1200,6 @@ msgstr "Search products..."
 #: .\templates\list_products.html:47
 msgid "Filters"
 msgstr "Filters"
-
-#: .\templates\list_products.html:54
-msgid "Categories"
-msgstr "Categories"
 
 #: .\templates\list_products.html:59
 msgid "Product Categories"
@@ -731,10 +1256,6 @@ msgstr "Min $"
 #: .\templates\list_products.html:145
 msgid "Max $"
 msgstr "Max $"
-
-#: .\templates\list_products.html:156 .\templates\product_details.html:313
-msgid "Rating"
-msgstr "Rating"
 
 #: .\templates\list_products.html:179
 msgid "Apply Filters"
@@ -814,10 +1335,6 @@ msgstr ""
 "In your cart:\n"
 "                                            <strong>%(quantity)s</strong>"
 
-#: .\templates\list_products.html:323 .\templates\product_details.html:138
-msgid "Remove"
-msgstr "Remove"
-
 #: .\templates\list_products.html:331 .\templates\product_details.html:142
 msgid "Buy Now"
 msgstr "Buy Now"
@@ -854,29 +1371,33 @@ msgstr "Sign in to continue your shopping journey"
 msgid "Please enter your credentials"
 msgstr "Please enter your credentials"
 
-#: .\templates\login.html:41 .\templates\register.html:97
-msgid "Password"
-msgstr "Password"
+#: .\templates\login.html:47 .\templates\register.html:74
+#, fuzzy
+#| msgid "Continue Shopping"
+msgid "Continue with Google"
+msgstr "Continue with Google"
 
-#: .\templates\login.html:51
+#: .\templates\login.html:52
+#, fuzzy
+#| msgid "Or login with"
+msgid "or login with email"
+msgstr "or login with email"
+
+#: .\templates\login.html:74
 msgid "Remember me"
 msgstr "Remember me"
 
-#: .\templates\login.html:53
+#: .\templates\login.html:77
 msgid "Forgot Password?"
 msgstr "Forgot Password?"
 
-#: .\templates\login.html:60
+#: .\templates\login.html:84
 msgid "Don\\"
 msgstr "Don\\"
 
-#: .\templates\login.html:60 .\templates\register.html:5
+#: .\templates\login.html:84 .\templates\register.html:5
 msgid "Register"
 msgstr "Register"
-
-#: .\templates\login.html:64
-msgid "Or login with"
-msgstr "Or login with"
 
 #: .\templates\manage_products.html:5 .\templates\manage_products.html:17
 msgid "Product Management"
@@ -954,14 +1475,6 @@ msgstr "Delete Selected"
 msgid "Export Selected"
 msgstr "Export Selected"
 
-#: .\templates\manage_products.html:127
-msgid "Image"
-msgstr "Image"
-
-#: .\templates\manage_products.html:128
-msgid "Name"
-msgstr "Name"
-
 #: .\templates\manage_products.html:129
 msgid "SKU"
 msgstr "SKU"
@@ -969,10 +1482,6 @@ msgstr "SKU"
 #: .\templates\manage_products.html:131
 msgid "Stock"
 msgstr "Stock"
-
-#: .\templates\manage_products.html:133
-msgid "Status"
-msgstr "Status"
 
 #: .\templates\manage_products.html:134
 msgid "Created"
@@ -1080,33 +1589,9 @@ msgstr "Promo Code"
 msgid "Proceed to Checkout"
 msgstr "Proceed to Checkout"
 
-#: .\templates\my_orders.html:5
-#: .\templates\my_orders.html:14
-msgid "My Orders"
-msgstr "My Orders"
-
 #: .\templates\my_orders.html:16
 msgid "All Orders"
 msgstr "All Orders"
-
-#: .\templates\my_orders.html:17 .\templates\my_orders.html:47
-#: .\templates\my_orders.html:64 .\templates\my_orders.html:81
-msgid "Processing"
-msgstr "Processing"
-
-#: .\templates\my_orders.html:18 .\templates\my_orders.html:51
-#: .\templates\my_orders.html:68 .\templates\my_orders.html:85
-msgid "Shipped"
-msgstr "Shipped"
-
-#: .\templates\my_orders.html:19 .\templates\my_orders.html:55
-#: .\templates\my_orders.html:72 .\templates\my_orders.html:89
-msgid "Delivered"
-msgstr "Delivered"
-
-#: .\templates\my_orders.html:20 .\templates\my_orders.html:99
-msgid "Returned"
-msgstr "Returned"
 
 #: .\templates\my_orders.html:30
 #, python-format
@@ -1117,14 +1602,6 @@ msgstr "Order #%(order_id)s"
 #: .\templates\my_orders.html:77
 msgid "Order Placed"
 msgstr "Order Placed"
-
-#: .\templates\my_orders.html:95
-msgid "Return Requested"
-msgstr "Return Requested"
-
-#: .\templates\my_orders.html:103
-msgid "Refunded"
-msgstr "Refunded"
 
 #: .\templates\my_orders.html:121
 msgid "No shipping address provided"
@@ -1193,7 +1670,7 @@ msgid "Previous"
 msgstr "Previous"
 
 #: .\templates\page.html:26 .\templates\page.html:30
-#: .\templates\register.html:78 .\templates\register.html:112
+#: .\templates\register.html:98 .\templates\register.html:132
 msgid "Next"
 msgstr "Next"
 
@@ -1208,14 +1685,6 @@ msgstr "Payment Information"
 #: .\templates\payment.html:50
 msgid "Step 3 of 4"
 msgstr "Step 3 of 4"
-
-#: .\templates\payment.html:67
-msgid "Payment Method"
-msgstr "Payment Method"
-
-#: .\templates\payment.html:79
-msgid "Credit Card"
-msgstr "Credit Card"
 
 #: .\templates\payment.html:89
 msgid "Card Details"
@@ -1295,6 +1764,16 @@ msgid ""
 msgstr ""
 "Your payment has been successfully processed and your order is confirmed."
 
+#: .\templates\payment_success.html:63
+msgid "We\\'ve sent a confirmation email to"
+msgstr ""
+
+#: .\templates\payment_success.html:63
+#, fuzzy
+#| msgid "Review your details"
+msgid "with your order details."
+msgstr "Review your details"
+
 #: .\templates\payment_success.html:74
 msgid "Estimated delivery:"
 msgstr "Estimated delivery:"
@@ -1331,10 +1810,6 @@ msgstr "off"
 #: .\templates\product_details.html:110
 msgid "available"
 msgstr "available"
-
-#: .\templates\product_details.html:118
-msgid "Description"
-msgstr "Description"
 
 #: .\templates\product_details.html:135
 msgid "In cart:"
@@ -1480,17 +1955,9 @@ msgstr "Viewed Product"
 msgid "Personal Information"
 msgstr "Personal Information"
 
-#: .\templates\profile.html:127 .\templates\profile_edit.html:43
-msgid "Email"
-msgstr "Email"
-
 #: .\templates\profile.html:134 .\templates\profile_edit.html:56
 msgid "Address Details"
 msgstr "Address Details"
-
-#: .\templates\profile.html:144
-msgid "Address Line 2"
-msgstr "Address Line 2"
 
 #: .\templates\profile.html:160 .\templates\profile_edit.html:131
 msgid "Is primary address"
@@ -1556,23 +2023,27 @@ msgstr "Join Our Community"
 msgid "Fill in your details to create an account"
 msgstr "Fill in your details to create an account"
 
-#: .\templates\register.html:121
+#: .\templates\register.html:59
+msgid "or"
+msgstr ""
+
+#: .\templates\register.html:141
 msgid "Review Your Information"
 msgstr "Review Your Information"
 
-#: .\templates\register.html:124
+#: .\templates\register.html:144
 msgid "First Name:"
 msgstr "First Name:"
 
-#: .\templates\register.html:128
+#: .\templates\register.html:148
 msgid "Last Name:"
 msgstr "Last Name:"
 
-#: .\templates\register.html:132
+#: .\templates\register.html:152
 msgid "Email:"
 msgstr "Email:"
 
-#: .\templates\register.html:140
+#: .\templates\register.html:160
 msgid ""
 "Welcome to our website. If you continue to browse and use this website, you "
 "are agreeing to comply with and be bound by the following terms and "
@@ -1582,7 +2053,7 @@ msgstr ""
 "are agreeing to comply with and be bound by the following terms and "
 "conditions of use."
 
-#: .\templates\register.html:141
+#: .\templates\register.html:161
 msgid ""
 "The content of the pages of this website is for your general information and "
 "use only. It is subject to change without notice."
@@ -1590,7 +2061,7 @@ msgstr ""
 "The content of the pages of this website is for your general information and "
 "use only. It is subject to change without notice."
 
-#: .\templates\register.html:142
+#: .\templates\register.html:162
 msgid ""
 "This website uses cookies to monitor browsing preferences. If you do allow "
 "cookies to be used, personal information may be stored by us for use by "
@@ -1600,7 +2071,7 @@ msgstr ""
 "cookies to be used, personal information may be stored by us for use by "
 "third parties."
 
-#: .\templates\register.html:143
+#: .\templates\register.html:163
 msgid ""
 "Neither we nor any third parties provide any warranty or guarantee as to the "
 "accuracy, timeliness, performance, completeness or suitability of the "
@@ -1612,23 +2083,23 @@ msgstr ""
 "information and materials found or offered on this website for any "
 "particular purpose."
 
-#: .\templates\register.html:148
+#: .\templates\register.html:168
 msgid "I agree to the Terms of Service and Privacy Policy"
 msgstr "I agree to the Terms of Service and Privacy Policy"
 
-#: .\templates\register.html:152
+#: .\templates\register.html:172
 msgid "Subscribe to our newsletter for updates and offers"
 msgstr "Subscribe to our newsletter for updates and offers"
 
-#: .\templates\register.html:160
+#: .\templates\register.html:180
 msgid "Submit Details"
 msgstr "Submit Details"
 
-#: .\templates\register.html:169
+#: .\templates\register.html:189
 msgid "Email Verification"
 msgstr "Email Verification"
 
-#: .\templates\register.html:170
+#: .\templates\register.html:190
 msgid ""
 "We've sent a 4-digit verification code to your email. Please enter it below "
 "to complete your registration."
@@ -1636,19 +2107,19 @@ msgstr ""
 "We've sent a 4-digit verification code to your email. Please enter it below "
 "to complete your registration."
 
-#: .\templates\register.html:178
+#: .\templates\register.html:198
 msgid "Didn't receive a code?"
 msgstr "Didn't receive a code?"
 
-#: .\templates\register.html:179
+#: .\templates\register.html:199
 msgid "Resend Code"
 msgstr "Resend Code"
 
-#: .\templates\register.html:189
+#: .\templates\register.html:209
 msgid "Complete Registration"
 msgstr "Complete Registration"
 
-#: .\templates\register.html:196
+#: .\templates\register.html:216
 msgid "Already have an account?"
 msgstr "Already have an account?"
 

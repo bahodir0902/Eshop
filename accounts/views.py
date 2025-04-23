@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import login, logout, authenticate
@@ -11,6 +12,7 @@ from django.contrib import messages
 from accounts.utils import is_admin
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 
 class Login(View):
     def get(self, request):
@@ -258,3 +260,78 @@ class VerifyEmailToChangeEmail(LoginRequiredMixin, View):
         CodeEmail.objects.filter(email=new_email).delete()
 
         return redirect('accounts:profile')
+
+class GoogleLoginView(View):
+    def get(self, request):
+        auth_url = (
+
+            f"{settings.GOOGLE_AUTH_URL}"
+
+            f"?client_id={settings.GOOGLE_CLIENT_ID}"
+
+            f"&redirect_uri={settings.GOOGLE_REDIRECT_URI}"
+
+            f"&response_type=code"
+
+            f"&scope=openid email profile"
+
+        )
+
+        return redirect(auth_url)
+
+
+class GoogleCallBackView(View):
+    def get(self, request):
+        code = request.GET.get('code')
+        token_data = {
+
+            "code": code,
+
+            "client_id": settings.GOOGLE_CLIENT_ID,
+
+            "client_secret": settings.GOOGLE_CLIENT_SECRET,
+
+            "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+
+            "grant_type": "authorization_code",
+
+        }
+
+        token_response = requests.post(settings.GOOGLE_TOKEN_URL, data=token_data)
+
+        token_json = token_response.json()
+
+        access_token = token_json.get("access_token")
+
+        user_info_response = requests.get(settings.GOOGLE_USER_INFO_URL,
+
+                                          headers={"Authorization": f"Bearer {access_token}"})
+
+        user_info = user_info_response.json()
+
+        print(user_info)
+        google_user_id = user_info.get('sub')
+        first_name = user_info.get('name', None)
+        last_name = user_info.get('given_name', None)
+        email = user_info.get('email')
+
+        if User.objects.filter(email=email, google_id__isnull=True).exists():
+            return HttpResponse("You already in the system. Please login in a standard way.")
+
+        user, created = User.objects.get_or_create(
+            google_id=google_user_id,
+            defaults={
+                'username': get_random_username(),
+                'email': email,
+                'first_name': first_name,
+                'last_name': last_name,
+            }
+        )
+
+        if created:
+            user.set_unusable_password()
+            user.save()
+
+        login(request, user)
+
+        return redirect('products:products')

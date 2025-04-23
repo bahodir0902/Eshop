@@ -23,7 +23,7 @@
 .login-card {
   display: flex;
   width: 900px;
-  height: 600px;
+  height: 660px; /* Increased to accommodate Google button */
   border-radius: 20px;
   overflow: hidden;
   box-shadow: var(--shadow);
@@ -117,7 +117,7 @@
 }
 
 .form-header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
@@ -131,9 +131,103 @@
   color: var(--text-light);
   font-size: 0.9rem;
 }
-/* Login Form Styles - Fixed with no animations */
 
-/* Option 2: Simple label above field (no animations) */
+/* Google Login Button Styles */
+.social-login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.google-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: all 0.6s ease;
+  z-index: 1;
+}
+
+.google-btn:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  border-color: #d0d0d0;
+}
+
+.google-btn:hover::before {
+  left: 100%;
+}
+
+.google-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.google-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.google-btn-text {
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 1rem;
+  flex-grow: 1;
+  text-align: center;
+}
+
+/* Form Separator */
+.form-separator {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.form-separator::before,
+.form-separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #e0e0e0;
+}
+
+.form-separator span {
+  padding: 0 1rem;
+  text-transform: lowercase;
+}
+
+/* Original Form Styles */
 .form-group {
   position: relative;
   margin-bottom: 1.5rem;
@@ -149,7 +243,6 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Position label above the field */
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
@@ -171,7 +264,6 @@
   color: var(--text-light);
   z-index: 1;
 }
-
 
 .form-options {
   display: flex;
@@ -267,7 +359,7 @@
   text-align: center;
   font-size: 0.9rem;
   color: var(--text-light);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .register-link a {
@@ -281,77 +373,39 @@
   text-decoration: underline;
 }
 
-.social-login {
-  text-align: center;
+/* Animation for the Google button */
+@keyframes pulse-shadow {
+  0% {
+    box-shadow: 0 2px 8px rgba(66, 133, 244, 0);
+  }
+  50% {
+    box-shadow: 0 2px 8px rgba(66, 133, 244, 0.4);
+  }
+  100% {
+    box-shadow: 0 2px 8px rgba(66, 133, 244, 0);
+  }
 }
 
-.social-login span {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--text-light);
-  margin-bottom: 1rem;
-  position: relative;
+.google-btn:active {
+  transform: scale(0.98);
+  animation: pulse-shadow 0.5s ease;
 }
 
-.social-login span::before,
-.social-login span::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 30%;
-  height: 1px;
-  background-color: #e0e0e0;
+.google-btn.btn-emphasized {
+  background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+  border: 2px solid #f0f0f0;
 }
 
-.social-login span::before {
-  left: 0;
-}
-
-.social-login span::after {
-  right: 0;
-}
-
-.social-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.social-btn {
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: var(--transition);
-  color: white;
-}
-
-.social-btn.google {
-  background-color: #DB4437;
-}
-
-.social-btn.facebook {
-  background-color: #4267B2;
-}
-
-.social-btn.twitter {
-  background-color: #1DA1F2;
-}
-
-.social-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+.google-btn.btn-emphasized:hover {
+  border-color: rgba(66, 133, 244, 0.3);
 }
 
 /* Responsive Styles */
 @media (max-width: 992px) {
   .login-card {
     width: 700px;
-    height: 550px;
+    height: auto;
+    min-height: 580px;
   }
 }
 
@@ -374,4 +428,58 @@
   .card-right {
     padding: 2rem;
   }
+}
+/* Enhanced Heading Styles for Login and Registration Pages */
+
+/* Common styles for both headings */
+.form-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.5px;
+  text-shadow: 0px 2px 8px rgba(94, 96, 206, 0.1);
+}
+
+.form-header h2::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+/* Animation for headings on page load */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-header {
+  position: relative;
+}
+
+.form-header h2 {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.form-header p {
+  animation: fadeInUp 0.8s ease 0.2s forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
 }

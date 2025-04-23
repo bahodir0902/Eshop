@@ -4,6 +4,8 @@ from accounts.views import *
 app_name = 'accounts'
 urlpatterns = [
     path('login/', Login.as_view(), name='login'),
+    path('login/google/', GoogleLoginView.as_view(), name='google_login'),
+    path('login/google/callback/', GoogleCallBackView.as_view(), name='google_callback'),
     path('register/', Register.as_view(), name='register'),
     path('logout/', Logout.as_view(), name='logout'),
     path('verify_email/', VerifyRegistration.as_view(), name='verify_email'),
