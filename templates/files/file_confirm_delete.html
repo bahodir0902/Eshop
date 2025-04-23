@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{% trans "Confirm Delete" %}</h1>
+
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+            {% trans "Warning" %}
+        </div>
+        <div class="card-body">
+            <p class="card-text">{% trans "Are you sure you want to delete the file" %} "{{ file.name }}"?</p>
+            <p class="card-text text-danger">{% trans "This action cannot be undone." %}</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">{% trans "Yes, Delete" %}</button>
+                <a href="{% url 'file_sharing:file_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

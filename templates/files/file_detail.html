@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ file.name }}</h1>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            {% trans "File Details" %}
+        </div>
+        <div class="card-body">
+            <p><strong>{% trans "Description" %}:</strong> {{ file.description|default:"-" }}</p>
+            <p><strong>{% trans "Uploaded by" %}:</strong> {{ file.user.email }}</p>
+            <p><strong>{% trans "Date uploaded" %}:</strong> {{ file.created_at|date:"F d, Y H:i" }}</p>
+            <p><strong>{% trans "Public" %}:</strong> {% if file.is_public %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
+
+            <div class="mt-4">
+                <a href="{{ file.file.url }}" class="btn btn-primary" target="_blank">{% trans "Download" %}</a>
+                {% if file.user == request.user or perms.file_sharing.manage_all_files %}
+                <a href="{% url 'file_sharing:file_update' file.pk %}" class="btn btn-warning">{% trans "Edit" %}</a>
+                <a href="{% url 'file_sharing:file_delete' file.pk %}" class="btn btn-danger">{% trans "Delete" %}</a>
+                {% endif %}
+                <a href="{% url 'file_sharing:file_list' %}" class="btn btn-secondary">{% trans "Back to List" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

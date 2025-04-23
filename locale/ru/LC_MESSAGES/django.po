@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 02:34+0500\n"
+"POT-Creation-Date: 2025-04-23 06:07+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgstr "Имя:"
 msgid "last_name"
 msgstr "Фамилия:"
 
-#: .\accounts\forms.py:68
+#: .\accounts\forms.py:68 .\accounts\models.py:8
 #, fuzzy
 #| msgid "Email"
 msgid "email"
@@ -52,10 +52,6 @@ msgstr "биография"
 msgid "image"
 msgstr "фотография"
 
-#: .\accounts\models.py:8
-msgid "name"
-msgstr "имя НАПРЯМУЮ ИЗ FORMS"
-
 #: .\accounts\models.py:38
 msgid "Image"
 msgstr "Фотография"
@@ -64,17 +60,47 @@ msgstr "Фотография"
 msgid "phone number"
 msgstr "номер телефона"
 
-#: .\config\settings.py:127
+#: .\config\settings.py:129
 msgid "English"
 msgstr "Английский"
 
-#: .\config\settings.py:128
+#: .\config\settings.py:130
 msgid "Russian"
 msgstr "Русский"
 
-#: .\config\settings.py:129
+#: .\config\settings.py:131
 msgid "Uzbek"
 msgstr "Узбекский"
+
+#: .\file_sharing\forms.py:18 .\file_sharing\models.py:7
+msgid "file"
+msgstr "файл"
+
+#: .\file_sharing\forms.py:19 .\file_sharing\models.py:8
+msgid "name"
+msgstr "имя"
+
+#: .\file_sharing\forms.py:20 .\file_sharing\models.py:9
+#, fuzzy
+#| msgid "Description:"
+msgid "description"
+msgstr "Описание:"
+
+#: .\file_sharing\forms.py:21
+msgid "make public"
+msgstr "сделать публичным"
+
+#: .\file_sharing\models.py:11
+msgid "Is Public?"
+msgstr "Публичный?"
+
+#: .\file_sharing\models.py:24
+msgid "Is premium?"
+msgstr "Премиум?"
+
+#: .\file_sharing\models.py:25
+msgid "Expire date"
+msgstr "Дата истечения"
 
 #: .\templates\add_product_form.html:4 .\templates\add_product_form.html:13
 #: .\templates\base.html:464
@@ -109,19 +135,23 @@ msgstr "Поиск продуктов"
 msgid "Search"
 msgstr "Поиск"
 
-#: .\templates\base.html:529
+#: .\templates\base.html:511
+msgid "Files"
+msgstr "Файлы"
+
+#: .\templates\base.html:534
 msgid "My Profile"
 msgstr "Мой профиль"
 
-#: .\templates\base.html:534
+#: .\templates\base.html:539
 msgid "Logout"
 msgstr "Выйти"
 
-#: .\templates\base.html:540 .\templates\login.html:9 .\templates\login.html:18
+#: .\templates\base.html:545 .\templates\login.html:9 .\templates\login.html:18
 msgid "Login"
 msgstr "Войти"
 
-#: .\templates\base.html:543 .\templates\register.html:8
+#: .\templates\base.html:548 .\templates\register.html:8
 #: .\templates\register.html:15
 msgid "Register"
 msgstr "Зарегистрироваться"
@@ -154,9 +184,126 @@ msgstr "Изменить пароль"
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
-#: .\templates\edit_product.html:9 .\templates\profile.html:141
+#: .\templates\edit_product.html:9
+#: .\templates\files\file_confirm_delete.html:19
+#: .\templates\files\file_update.html:46 .\templates\files\file_upload.html:43
+#: .\templates\profile.html:141
 msgid "Cancel"
 msgstr "Отмена"
+
+#: .\templates\files\file_confirm_delete.html:6
+msgid "Confirm Delete"
+msgstr "Подвердить удаление"
+
+#: .\templates\files\file_confirm_delete.html:10
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: .\templates\files\file_confirm_delete.html:13
+msgid "Are you sure you want to delete the file"
+msgstr "Вы уверены что хотите удалить этот файл"
+
+#: .\templates\files\file_confirm_delete.html:14
+msgid "This action cannot be undone."
+msgstr "Это действие не может быть возвратимым"
+
+#: .\templates\files\file_confirm_delete.html:18
+msgid "Yes, Delete"
+msgstr "Да, Удалить"
+
+#: .\templates\files\file_detail.html:21
+msgid "File Details"
+msgstr "Детали файла"
+
+#: .\templates\files\file_detail.html:24 .\templates\files\file_list.html:28
+#, fuzzy
+#| msgid "Description:"
+msgid "Description"
+msgstr "Описание:"
+
+#: .\templates\files\file_detail.html:25 .\templates\files\file_list.html:29
+msgid "Uploaded by"
+msgstr "Загружено от"
+
+#: .\templates\files\file_detail.html:26
+msgid "Date uploaded"
+msgstr "Дата загрузки"
+
+#: .\templates\files\file_detail.html:27 .\templates\files\file_list.html:31
+msgid "Public"
+msgstr "Публичный"
+
+#: .\templates\files\file_detail.html:27 .\templates\files\file_list.html:42
+msgid "Yes"
+msgstr "Да"
+
+#: .\templates\files\file_detail.html:27 .\templates\files\file_list.html:42
+msgid "No"
+msgstr "Нет"
+
+#: .\templates\files\file_detail.html:30 .\templates\files\file_list.html:44
+msgid "Download"
+msgstr "Загрузить"
+
+#: .\templates\files\file_detail.html:32 .\templates\files\file_list.html:47
+msgid "Edit"
+msgstr "Редактировать"
+
+#: .\templates\files\file_detail.html:33 .\templates\files\file_list.html:48
+#, fuzzy
+#| msgid "Delete Product"
+msgid "Delete"
+msgstr "Удалить продукт"
+
+#: .\templates\files\file_detail.html:35
+msgid "Back to List"
+msgstr "Назад в файлы"
+
+#: .\templates\files\file_list.html:6
+msgid "My Files"
+msgstr "Мои файлы"
+
+#: .\templates\files\file_list.html:9 .\templates\files\file_upload.html:6
+msgid "Upload New File"
+msgstr "Загрузить новые файлы"
+
+#: .\templates\files\file_list.html:27
+msgid "Name"
+msgstr "Имя"
+
+#: .\templates\files\file_list.html:30
+msgid "Date"
+msgstr "Дата"
+
+#: .\templates\files\file_list.html:32
+msgid "Actions"
+msgstr "Действия"
+
+#: .\templates\files\file_list.html:45
+msgid "View"
+msgstr "Смотреть"
+
+#: .\templates\files\file_list.html:54
+msgid "No files found."
+msgstr "Файлов не найдено"
+
+#: .\templates\files\file_update.html:6
+msgid "Edit File"
+msgstr "Редактировать файл"
+
+#: .\templates\files\file_update.html:21
+#, fuzzy
+#| msgid "Personal Information"
+msgid "Edit File Information"
+msgstr "Личная информация"
+
+#: .\templates\files\file_update.html:45
+msgid "Update"
+msgstr "Обновить"
+
+#: .\templates\files\file_upload.html:42
+msgid "Upload"
+msgstr "Загрузить"
 
 #: .\templates\find_and_delete_product.html:4
 #: .\templates\find_and_edit_product.html:4 .\templates\list_products.html:4

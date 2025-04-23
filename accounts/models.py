@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
-    email = models.EmailField(_('name'), unique=True)
+    email = models.EmailField(_('email'), unique=True)
     google_id = models.CharField(max_length=200, null=True, blank=True)
     profile_photo = models.ImageField(null=True, blank=True)
 

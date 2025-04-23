@@ -499,13 +499,18 @@
                         {% csrf_token %}
                         <label for="select-language">Language</label>
                         <select name="language" id="select-language">
-                            <option value="en"{% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
                             <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>Русский</option>
                             <option value="uz" {% if LANGUAGE_CODE == 'uz' %}selected{% endif %}>O'zbek</option>
                         </select>
                         <input type="submit" value="Change language">
                     </form>
 
+                    <li class="nav-item">
+                        <a class="nav-link" {% if request.path|slice:"7" == '/files/' %}active{% endif %} href="{% url 'file_sharing:file_list' %}">
+                            {% trans 'Files' %}
+                        </a>
+                    </li>
                     <!-- Auth Section -->
                     <div class="auth-buttons">
                         {% if request.user.is_authenticated %}

@@ -29,7 +29,8 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('shop/', include('eshop.urls')),
-    path('accounts/', include('accounts.urls'))
+    path('accounts/', include('accounts.urls')),
+    path('files/', include('file_sharing.urls'))
 )
 
 if settings.DEBUG:

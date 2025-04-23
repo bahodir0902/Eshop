@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 02:34+0500\n"
+"POT-Creation-Date: 2025-04-23 06:07+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr "First name:"
 msgid "last_name"
 msgstr "Last name:"
 
-#: .\accounts\forms.py:68
+#: .\accounts\forms.py:68 .\accounts\models.py:8
 #, fuzzy
 #| msgid "Email"
 msgid "email"
@@ -51,10 +51,6 @@ msgstr "bio"
 msgid "image"
 msgstr "image"
 
-#: .\accounts\models.py:8
-msgid "name"
-msgstr "name"
-
 #: .\accounts\models.py:38
 msgid "Image"
 msgstr "Image"
@@ -63,17 +59,47 @@ msgstr "Image"
 msgid "phone number"
 msgstr "phone number"
 
-#: .\config\settings.py:127
+#: .\config\settings.py:129
 msgid "English"
 msgstr "English"
 
-#: .\config\settings.py:128
+#: .\config\settings.py:130
 msgid "Russian"
 msgstr "Russian"
 
-#: .\config\settings.py:129
+#: .\config\settings.py:131
 msgid "Uzbek"
 msgstr "Uzbek"
+
+#: .\file_sharing\forms.py:18 .\file_sharing\models.py:7
+msgid "file"
+msgstr "file"
+
+#: .\file_sharing\forms.py:19 .\file_sharing\models.py:8
+msgid "name"
+msgstr "name"
+
+#: .\file_sharing\forms.py:20 .\file_sharing\models.py:9
+#, fuzzy
+#| msgid "Description:"
+msgid "description"
+msgstr "Description:"
+
+#: .\file_sharing\forms.py:21
+msgid "make public"
+msgstr "make public"
+
+#: .\file_sharing\models.py:11
+msgid "Is Public?"
+msgstr "Is Public?"
+
+#: .\file_sharing\models.py:24
+msgid "Is premium?"
+msgstr "Is premium?"
+
+#: .\file_sharing\models.py:25
+msgid "Expire date"
+msgstr "Expire date"
 
 #: .\templates\add_product_form.html:4 .\templates\add_product_form.html:13
 #: .\templates\base.html:464
@@ -108,19 +134,23 @@ msgstr "Search products"
 msgid "Search"
 msgstr "Search"
 
-#: .\templates\base.html:529
+#: .\templates\base.html:511
+msgid "Files"
+msgstr "Files"
+
+#: .\templates\base.html:534
 msgid "My Profile"
 msgstr "My Profile"
 
-#: .\templates\base.html:534
+#: .\templates\base.html:539
 msgid "Logout"
 msgstr "Logout"
 
-#: .\templates\base.html:540 .\templates\login.html:9 .\templates\login.html:18
+#: .\templates\base.html:545 .\templates\login.html:9 .\templates\login.html:18
 msgid "Login"
 msgstr "Login"
 
-#: .\templates\base.html:543 .\templates\register.html:8
+#: .\templates\base.html:548 .\templates\register.html:8
 #: .\templates\register.html:15
 msgid "Register"
 msgstr "Register"
@@ -153,9 +183,126 @@ msgstr "Change Password"
 msgid "Save Changes"
 msgstr "Save Changes"
 
-#: .\templates\edit_product.html:9 .\templates\profile.html:141
+#: .\templates\edit_product.html:9
+#: .\templates\files\file_confirm_delete.html:19
+#: .\templates\files\file_update.html:46 .\templates\files\file_upload.html:43
+#: .\templates\profile.html:141
 msgid "Cancel"
 msgstr "Cancel"
+
+#: .\templates\files\file_confirm_delete.html:6
+msgid "Confirm Delete"
+msgstr "Confirm Delete"
+
+#: .\templates\files\file_confirm_delete.html:10
+msgid "Warning"
+msgstr "Warning"
+
+#: .\templates\files\file_confirm_delete.html:13
+msgid "Are you sure you want to delete the file"
+msgstr "Are you sure you want to delete the file"
+
+#: .\templates\files\file_confirm_delete.html:14
+msgid "This action cannot be undone."
+msgstr "This action cannot be undone."
+
+#: .\templates\files\file_confirm_delete.html:18
+msgid "Yes, Delete"
+msgstr "Yes, Delete"
+
+#: .\templates\files\file_detail.html:21
+msgid "File Details"
+msgstr "File Details"
+
+#: .\templates\files\file_detail.html:24 .\templates\files\file_list.html:28
+#, fuzzy
+#| msgid "Description:"
+msgid "Description"
+msgstr "Description:"
+
+#: .\templates\files\file_detail.html:25 .\templates\files\file_list.html:29
+msgid "Uploaded by"
+msgstr "Uploaded by"
+
+#: .\templates\files\file_detail.html:26
+msgid "Date uploaded"
+msgstr "Date uploaded"
+
+#: .\templates\files\file_detail.html:27 .\templates\files\file_list.html:31
+msgid "Public"
+msgstr "Public"
+
+#: .\templates\files\file_detail.html:27 .\templates\files\file_list.html:42
+msgid "Yes"
+msgstr "Yes"
+
+#: .\templates\files\file_detail.html:27 .\templates\files\file_list.html:42
+msgid "No"
+msgstr "No"
+
+#: .\templates\files\file_detail.html:30 .\templates\files\file_list.html:44
+msgid "Download"
+msgstr "Download"
+
+#: .\templates\files\file_detail.html:32 .\templates\files\file_list.html:47
+msgid "Edit"
+msgstr "Edit"
+
+#: .\templates\files\file_detail.html:33 .\templates\files\file_list.html:48
+#, fuzzy
+#| msgid "Delete Product"
+msgid "Delete"
+msgstr "Delete Product"
+
+#: .\templates\files\file_detail.html:35
+msgid "Back to List"
+msgstr "Back to List"
+
+#: .\templates\files\file_list.html:6
+msgid "My Files"
+msgstr "My Files"
+
+#: .\templates\files\file_list.html:9 .\templates\files\file_upload.html:6
+msgid "Upload New File"
+msgstr "Upload New File"
+
+#: .\templates\files\file_list.html:27
+msgid "Name"
+msgstr "Name"
+
+#: .\templates\files\file_list.html:30
+msgid "Date"
+msgstr "Date"
+
+#: .\templates\files\file_list.html:32
+msgid "Actions"
+msgstr "Actions"
+
+#: .\templates\files\file_list.html:45
+msgid "View"
+msgstr "View"
+
+#: .\templates\files\file_list.html:54
+msgid "No files found."
+msgstr "No files found."
+
+#: .\templates\files\file_update.html:6
+msgid "Edit File"
+msgstr "Edit File"
+
+#: .\templates\files\file_update.html:21
+#, fuzzy
+#| msgid "Personal Information"
+msgid "Edit File Information"
+msgstr "Personal Information"
+
+#: .\templates\files\file_update.html:45
+msgid "Update"
+msgstr "Update"
+
+#: .\templates\files\file_upload.html:42
+msgid "Upload"
+msgstr "Upload"
 
 #: .\templates\find_and_delete_product.html:4
 #: .\templates\find_and_edit_product.html:4 .\templates\list_products.html:4

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'eshop',
     'accounts',
     'common',
+    'file_sharing',
     #3rd party
     'django_extensions',
     'rosetta'
@@ -59,7 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'accounts.middlewares.InactiveUserMiddleware'
+    'accounts.middlewares.InactiveUserMiddleware',
+    'file_sharing.middleware.FileUploadLimitMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
