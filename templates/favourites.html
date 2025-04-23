@@ -55,6 +55,7 @@
                         {% else %}
                         <span class="availability unavailable">{% trans 'Out of Stock' %}</span>
                         {% endif %}
+                        <p class="product-description">{{ item.product.short_description|truncatechars:100 }}</p>
                     </div>
                     <div class="card-actions">
                         <button class="remove-button" data-id="{{ item.product.id }}" title="{% trans 'Remove from favorites' %}">
@@ -70,7 +71,7 @@
                 </div>
                 <div class="card-back">
                     <h3>{{ item.product.name }}</h3>
-                    <p class="description">{{ item.product.description|truncatechars:150 }}</p>
+                    <p class="description">{{ item.product.full_description|truncatechars:500 }}</p>
                     <div class="category">
                         {% if item.product.category %}
                         <span class="category-label">{% trans 'Category:' %}</span>

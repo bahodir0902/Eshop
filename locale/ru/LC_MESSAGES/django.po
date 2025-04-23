@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-22 00:08+0500\n"
+"POT-Creation-Date: 2025-04-23 15:23+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,8 +27,8 @@ msgstr ""
 msgid "Email"
 msgstr "Электронная почта"
 
-#: .\accounts\forms.py:10 .\accounts\forms.py:35 .\templates\login.html:41
-#: .\templates\register.html:97
+#: .\accounts\forms.py:10 .\accounts\forms.py:35 .\templates\login.html:65
+#: .\templates\register.html:117
 msgid "Password"
 msgstr "Пароль"
 
@@ -40,13 +40,13 @@ msgstr "Сбросить пароль"
 
 #: .\accounts\forms.py:32 .\accounts\forms.py:62 .\templates\checkout.html:84
 #: .\templates\profile.html:121 .\templates\profile_edit.html:19
-#: .\templates\register.html:67
+#: .\templates\register.html:87
 msgid "First Name"
 msgstr "Имя"
 
 #: .\accounts\forms.py:33 .\accounts\forms.py:63 .\templates\checkout.html:90
 #: .\templates\profile.html:124 .\templates\profile_edit.html:31
-#: .\templates\register.html:74
+#: .\templates\register.html:94
 msgid "Last Name"
 msgstr "Фамилия"
 
@@ -832,7 +832,7 @@ msgid "Logout"
 msgstr "Выйти"
 
 #: .\templates\base.html:162 .\templates\base.html:210
-#: .\templates\login.html:56 .\templates\register.html:196
+#: .\templates\login.html:80 .\templates\register.html:216
 msgid "Log In"
 msgstr "Войти"
 
@@ -908,7 +908,7 @@ msgstr "Все права защищены."
 msgid "Privacy Policy"
 msgstr "Политика конфиденциальности"
 
-#: .\templates\base.html:236 .\templates\register.html:138
+#: .\templates\base.html:236 .\templates\register.html:158
 msgid "Terms of Service"
 msgstr "Условия использования"
 
@@ -977,8 +977,8 @@ msgstr "Шаг 2 из 4"
 msgid "Contact Information"
 msgstr "Контактная информация"
 
-#: .\templates\checkout.html:64 .\templates\login.html:34
-#: .\templates\register.html:90 .\templates\reset_password.html:16
+#: .\templates\checkout.html:64 .\templates\login.html:58
+#: .\templates\register.html:110 .\templates\reset_password.html:16
 msgid "Email Address"
 msgstr "Адрес электронной почты"
 
@@ -1082,7 +1082,7 @@ msgstr "Введите новый пароль для обновления ва�
 msgid "New Password"
 msgstr "Новый пароль"
 
-#: .\templates\create_new_password.html:19 .\templates\register.html:104
+#: .\templates\create_new_password.html:19 .\templates\register.html:124
 msgid "Confirm Password"
 msgstr "Подтвердите пароль"
 
@@ -1164,8 +1164,8 @@ msgstr "Добавить в корзину"
 msgid "Category:"
 msgstr "Категория:"
 
-#: .\templates\favourites.html:81 .\templates\register.html:109
-#: .\templates\register.html:157 .\templates\register.html:186
+#: .\templates\favourites.html:81 .\templates\register.html:129
+#: .\templates\register.html:177 .\templates\register.html:206
 msgid "Back"
 msgstr "Назад"
 
@@ -1375,25 +1375,33 @@ msgstr "Войдите, чтобы продолжить ваше покупат�
 msgid "Please enter your credentials"
 msgstr "Пожалуйста, введите ваши учетные данные"
 
-#: .\templates\login.html:51
+#: .\templates\login.html:47 .\templates\register.html:74
+#, fuzzy
+#| msgid "Continue Shopping"
+msgid "Continue with Google"
+msgstr "Продолжить с Google"
+
+#: .\templates\login.html:52
+#, fuzzy
+#| msgid "Or login with"
+msgid "or login with email"
+msgstr "Или войти через почту"
+
+#: .\templates\login.html:74
 msgid "Remember me"
 msgstr "Запомнить меня"
 
-#: .\templates\login.html:53
+#: .\templates\login.html:77
 msgid "Forgot Password?"
 msgstr "Забыли пароль?"
 
-#: .\templates\login.html:60
+#: .\templates\login.html:84
 msgid "Don\\"
 msgstr "Нет\\"
 
-#: .\templates\login.html:60 .\templates\register.html:5
+#: .\templates\login.html:84 .\templates\register.html:5
 msgid "Register"
 msgstr "Регистрация"
-
-#: .\templates\login.html:64
-msgid "Or login with"
-msgstr "Или войти через"
 
 #: .\templates\manage_products.html:5 .\templates\manage_products.html:17
 msgid "Product Management"
@@ -1672,7 +1680,7 @@ msgid "Previous"
 msgstr "Предыдущий"
 
 #: .\templates\page.html:26 .\templates\page.html:30
-#: .\templates\register.html:78 .\templates\register.html:112
+#: .\templates\register.html:98 .\templates\register.html:132
 msgid "Next"
 msgstr "Следующий"
 
@@ -2026,23 +2034,27 @@ msgstr "Присоединяйтесь к нашему сообществу"
 msgid "Fill in your details to create an account"
 msgstr "Заполните ваши данные для создания аккаунта"
 
-#: .\templates\register.html:121
+#: .\templates\register.html:59
+msgid "or"
+msgstr ""
+
+#: .\templates\register.html:141
 msgid "Review Your Information"
 msgstr "Проверьте вашу информацию"
 
-#: .\templates\register.html:124
+#: .\templates\register.html:144
 msgid "First Name:"
 msgstr "Имя:"
 
-#: .\templates\register.html:128
+#: .\templates\register.html:148
 msgid "Last Name:"
 msgstr "Фамилия:"
 
-#: .\templates\register.html:132
+#: .\templates\register.html:152
 msgid "Email:"
 msgstr "Электронная почта:"
 
-#: .\templates\register.html:140
+#: .\templates\register.html:160
 msgid ""
 "Welcome to our website. If you continue to browse and use this website, you "
 "are agreeing to comply with and be bound by the following terms and "
@@ -2052,7 +2064,7 @@ msgstr ""
 "использовать этот сайт, вы соглашаетесь соблюдать и быть связанными "
 "следующими условиями использования."
 
-#: .\templates\register.html:141
+#: .\templates\register.html:161
 msgid ""
 "The content of the pages of this website is for your general information and "
 "use only. It is subject to change without notice."
@@ -2061,7 +2073,7 @@ msgstr ""
 "информации и использования. Оно может быть изменено без предварительного "
 "уведомления."
 
-#: .\templates\register.html:142
+#: .\templates\register.html:162
 msgid ""
 "This website uses cookies to monitor browsing preferences. If you do allow "
 "cookies to be used, personal information may be stored by us for use by "
@@ -2071,7 +2083,7 @@ msgstr ""
 "вы разрешаете использовать cookies, личная информация может быть сохранена "
 "нами для использования третьими сторонами."
 
-#: .\templates\register.html:143
+#: .\templates\register.html:163
 msgid ""
 "Neither we nor any third parties provide any warranty or guarantee as to the "
 "accuracy, timeliness, performance, completeness or suitability of the "
@@ -2083,23 +2095,23 @@ msgstr ""
 "пригодности информации и материалов, найденных или предлагаемых на этом "
 "сайте для любой конкретной цели."
 
-#: .\templates\register.html:148
+#: .\templates\register.html:168
 msgid "I agree to the Terms of Service and Privacy Policy"
 msgstr "Я согласен с Условиями использования и Политикой конфиденциальности"
 
-#: .\templates\register.html:152
+#: .\templates\register.html:172
 msgid "Subscribe to our newsletter for updates and offers"
 msgstr "Подпишитесь на нашу рассылку для обновлений и предложений"
 
-#: .\templates\register.html:160
+#: .\templates\register.html:180
 msgid "Submit Details"
 msgstr "Отправить данные"
 
-#: .\templates\register.html:169
+#: .\templates\register.html:189
 msgid "Email Verification"
 msgstr "Подтверждение электронной почты"
 
-#: .\templates\register.html:170
+#: .\templates\register.html:190
 msgid ""
 "We've sent a 4-digit verification code to your email. Please enter it below "
 "to complete your registration."
@@ -2107,19 +2119,19 @@ msgstr ""
 "Мы отправили 4-значный код подтверждения на вашу электронную почту. "
 "Пожалуйста, введите его ниже, чтобы завершить регистрацию."
 
-#: .\templates\register.html:178
+#: .\templates\register.html:198
 msgid "Didn't receive a code?"
 msgstr "Не получили код?"
 
-#: .\templates\register.html:179
+#: .\templates\register.html:199
 msgid "Resend Code"
 msgstr "Отправить код повторно"
 
-#: .\templates\register.html:189
+#: .\templates\register.html:209
 msgid "Complete Registration"
 msgstr "Завершить регистрацию"
 
-#: .\templates\register.html:196
+#: .\templates\register.html:216
 msgid "Already have an account?"
 msgstr "Уже есть аккаунт?"
 

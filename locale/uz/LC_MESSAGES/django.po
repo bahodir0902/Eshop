@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-22 00:08+0500\n"
+"POT-Creation-Date: 2025-04-23 15:21+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,8 +25,8 @@ msgstr ""
 msgid "Email"
 msgstr "Elektron pochta"
 
-#: .\accounts\forms.py:10 .\accounts\forms.py:35 .\templates\login.html:41
-#: .\templates\register.html:97
+#: .\accounts\forms.py:10 .\accounts\forms.py:35 .\templates\login.html:65
+#: .\templates\register.html:117
 msgid "Password"
 msgstr "Parol"
 
@@ -38,13 +38,13 @@ msgstr "Parolni tiklash"
 
 #: .\accounts\forms.py:32 .\accounts\forms.py:62 .\templates\checkout.html:84
 #: .\templates\profile.html:121 .\templates\profile_edit.html:19
-#: .\templates\register.html:67
+#: .\templates\register.html:87
 msgid "First Name"
 msgstr "Ism"
 
 #: .\accounts\forms.py:33 .\accounts\forms.py:63 .\templates\checkout.html:90
 #: .\templates\profile.html:124 .\templates\profile_edit.html:31
-#: .\templates\register.html:74
+#: .\templates\register.html:94
 msgid "Last Name"
 msgstr "Familiya"
 
@@ -834,7 +834,7 @@ msgid "Logout"
 msgstr "Chiqish"
 
 #: .\templates\base.html:162 .\templates\base.html:210
-#: .\templates\login.html:56 .\templates\register.html:196
+#: .\templates\login.html:80 .\templates\register.html:216
 msgid "Log In"
 msgstr "Kirish"
 
@@ -911,7 +911,7 @@ msgstr "Barcha huquqlar himoyalangan."
 msgid "Privacy Policy"
 msgstr "Maxfiylik siyosati"
 
-#: .\templates\base.html:236 .\templates\register.html:138
+#: .\templates\base.html:236 .\templates\register.html:158
 msgid "Terms of Service"
 msgstr "Xizmat ko'rsatish shartlari"
 
@@ -980,8 +980,8 @@ msgstr "4 dan 2-qadam"
 msgid "Contact Information"
 msgstr "Aloqa ma'lumotlari"
 
-#: .\templates\checkout.html:64 .\templates\login.html:34
-#: .\templates\register.html:90 .\templates\reset_password.html:16
+#: .\templates\checkout.html:64 .\templates\login.html:58
+#: .\templates\register.html:110 .\templates\reset_password.html:16
 msgid "Email Address"
 msgstr "Elektron pochta manzili"
 
@@ -1085,7 +1085,7 @@ msgstr "Hisobingizni yangilash uchun yangi parol kiriting."
 msgid "New Password"
 msgstr "Yangi parol"
 
-#: .\templates\create_new_password.html:19 .\templates\register.html:104
+#: .\templates\create_new_password.html:19 .\templates\register.html:124
 msgid "Confirm Password"
 msgstr "Parolni tasdiqlang"
 
@@ -1167,8 +1167,8 @@ msgstr "Savatga qo'shish"
 msgid "Category:"
 msgstr "Kategoriya:"
 
-#: .\templates\favourites.html:81 .\templates\register.html:109
-#: .\templates\register.html:157 .\templates\register.html:186
+#: .\templates\favourites.html:81 .\templates\register.html:129
+#: .\templates\register.html:177 .\templates\register.html:206
 msgid "Back"
 msgstr "Orqaga"
 
@@ -1379,25 +1379,33 @@ msgstr "Xarid sayohatingizni davom ettirish uchun tizimga kiring"
 msgid "Please enter your credentials"
 msgstr "Iltimos, ma'lumotlaringizni kiriting"
 
-#: .\templates\login.html:51
+#: .\templates\login.html:47 .\templates\register.html:74
+#, fuzzy
+#| msgid "Continue Shopping"
+msgid "Continue with Google"
+msgstr "Google bilan davom ettirish"
+
+#: .\templates\login.html:52
+#, fuzzy
+#| msgid "Or login with"
+msgid "or login with email"
+msgstr "Yoki email bilan kirish"
+
+#: .\templates\login.html:74
 msgid "Remember me"
 msgstr "Meni eslab qol"
 
-#: .\templates\login.html:53
+#: .\templates\login.html:77
 msgid "Forgot Password?"
 msgstr "Parolni unutdingizmi?"
 
-#: .\templates\login.html:60
+#: .\templates\login.html:84
 msgid "Don\\"
 msgstr "Hisobingiz yo'qmi\\"
 
-#: .\templates\login.html:60 .\templates\register.html:5
+#: .\templates\login.html:84 .\templates\register.html:5
 msgid "Register"
 msgstr "Ro'yxatdan o'tish"
-
-#: .\templates\login.html:64
-msgid "Or login with"
-msgstr "Yoki bilan kirish"
 
 #: .\templates\manage_products.html:5 .\templates\manage_products.html:17
 msgid "Product Management"
@@ -1668,7 +1676,7 @@ msgid "Previous"
 msgstr "Oldingi"
 
 #: .\templates\page.html:26 .\templates\page.html:30
-#: .\templates\register.html:78 .\templates\register.html:112
+#: .\templates\register.html:98 .\templates\register.html:132
 msgid "Next"
 msgstr "Keyingi"
 
@@ -2023,23 +2031,27 @@ msgstr "Bizning hamjamiyatimizga qo'shiling"
 msgid "Fill in your details to create an account"
 msgstr "Hisob yaratish uchun ma'lumotlaringizni to'ldiring"
 
-#: .\templates\register.html:121
+#: .\templates\register.html:59
+msgid "or"
+msgstr ""
+
+#: .\templates\register.html:141
 msgid "Review Your Information"
 msgstr "Ma'lumotlaringizni ko'rib chiqing"
 
-#: .\templates\register.html:124
+#: .\templates\register.html:144
 msgid "First Name:"
 msgstr "Ism:"
 
-#: .\templates\register.html:128
+#: .\templates\register.html:148
 msgid "Last Name:"
 msgstr "Familiya:"
 
-#: .\templates\register.html:132
+#: .\templates\register.html:152
 msgid "Email:"
 msgstr "Elektron pochta:"
 
-#: .\templates\register.html:140
+#: .\templates\register.html:160
 msgid ""
 "Welcome to our website. If you continue to browse and use this website, you "
 "are agreeing to comply with and be bound by the following terms and "
@@ -2049,7 +2061,7 @@ msgstr ""
 "foydalanishni davom ettirsangiz, quyidagi foydalanish shartlari va "
 "qoidalariga rioya qilishga va bog'lanishga rozi bo'lasiz."
 
-#: .\templates\register.html:141
+#: .\templates\register.html:161
 msgid ""
 "The content of the pages of this website is for your general information and "
 "use only. It is subject to change without notice."
@@ -2057,7 +2069,7 @@ msgstr ""
 "Ushbu veb-saytning sahifalari mazmuni faqat umumiy ma'lumot va foydalanish "
 "uchun. U oldindan ogohlantirmasdan o'zgartirilishi mumkin."
 
-#: .\templates\register.html:142
+#: .\templates\register.html:162
 msgid ""
 "This website uses cookies to monitor browsing preferences. If you do allow "
 "cookies to be used, personal information may be stored by us for use by "
@@ -2068,7 +2080,7 @@ msgstr ""
 "bersangiz, shaxsiy ma'lumotlar uchinchi shaxslar tomonidan foydalanish uchun "
 "biz tomonimizdan saqlanishi mumkin."
 
-#: .\templates\register.html:143
+#: .\templates\register.html:163
 msgid ""
 "Neither we nor any third parties provide any warranty or guarantee as to the "
 "accuracy, timeliness, performance, completeness or suitability of the "
@@ -2080,25 +2092,25 @@ msgstr ""
 "to'liqligini yoki biron bir maqsadga mosligini kafolatlamaydi yoki kafolat "
 "bermaydi."
 
-#: .\templates\register.html:148
+#: .\templates\register.html:168
 msgid "I agree to the Terms of Service and Privacy Policy"
 msgstr "Xizmat ko'rsatish shartlari va Maxfiylik siyosatiga roziman"
 
-#: .\templates\register.html:152
+#: .\templates\register.html:172
 msgid "Subscribe to our newsletter for updates and offers"
 msgstr ""
 "Yangilanishlar va takliflar uchun bizning axborot byulletenimizga obuna "
 "bo'ling"
 
-#: .\templates\register.html:160
+#: .\templates\register.html:180
 msgid "Submit Details"
 msgstr "Ma'lumotlarni yuborish"
 
-#: .\templates\register.html:169
+#: .\templates\register.html:189
 msgid "Email Verification"
 msgstr "Elektron pochta tekshiruvi"
 
-#: .\templates\register.html:170
+#: .\templates\register.html:190
 msgid ""
 "We've sent a 4-digit verification code to your email. Please enter it below "
 "to complete your registration."
@@ -2106,19 +2118,19 @@ msgstr ""
 "Elektron pochtangizga 4 raqamli tekshirish kodini yubordik. Ro'yxatdan "
 "o'tishni yakunlash uchun uni quyida kiriting."
 
-#: .\templates\register.html:178
+#: .\templates\register.html:198
 msgid "Didn't receive a code?"
 msgstr "Kod kelmadimi?"
 
-#: .\templates\register.html:179
+#: .\templates\register.html:199
 msgid "Resend Code"
 msgstr "Kodni qayta yuborish"
 
-#: .\templates\register.html:189
+#: .\templates\register.html:209
 msgid "Complete Registration"
 msgstr "Ro'yxatdan o'tishni yakunlash"
 
-#: .\templates\register.html:196
+#: .\templates\register.html:216
 msgid "Already have an account?"
 msgstr "Hisobingiz bormi?"
 

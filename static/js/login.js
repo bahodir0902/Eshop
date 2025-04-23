@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Add 'filled' class to inputs that are pre-filled (Django might pre-fill these on form errors)
     const inputs = document.querySelectorAll('.form-group input');
 
@@ -14,14 +14,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Add event listeners for focus and blur
-        input.addEventListener('focus', function() {
+        input.addEventListener('focus', function () {
             const label = this.nextElementSibling;
             if (label && label.tagName === 'LABEL') {
                 label.classList.add('active');
             }
         });
 
-        input.addEventListener('blur', function() {
+        input.addEventListener('blur', function () {
             if (this.value.trim() === '') {
                 const label = this.nextElementSibling;
                 if (label && label.tagName === 'LABEL') {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form validation
     const form = document.querySelector('form');
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         let isValid = true;
         const emailInput = document.querySelector('input[type="email"]');
         const passwordInput = document.querySelector('input[type="password"]');
@@ -72,9 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function highlightError(input) {
         input.classList.add('error');
-        input.addEventListener('focus', function() {
+        input.addEventListener('focus', function () {
             this.classList.remove('error');
-        }, { once: true });
+        }, {once: true});
     }
 
     function showErrorMessage(message) {
@@ -130,4 +130,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+
+
+    const googleBtn = document.querySelector('.google-btn');
+
+    if (googleBtn) {
+        // Add subtle hover animation
+        googleBtn.addEventListener('mouseenter', function () {
+            this.classList.add('hover-effect');
+        });
+
+        googleBtn.addEventListener('mouseleave', function () {
+            this.classList.remove('hover-effect');
+        });
+
+        // Add click effect
+        googleBtn.addEventListener('click', function () {
+            // Add a brief animation before redirecting
+            this.classList.add('clicked');
+
+            // Small delay for the animation to be visible
+            setTimeout(() => {
+                this.classList.remove('clicked');
+            }, 150);
+        });
+
+        // Make button initially emphasized after page load
+        setTimeout(() => {
+            googleBtn.classList.add('btn-emphasized');
+
+            // Add a subtle animation to draw attention
+            googleBtn.style.transition = 'all 0.5s ease';
+            googleBtn.style.transform = 'translateY(-3px)';
+
+            setTimeout(() => {
+                googleBtn.style.transform = 'translateY(0)';
+            }, 300);
+        }, 500);
+    }
 });

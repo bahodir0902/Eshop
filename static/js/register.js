@@ -306,25 +306,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: formData,
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showSuccessMessage('Verification successful! Redirecting to your account...');
-                    setTimeout(() => {
-                        window.location.href = data.redirect_url || '/dashboard/';
-                    }, 2000);
-                } else {
-                    showErrorMessage(data.error || 'Invalid verification code. Please try again.');
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showSuccessMessage('Verification successful! Redirecting to your account...');
+                        setTimeout(() => {
+                            window.location.href = data.redirect_url || '/dashboard/';
+                        }, 2000);
+                    } else {
+                        showErrorMessage(data.error || 'Invalid verification code. Please try again.');
+                        this.disabled = false;
+                        this.innerHTML = '<span>Complete Registration</span><i class="fas fa-check"></i>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Verification error:', error);
+                    showErrorMessage('A network error occurred. Please try again.');
                     this.disabled = false;
                     this.innerHTML = '<span>Complete Registration</span><i class="fas fa-check"></i>';
-                }
-            })
-            .catch(error => {
-                console.error('Verification error:', error);
-                showErrorMessage('A network error occurred. Please try again.');
-                this.disabled = false;
-                this.innerHTML = '<span>Complete Registration</span><i class="fas fa-check"></i>';
-            });
+                });
         });
     }
 
@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function () {
         field.classList.add('error-border');
         field.style.borderColor = '#dc3545';
         field.closest('.form-group').appendChild(errorElement);
-        field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        field.scrollIntoView({behavior: 'smooth', block: 'center'});
     }
 
     function showErrorMessage(message) {
@@ -402,11 +402,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Update confirmation data for Step 3
     function updateConfirmationData() {
         const fields = [
-            { input: 'first_name', confirm: 'first-name' },
-            { input: 'last_name', confirm: 'last-name' },
-            { input: 'email', confirm: 'email' }
+            {input: 'first_name', confirm: 'first-name'},
+            {input: 'last_name', confirm: 'last-name'},
+            {input: 'email', confirm: 'email'}
         ];
-        fields.forEach(({ input, confirm }) => {
+        fields.forEach(({input, confirm}) => {
             const value = document.getElementById(`id_${input}`).value;
             const confirmElement = document.getElementById(`confirm-${confirm}`);
             if (confirmElement) {
@@ -414,6 +414,47 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    // Add this to your existing register.js file
+    document.addEventListener('DOMContentLoaded', function () {
+        // Google button enhancement
+        const googleBtn = document.querySelector('.google-btn');
+
+        if (googleBtn) {
+            // Add subtle hover animation
+            googleBtn.addEventListener('mouseenter', function () {
+                this.classList.add('hover-effect');
+            });
+
+            googleBtn.addEventListener('mouseleave', function () {
+                this.classList.remove('hover-effect');
+            });
+
+            // Add click effect
+            googleBtn.addEventListener('click', function () {
+                // Add a brief animation before redirecting
+                this.classList.add('clicked');
+
+                // Small delay for the animation to be visible
+                setTimeout(() => {
+                    this.classList.remove('clicked');
+                }, 150);
+            });
+
+            // Make button initially emphasized after page load
+            setTimeout(() => {
+                googleBtn.classList.add('btn-emphasized');
+
+                // Add a subtle animation to draw attention
+                googleBtn.style.transition = 'all 0.5s ease';
+                googleBtn.style.transform = 'translateY(-3px)';
+
+                setTimeout(() => {
+                    googleBtn.style.transform = 'translateY(0)';
+                }, 300);
+            }, 500);
+        }
+    });
 });
 
 

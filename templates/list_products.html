@@ -265,6 +265,7 @@
                         <a href="{% url 'products:product_detail' slug=product.slug %}">
                             <img src="
 
+
                                     {% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/300x200{% endif %}"
                                  alt="{{ product.name }}">
                             <div class="product-badges">
@@ -344,8 +345,12 @@
                         {% endif %}
 
                         <!-- Wishlist button -->
-                        <button type="button" class="btn btn-icon wishlist">
-                            <i class="fa fa-heart-o"></i>
+                        <button type="button" class="btn btn-icon wishlist" aria-label="Add to favorites">
+                            {% if product.id in favourite_items_ids %}
+                                <i class="fas fa-heart"></i>
+                            {% else %}
+                                <i class="far fa-heart"></i>
+                            {% endif %}
                         </button>
                     </div>
                 </div>
