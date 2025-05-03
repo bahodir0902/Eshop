@@ -159,10 +159,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    function checkStockAvailability() {
+        const availabilityElement = document.querySelector('.availability');
+        if (availabilityElement && availabilityElement.querySelector('.out-of-stock')) {
+            showNotification('Sorry, this product is currently out of stock.');
+            return false;
+        }
+        return true;
+    }
+
     // Add to cart button functionality with AJAX
     // const addToCartBtn = document.querySelector('.add-to-cart-detail');
 
     addToCartBtn.addEventListener('click', function () {
+
+        if (!checkStockAvailability()) {
+            return; // Stop execution if out of stock
+        }
+
         const productId = this.getAttribute('data-product-id');
         const csrfToken = getCSRFToken();
         const currentAction = this.getAttribute('data-action') || 'add';
@@ -268,6 +282,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (buyNowBtn) {
         buyNowBtn.addEventListener('click', function () {
+
+            if (!checkStockAvailability()) {
+                return; // Stop execution if out of stock
+            }
             const productId = addToCartBtn ? addToCartBtn.getAttribute('data-product-id') : null;
             const quantity = parseInt(quantityInput.value);
             const csrfToken = getCSRFToken();

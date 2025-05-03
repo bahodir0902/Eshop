@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+
+from celery.schedules import crontab
 from environ import environ
 import os
 from django.utils.translation import gettext_lazy as _
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_ratelimit',
     'rosetta',
+    'django_celery_beat',
     # local
     'eshop',
     'accounts',
@@ -84,7 +87,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18n'
+                'django.template.context_processors.i18n',
+                'notifications.context_processors.notification_counts',
             ],
         },
     },
@@ -168,10 +172,28 @@ SILENCED_SYSTEM_CHECKS = [
 
 AUTH_USER_MODEL = env.str('AUTH_USER_MODEL')
 
-
 GOOGLE_CLIENT_ID = env.str("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = env.str('GOOGLE_CLIENT_SECRET')
-GOOGLE_REDIRECT_URI=env.str('GOOGLE_REDIRECT_URI')
-GOOGLE_AUTH_URL=env.str('GOOGLE_AUTH_URL')
-GOOGLE_TOKEN_URL=env.str('GOOGLE_TOKEN_URL')
-GOOGLE_USER_INFO_URL=env.str('GOOGLE_USER_INFO_URL')
+GOOGLE_REDIRECT_URI = env.str('GOOGLE_REDIRECT_URI')
+GOOGLE_AUTH_URL = env.str('GOOGLE_AUTH_URL')
+GOOGLE_TOKEN_URL = env.str('GOOGLE_TOKEN_URL')
+GOOGLE_USER_INFO_URL = env.str('GOOGLE_USER_INFO_URL')
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 1800
+CELERY_TIMEZONE = "Asia/Tashkent"
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"
+CELERY_BEAT_SCHEDULE = {
+    # Database backups - critical task
+    'backup-postgresql-database': {
+        'task': 'common.tasks.backup_postgresql_database',
+        'schedule': crontab(hour=3, minute=0),  # Every day at 3 AM
+    },
+    # if sqlite
+    # 'backup-sqlite-database': {
+    #     'task': 'common.tasks.backup_sqlite_database',
+    #     'schedule': crontab(hour=3, minute=0),  # Every day at 3 AM
+    # },
+}

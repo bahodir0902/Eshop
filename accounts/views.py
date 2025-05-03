@@ -17,7 +17,7 @@ from django.conf import settings
 class Login(View):
     def get(self, request):
         form = UserLoginForm()
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'accounts/login.html', {'form': form})
 
     def post(self, request):
         form = UserLoginForm(request.POST)
@@ -25,7 +25,7 @@ class Login(View):
             user = authenticate(request, **form.cleaned_data)
             if not user:
                 form.add_error('email', 'Username or password is incorrect')
-                return render(request, 'login.html', {'form': form})
+                return render(request, 'accounts/login.html', {'form': form})
 
             login(request, user)
             return redirect('products:products')
@@ -35,7 +35,7 @@ class Login(View):
 class Register(View):
     def get(self, request):
         form = UserRegisterForm()
-        return render(request, 'register.html', {'form': form})
+        return render(request, 'accounts/register.html', {'form': form})
 
     def post(self, request):
         form = UserRegisterForm(request.POST)
@@ -87,7 +87,7 @@ class VerifyRegistration(View):
 class ForgotPassword(View):
     def get(self, request):
         form = UserForgotPasswordForm()
-        return render(request, 'reset_password.html', {'form': form})
+        return render(request, 'accounts/reset_password.html', {'form': form})
 
     def post(self, request):
         form = UserForgotPasswordForm(request.POST)
@@ -96,39 +96,39 @@ class ForgotPassword(View):
             user = User.objects.filter(email=email).first()
             if not user:
                 form.add_error('email', 'User with this email doesn\'t exists.')
-                return render(request, 'reset_password.html', {'form': form})
+                return render(request, 'accounts/reset_password.html', {'form': form})
 
             send_password_verification(user)
             request.session['reset_email'] = email
             return redirect('accounts:check_email')
 
-        return render(request, 'reset_password.html', {'form': form})
+        return render(request, 'accounts/reset_password.html', {'form': form})
 
 
 class CheckEmail(View):
     def get(self, request):
-        return render(request, 'check_email.html')
+        return render(request, 'accounts/check_email.html')
 
     def post(self, request):
         code = request.POST.get('verification_code')
         email = request.session.get('reset_email')
         if not code or not email:
             messages.error(request, 'Email or Code number didn\'t received, please try again.')
-            return render(request, 'check_email.html')
+            return render(request, 'accounts/check_email.html')
 
         code_db = CodePassword.objects.filter(user=User.objects.filter(email=email).first()).first()
 
         if not code_db:
             messages.error(request, "Invalid verification code. Please try again.")
-            return render(request, 'check_email.html')
+            return render(request, 'accounts/check_email.html')
 
         if code_db.expire_date < timezone.now():
             messages.error(request, "Your code has expired. Request a new one.")
-            return render(request, 'check_email.html')
+            return render(request, 'accounts/check_email.html')
 
         if str(code_db.code) != str(code):
             messages.error(request, "Incorrect code. Please enter the correct code.")
-            return render(request, 'check_email.html')
+            return render(request, 'accounts/check_email.html')
 
         request.session['reset_email'] = email
 
@@ -138,7 +138,7 @@ class CreateNewPassword(View):
     def get(self, request):
         if not request.session.get('reset_email', False):
             return HttpResponse("Email is not verified")
-        return render(request, 'create_new_password.html')
+        return render(request, 'accounts/create_new_password.html')
 
     def post(self, request):
         password = request.POST.get('password')
@@ -146,11 +146,11 @@ class CreateNewPassword(View):
 
         if not password or not confirm_password:
             messages.error(request, 'Passwords didn\'t received. Please try again.')
-            return render(request, 'create_new_password.html')
+            return render(request, 'accounts/create_new_password.html')
 
         if str(password) != str(confirm_password):
             messages.error(request, "Passwords didn\'t match.")
-            return render(request, 'create_new_password.html')
+            return render(request, 'accounts/create_new_password.html')
 
         email = request.session.get('reset_email')
         if not email:
@@ -176,7 +176,7 @@ class Profile(View):
             'profile_form': profile_form,
             'address_form': address_form
         }
-        return render(request, 'profile.html', context=data)
+        return render(request, 'accounts/profile.html', context=data)
 
 
 class ProfileEdit(LoginRequiredMixin, View):
@@ -192,7 +192,7 @@ class ProfileEdit(LoginRequiredMixin, View):
             'profile_form': profile_form,
             'address_form': address_form
         }
-        return render(request, 'profile_edit.html', context=data)
+        return render(request, 'accounts/profile_edit.html', context=data)
 
     def post(self, request):
         profile_form = UserProfileForm(request.POST, instance=request.user)
@@ -229,13 +229,13 @@ class ProfileEdit(LoginRequiredMixin, View):
             'profile_form': profile_form,
             'address_form': address_form
         }
-        return render(request, 'profile_edit.html', context=data)
+        return render(request, 'accounts/profile_edit.html', context=data)
 
 
 class VerifyEmailToChangeEmail(LoginRequiredMixin, View):
     def get(self, request):
         new_email = request.session.get('new_email')
-        return render(request, 'verify_email_to_change_email_passcode.html', {'new_email': new_email})
+        return render(request, 'accounts/verify_email_to_change_email_passcode.html', {'new_email': new_email})
 
     def post(self, request):
         code = request.POST.get('code')
@@ -244,15 +244,15 @@ class VerifyEmailToChangeEmail(LoginRequiredMixin, View):
         code_db = CodeEmail.objects.filter(email=new_email).first()
         if not code_db:
             messages.error(request, 'Code was not found in database. Please try again later.')
-            return render(request, 'verify_email_to_change_email_passcode.html', {'new_email': new_email})
+            return render(request, 'accounts/verify_email_to_change_email_passcode.html', {'new_email': new_email})
 
         if code_db.expire_date < timezone.now():
             messages.error(request, "Your code has expired. Request a new one.")
-            return render(request, 'verify_email_to_change_email_passcode.html', {'new_email': new_email})
+            return render(request, 'accounts/verify_email_to_change_email_passcode.html', {'new_email': new_email})
 
         if str(code_db.code) != str(code):
             messages.error(request, "Incorrect code. Please enter the correct code.")
-            return render(request, 'verify_email_to_change_email_passcode.html', {'new_email': new_email})
+            return render(request, 'accounts/verify_email_to_change_email_passcode.html', {'new_email': new_email})
 
         user_db = User.objects.filter(pk=request.user.pk).first()
         user_db.email = new_email

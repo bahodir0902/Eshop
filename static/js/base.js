@@ -35,14 +35,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // Optional: Update cart/wishlist counts if needed via AJAX after certain actions
-    // Example function (replace with your actual logic)
+    // Optional: Update cart/wishlist/notifications counts via AJAX
     function updateCounts() {
         fetch('/common/get-counts') // Example endpoint
             .then(response => response.json())
             .then(data => {
                 const cartBadge = document.querySelector('.cart-count');
                 const wishlistBadge = document.querySelector('.wishlist-count');
+                const notificationsBadge = document.querySelector('.notifications-count');
+
                 if (cartBadge && data.cart_count !== undefined) {
                     cartBadge.textContent = data.cart_count;
                     cartBadge.style.display = data.cart_count > 0 ? 'inline-block' : 'none';
@@ -51,10 +52,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     wishlistBadge.textContent = data.wishlist_count;
                     wishlistBadge.style.display = data.wishlist_count > 0 ? 'inline-block' : 'none';
                 }
+                if (notificationsBadge && data.notifications_count !== undefined) {
+                    notificationsBadge.textContent = data.notifications_count;
+                    notificationsBadge.style.display = data.notifications_count > 0 ? 'inline-block' : 'none';
+                }
             })
             .catch(error => console.error('Error fetching counts:', error));
     }
 
     updateCounts(); // Call on page load or after relevant actions
 
+    // Optionally refresh notification count every 60 seconds
+    setInterval(updateCounts, 60000);
 });

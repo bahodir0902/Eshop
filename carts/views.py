@@ -15,28 +15,39 @@ class CartView(LoginRequiredMixin, View):
             total_price=ExpressionWrapper(F('product__price') * F('quantity'), output_field=FloatField())
         )
 
-        return render(request, 'my_cart.html', {'cart_items': cart_items})
+        return render(request, 'carts/my_cart.html', {'cart_items': cart_items})
 
 
 class AddCartItem(LoginRequiredMixin, View):
     def post(self, request, pk):
-        quantity = request.POST.get('quantity', None)
-        if not quantity:
+        content_type = request.META.get('CONTENT_TYPE', '')
+        quantity = 1
+
+        if 'application/json' in content_type.lower():
             try:
                 data = json.loads(request.body)
                 quantity = data.get('quantity', 1)
             except json.JSONDecodeError:
                 quantity = 1
+        else:
+            quantity = request.POST.get('quantity', 1)
 
         try:
             quantity = int(quantity)
         except (ValueError, TypeError):
             quantity = 1
 
+
         cart, _ = Cart.objects.get_or_create(user=request.user)
         product = Product.objects.filter(pk=pk).first()
         if not product:
             return JsonResponse({'success': False, 'error': 'Product not found'})
+
+        if product.inventory.stock_count <= 0:
+            return JsonResponse({
+                'success': False,
+                'error': 'This product is out of stock'
+            })
 
         item, created = CartItems.objects.get_or_create(
             cart=cart, product=product, defaults={'quantity': quantity}
@@ -56,9 +67,18 @@ class AddCartItem(LoginRequiredMixin, View):
 
 class UpdateCartItem(LoginRequiredMixin, View):
     def post(self, request, pk):
-        cart = Cart.objects.filter(user=request.user).first()
-        quantity = request.POST.get('quantity', 1)
+        try:
+            data = json.loads(request.body)
+            quantity = data.get('quantity', 1)
+        except json.JSONDecodeError:
+            quantity = request.POST.get('quantity', 1)
 
+        try:
+            quantity = int(quantity)
+        except (ValueError, TypeError):
+            return JsonResponse({'success': False, 'error': 'quantity is not integer object'})
+
+        cart = Cart.objects.filter(user=request.user).first()
         if not cart:
             cart = Cart.objects.create(user=request.user)
 
@@ -66,18 +86,12 @@ class UpdateCartItem(LoginRequiredMixin, View):
         if not product:
             return JsonResponse({'success': False, 'error': 'Product id not found. Please try again later.'})
 
-        if not CartItems.objects.filter(Q(cart=cart) & Q(product=product)).exists():
-            CartItems.objects.create(cart=cart, quantity=quantity, product=product)
-            return JsonResponse({'success': True})
-
-        item = CartItems.objects.filter(Q(cart=cart) & Q(product=product)).first()
-        if not item:
-            return JsonResponse({'success': False, 'error': 'Fatal Internal Server error.'})
-        try:
-            item.quantity = int(quantity)
+        item, created = CartItems.objects.get_or_create(
+            cart=cart, product=product, defaults={'quantity': quantity}
+        )
+        if not created:
+            item.quantity = quantity
             item.save()
-        except (ValueError, TypeError) as e:
-            return JsonResponse({'success': F, 'error': 'quantity is not integer object'})
 
         return JsonResponse({'success': True})
 
