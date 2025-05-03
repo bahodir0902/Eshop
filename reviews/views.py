@@ -7,14 +7,8 @@ from reviews.models import FeedBack
 from django.contrib.auth.decorators import login_required
 
 class FeedbackView(View):
-    def get(self, request, product_id):
-        product = Product.objects.filter(pk=product_id).first()
-        if not product:
-            return HttpResponse("Fatal error, product not found.", status=404)
-
     @method_decorator(login_required)
     def post(self, request, product_id):
-        print(request, product_id)
         product = Product.objects.filter(pk=product_id).first()
         if not product:
             return HttpResponse("Fatal error, product not found", status=404)
@@ -25,8 +19,6 @@ class FeedbackView(View):
 
         if not rating:
             return JsonResponse({'success': False, "error": "Rating is not found or must be between 1 and 5"})
-
-        print(rating, comment)
 
         FeedBack.objects.filter(user=request.user, product=product).delete()
 

@@ -33,7 +33,7 @@ class FavouriteView(LoginRequiredMixin, View):
             'cart_items_json': json.dumps(cart_items_data)
         }
 
-        return render(request, 'favourites.html', context=data)
+        return render(request, 'favourites/favourites.html', context=data)
 
 class AddFavouriteItem(LoginRequiredMixin, View):
     def post(self, request, pk):

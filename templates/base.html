@@ -122,6 +122,15 @@
                                     {# Add wishlist count logic if available #}
                                 </a>
                             </li>
+                            <!-- Notifications Icon Link -->
+                            <li class="nav-item">
+                                <a class="nav-link nav-icon-link {% if request.resolver_match.url_name == 'notifications' %}active{% endif %}"
+                                   href="{% url 'notifications:list' %}" aria-label="{% trans 'View Notifications' %}">
+                                    <i class="fas fa-bell"></i>
+                                    <span class="badge rounded-pill bg-warning notifications-count">{% if unread_notifications_count %}
+                                        {{ unread_notifications_count }}{% else %}0{% endif %}</span>
+                                </a>
+                            </li>
 
                             <!-- Separator -->
                             <li class="nav-item d-none d-lg-block mx-2"><span class="nav-separator">|</span></li>

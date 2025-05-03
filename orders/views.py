@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.db.models import ExpressionWrapper, F,Sum, FloatField
+from django.db.models import ExpressionWrapper, F, Sum, FloatField
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from accounts.models import User, Address
@@ -23,7 +23,7 @@ class MyOrdersView(LoginRequiredMixin, View):
             'items': items
         }
 
-        return render(request, "my_orders.html", context=data)
+        return render(request, "orders/my_orders.html", context=data)
 
 
 class CheckoutView(LoginRequiredMixin, View):
@@ -45,7 +45,7 @@ class CheckoutView(LoginRequiredMixin, View):
             'address_form': address_form,
             'subtotal': subtotal
         }
-        return render(request, 'checkout.html', context=data)
+        return render(request, 'orders/checkout.html', context=data)
 
     def post(self, request):
         user_address = Address.objects.filter(user=request.user).first()
@@ -67,30 +67,33 @@ class CheckoutView(LoginRequiredMixin, View):
             return HttpResponse('Cart is empty. Please fill the cart and come back.')
 
         if address_form.is_valid():
-            new_address, old_address = None, None
+            shipping_address = None
             if save_primary:
-                old_address = address_form.save()
-            else:
                 address = address_form.save(commit=False)
-                address.is_primary = False
+                address.user = request.user
+                address.is_primary = True
                 address.save()
-                new_address = Address.objects.create(
-                    address_line_1=address.address_line_1,
-                    address_line_2=address.address_line_2,
-                    city=address.city,
-                    country=address.country,
-                    postal_code=address.postal_code,
+                shipping_address = address
+            else:
+                address_data = address_form.cleaned_data
+                shipping_address = Address.objects.create(
+                    user=request.user,
+                    address_line_1=address_data['address_line_1'],
+                    address_line_2=address_data.get('address_line_2', ''),
+                    city=address_data['city'],
+                    country=address_data['country'],
+                    postal_code=address_data['postal_code'],
                     is_primary=False,
-                    user=address.user,
-                    state_or_province=address.state_or_province
+                    state_or_province=address_data.get('state_or_province', '')
                 )
+
             if phone_number:
                 User.objects.filter(pk=request.user.pk).update(phone_number=phone_number)
 
             Order.objects.filter(user=request.user, status='pending').delete()
             order = Order.objects.create(
                 user=request.user,
-                shipping_address=old_address if save_primary else new_address,
+                shipping_address=shipping_address,
                 shipping_method=delivery_option,
                 shipping_cost=delivery_cost
             )
@@ -99,7 +102,7 @@ class CheckoutView(LoginRequiredMixin, View):
                 order_details.delete()
 
             for item in cart_items:
-                 OrderDetails.objects.create(
+                OrderDetails.objects.create(
                     order=order,
                     product=item.product,
                     quantity=item.quantity
@@ -116,5 +119,4 @@ class CheckoutView(LoginRequiredMixin, View):
             'address_form': address_form
         }
 
-        return render(request, 'checkout.html', context=data)
-
+        return render(request, 'orders/checkout.html', context=data)

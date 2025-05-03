@@ -41,7 +41,8 @@ urlpatterns += i18n_patterns(
     path('orders/', include('orders.urls')),
     path('feedbacks/', include('reviews.urls')),
     path('common/', include('common.urls')),
-    path('favourites/', include('favourites.urls'))
+    path('favourites/', include('favourites.urls')),
+    path('notifications/', include('notifications.urls'))
 )
 
 if settings.DEBUG:

@@ -2503,3 +2503,21 @@ button:focus, .btn:focus {
         max-height: 50vh;
     }
 }
+
+
+/* Out of Stock styling */
+.btn.out-of-stock {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #ddd;
+}
+
+.badge.out-of-stock {
+    background-color: #dc3545;
+    color: white;
+}
+
+.product-card:has(.badge.out-of-stock) .product-image {
+    opacity: 0.7;
+}

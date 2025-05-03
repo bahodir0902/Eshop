@@ -15,7 +15,7 @@ class PaymentView(LoginRequiredMixin, View):
     def get(self, request):
         pk = request.session.get('new_order_id', None)
         data = self.fetch_details(pk)
-        return render(request, 'payment.html', context=data)
+        return render(request, 'payments/payment.html', context=data)
 
     def post(self, request):
         pk = request.session.get('new_order_id', None)
@@ -27,20 +27,20 @@ class PaymentView(LoginRequiredMixin, View):
 
         if not card_name:
             messages.error(request, "Card holder's first name and last name are not provided")
-            return render(request, 'payment.html', context=data)
+            return render(request, 'payments/payment.html', context=data)
 
         if not card_number or not card_number.replace(' ', '').isdigit() or not len(card_number.replace(' ', '')) in (
         15, 16):
             messages.error(request, "Card number not provided or number's length is not valid")
-            return render(request, 'payment.html', context=data)
+            return render(request, 'payments/payment.html', context=data)
 
         if not expiry_date or '/' not in expiry_date:
             messages.error(request, "Expiry date is not provided or provided in wrong format (no / between MM and YY).")
-            return render(request, 'payment.html', context=data)
+            return render(request, 'payments/payment.html', context=data)
 
         if not cvv or len(cvv) not in [3, 4]:
             messages.error(request, "Cvv is not provided or provided with wrong length")
-            return render(request, 'payment.html', context=data)
+            return render(request, 'payments/payment.html', context=data)
 
         Order.objects.filter(pk=pk).update(status='paid')
 
@@ -104,4 +104,4 @@ class PaymentSuccessView(LoginRequiredMixin, View):
         data['country'] = order.shipping_address.country
         data['delivery_date'] = delivery_date
 
-        return render(request, 'payment_success.html', context=data)
+        return render(request, 'payments/payment_success.html', context=data)

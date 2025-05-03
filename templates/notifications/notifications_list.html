@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Notifications' %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="notification-container">
+    <div class="notification-header">
+        <div class="notification-title-section">
+            <h1 class="notification-title">{% trans 'Notifications' %}</h1>
+            <p class="notification-subtitle">{% trans 'Your notifications and updates' %}</p>
+        </div>
+        {% if unread_count > 0 %}
+        <div class="notification-actions-top">
+            <span class="notification-badge">{{ unread_count }}</span>
+            <a href="{% url 'notifications:mark_all_notifications_as_read' %}" class="btn-mark-all-read">
+                <i class="fas fa-check-double"></i> {% trans 'Mark all as read' %}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Notification filter tabs -->
+    <div class="notification-tabs">
+        <button class="tab-btn active" data-filter="all">{% trans 'All' %}</button>
+        <button class="tab-btn" data-filter="unread">{% trans 'Unread' %}</button>
+    </div>
+
+    {% if notifications %}
+        <div class="notifications-list">
+            {% for notification in notifications %}
+                <div class="notification-item {% if not notification.is_read %}unread{% endif %}" data-notification-type="{% if not notification.is_read %}unread{% else %}read{% endif %}">
+                    <div class="notification-status-indicator"></div>
+                    <div class="notification-content">
+                        <div class="notification-header-row">
+                            <h3 class="notification-item-title">{{ notification.title }}</h3>
+                            <div class="notification-meta">
+                                <span class="notification-time">{{ notification.created_at|timesince }} {% trans 'ago' %}</span>
+                            </div>
+                        </div>
+                        <div class="notification-message">{{ notification.message }}</div>
+                        {% if not notification.is_read %}
+                            <div class="notification-actions">
+                                <a href="{% url 'notifications:mark_read' notification.id %}" class="btn-mark-read">
+                                    <i class="fas fa-check"></i> {% trans 'Mark as read' %}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-notifications">
+            <div class="empty-icon">
+                <i class="fas fa-bell-slash"></i>
+            </div>
+            <h3>{% trans 'No notifications yet' %}</h3>
+            <p>{% trans 'When you receive notifications, they will appear here.' %}</p>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/notifications.js' %}"></script>
+{% endblock %}

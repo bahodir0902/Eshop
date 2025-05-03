@@ -74,7 +74,7 @@ class AddProductView(View):
     @method_decorator(restrict_user(is_admin, is_seller))
     def get(self, request):
         form = AddProductModelForm()
-        return render(request, 'add_product_form.html', {'form': form})
+        return render(request, 'products/add_product_form.html', {'form': form})
 
     @method_decorator(restrict_user(is_admin, is_seller))
     def post(self, request):
@@ -86,7 +86,7 @@ class AddProductView(View):
             return redirect('products:products')
         form.add_error(None, 'Please enter valid data.')
         print(form.errors)
-        return render(request, 'add_product_form.html', {'form': form})
+        return render(request, 'products/add_product_form.html', {'form': form})
 
 
 class EditProductView(View):
@@ -94,7 +94,7 @@ class EditProductView(View):
     def get(self, request, pk):
         product = Product.objects.filter(pk=pk).first()
         form = UpdateProductModelForm(instance=product)
-        return render(request, 'edit_product.html', {'form': form})
+        return render(request, 'products/edit_product.html', {'form': form})
 
     @method_decorator(restrict_user(is_admin, is_seller))
     def post(self, request, pk):
@@ -105,7 +105,7 @@ class EditProductView(View):
             products.save()
             return redirect('products:manage_products')
         form.add_error(None, 'Please enter valid data.')
-        return render(request, 'edit_product.html', {'form': form})
+        return render(request, 'products/edit_product.html', {'form': form})
 
 
 def dashboard_statistics():
@@ -163,7 +163,7 @@ class ManageProductView(View):
         # Include categories for the filter dropdown
         data['categories'] = Category.objects.all()
 
-        return render(request, 'manage_products.html', context=data)
+        return render(request, 'products/manage_products.html', context=data)
 
 
 @restrict_user(is_admin, is_seller)

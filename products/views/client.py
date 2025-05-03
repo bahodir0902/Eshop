@@ -110,7 +110,7 @@ class ProductListView(View):
 
         data['categories'] = categories
 
-        return render(request, 'list_products.html', context=data)
+        return render(request, 'products/list_products.html', context=data)
 
 
 class ProductDetailView(View):
@@ -176,7 +176,7 @@ class ProductDetailView(View):
             'user_feedback': user_feedback
         }
 
-        return render(request, 'product_details.html', context=data)
+        return render(request, 'products/product_details.html', context=data)
 
     def get_feedbacks(self, product: Product):
         feedbacks = FeedBack.objects.filter(product=product)

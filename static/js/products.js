@@ -44,18 +44,18 @@ function ensureLanguagePrefix(url) {
 
 // GSAP-like animation utility for smoother transitions
 const SmoothAnimation = {
-    easeOutBack: function(t) {
+    easeOutBack: function (t) {
         const c1 = 1.70158;
         const c3 = c1 + 1;
         return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
     },
-    easeOutQuart: function(t) {
+    easeOutQuart: function (t) {
         return 1 - Math.pow(1 - t, 4);
     },
-    easeInOutQuart: function(t) {
+    easeInOutQuart: function (t) {
         return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
     },
-    animate: function(element, properties, duration = 300, easing = this.easeOutQuart) {
+    animate: function (element, properties, duration = 300, easing = this.easeOutQuart) {
         const startTime = performance.now();
         const initialProperties = {};
 
@@ -88,7 +88,7 @@ const SmoothAnimation = {
 };
 
 // All functionality wrapped in DOMContentLoaded event
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // ===============================================================
     // 1. ENHANCED HEART ICON ANIMATIONS (WISHLIST FUNCTIONALITY)
     // ===============================================================
@@ -188,13 +188,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 600, SmoothAnimation.easeOutQuart);
 
             setTimeout(() => {
-                SmoothAnimation.animate(ripple, { opacity: 0 }, 300);
+                SmoothAnimation.animate(ripple, {opacity: 0}, 300);
                 setTimeout(() => ripple.remove(), 300);
             }, 300);
         }
 
         // Main heart icon click animation
-        return function(event) {
+        return function (event) {
             const button = event.currentTarget;
             const icon = button.querySelector('i');
 
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Add AJAX functionality for wishlist
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const icon = this.querySelector('i');
             const productCard = this.closest('.product-card');
             const productId = productCard.getAttribute('data-product-id');
@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enhanced view switching with animations
     viewButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             viewButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
             const viewType = this.getAttribute('data-view');
@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Toggle filter sidebar when clicking the filter button
     if (filterToggle && filterPanel) {
-        filterToggle.addEventListener('click', function(e) {
+        filterToggle.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Close filter sidebar with close button
     if (closeFilters) {
-        closeFilters.addEventListener('click', function(e) {
+        closeFilters.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
             closeFilterSidebar();
@@ -572,13 +572,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Close filter sidebar when clicking the overlay
     if (filterOverlay) {
-        filterOverlay.addEventListener('click', function(e) {
+        filterOverlay.addEventListener('click', function (e) {
             closeFilterSidebar();
         });
     }
 
     // Close sidebar with ESC key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && filterPanel && filterPanel.classList.contains('active')) {
             closeFilterSidebar();
         }
@@ -586,13 +586,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Prevent filter panel clicks from propagating to overlay
     if (filterPanel) {
-        filterPanel.addEventListener('click', function(e) {
+        filterPanel.addEventListener('click', function (e) {
             e.stopPropagation();
         });
     }
 
     // Handle window resize to adjust sidebar behavior
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         if (filterPanel && filterPanel.classList.contains('active')) {
             if (window.innerWidth < 992) {
                 productsContainer.classList.remove('sidebar-open');
@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const removeFilterBtns = document.querySelectorAll('.remove-filter');
     if (removeFilterBtns.length > 0) {
         removeFilterBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 // Get the parameter to remove
                 const param = this.getAttribute('data-param');
@@ -646,7 +646,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Clear all filters
     const clearAllBtn = document.querySelector('.clear-all-filters');
     if (clearAllBtn) {
-        clearAllBtn.addEventListener('click', function(e) {
+        clearAllBtn.addEventListener('click', function (e) {
             e.preventDefault();
 
             // Get the current URL
@@ -734,7 +734,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Close dropdown with close button
     if (closeCategories) {
-        closeCategories.addEventListener('click', function(e) {
+        closeCategories.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -752,7 +752,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle Apply button
     if (applyCategories) {
-        applyCategories.addEventListener('click', function(e) {
+        applyCategories.addEventListener('click', function (e) {
             e.preventDefault();
 
             // Get current URL and params
@@ -776,7 +776,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle Reset button
     if (resetCategories) {
-        resetCategories.addEventListener('click', function(e) {
+        resetCategories.addEventListener('click', function (e) {
             e.preventDefault();
 
             // Uncheck all checkboxes
@@ -795,7 +795,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (categoryCheckboxes) {
         categoryCheckboxes.forEach(checkbox => {
             if (checkbox.getAttribute('data-form-submit') === 'true') {
-                checkbox.addEventListener('change', function() {
+                checkbox.addEventListener('change', function () {
                     // Update hidden inputs in the main filter form
                     updateHiddenCategoryInputs();
                 });
@@ -867,7 +867,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const productCards = document.querySelectorAll('.product-card');
     productCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
+        card.addEventListener('mouseenter', function () {
             this.style.zIndex = '10';
 
             // Add subtle shadow animation
@@ -881,7 +881,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        card.addEventListener('mouseleave', function() {
+        card.addEventListener('mouseleave', function () {
             this.style.zIndex = '1';
 
             // Reset image zoom
@@ -898,7 +898,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const addToCartButtons = document.querySelectorAll('.add-to-cart, .update-cart');
     addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
+            // Check if button is disabled or has the 'out-of-stock' class
+            if (this.disabled || this.classList.contains('out-of-stock')) {
+                // Show a notification that the item is out of stock
+                const notification = document.createElement('div');
+                notification.className = 'product-notification error';
+                notification.innerHTML = '<i class="fa fa-exclamation-circle"></i> This item is out of stock';
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }, 2000);
+
+                return; // Stop execution
+            }
+
             // Get the product card and extract the product ID from data attribute
             const productCard = this.closest('.product-card');
             const productId = productCard.getAttribute('data-product-id');
@@ -912,14 +930,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 quantityContainer = document.createElement('div');
                 quantityContainer.className = 'quantity-container';
                 quantityContainer.innerHTML = `
-                    <span class="quantity-label">Qty:</span>
-                    <div class="quantity-controls">
-                        <button type="button" class="quantity-btn minus">-</button>
-                        <input type="number" class="quantity-input" value="1" min="1" max="99">
-                        <button type="button" class="quantity-btn plus">+</button>
-                    </div>
-                    <button type="button" class="btn btn-confirm-cart">Confirm</button>
-                `;
+                <span class="quantity-label">Qty:</span>
+                <div class="quantity-controls">
+                    <button type="button" class="quantity-btn minus">-</button>
+                    <input type="number" class="quantity-input" value="1" min="1" max="99">
+                    <button type="button" class="quantity-btn plus">+</button>
+                </div>
+                <button type="button" class="btn btn-confirm-cart">Confirm</button>
+            `;
 
                 // Insert before the current button
                 productActions.insertBefore(quantityContainer, this);
@@ -1228,7 +1246,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const mobileSort = document.getElementById('mobile-sort');
     if (mobileSort) {
-        mobileSort.addEventListener('change', function() {
+        mobileSort.addEventListener('change', function () {
             const form = document.getElementById('filter-form');
             if (form) {
                 const sortInput = form.querySelector('input[name="sort"]:checked');

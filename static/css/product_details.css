@@ -1539,3 +1539,23 @@ a {
     background-color: var(--gray-200);
   }
 }
+
+
+/* Out of Stock styling */
+.out-of-stock-btn {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #ddd;
+}
+
+.out-of-stock-message {
+    margin-bottom: 15px;
+}
+
+
+/* Even when contained in an out-of-stock section */
+.out-of-stock-btn {
+    cursor: pointer !important;
+    opacity: 1 !important;
+}
