@@ -165,10 +165,22 @@ EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
 EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
 
-SILENCED_SYSTEM_CHECKS = [
-    "django_ratelimit.E003",
-    "django_ratelimit.W001"
-]
+# SILENCED_SYSTEM_CHECKS = [
+#     "django_ratelimit.E003",
+#     "django_ratelimit.W001"
+# ]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+
 
 AUTH_USER_MODEL = env.str('AUTH_USER_MODEL')
 

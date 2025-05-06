@@ -7,6 +7,7 @@ from products.forms import AddProductModelForm, UpdateProductModelForm
 from accounts.utils import is_admin, is_seller, restrict_user
 from django.contrib.postgres.search import TrigramSimilarity
 from django.views import View
+from django.views.decorators.cache import cache_page
 
 
 def fetch_product(q, page, per_page=8, category_id=None, status=None, sort='name_asc'):
@@ -133,6 +134,7 @@ def dashboard_statistics():
 
 class ManageProductView(View):
     @method_decorator(restrict_user(is_admin, is_seller))
+    @method_decorator(cache_page(60 * 30))
     def get(self, request):
         # Get all query parameters
         q = request.GET.get('q', '')
@@ -141,26 +143,20 @@ class ManageProductView(View):
         status = request.GET.get('status')
         sort = request.GET.get('sort', 'name_asc')  # Default sort order
 
-        # Handle per_page parameter more safely
         try:
             per_page = int(request.GET.get('per_page', 6))
         except (TypeError, ValueError):
             per_page = 6
 
-        # Ensure per_page is within reasonable bounds
         per_page = min(max(per_page, 6), 100)
 
-        # Fetch products with all parameters
         products = fetch_product(q, page_number, per_page, category, status, sort)
 
-        # Get dashboard statistics
         data = dashboard_statistics()
         data['products'] = products
 
-        # Add query parameters to context for form persistence
-        data['q'] = q  # Ensure search query is in context
+        data['q'] = q
 
-        # Include categories for the filter dropdown
         data['categories'] = Category.objects.all()
 
         return render(request, 'products/manage_products.html', context=data)

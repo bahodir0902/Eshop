@@ -1,7 +1,10 @@
+import hashlib
 from django.contrib.postgres.search import TrigramSimilarity
+from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.db.models import Q, Sum, Avg, Count
 from django.shortcuts import render, get_object_or_404
+from django_ratelimit.decorators import ratelimit
 from products.models import Product, Category
 from carts.models import CartItems, Cart
 from favourites.models import Favourite, FavouriteItem
@@ -10,11 +13,11 @@ from activity.models import RecentProducts
 import re
 from orders.models import Order, OrderDetails
 from django.views import View
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 
 def fetch_product(request):
-    products = Product.objects.all().order_by('-is_available', 'name', 'created_at')
-
     q = request.GET.get('q')
     page_number = request.GET.get('page')
     per_page = request.GET.get('per_page')
@@ -23,6 +26,16 @@ def fetch_product(request):
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     rating = request.GET.get('rating')
+
+    if category_id == '5' or category_id == 5:
+        raw_key = f"electronics_products:{q}:{sort}:{page_number}:{per_page}"
+        key = hashlib.md5(raw_key.encode()).hexdigest()
+        cached_page = cache.get(key)
+
+        if cached_page:
+            return cached_page
+
+    products = Product.objects.all().order_by('-is_available', 'name', 'created_at')
 
     if category_id:
         db_category = Category.objects.filter(pk=category_id).first()
@@ -69,7 +82,6 @@ def fetch_product(request):
     if max_price and max_price.isdigit():
         products = products.filter(price__lte=max_price)
 
-
     products = products.annotate(stock_count=Sum('inventory__stock_count'))
     products = products.annotate(rating=Avg('feedbacks__rating'))
     products = products.annotate(total_ordered=Count('ordered_product'))
@@ -77,10 +89,14 @@ def fetch_product(request):
     paginator = Paginator(products, per_page) if per_page else Paginator(products, 32)
     products = paginator.get_page(page_number)
 
+    if category_id == '5' or category_id == 5:
+        cache.set(key, products, timeout=60 * 30)
+
     return products
 
 
 class ProductListView(View):
+    @method_decorator(ratelimit(key='user_or_ip', rate='20/m', block=True))
     def get(self, request):
 
         products = fetch_product(request)
