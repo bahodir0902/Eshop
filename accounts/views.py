@@ -9,16 +9,20 @@ from django.http import JsonResponse, HttpResponse
 from accounts.models import CodeEmail, User, CodePassword
 from django.utils import timezone
 from django.contrib import messages
-from accounts.utils import is_admin
-from django.utils.decorators import method_decorator
+from django.core.cache import cache
+from django.views.decorators.cache import cache_page
+from django_ratelimit.decorators import ratelimit
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
+from django.utils.decorators import method_decorator
 
 class Login(View):
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def get(self, request):
         form = UserLoginForm()
         return render(request, 'accounts/login.html', {'form': form})
 
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def post(self, request):
         form = UserLoginForm(request.POST)
         if form.is_valid():
@@ -33,10 +37,12 @@ class Login(View):
         return redirect('accounts:login')
 
 class Register(View):
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def get(self, request):
         form = UserRegisterForm()
         return render(request, 'accounts/register.html', {'form': form})
 
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def post(self, request):
         form = UserRegisterForm(request.POST)
         if form.is_valid() and form.validate_passwords():
@@ -56,6 +62,7 @@ class Logout(View):
 
 
 class VerifyRegistration(View):
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def post(self, request):
         verification_code = request.POST.get('verification_code')
         email = request.POST.get('email')
@@ -85,10 +92,12 @@ class VerifyRegistration(View):
 
 
 class ForgotPassword(View):
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def get(self, request):
         form = UserForgotPasswordForm()
         return render(request, 'accounts/reset_password.html', {'form': form})
 
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def post(self, request):
         form = UserForgotPasswordForm(request.POST)
         if form.is_valid():
@@ -106,9 +115,11 @@ class ForgotPassword(View):
 
 
 class CheckEmail(View):
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def get(self, request):
         return render(request, 'accounts/check_email.html')
 
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def post(self, request):
         code = request.POST.get('verification_code')
         email = request.session.get('reset_email')
@@ -135,11 +146,13 @@ class CheckEmail(View):
         return redirect('accounts:create_new_password')
 
 class CreateNewPassword(View):
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def get(self, request):
         if not request.session.get('reset_email', False):
             return HttpResponse("Email is not verified")
         return render(request, 'accounts/create_new_password.html')
 
+    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def post(self, request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
@@ -262,6 +275,7 @@ class VerifyEmailToChangeEmail(LoginRequiredMixin, View):
         return redirect('accounts:profile')
 
 class GoogleLoginView(View):
+    @method_decorator(ratelimit(key='user_or_ip', rate='10/m', block=True))
     def get(self, request):
         auth_url = (
 
