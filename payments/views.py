@@ -1,5 +1,7 @@
 from datetime import timedelta
-from django.http import HttpResponse
+
+from django.db import transaction
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from carts.models import Cart, CartItems
@@ -42,20 +44,39 @@ class PaymentView(LoginRequiredMixin, View):
             messages.error(request, "Cvv is not provided or provided with wrong length")
             return render(request, 'payments/payment.html', context=data)
 
-        Order.objects.filter(pk=pk).update(status='paid')
+        try:
+            with transaction.atomic():
+                updated = Order.objects.filter(pk=pk).update(status='paid')
+                if not updated:
+                    raise ValueError("Order not found or could not be updated")
 
-        cart = Cart.objects.filter(user=request.user)
-        CartItems.objects.filter(cart=cart.first()).delete()
-        cart.delete()
+                cart = Cart.objects.filter(user=request.user).first()
+                if not cart:
+                    raise ValueError("Cart not found")
 
-        Payment.objects.create(
-            order_id=pk,
-            payment_method='debit_card',
-            amount=data.get('total_order_cost'),
-            status='paid',
-            currency='USD'
-        )
+                cart_items = CartItems.objects.select_related('product__inventory').filter(cart=cart)
 
+                for item in cart_items:
+                    inventory = item.product.inventory
+                    if inventory.stock_count < item.quantity:
+                        raise ValueError(
+                            f"Not enough stock for '{item.product.name}'. Only {inventory.stock_count} left."
+                        )
+                    inventory.stock_count -= item.quantity
+                    inventory.save()
+
+                cart_items.delete()
+                cart.delete()
+
+                Payment.objects.create(
+                    order_id=pk,
+                       payment_method='debit_card',
+                    amount=data.get('total_order_cost'),
+                    status='paid',
+                    currency='USD'
+                )
+        except (ValueError, TypeError) as e:
+            return JsonResponse({'success': False, 'error': str(e)})
         return redirect('payments:payment_success')
 
     @staticmethod

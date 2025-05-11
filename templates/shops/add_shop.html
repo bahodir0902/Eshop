@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Add Shop' %}{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/add_product.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="product-form-card">
+            <div class="form-header">
+                <h1>{% trans 'Add New Shop' %}</h1>
+                <p class="subtitle">{% trans 'Enter shop details below' %}</p>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" class="product-form">
+                {% csrf_token %}
+
+                <div class="form-section">
+                    <h2 class="section-title">{% trans 'Basic Information' %}</h2>
+
+                    <!-- Shop Name -->
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">{% trans 'Shop Name' %}</label>
+                        {{ form.name }}
+                        <span class="form-hint">{% trans 'Choose a unique name for your shop' %}</span>
+                        {% if form.name.errors %}
+                            <span class="form-error">{{ form.name.errors }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Shop Description -->
+                    <div class="form-group">
+                        <label for="{{ form.description.id_for_label }}">{% trans 'Description' %}</label>
+                        {{ form.description }}
+                        <span class="form-hint">{% trans 'Detailed description of your shop' %}</span>
+                        {% if form.description.errors %}
+                            <span class="form-error">{{ form.description.errors }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Shop Owner -->
+                    {% if form.owner %}
+                    <div class="form-group">
+                        <label for="{{ form.owner.id_for_label }}">{% trans 'Shop Owner' %}</label>
+                        <div class="select-container">
+                            <i class="fas fa-user"></i>
+                            {{ form.owner }}
+                            <i class="fas fa-chevron-down dropdown-icon"></i>
+                        </div>
+                        {% if form.owner.errors %}
+                            <span class="form-error">{{ form.owner.errors }}</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">{% trans 'Shop Image' %}</h2>
+
+                    <!-- Image Upload -->
+                    <div class="form-group">
+                        <label>{% trans 'Shop Image' %}</label>
+                        <div class="image-upload-container">
+                            <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}"
+                                   class="file-input">
+                            <div class="upload-ui">
+                                <div class="upload-icon-container">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="upload-text">
+                                    <span class="primary-text">{% trans 'Drop your image here or click to browse' %}</span>
+                                    <span class="secondary-text">{% trans 'Supports: JPG, PNG (Max 4MB)' %}</span>
+                                </div>
+                            </div>
+                            <div class="selected-file">
+                                <div class="file-preview"></div>
+                                <div class="file-info">
+                                    <span class="file-name">{% trans 'No file selected' %}</span>
+                                    <button type="button" class="remove-file">{% trans 'Remove' %}</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% if form.image.errors %}
+                            <span class="form-error">{{ form.image.errors }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary"
+                            onclick="window.history.back();">{% trans 'Cancel' %}</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-store"></i>
+                        <span>{% trans 'Create Shop' %}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // File upload preview
+            const fileInput = document.querySelector('.file-input');
+            const uploadUI = document.querySelector('.upload-ui');
+            const selectedFile = document.querySelector('.selected-file');
+            const filePreview = document.querySelector('.file-preview');
+            const fileName = document.querySelector('.file-name');
+            const removeButton = document.querySelector('.remove-file');
+
+            fileInput.addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    fileName.textContent = file.name;
+
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            filePreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        filePreview.innerHTML = `<i class="fas fa-file"></i>`;
+                    }
+
+                    uploadUI.style.display = 'none';
+                    selectedFile.style.display = 'flex';
+                }
+            });
+
+            removeButton.addEventListener('click', function () {
+                fileInput.value = '';
+                uploadUI.style.display = 'flex';
+                selectedFile.style.display = 'none';
+                filePreview.innerHTML = '';
+                fileName.textContent = '{% trans "No file selected" %}';
+            });
+
+            // Make the entire upload area clickable
+            uploadUI.addEventListener('click', function () {
+                fileInput.click();
+            });
+        });
+    </script>
+{% endblock %}

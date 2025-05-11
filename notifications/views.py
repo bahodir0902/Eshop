@@ -4,6 +4,8 @@ from django.views import View
 from django.utils import timezone
 from django.http import JsonResponse
 from notifications.models import Notifications
+from django.db import transaction
+from django.utils.decorators import method_decorator
 
 
 class NotificationView(LoginRequiredMixin, View):
@@ -17,6 +19,7 @@ class NotificationView(LoginRequiredMixin, View):
 
 
 class MarkRead(LoginRequiredMixin, View):
+    @method_decorator(transaction.atomic)
     def get(self, request, notification_id):
         try:
             notification = Notifications.objects.get(id=notification_id, to_user=request.user)
@@ -41,6 +44,7 @@ class MarkRead(LoginRequiredMixin, View):
 
 
 class MarkAllNotificationsAsRead(LoginRequiredMixin, View):
+    @method_decorator(transaction.atomic)
     def get(self, request):
         notifications = Notifications.objects.filter(
             to_user=request.user,
@@ -49,10 +53,12 @@ class MarkAllNotificationsAsRead(LoginRequiredMixin, View):
 
         count = notifications.count()
 
-        for notification in notifications:
-            notification.is_read = True
-            notification.read_at = timezone.now()
-            notification.save()
+        notifications.update(is_read=True, read_at=timezone.now())
+
+        # for notification in notifications:
+        #     notification.is_read = True
+        #     notification.read_at = timezone.now()
+        #     notification.save()
 
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return JsonResponse({

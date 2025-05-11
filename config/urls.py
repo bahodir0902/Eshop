@@ -33,7 +33,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('', home, name='home'),
     path('admin/', admin.site.urls),
-    path('shop/', include('eshop.urls')),
+    path('shops/', include('shops.urls')),
     path('products/', include('products.urls')),
     path('accounts/', include('accounts.urls')),
     path('cart/', include('carts.urls')),

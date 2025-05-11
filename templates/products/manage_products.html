@@ -16,6 +16,22 @@
             <div class="header-content">
                 <h1>{% trans 'Product Management' %}</h1>
                 <div class="header-actions">
+                    <div class="admin-actions">
+                    {% if perms.products.add_category %}
+                        <a href="{% url 'products:add_category' %}" class="btn btn-primary">
+                            <i class="fas fa-tag"></i>
+                            <span>{% trans 'Add Category' %}</span>
+                        </a>
+                    {% endif %}
+
+                    {% if perms.shops.add_shop %}
+                        <a href="{% url 'shops:add_shop' %}" class="btn btn-primary">
+                            <i class="fas fa-store"></i>
+                            <span>{% trans 'Add Shop' %}</span>
+                        </a>
+                    {% endif %}
+
+                    </div>
                     <a href="{% url 'products:add_product' %}" class="btn-primary">
                         <i class="fa fa-plus"></i> {% trans 'Add New Product' %}
                     </a>
@@ -65,25 +81,33 @@
                 <label>{% trans 'Status:' %}</label>
                 <select id="statusFilter">
                     <option value="">{% trans 'All Status' %}</option>
-                    <option value="active" {% if request.GET.status == "active" %}selected{% endif %}>{% trans 'Active' %}</option>
-                    <option value="out_of_stock" {% if request.GET.status == "out_of_stock" %}selected{% endif %}>{% trans 'Out of Stock' %}
+                    <option value="active"
+                            {% if request.GET.status == "active" %}selected{% endif %}>{% trans 'Active' %}</option>
+                    <option value="out_of_stock"
+                            {% if request.GET.status == "out_of_stock" %}selected{% endif %}>{% trans 'Out of Stock' %}
                     </option>
                 </select>
             </div>
             <div class="filter-group">
                 <label>{% trans 'Sort By:' %}</label>
                 <select id="sortOrder">
-                    <option value="name_asc" {% if request.GET.sort == "name_asc" %}selected{% endif %}>{% trans 'Name (A-Z)' %}
+                    <option value="name_asc"
+                            {% if request.GET.sort == "name_asc" %}selected{% endif %}>{% trans 'Name (A-Z)' %}
                     </option>
-                    <option value="name_desc" {% if request.GET.sort == "name_desc" %}selected{% endif %}>{% trans 'Name (Z-A)' %}
+                    <option value="name_desc"
+                            {% if request.GET.sort == "name_desc" %}selected{% endif %}>{% trans 'Name (Z-A)' %}
                     </option>
-                    <option value="newest" {% if request.GET.sort == "newest" %}selected{% endif %}>{% trans 'Newest First' %}
+                    <option value="newest"
+                            {% if request.GET.sort == "newest" %}selected{% endif %}>{% trans 'Newest First' %}
                     </option>
-                    <option value="oldest" {% if request.GET.sort == "oldest" %}selected{% endif %}>{% trans 'Oldest First' %}
+                    <option value="oldest"
+                            {% if request.GET.sort == "oldest" %}selected{% endif %}>{% trans 'Oldest First' %}
                     </option>
-                    <option value="price_high" {% if request.GET.sort == "price_high" %}selected{% endif %}>{% trans 'Price (High-Low)' %}
+                    <option value="price_high"
+                            {% if request.GET.sort == "price_high" %}selected{% endif %}>{% trans 'Price (High-Low)' %}
                     </option>
-                    <option value="price_low" {% if request.GET.sort == "price_low" %}selected{% endif %}>{% trans 'Price (Low-High)' %}
+                    <option value="price_low"
+                            {% if request.GET.sort == "price_low" %}selected{% endif %}>{% trans 'Price (Low-High)' %}
                     </option>
                 </select>
             </div>
@@ -103,7 +127,9 @@
         </div>
 
         <div class="bulk-actions">
-            <div class="selected-count">{% blocktrans count counter=0 %}{{ counter }} item selected{% plural %}{{ counter }} items selected{% endblocktrans %}</div>
+            <div class="selected-count">
+                {% blocktrans count counter=0 %}{{ counter }} item selected{% plural %}{{ counter }} items
+                    selected{% endblocktrans %}</div>
             <div class="action-buttons">
                 <button class="btn-outline btn-sm bulk-btn disabled" id="bulkEdit">
                     <i class="fa fa-pencil"></i> {% trans 'Edit Selected' %}
@@ -170,7 +196,8 @@
                         <td>{{ product.category|default:_("Uncategorized") }}</td>
                         <td>
                         <span class="status-badge {% if product.is_available %}active{% else %}inactive{% endif %}">
-                            {% if product.is_available %}{% trans 'Active' %}{% else %}{% trans 'Out of Stock' %}{% endif %}
+                            {% if product.is_available %}{% trans 'Active' %}{% else %}
+                                {% trans 'Out of Stock' %}{% endif %}
                         </span>
                         </td>
                         <td>{{ product.created_at|date:"M d, Y" }}</td>
@@ -180,11 +207,13 @@
                                    title="{% trans 'View' %}">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a href="{% url 'products:edit_product' product.pk %}" class="btn-icon" title="{% trans 'Edit' %}">
+                                <a href="{% url 'products:edit_product' product.pk %}" class="btn-icon"
+                                   title="{% trans 'Edit' %}">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 <a href="{% url 'products:delete_product' pk=product.pk %}" class="btn-icon"
-                                   data-id="{{ product.pk }}" title="{% trans 'Delete' %}" onclick="event.preventDefault();">
+                                   data-id="{{ product.pk }}" title="{% trans 'Delete' %}"
+                                   onclick="event.preventDefault();">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </div>

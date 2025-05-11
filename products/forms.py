@@ -1,13 +1,23 @@
 import ast
 import json
-
 from django import forms
-from products.models import Product, Inventory
-
+from products.models import Product, Inventory, Category
+from django.utils.translation import gettext_lazy as _
+from shops.models import Shop
 
 class AddProductModelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+
+        for group in user.groups.all():
+            if group.name == 'Sellers':
+                shop = Shop.objects.filter(owner=user)
+                self.fields['shop'].initial = shop.first()
+                self.fields['shop'].queryset = shop
+        # self.fields['shop'].disabled = True
+
     stock_count = forms.IntegerField(min_value=0)
-    # Add widgets for better display of our new fields
     short_description = forms.CharField(
         max_length=255,
         required=False,
@@ -45,16 +55,13 @@ class AddProductModelForm(forms.ModelForm):
         if not specifications:
             return ""
 
-        # Clean the input string (strip spaces, ensure no unwanted characters)
         specifications = specifications.strip()
 
-        # Split the input into key-value pairs
         specs_dict = {}
         pairs = specifications.split(',')
 
         for pair in pairs:
             pair = pair.strip()
-            # Check if the pair contains a valid `key: value` format
             if ':' in pair:
                 key, value = pair.split(':', 1)
                 specs_dict[key.strip()] = value.strip()
@@ -74,8 +81,7 @@ class AddProductModelForm(forms.ModelForm):
                   'is_available', 'is_discounted', 'is_featured'
         ]
 
-    def validate(self, *args, **kwargs):
-        pass
+
 
     def save(self, commit=...):
         stock_count = self.cleaned_data.pop('stock_count')
@@ -94,8 +100,19 @@ class AddProductModelForm(forms.ModelForm):
 
 
 class UpdateProductModelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['stock_count'].initial = self.instance.inventory.stock_count
+
+        for group in user.groups.all():
+            if group.name == 'Sellers':
+                shop = Shop.objects.filter(owner=user)
+                self.fields['shop'].initial = shop.first()
+                self.fields['shop'].queryset = shop
+        # self.fields['shop'].disabled = True
+
     stock_count = forms.IntegerField(min_value=0)
-    # Add widgets for better display of our new fields
     short_description = forms.CharField(
         max_length=255,
         required=False,
@@ -133,27 +150,19 @@ class UpdateProductModelForm(forms.ModelForm):
                   'is_available', 'is_discounted', 'is_featured'
         ]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['stock_count'].initial = self.instance.inventory.stock_count
-
     def clean_specifications(self):
-        """Convert specifications string to a dictionary."""
         specifications = self.cleaned_data.get('specifications')
 
         if not specifications:
             return ""
 
-        # Clean the input string (strip spaces, ensure no unwanted characters)
         specifications = specifications.strip()
 
-        # Split the input into key-value pairs
         specs_dict = {}
         pairs = specifications.split(',')
 
         for pair in pairs:
             pair = pair.strip()
-            # Check if the pair contains a valid `key: value` format
             if ':' in pair:
                 key, value = pair.split(':', 1)
                 specs_dict[key.strip()] = value.strip()
@@ -177,3 +186,17 @@ class UpdateProductModelForm(forms.ModelForm):
             product.save()
 
         return product
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name', 'parent_category']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Enter category name')}),
+            'parent_category': forms.Select(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+        self.fields['parent_category'].required = False
+        self.fields['parent_category'].empty_label = _('No parent category')

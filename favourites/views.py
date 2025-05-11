@@ -1,12 +1,14 @@
 import json
 from django.db.models import ExpressionWrapper, F, FloatField
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import render
 from products.models import Product
 from carts.models import CartItems, Cart
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from favourites.models import Favourite, FavouriteItem
+from django.db import transaction
+from django.utils.decorators import method_decorator
 
 
 class FavouriteView(LoginRequiredMixin, View):
@@ -35,7 +37,9 @@ class FavouriteView(LoginRequiredMixin, View):
 
         return render(request, 'favourites/favourites.html', context=data)
 
+
 class AddFavouriteItem(LoginRequiredMixin, View):
+    @method_decorator(transaction.atomic)
     def post(self, request, pk):
         favourite = Favourite.objects.filter(user=request.user).first()
         if not favourite:
@@ -51,6 +55,7 @@ class AddFavouriteItem(LoginRequiredMixin, View):
 
 
 class RemoveFavouriteItem(LoginRequiredMixin, View):
+    @method_decorator(transaction.atomic)
     def post(self, request, pk):
         favourite = Favourite.objects.filter(user=request.user).first()
         if not favourite:
@@ -62,7 +67,9 @@ class RemoveFavouriteItem(LoginRequiredMixin, View):
         FavouriteItem.objects.filter(favourite=favourite, product__id=product.pk).delete()
         return JsonResponse({'success': True})
 
+
 class ClearFavourites(LoginRequiredMixin, View):
+    @method_decorator(transaction.atomic)
     def post(self, request):
         favourite = Favourite.objects.filter(user=request.user).first()
         FavouriteItem.objects.filter(favourite=favourite).delete()

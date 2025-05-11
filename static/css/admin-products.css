@@ -714,3 +714,45 @@
 .btn-danger:hover {
     background-color: #c82333;
 }
+
+/* Add this to your main CSS file */
+
+.admin-actions {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.admin-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.admin-actions .btn-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+}
+
+.admin-actions .btn i {
+    font-size: 0.875rem;
+}
+
+/* Media query for responsive layout */
+@media (max-width: 768px) {
+    .admin-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .admin-actions .btn {
+        width: 100%;
+    }
+}

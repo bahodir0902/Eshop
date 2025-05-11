@@ -10,5 +10,5 @@ from django.contrib.auth.decorators import login_required
 from carts.models import CartItems, Cart
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from eshop.models import Favourite, FavouriteItem
+from favourites.models import Favourite, FavouriteItem
 from reviews.models import FeedBack
