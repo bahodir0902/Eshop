@@ -33,11 +33,11 @@ def fetch_product(request):
     status = request.GET.get('status')
     sort = request.GET.get('sort', 'name_asc')
     try:
-        per_page = int(request.GET.get('per_page', 6))
+        per_page = int(request.GET.get('per_page', 25))
     except (TypeError, ValueError):
-        per_page = 6
+        per_page = 25
 
-    per_page = min(max(per_page, 6), 100)
+    per_page = min(max(per_page, 25), 100)
 
     if category_id:
         try:

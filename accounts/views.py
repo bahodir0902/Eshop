@@ -40,12 +40,12 @@ class Login(View):
 
 
 class Register(View):
-    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
+    @method_decorator(ratelimit(key='user_or_ip', rate='40/m', block=True))
     def get(self, request):
         form = UserRegisterForm()
         return render(request, 'accounts/register.html', {'form': form})
 
-    @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
+    @method_decorator(ratelimit(key='user_or_ip', rate='10/m', block=True))
     @method_decorator(transaction.atomic)
     def post(self, request):
         form = UserRegisterForm(request.POST)

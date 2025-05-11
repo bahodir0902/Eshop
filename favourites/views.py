@@ -74,3 +74,18 @@ class ClearFavourites(LoginRequiredMixin, View):
         favourite = Favourite.objects.filter(user=request.user).first()
         FavouriteItem.objects.filter(favourite=favourite).delete()
         return JsonResponse({'success': True})
+
+
+class CheckFavouriteItem(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        favourite = Favourite.objects.filter(user=request.user).first()
+        if not favourite:
+            return JsonResponse({'is_favorite': False})
+
+        product = Product.objects.filter(pk=pk).first()
+        if not product:
+            return JsonResponse({'is_favorite': False})
+
+        item = FavouriteItem.objects.filter(favourite=favourite, product=product).exists()
+
+        return JsonResponse({'is_favorite': item})
