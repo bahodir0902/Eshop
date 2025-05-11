@@ -1,5 +1,412 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-    <h1>{% trans 'This is a home page for a project' %}</h1>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="hero-content animate__animated animate__fadeIn">
+            <h1 class="hero-title">{% trans "Discover Amazing Products" %}</h1>
+            <p class="hero-subtitle">{% trans "Shop the latest trends with confidence and ease" %}</p>
+            <div class="hero-buttons">
+                <a href="{% url 'products:products' %}" class="btn-primary">
+                    <span>{% trans "Shop Now" %}</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#featured-products" class="btn-secondary btn-explore">
+                    <span>{% trans "Explore" %}</span>
+                    <i class="fas fa-compass"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="hero-shape">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#ffffff" fill-opacity="1" d="M0,128L48,144C96,160,192,192,288,192C384,192,480,160,576,149.3C672,139,768,149,864,176C960,203,1056,245,1152,240C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section id="featured-products" class="featured-products">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">{% trans "Handpicked" %}</div>
+            <h2>{% trans "Featured Products" %}</h2>
+            <p>{% trans "Discover our curated selection just for you" %}</p>
+        </div>
+
+        <div class="products-grid" id="featured-products-container">
+            {% for product in featured_products %}
+                <div class="product-card">
+                    <div class="product-badges">
+                        {% if product.is_new %}
+                            <span class="badge badge-new">{% trans "New" %}</span>
+                        {% endif %}
+                        {% if product.is_discounted %}
+                            <span class="badge badge-sale">{% trans "Sale" %}</span>
+                        {% endif %}
+                    </div>
+                    <div class="product-image">
+                        <a href="{% url 'products:product_detail' product.slug %}">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <img src="{% static 'img/product-placeholder.jpg' %}" alt="{{ product.name }}">
+                            {% endif %}
+                        </a>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart" data-product-id="{{ product.id }}" aria-label="Add to cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn toggle-favorite" data-product-id="{{ product.id }}" aria-label="Add to favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="action-btn quick-view" data-product-id="{{ product.id }}" aria-label="Quick view">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-meta">
+                            <span class="product-category">{{ product.category.name }}</span>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.8</span>
+                            </div>
+                        </div>
+                        <a href="{% url 'products:product_detail' product.slug %}" class="product-title-link">
+                            <h3>{{ product.name }}</h3>
+                        </a>
+                        <div class="product-price-container">
+                            <p class="product-price">${{ product.price }}</p>
+                            {% if product.compare_at_price %}
+                                <p class="product-price-compare">${{ product.compare_at_price }}</p>
+                            {% endif %}
+                        </div>
+                        <p class="product-shop">
+                            <i class="fas fa-store"></i>
+                            {{ product.shop.name }}
+                        </p>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-products">
+                    <div class="empty-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <p>{% trans "No featured products available at the moment." %}</p>
+                    <a href="{% url 'products:products' %}" class="btn-primary">{% trans "Browse All Products" %}</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if featured_products %}
+            <div class="section-footer">
+                <a href="{% url 'products:products' %}" class="btn-outline">
+                    <span>{% trans "View All Products" %}</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Promotion Banner -->
+<section class="promotion-banner">
+    <div class="container">
+        <div class="promotion-content">
+            <div class="promotion-tag">{% trans "Limited Time Offer" %}</div>
+            <h2>{% trans "Special Deals & Discounts" %}</h2>
+            <p>{% trans "Discover our discounted products with incredible deals up to 70% off" %}</p>
+            <div class="countdown" id="promo-countdown">
+                <div class="countdown-item">
+                    <span class="countdown-value" id="countdown-days">00</span>
+                    <span class="countdown-label">{% trans "Days" %}</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="countdown-hours">00</span>
+                    <span class="countdown-label">{% trans "Hours" %}</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="countdown-minutes">00</span>
+                    <span class="countdown-label">{% trans "Minutes" %}</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="countdown-seconds">00</span>
+                    <span class="countdown-label">{% trans "Seconds" %}</span>
+                </div>
+            </div>
+            <a href="{% url 'products:products' %}?is_discounted=1" class="btn-primary btn-large">
+                <span>{% trans "Shop Deals Now" %}</span>
+                <i class="fas fa-bolt"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">{% trans "Browse" %}</div>
+            <h2>{% trans "Shop by Category" %}</h2>
+            <p>{% trans "Find exactly what you're looking for in our curated collections" %}</p>
+        </div>
+
+        <div class="categories-grid">
+            {% for category in categories %}
+                <a href="{% url 'products:products' %}?category={{ category.id }}" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>{{ category.name }}</h3>
+                        <span class="category-count">{{ category.product_category.count }} {% trans "Products" %}</span>
+                        <span class="category-action">{% trans "Browse" %} <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+            {% empty %}
+                <div class="empty-categories">
+                    <div class="empty-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <p>{% trans "No categories available at the moment." %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Popular Shops Section -->
+<section class="popular-shops">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">{% trans "Top Rated" %}</div>
+            <h2>{% trans "Popular Shops" %}</h2>
+            <p>{% trans "Trusted by thousands of customers worldwide" %}</p>
+        </div>
+
+        <div class="shops-grid" id="shops-slider">
+            {% for shop in popular_shops %}
+                <div class="shop-card">
+                    <div class="shop-image">
+                        {% if shop.image %}
+                            <img src="{{ shop.image.url }}" alt="{{ shop.name }}">
+                        {% else %}
+                            <img src="{% static 'img/shop-placeholder.jpg' %}" alt="{{ shop.name }}">
+                        {% endif %}
+                        <div class="shop-overlay">
+                            <a href="#" class="btn-secondary">{% trans "Visit Shop" %}</a>
+                        </div>
+                    </div>
+                    <div class="shop-info">
+                        <div class="shop-meta">
+                            <h3>{{ shop.name }}</h3>
+                            <div class="shop-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                        </div>
+                        <div class="shop-stats">
+                            <div class="shop-stat">
+                                <i class="fas fa-box"></i>
+                                <span>{{ shop.products.count }} {% trans "Products" %}</span>
+                            </div>
+                            <div class="shop-stat">
+                                <i class="fas fa-user-friends"></i>
+                                <span>{{ shop.followers_count|default:"0" }} {% trans "Followers" %}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-shops">
+                    <div class="empty-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <p>{% trans "No shops available at the moment." %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- New Arrivals Section -->
+<section class="new-arrivals">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">{% trans "Just In" %}</div>
+            <h2>{% trans "New Arrivals" %}</h2>
+            <p>{% trans "The latest additions to our catalog, fresh off the shelf" %}</p>
+        </div>
+
+        <div class="products-grid">
+            {% for product in new_products %}
+                <div class="product-card">
+                    <div class="product-badges">
+                        <span class="badge badge-new">{% trans "New" %}</span>
+                        {% if product.is_discounted %}
+                            <span class="badge badge-sale">{% trans "Sale" %}</span>
+                        {% endif %}
+                    </div>
+                    <div class="product-image">
+                        <a href="{% url 'products:product_detail' product.slug %}">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <img src="{% static 'img/product-placeholder.jpg' %}" alt="{{ product.name }}">
+                            {% endif %}
+                        </a>
+                        <div class="product-actions">
+                            <button class="action-btn add-to-cart" data-product-id="{{ product.id }}" aria-label="Add to cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                            <button class="action-btn toggle-favorite" data-product-id="{{ product.id }}" aria-label="Add to favorites">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="action-btn quick-view" data-product-id="{{ product.id }}" aria-label="Quick view">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-meta">
+                            <span class="product-category">{{ product.category.name }}</span>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <span>4.7</span>
+                            </div>
+                        </div>
+                        <a href="{% url 'products:product_detail' product.slug %}" class="product-title-link">
+                            <h3>{{ product.name }}</h3>
+                        </a>
+                        <div class="product-price-container">
+                            <p class="product-price">${{ product.price }}</p>
+                            {% if product.compare_at_price %}
+                                <p class="product-price-compare">${{ product.compare_at_price }}</p>
+                            {% endif %}
+                        </div>
+                        <p class="product-shop">
+                            <i class="fas fa-store"></i>
+                            {{ product.shop.name }}
+                        </p>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-products">
+                    <div class="empty-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <p>{% trans "No new products available at the moment." %}</p>
+                    <a href="{% url 'products:products' %}" class="btn-primary">{% trans "Browse All Products" %}</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if new_products %}
+            <div class="section-footer">
+                <a href="{% url 'products:products' %}" class="btn-outline">
+                    <span>{% trans "View All New Arrivals" %}</span>
+                    <i class="fas fa-long-arrow-alt-right"></i>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Shopping Benefits -->
+<section class="benefits">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">{% trans "Why Choose Us" %}</div>
+            <h2>{% trans "Shopping Benefits" %}</h2>
+            <p>{% trans "We're committed to making your shopping experience exceptional" %}</p>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>{% trans "Fast Delivery" %}</h3>
+                    <p>{% trans "Get your products delivered quickly and reliably, with real-time tracking" %}</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>{% trans "Secure Payment" %}</h3>
+                    <p>{% trans "Your payments are safe with our secure payment system using latest encryption" %}</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>{% trans "Easy Returns" %}</h3>
+                    <p>{% trans "Simple and hassle-free 30-day return process with money-back guarantee" %}</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>{% trans "24/7 Support" %}</h3>
+                    <p>{% trans "Our customer support team is always ready to help you with any questions" %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter">
+    <div class="container">
+        <div class="newsletter-content">
+            <div class="newsletter-image">
+                <img src="{% static 'img/newsletter-image.svg' %}" alt="Newsletter">
+            </div>
+            <div class="newsletter-form-container">
+                <div class="section-tag light">{% trans "Stay Connected" %}</div>
+                <h2>{% trans "Join Our Newsletter" %}</h2>
+                <p>{% trans "Subscribe to our newsletter for the latest products, deals, and updates delivered to your inbox" %}</p>
+                <form id="newsletter-form" class="newsletter-form">
+                    <div class="form-group">
+                        <i class="fas fa-envelope form-icon"></i>
+                        <input type="email" placeholder="{% trans 'Your email address' %}" required>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <span>{% trans "Subscribe" %}</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+                <div class="newsletter-privacy">
+                    <i class="fas fa-lock"></i>
+                    <span>{% trans "We respect your privacy. Unsubscribe anytime." %}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Toast Notifications -->
+<div id="toast-container"></div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}
