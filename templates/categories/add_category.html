@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Add Category' %}{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/add_product.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="product-form-card">
+            <div class="form-header">
+                <h1>{% trans 'Add New Category' %}</h1>
+                <p class="subtitle">{% trans 'Enter category details below' %}</p>
+            </div>
+
+            <form method="post" class="product-form">
+                {% csrf_token %}
+
+                <div class="form-section">
+                    <h2 class="section-title">{% trans 'Category Information' %}</h2>
+
+                    <!-- Category Name -->
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">{% trans 'Category Name' %}</label>
+                        {{ form.name }}
+                        <span class="form-hint">{% trans 'Choose a descriptive name for your category' %}</span>
+                        {% if form.name.errors %}
+                            <span class="form-error">{{ form.name.errors }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Parent Category -->
+                    <div class="form-group">
+                        <label for="{{ form.parent_category.id_for_label }}">{% trans 'Parent Category' %}</label>
+                        <div class="select-container">
+                            <i class="fas fa-layer-group"></i>
+                            {{ form.parent_category }}
+                            <i class="fas fa-chevron-down dropdown-icon"></i>
+                        </div>
+                        <span class="form-hint">{% trans 'Optional: Select a parent category to create a subcategory' %}</span>
+                        {% if form.parent_category.errors %}
+                            <span class="form-error">{{ form.parent_category.errors }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary"
+                            onclick="window.history.back();">{% trans 'Cancel' %}</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-tag"></i>
+                        <span>{% trans 'Create Category' %}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

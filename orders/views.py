@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import ExpressionWrapper, F, Sum, FloatField
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from accounts.models import User, Address
 from carts.models import Cart, CartItems
 from products.models import Product
@@ -10,7 +11,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from accounts.forms import UserAddressForm
 from payments.models import Payment
-
+from django.db import transaction
 
 class MyOrdersView(LoginRequiredMixin, View):
     def get(self, request):
@@ -47,6 +48,7 @@ class CheckoutView(LoginRequiredMixin, View):
         }
         return render(request, 'orders/checkout.html', context=data)
 
+    @method_decorator(transaction.atomic)
     def post(self, request):
         user_address = Address.objects.filter(user=request.user).first()
         address_form = UserAddressForm(instance=user_address, data=request.POST)

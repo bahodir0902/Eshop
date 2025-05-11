@@ -6,6 +6,8 @@ from carts.models import Cart, CartItems
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Q, ExpressionWrapper, FloatField
 from products.models import Product
+from django.db import transaction
+from django.utils.decorators import method_decorator
 
 
 class CartView(LoginRequiredMixin, View):
@@ -19,6 +21,7 @@ class CartView(LoginRequiredMixin, View):
 
 
 class AddCartItem(LoginRequiredMixin, View):
+    @method_decorator(transaction.atomic)
     def post(self, request, pk):
         content_type = request.META.get('CONTENT_TYPE', '')
         quantity = 1
@@ -36,7 +39,6 @@ class AddCartItem(LoginRequiredMixin, View):
             quantity = int(quantity)
         except (ValueError, TypeError):
             quantity = 1
-
 
         cart, _ = Cart.objects.get_or_create(user=request.user)
         product = Product.objects.filter(pk=pk).first()
@@ -66,25 +68,28 @@ class AddCartItem(LoginRequiredMixin, View):
 
 
 class UpdateCartItem(LoginRequiredMixin, View):
+    @method_decorator(transaction.atomic)
     def post(self, request, pk):
-        try:
-            data = json.loads(request.body)
-            quantity = data.get('quantity', 1)
-        except json.JSONDecodeError:
+        quantity = 1
+        if request.content_type == 'application/json':
+            try:
+                data = json.loads(request.body)
+                quantity = data.get('quantity', 1)
+            except (json.JSONDecodeError, TypeError):
+                return JsonResponse({'success': False, 'error': 'Invalid JSON body.'})
+        else:
             quantity = request.POST.get('quantity', 1)
 
         try:
             quantity = int(quantity)
         except (ValueError, TypeError):
-            return JsonResponse({'success': False, 'error': 'quantity is not integer object'})
+            return JsonResponse({'success': False, 'error': 'Quantity is not an integer.'})
 
-        cart = Cart.objects.filter(user=request.user).first()
-        if not cart:
-            cart = Cart.objects.create(user=request.user)
+        cart, _ = Cart.objects.get_or_create(user=request.user)
 
         product = Product.objects.filter(pk=pk).first()
         if not product:
-            return JsonResponse({'success': False, 'error': 'Product id not found. Please try again later.'})
+            return JsonResponse({'success': False, 'error': 'Product not found.'})
 
         item, created = CartItems.objects.get_or_create(
             cart=cart, product=product, defaults={'quantity': quantity}
@@ -97,6 +102,7 @@ class UpdateCartItem(LoginRequiredMixin, View):
 
 
 class RemoveCartItem(LoginRequiredMixin, View):
+    @method_decorator(transaction.atomic)
     def post(self, request, pk):
         cart = Cart.objects.filter(user=request.user).first()
         if not cart:
@@ -108,6 +114,7 @@ class RemoveCartItem(LoginRequiredMixin, View):
 
 
 class ClearCartItem(LoginRequiredMixin, View):
+    @method_decorator(transaction.atomic)
     def post(self, request):
         cart = Cart.objects.filter(user=request.user).first()
         if not cart:
@@ -119,6 +126,7 @@ class ClearCartItem(LoginRequiredMixin, View):
         return JsonResponse({'success': True})
 
 
+@transaction.atomic
 def remove_cart_item_in_list(request, pk):
     try:
         cart_item = CartItems.objects.get(id=pk, cart__user=request.user)

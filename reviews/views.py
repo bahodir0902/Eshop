@@ -5,9 +5,11 @@ from django.views import View
 from products.models import Product
 from reviews.models import FeedBack
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 
 class FeedbackView(View):
     @method_decorator(login_required)
+    @method_decorator(transaction.atomic)
     def post(self, request, product_id):
         product = Product.objects.filter(pk=product_id).first()
         if not product:
@@ -35,13 +37,10 @@ class FeedbackView(View):
             feedback.save()
         return JsonResponse({"success": True})
 
-
     @method_decorator(login_required)
+    @method_decorator(transaction.atomic)
     def delete(self, request, product_id):
         product = get_object_or_404(Product, id=product_id)
         FeedBack.objects.filter(user=request.user, product=product).delete()
 
         return JsonResponse({"success": True})
-
-
-

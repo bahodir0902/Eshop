@@ -15,6 +15,8 @@ from django_ratelimit.decorators import ratelimit
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 from django.utils.decorators import method_decorator
+from django.db import transaction
+
 
 class Login(View):
     @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
@@ -36,6 +38,7 @@ class Login(View):
 
         return redirect('accounts:login')
 
+
 class Register(View):
     @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def get(self, request):
@@ -43,6 +46,7 @@ class Register(View):
         return render(request, 'accounts/register.html', {'form': form})
 
     @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
+    @method_decorator(transaction.atomic)
     def post(self, request):
         form = UserRegisterForm(request.POST)
         if form.is_valid() and form.validate_passwords():
@@ -55,6 +59,7 @@ class Register(View):
         print(form.errors)
         return JsonResponse({'success': False, 'errors': form.errors})
 
+
 class Logout(View):
     def get(self, request):
         logout(request)
@@ -63,6 +68,7 @@ class Logout(View):
 
 class VerifyRegistration(View):
     @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
+    @method_decorator(transaction.atomic)
     def post(self, request):
         verification_code = request.POST.get('verification_code')
         email = request.POST.get('email')
@@ -98,6 +104,7 @@ class ForgotPassword(View):
         return render(request, 'accounts/reset_password.html', {'form': form})
 
     @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
+    @method_decorator(transaction.atomic)
     def post(self, request):
         form = UserForgotPasswordForm(request.POST)
         if form.is_valid():
@@ -145,6 +152,7 @@ class CheckEmail(View):
 
         return redirect('accounts:create_new_password')
 
+
 class CreateNewPassword(View):
     @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
     def get(self, request):
@@ -153,6 +161,7 @@ class CreateNewPassword(View):
         return render(request, 'accounts/create_new_password.html')
 
     @method_decorator(ratelimit(key='user_or_ip', rate='6/m', block=True))
+    @method_decorator(transaction.atomic)
     def post(self, request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
@@ -207,6 +216,7 @@ class ProfileEdit(LoginRequiredMixin, View):
         }
         return render(request, 'accounts/profile_edit.html', context=data)
 
+    @method_decorator(transaction.atomic)
     def post(self, request):
         profile_form = UserProfileForm(request.POST, instance=request.user)
         current_address = Address.objects.filter(user=request.user).first()
@@ -250,6 +260,7 @@ class VerifyEmailToChangeEmail(LoginRequiredMixin, View):
         new_email = request.session.get('new_email')
         return render(request, 'accounts/verify_email_to_change_email_passcode.html', {'new_email': new_email})
 
+    @method_decorator(transaction.atomic)  # Added transaction atomic
     def post(self, request):
         code = request.POST.get('code')
         new_email = request.session.get('new_email')
@@ -274,52 +285,41 @@ class VerifyEmailToChangeEmail(LoginRequiredMixin, View):
 
         return redirect('accounts:profile')
 
+
 class GoogleLoginView(View):
     @method_decorator(ratelimit(key='user_or_ip', rate='10/m', block=True))
     def get(self, request):
         auth_url = (
-
             f"{settings.GOOGLE_AUTH_URL}"
-
             f"?client_id={settings.GOOGLE_CLIENT_ID}"
-
             f"&redirect_uri={settings.GOOGLE_REDIRECT_URI}"
-
             f"&response_type=code"
-
             f"&scope=openid email profile"
-
         )
 
         return redirect(auth_url)
 
 
 class GoogleCallBackView(View):
+    @method_decorator(transaction.atomic)
     def get(self, request):
         code = request.GET.get('code')
         token_data = {
-
             "code": code,
-
             "client_id": settings.GOOGLE_CLIENT_ID,
-
             "client_secret": settings.GOOGLE_CLIENT_SECRET,
-
             "redirect_uri": settings.GOOGLE_REDIRECT_URI,
-
             "grant_type": "authorization_code",
-
         }
 
         token_response = requests.post(settings.GOOGLE_TOKEN_URL, data=token_data)
-
         token_json = token_response.json()
-
         access_token = token_json.get("access_token")
 
-        user_info_response = requests.get(settings.GOOGLE_USER_INFO_URL,
-
-                                          headers={"Authorization": f"Bearer {access_token}"})
+        user_info_response = requests.get(
+            settings.GOOGLE_USER_INFO_URL,
+            headers={"Authorization": f"Bearer {access_token}"}
+        )
 
         user_info = user_info_response.json()
 
