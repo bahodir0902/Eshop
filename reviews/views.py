@@ -6,6 +6,8 @@ from products.models import Product
 from reviews.models import FeedBack
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from shops.models import Shop
+from reviews.utils import update_shop_rating
 
 class FeedbackView(View):
     @method_decorator(login_required)
@@ -35,6 +37,9 @@ class FeedbackView(View):
         if 'image' in request.FILES:
             feedback.image = request.FILES.get('image')
             feedback.save()
+
+        update_shop_rating(product.shop)
+
         return JsonResponse({"success": True})
 
     @method_decorator(login_required)
@@ -42,5 +47,7 @@ class FeedbackView(View):
     def delete(self, request, product_id):
         product = get_object_or_404(Product, id=product_id)
         FeedBack.objects.filter(user=request.user, product=product).delete()
+
+        update_shop_rating(product.shop)
 
         return JsonResponse({"success": True})
