@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
-from .forms import ShopForm
+from shops.forms import ShopForm
 from django.views import View
 from django.db import transaction
 
@@ -32,4 +32,3 @@ class AddShopView(LoginRequiredMixin, View):
         return render(request, 'shops/add_shop.html', {
             'form': form,
         })
-

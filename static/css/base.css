@@ -166,6 +166,14 @@ a:hover {
     position: relative; /* For potential future ::after effects */
 }
 
+.navbar-nav {
+    overflow: visible; /* Ensure navbar doesn't clip badges */
+}
+
+.navbar-collapse {
+    overflow: visible; /* Ensure collapse doesn't clip badges */
+}
+
 .navbar-nav .nav-link i {
     /* margin-right: 0.5rem; */ /* Added margin directly in HTML */
     font-size: 1em; /* Match text size */
@@ -188,9 +196,19 @@ a:hover {
 
 /* Icon links (Cart, Wishlist) */
 .nav-icon-link {
-    position: relative; /* For badge positioning */
-    padding: 0.6rem 0.8rem !important; /* Slightly tighter padding */
-    margin-left: 0.25rem;
+    position: relative;
+    padding: 0.6rem 1rem !important; /* More padding to accommodate badges */
+    margin: 0 0.25rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    overflow: visible !important;
+    display: inline-block;
+}
+
+
+.navbar-nav,
+.navbar-collapse {
+    overflow: visible;
 }
 
 .nav-icon-link i {
@@ -201,19 +219,50 @@ a:hover {
 
 .nav-icon-link .badge {
     position: absolute;
-    top: 0px;
-    right: -5px;
-    font-size: 0.65rem;
-    padding: 0.2em 0.5em;
+    top: -10px; /* Increased offset to ensure full visibility */
+    right: -15px; /* Increased offset to ensure full visibility */
+    background-color: #ef4444;
+    color: white;
+    border-radius: 50%;
+    min-width: 20px; /* Slightly smaller for better proportion */
+    width: auto;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
     line-height: 1;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+    border: 2px solid white;
+    z-index: 1100; /* Higher z-index to ensure it's above everything */
+    transition: all 0.3s ease;
+    padding: 0 6px;
+    transform: translateX(0) translateY(0); /* Ensure no transform issues */
 }
 
 .nav-icon-link .badge.bg-primary {
-    background-color: var(--primary-color) !important;
+    background-color: #4f46e5 !important;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4) !important;
+}
+
+.nav-icon-link .badge.bg-warning {
+    background-color: #f59e0b !important;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4) !important;
+}
+
+.nav-icon-link .badge[style*="none"] {
+    display: none !important;
+}
+
+/* Show when count > 0 */
+.nav-icon-link .badge:not([style*="none"]) {
+    display: flex !important;
 }
 
 .nav-icon-link .badge.bg-danger {
-    background-color: var(--danger-color) !important;
+    background-color: #ef4444 !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4) !important;
 }
 
 .nav-separator {
@@ -1057,27 +1106,37 @@ a:hover {
 .mobile-menu.active .mobile-language-option:nth-child(1) {
     animation-delay: 0.1s;
 }
+
 .mobile-menu.active .mobile-menu-link:nth-child(2),
 .mobile-menu.active .mobile-language-option:nth-child(2) {
     animation-delay: 0.15s;
 }
+
 .mobile-menu.active .mobile-menu-link:nth-child(3),
 .mobile-menu.active .mobile-language-option:nth-child(3) {
     animation-delay: 0.2s;
 }
+
 .mobile-menu.active .mobile-menu-link:nth-child(4),
 .mobile-menu.active .mobile-language-option:nth-child(4) {
     animation-delay: 0.25s;
 }
+
 .mobile-menu.active .mobile-menu-link:nth-child(5),
 .mobile-menu.active .mobile-language-option:nth-child(5) {
     animation-delay: 0.3s;
 }
+
 .mobile-menu.active .mobile-menu-link:nth-child(6),
 .mobile-menu.active .mobile-language-option:nth-child(6) {
     animation-delay: 0.35s;
 }
-
+.navbar-nav,
+.navbar-collapse,
+.nav-item,
+.nav-icon-link {
+    overflow: visible !important;
+}
 /* Additional Ripple Effect and Badge Styles */
 .ripple-effect {
     position: absolute;
@@ -1106,9 +1165,15 @@ a:hover {
 }
 
 @keyframes badge-pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.4); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.4);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* --- Responsive Adjustments --- */
@@ -1123,8 +1188,24 @@ a:hover {
         overflow-y: auto;
     }
 
+    .nav-icon-link .badge {
+        top: -8px; /* Adjust for mobile */
+        right: -12px;
+        min-width: 18px;
+        height: 18px;
+        font-size: 0.65rem;
+        padding: 0 4px;
+    }
+
     .nav-icon-link {
-        margin-left: 0;
+        padding: 0.7rem 1rem !important; /* Extra padding on mobile */
+    }
+
+    .nav-icon-link {
+        position: relative;
+        overflow: visible; /* Important: allow badges to extend outside */
+        padding: 0.6rem 0.8rem !important;
+        margin-left: 0.25rem;
     }
 
     /* Make mobile dropdown items full width and add spacing */
@@ -1188,5 +1269,36 @@ a:hover {
 
     .mobile-language-options {
         grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+    }
+}
+
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        overflow: visible !important;
+        /* Remove max-height if it exists */
+        max-height: none !important;
+    }
+}
+
+/* Ensure badges are visible when navbar is scrolled */
+#page-header.navbar-scrolled .nav-icon-link .badge {
+    z-index: 1101;
+}
+
+/* Fix for badge animation */
+.badge-pulse {
+    animation: badge-pulse 1s cubic-bezier(0.66, 0, 0, 1);
+}
+
+@keyframes badge-pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.4);
+    }
+    100% {
+        transform: scale(1);
     }
 }

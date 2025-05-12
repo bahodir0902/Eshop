@@ -18,7 +18,6 @@ from shops.models import Shop
 
 def fetch_product(request):
     groups = request.user.groups.all()
-    print(groups)
 
     for group in groups:
         if group.name == 'Sellers':
