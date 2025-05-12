@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-23 15:21+0500\n"
+"POT-Creation-Date: 2025-05-12 18:21+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,13 +20,13 @@ msgstr ""
 
 #: .\accounts\forms.py:9 .\accounts\forms.py:14 .\accounts\forms.py:34
 #: .\accounts\forms.py:54 .\accounts\forms.py:64 .\accounts\models.py:32
-#: .\accounts\models.py:91 .\templates\profile.html:127
-#: .\templates\profile_edit.html:43
+#: .\accounts\models.py:91 .\templates\accounts\profile.html:127
+#: .\templates\accounts\profile_edit.html:43
 msgid "Email"
 msgstr "Elektron pochta"
 
-#: .\accounts\forms.py:10 .\accounts\forms.py:35 .\templates\login.html:65
-#: .\templates\register.html:117
+#: .\accounts\forms.py:10 .\accounts\forms.py:35
+#: .\templates\accounts\login.html:65 .\templates\accounts\register.html:117
 msgid "Password"
 msgstr "Parol"
 
@@ -36,15 +36,17 @@ msgstr "Parol"
 msgid "Repeat Password"
 msgstr "Parolni tiklash"
 
-#: .\accounts\forms.py:32 .\accounts\forms.py:62 .\templates\checkout.html:84
-#: .\templates\profile.html:121 .\templates\profile_edit.html:19
-#: .\templates\register.html:87
+#: .\accounts\forms.py:32 .\accounts\forms.py:62
+#: .\templates\accounts\profile.html:121
+#: .\templates\accounts\profile_edit.html:19
+#: .\templates\accounts\register.html:87 .\templates\orders\checkout.html:84
 msgid "First Name"
 msgstr "Ism"
 
-#: .\accounts\forms.py:33 .\accounts\forms.py:63 .\templates\checkout.html:90
-#: .\templates\profile.html:124 .\templates\profile_edit.html:31
-#: .\templates\register.html:94
+#: .\accounts\forms.py:33 .\accounts\forms.py:63
+#: .\templates\accounts\profile.html:124
+#: .\templates\accounts\profile_edit.html:31
+#: .\templates\accounts\register.html:94 .\templates\orders\checkout.html:90
 msgid "Last Name"
 msgstr "Familiya"
 
@@ -54,17 +56,22 @@ msgstr "Familiya"
 msgid "Passwords don't match."
 msgstr "Parollar mos kelmaydi! 🔴"
 
-#: .\accounts\forms.py:74 .\accounts\models.py:50 .\templates\checkout.html:97
-#: .\templates\profile.html:140 .\templates\profile_edit.html:59
+#: .\accounts\forms.py:74 .\accounts\models.py:50
+#: .\templates\accounts\profile.html:140
+#: .\templates\accounts\profile_edit.html:59
+#: .\templates\orders\checkout.html:97
 msgid "Address Line 1"
 msgstr "Manzil qatori 1"
 
-#: .\accounts\forms.py:75 .\accounts\models.py:51 .\templates\profile.html:144
+#: .\accounts\forms.py:75 .\accounts\models.py:51
+#: .\templates\accounts\profile.html:144
 msgid "Address Line 2"
 msgstr "Manzil qatori 2"
 
-#: .\accounts\forms.py:76 .\accounts\models.py:52 .\templates\checkout.html:106
-#: .\templates\profile.html:148 .\templates\profile_edit.html:83
+#: .\accounts\forms.py:76 .\accounts\models.py:52
+#: .\templates\accounts\profile.html:148
+#: .\templates\accounts\profile_edit.html:83
+#: .\templates\orders\checkout.html:106
 msgid "City"
 msgstr "Shahar"
 
@@ -74,13 +81,17 @@ msgstr "Shahar"
 msgid "State or Province"
 msgstr "Viloyat/Tuman"
 
-#: .\accounts\forms.py:78 .\accounts\models.py:54 .\templates\checkout.html:120
-#: .\templates\profile.html:154 .\templates\profile_edit.html:107
+#: .\accounts\forms.py:78 .\accounts\models.py:54
+#: .\templates\accounts\profile.html:154
+#: .\templates\accounts\profile_edit.html:107
+#: .\templates\orders\checkout.html:120
 msgid "Country"
 msgstr "Mamlakat"
 
-#: .\accounts\forms.py:79 .\accounts\models.py:55 .\templates\checkout.html:116
-#: .\templates\profile.html:157 .\templates\profile_edit.html:119
+#: .\accounts\forms.py:79 .\accounts\models.py:55
+#: .\templates\accounts\profile.html:157
+#: .\templates\accounts\profile_edit.html:119
+#: .\templates\orders\checkout.html:116
 msgid "Postal Code"
 msgstr "Pochta indeksi"
 
@@ -94,7 +105,7 @@ msgstr "Asosiy manzil"
 msgid "The Email field must be set"
 msgstr ""
 
-#: .\accounts\models.py:31 .\templates\checkout.html:69
+#: .\accounts\models.py:31 .\templates\orders\checkout.html:69
 msgid "Phone Number"
 msgstr "Telefon raqami"
 
@@ -113,6 +124,7 @@ msgstr "Foydalanuvchi"
 #: .\accounts\models.py:40 .\accounts\models.py:49 .\accounts\models.py:71
 #: .\activity\models.py:8 .\carts\models.py:10 .\favourites\models.py:9
 #: .\orders\models.py:26 .\reviews\models.py:30 .\templates\base.html:142
+#: .\templates\base.html:187
 msgid "User"
 msgstr "Foydalanuvchi"
 
@@ -122,8 +134,9 @@ msgstr "Foydalanuvchi"
 msgid "Users"
 msgstr "Foydalanuvchi"
 
-#: .\accounts\models.py:53 .\templates\checkout.html:110
-#: .\templates\profile.html:151 .\templates\profile_edit.html:95
+#: .\accounts\models.py:53 .\templates\accounts\profile.html:151
+#: .\templates\accounts\profile_edit.html:95
+#: .\templates\orders\checkout.html:110
 msgid "State/Province"
 msgstr "Viloyat/Tuman"
 
@@ -198,9 +211,10 @@ msgstr "Tegishli mahsulot"
 msgid "Recent Products"
 msgstr "Tegishli mahsulot"
 
-#: .\carts\models.py:13 .\carts\models.py:21 .\templates\checkout.html:18
-#: .\templates\my_cart.html:16 .\templates\payment.html:18
-#: .\templates\payment_success.html:18
+#: .\carts\models.py:13 .\carts\models.py:21 .\templates\base.html:238
+#: .\templates\carts\my_cart.html:16 .\templates\orders\checkout.html:18
+#: .\templates\payments\payment.html:18
+#: .\templates\payments\payment_success.html:18
 msgid "Cart"
 msgstr "Savat"
 
@@ -244,15 +258,15 @@ msgstr "Asoslangan"
 msgid "Base Models"
 msgstr "Asoslangan"
 
-#: .\config\settings.py:139
+#: .\config\settings.py:146
 msgid "English"
 msgstr "Inglizcha"
 
-#: .\config\settings.py:140
+#: .\config\settings.py:147
 msgid "Russian"
 msgstr "Ruscha"
 
-#: .\config\settings.py:141
+#: .\config\settings.py:148
 msgid "Uzbek"
 msgstr "O'zbekcha"
 
@@ -303,7 +317,9 @@ msgstr ""
 msgid "Notification"
 msgstr "Tekshirish"
 
-#: .\notifications\models.py:16
+#: .\notifications\models.py:16 .\templates\base.html:247
+#: .\templates\notifications\notifications_list.html:5
+#: .\templates\notifications\notifications_list.html:15
 #, fuzzy
 #| msgid "Specifications"
 msgid "Notifications"
@@ -317,9 +333,9 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: .\orders\models.py:14 .\templates\my_orders.html:17
-#: .\templates\my_orders.html:47 .\templates\my_orders.html:64
-#: .\templates\my_orders.html:81
+#: .\orders\models.py:14 .\templates\orders\my_orders.html:17
+#: .\templates\orders\my_orders.html:46 .\templates\orders\my_orders.html:63
+#: .\templates\orders\my_orders.html:80
 msgid "Processing"
 msgstr "Ishlov berilmoqda"
 
@@ -331,9 +347,9 @@ msgstr ""
 msgid "Packing"
 msgstr ""
 
-#: .\orders\models.py:17 .\templates\my_orders.html:18
-#: .\templates\my_orders.html:51 .\templates\my_orders.html:68
-#: .\templates\my_orders.html:85
+#: .\orders\models.py:17 .\templates\orders\my_orders.html:18
+#: .\templates\orders\my_orders.html:50 .\templates\orders\my_orders.html:67
+#: .\templates\orders\my_orders.html:84
 msgid "Shipped"
 msgstr "Jo'natilgan"
 
@@ -343,22 +359,21 @@ msgstr "Jo'natilgan"
 msgid "In Delivery"
 msgstr "Standart yetkazib berish"
 
-#: .\orders\models.py:19 .\templates\my_orders.html:19
-#: .\templates\my_orders.html:55 .\templates\my_orders.html:72
-#: .\templates\my_orders.html:89
+#: .\orders\models.py:19 .\templates\orders\my_orders.html:19
+#: .\templates\orders\my_orders.html:54 .\templates\orders\my_orders.html:71
+#: .\templates\orders\my_orders.html:88
 msgid "Delivered"
 msgstr "Yetkazib berilgan"
 
-#: .\orders\models.py:20 .\templates\my_orders.html:95
+#: .\orders\models.py:20
 msgid "Return Requested"
 msgstr "Qaytarish so'rovi"
 
-#: .\orders\models.py:21 .\templates\my_orders.html:20
-#: .\templates\my_orders.html:99
+#: .\orders\models.py:21
 msgid "Returned"
 msgstr "Qaytarilgan"
 
-#: .\orders\models.py:22 .\templates\my_orders.html:103
+#: .\orders\models.py:22
 msgid "Refunded"
 msgstr "Qaytarilgan pul"
 
@@ -372,13 +387,13 @@ msgstr "Bekor qilish"
 msgid "Failed"
 msgstr ""
 
-#: .\orders\models.py:28 .\templates\checkout.html:80
-#: .\templates\my_orders.html:116
+#: .\orders\models.py:28 .\templates\orders\checkout.html:80
+#: .\templates\orders\my_orders.html:95
 msgid "Shipping Address"
 msgstr "Yetkazib berish manzili"
 
 #: .\orders\models.py:29 .\payments\models.py:17
-#: .\templates\manage_products.html:133
+#: .\templates\products\manage_products.html:159
 msgid "Status"
 msgstr "Status"
 
@@ -428,7 +443,7 @@ msgstr "Buyurtma tafsilotlarini ko'rish"
 msgid "Cash"
 msgstr ""
 
-#: .\payments\models.py:11 .\templates\payment.html:79
+#: .\payments\models.py:11 .\templates\payments\payment.html:79
 msgid "Credit Card"
 msgstr "Kredit kartasi"
 
@@ -438,7 +453,7 @@ msgstr "Kredit kartasi"
 msgid "Debit Card"
 msgstr "Kredit kartasi"
 
-#: .\payments\models.py:15 .\templates\payment.html:67
+#: .\payments\models.py:15 .\templates\payments\payment.html:67
 msgid "Payment Method"
 msgstr "To'lov usuli"
 
@@ -452,9 +467,9 @@ msgstr "Hisob"
 msgid "Currency"
 msgstr ""
 
-#: .\payments\models.py:21 .\templates\checkout.html:32
-#: .\templates\my_cart.html:30 .\templates\payment.html:32
-#: .\templates\payment_success.html:32
+#: .\payments\models.py:21 .\templates\carts\my_cart.html:30
+#: .\templates\orders\checkout.html:32 .\templates\payments\payment.html:32
+#: .\templates\payments\payment_success.html:32
 msgid "Payment"
 msgstr "To'lov"
 
@@ -464,33 +479,46 @@ msgstr "To'lov"
 msgid "Payments"
 msgstr "To'lov"
 
+#: .\products\forms.py:195
+#, fuzzy
+#| msgid "Enter your last name"
+msgid "Enter category name"
+msgstr "Familiyangizni kiriting"
+
+#: .\products\forms.py:202
+#, fuzzy
+#| msgid "Category"
+msgid "No parent category"
+msgstr "Kategoriya"
+
 #: .\products\models.py:22 .\products\models.py:51 .\products\models.py:66
-#: .\shops\models.py:24 .\templates\manage_products.html:128
+#: .\shops\models.py:28 .\templates\products\manage_products.html:154
 msgid "Name"
 msgstr "Nomi"
 
-#: .\products\models.py:24
+#: .\products\models.py:24 .\templates\categories\add_category.html:34
 #, fuzzy
 #| msgid "Category"
 msgid "Parent Category"
 msgstr "Kategoriya"
 
 #: .\products\models.py:27 .\products\models.py:108
-#: .\templates\add_product_form.html:110 .\templates\edit_product.html:121
-#: .\templates\manage_products.html:132
+#: .\templates\products\add_product_form.html:110
+#: .\templates\products\edit_product.html:121
+#: .\templates\products\manage_products.html:158
 msgid "Category"
 msgstr "Kategoriya"
 
-#: .\products\models.py:28 .\templates\list_products.html:54
+#: .\products\models.py:28 .\templates\products\list_products.html:54
 msgid "Categories"
 msgstr "Kategoriyalar"
 
-#: .\products\models.py:43 .\reviews\models.py:22 .\shops\models.py:15
+#: .\products\models.py:43 .\reviews\models.py:22 .\shops\models.py:19
 msgid "Image size can't exceed 4 MB."
 msgstr ""
 
-#: .\products\models.py:52 .\templates\add_product_form.html:96
-#: .\templates\edit_product.html:104
+#: .\products\models.py:52 .\templates\products\add_product_form.html:96
+#: .\templates\products\edit_product.html:104
 msgid "Stock Count"
 msgstr "Ombordagi soni"
 
@@ -505,7 +533,8 @@ msgid "Warehouse Location"
 msgstr ""
 
 #: .\products\models.py:57 .\products\models.py:109
-#: .\templates\add_product_form.html:131 .\templates\edit_product.html:148
+#: .\templates\products\add_product_form.html:131
+#: .\templates\products\edit_product.html:148
 msgid "Inventory"
 msgstr "Inventar"
 
@@ -515,9 +544,10 @@ msgstr "Inventar"
 msgid "Inventories"
 msgstr "Inventar"
 
-#: .\products\models.py:67 .\templates\add_product_form.html:76
-#: .\templates\edit_product.html:78 .\templates\list_products.html:207
-#: .\templates\manage_products.html:130
+#: .\products\models.py:67 .\templates\products\add_product_form.html:76
+#: .\templates\products\edit_product.html:78
+#: .\templates\products\list_products.html:207
+#: .\templates\products\manage_products.html:156
 msgid "Price"
 msgstr "Narx"
 
@@ -527,8 +557,8 @@ msgstr "Narx"
 msgid "Is Available"
 msgstr "mavjud"
 
-#: .\products\models.py:70 .\templates\add_product_form.html:145
-#: .\templates\edit_product.html:165
+#: .\products\models.py:70 .\templates\products\add_product_form.html:145
+#: .\templates\products\edit_product.html:165
 msgid "Short Description"
 msgstr "Qisqa tavsif"
 
@@ -540,8 +570,9 @@ msgstr ""
 "Mahsulot ro'yxati uchun qisqa diqqatni tortadigan tavsif (maksimal 255 ta "
 "belgi)"
 
-#: .\products\models.py:77 .\shops\models.py:35
-#: .\templates\add_product_form.html:120 .\templates\edit_product.html:134
+#: .\products\models.py:77 .\shops\models.py:40 .\templates\base.html:203
+#: .\templates\products\add_product_form.html:120
+#: .\templates\products\edit_product.html:134
 msgid "Shop"
 msgstr "Do'kon"
 
@@ -551,8 +582,8 @@ msgstr "Do'kon"
 msgid "Slug"
 msgstr "URL Slug"
 
-#: .\products\models.py:80 .\templates\add_product_form.html:152
-#: .\templates\edit_product.html:175
+#: .\products\models.py:80 .\templates\products\add_product_form.html:152
+#: .\templates\products\edit_product.html:175
 msgid "Full Description"
 msgstr "To'liq tavsif"
 
@@ -562,8 +593,9 @@ msgstr "To'liq tavsif"
 msgid "Detailed product description with marketing tone."
 msgstr "Marketing ohangida batafsil mahsulot tavsifi"
 
-#: .\products\models.py:86 .\templates\add_product_form.html:159
-#: .\templates\edit_product.html:185 .\templates\product_details.html:190
+#: .\products\models.py:86 .\templates\products\add_product_form.html:159
+#: .\templates\products\edit_product.html:185
+#: .\templates\products\product_details.html:223
 msgid "Key Features"
 msgstr "Asosiy xususiyatlar"
 
@@ -573,8 +605,9 @@ msgstr "Asosiy xususiyatlar"
 msgid "List of key features."
 msgstr "Asosiy xususiyatlar"
 
-#: .\products\models.py:92 .\templates\add_product_form.html:167
-#: .\templates\edit_product.html:196 .\templates\product_details.html:178
+#: .\products\models.py:92 .\templates\products\add_product_form.html:167
+#: .\templates\products\edit_product.html:196
+#: .\templates\products\product_details.html:211
 msgid "Specifications"
 msgstr "Texnik xususiyatlar"
 
@@ -582,8 +615,8 @@ msgstr "Texnik xususiyatlar"
 msgid "Key-value technical specs."
 msgstr ""
 
-#: .\products\models.py:102 .\reviews\models.py:40 .\shops\models.py:31
-#: .\templates\manage_products.html:127
+#: .\products\models.py:102 .\reviews\models.py:40 .\shops\models.py:35
+#: .\templates\products\manage_products.html:153
 msgid "Image"
 msgstr "Rasm"
 
@@ -607,17 +640,22 @@ msgstr ""
 msgid "Approved By"
 msgstr ""
 
-#: .\products\models.py:116 .\templates\base.html:51 .\templates\base.html:198
-#: .\templates\product_details.html:41
+#: .\products\models.py:116 .\templates\base.html:54 .\templates\base.html:216
+#: .\templates\base.html:359 .\templates\home.html:173
+#: .\templates\home.html:222 .\templates\products\product_details.html:41
 msgid "Products"
 msgstr "Mahsulotlar"
 
-#: .\reviews\models.py:15
+#: .\products\views\admin.py:217
+msgid "Category created successfully!"
+msgstr ""
+
+#: .\reviews\models.py:15 .\shops\models.py:13
 msgid "FeedBack rating should be between 1 and 5."
 msgstr ""
 
-#: .\reviews\models.py:32 .\templates\list_products.html:156
-#: .\templates\product_details.html:313
+#: .\reviews\models.py:32 .\templates\products\list_products.html:156
+#: .\templates\products\product_details.html:346
 msgid "Rating"
 msgstr "Reyting"
 
@@ -645,281 +683,40 @@ msgstr ""
 msgid "Feedbacks"
 msgstr ""
 
-#: .\shops\models.py:23
+#: .\shops\forms.py:15
+#, fuzzy
+#| msgid "Enter your last name"
+msgid "Enter shop name"
+msgstr "Familiyangizni kiriting"
+
+#: .\shops\forms.py:16
+msgid "Describe your shop"
+msgstr ""
+
+#: .\shops\models.py:27
 msgid "Owner"
 msgstr ""
 
-#: .\shops\models.py:25 .\templates\product_details.html:118
+#: .\shops\models.py:29 .\templates\products\product_details.html:122
+#: .\templates\shops\add_shop.html:34
 msgid "Description"
 msgstr "Tavsif"
 
-#: .\shops\models.py:36
+#: .\shops\models.py:41
 #, fuzzy
 #| msgid "Shop"
 msgid "Shops"
 msgstr "Do'kon"
 
-#: .\templates\add_product_form.html:4 .\templates\manage_products.html:201
-msgid "Add Product"
-msgstr "Mahsulot qo'shish"
-
-#: .\templates\add_product_form.html:56 .\templates\manage_products.html:20
-msgid "Add New Product"
-msgstr "Yangi mahsulot qo'shish"
-
-#: .\templates\add_product_form.html:57
-msgid "Enter product details below"
-msgstr "Mahsulot tafsilotlarini quyida kiriting"
-
-#: .\templates\add_product_form.html:64 .\templates\edit_product.html:63
-msgid "Basic Information"
-msgstr "Asosiy ma'lumot"
-
-#: .\templates\add_product_form.html:68 .\templates\edit_product.html:67
-msgid "Product Name"
-msgstr "Mahsulot nomi"
-
-#: .\templates\add_product_form.html:70 .\templates\edit_product.html:72
-msgid "Choose a descriptive name for your product"
-msgstr "Mahsulotingiz uchun tavsiflovchi nom tanlang"
-
-#: .\templates\add_product_form.html:85 .\templates\edit_product.html:90
-msgid "URL Slug"
-msgstr "URL Slug"
-
-#: .\templates\add_product_form.html:90 .\templates\edit_product.html:98
-msgid "Used in product URL: example-product"
-msgstr "Mahsulot URL-da ishlatiladi: misol-mahsulot"
-
-#: .\templates\add_product_form.html:105 .\templates\edit_product.html:116
-msgid "Classification"
-msgstr "Tasnif"
-
-#: .\templates\add_product_form.html:141 .\templates\edit_product.html:161
-#: .\templates\product_details.html:7 .\templates\product_details.html:185
-msgid "Product Details"
-msgstr "Mahsulot tafsilotlari"
-
-#: .\templates\add_product_form.html:147 .\templates\edit_product.html:170
-msgid "Short catchy description for product listings (max 255 characters)"
-msgstr ""
-"Mahsulot ro'yxati uchun qisqa diqqatni tortadigan tavsif (maksimal 255 ta "
-"belgi)"
-
-#: .\templates\add_product_form.html:154 .\templates\edit_product.html:180
-msgid "Detailed product description with marketing tone"
-msgstr "Marketing ohangida batafsil mahsulot tavsifi"
-
-#: .\templates\add_product_form.html:161 .\templates\edit_product.html:190
-msgid "Enter features separated by comma"
-msgstr "Xususiyatlarni vergul bilan ajratib kiriting"
-
-#: .\templates\add_product_form.html:162 .\templates\edit_product.html:191
-msgid "Feature 1, Feature 2, Feature 3"
-msgstr "Xususiyat 1, Xususiyat 2, Xususiyat 3"
-
-#: .\templates\add_product_form.html:169 .\templates\edit_product.html:201
-msgid "Enter specifications as a key-value pair separated by comma"
-msgstr ""
-"Texnik xususiyatlarni kalit-qiymat juftligi sifatida vergul bilan ajratib "
-"kiriting"
-
-#: .\templates\add_product_form.html:170 .\templates\edit_product.html:202
-msgid "Weight: 2.5kg, Dimensions: 10 x 15 x 5 cm, Material: Aluminum"
-msgstr "Og'irligi: 2.5kg, O'lchamlari: 10 x 15 x 5 sm, Material: Alyuminiy"
-
-#: .\templates\add_product_form.html:175 .\templates\edit_product.html:207
-msgid "Product Image"
-msgstr "Mahsulot rasmi"
-
-#: .\templates\add_product_form.html:184 .\templates\edit_product.html:216
-msgid "Drop your image here or click to browse"
-msgstr "Rasmingizni shu yerga tashlang yoki ko'rish uchun bosing"
-
-#: .\templates\add_product_form.html:185 .\templates\edit_product.html:217
-msgid "Supports: JPG, PNG, GIF (Max 5MB)"
-msgstr "Qo'llab-quvvatlanadi: JPG, PNG, GIF (Maksimal 5MB)"
-
-#: .\templates\add_product_form.html:191 .\templates\add_product_form.html:289
-#: .\templates\edit_product.html:223 .\templates\edit_product.html:307
-msgid "No file selected"
-msgstr "Fayl tanlanmagan"
-
-#: .\templates\add_product_form.html:192 .\templates\edit_product.html:224
-#: .\templates\list_products.html:323 .\templates\product_details.html:138
-msgid "Remove"
-msgstr "O'chirish"
-
-#: .\templates\add_product_form.html:200 .\templates\edit_product.html:243
-msgid "Product Status"
-msgstr "Mahsulot holati"
-
-#: .\templates\add_product_form.html:206 .\templates\edit_product.html:249
-msgid "Available for Purchase"
-msgstr "Sotib olish uchun mavjud"
-
-#: .\templates\add_product_form.html:207 .\templates\edit_product.html:250
-msgid "Make product visible to customers"
-msgstr "Mahsulotni mijozlar uchun ko'rinadigan qilish"
-
-#: .\templates\add_product_form.html:218 .\templates\edit_product.html:264
-msgid "Featured Product"
-msgstr "Tavsiya etilgan mahsulot"
-
-#: .\templates\add_product_form.html:219 .\templates\edit_product.html:265
-msgid "Show in featured sections"
-msgstr "Tavsiya etilgan bo'limlarda ko'rsatish"
-
-#: .\templates\add_product_form.html:230 .\templates\edit_product.html:279
-msgid "Discounted"
-msgstr "Chegirmali"
-
-#: .\templates\add_product_form.html:231 .\templates\edit_product.html:280
-msgid "Apply discount to this product"
-msgstr "Ushbu mahsulotga chegirma qo'llash"
-
-#: .\templates\add_product_form.html:243 .\templates\edit_product.html:294
-#: .\templates\manage_products.html:225 .\templates\profile_edit.html:138
-msgid "Cancel"
-msgstr "Bekor qilish"
-
-#: .\templates\add_product_form.html:246
-msgid "Launch Product"
-msgstr "Mahsulotni ishga tushirish"
-
-#: .\templates\base.html:9 .\templates\base.html:39 .\templates\base.html:188
-#: .\templates\base.html:235
-msgid "E-Shop"
-msgstr "E-Do'kon"
-
-#: .\templates\base.html:43
-msgid "Toggle navigation"
-msgstr "Navigatsiyani almashtirish"
-
-#: .\templates\base.html:56 .\templates\base.html:199
-msgid "Deals"
-msgstr "Takliflar"
-
-#: .\templates\base.html:63
-msgid "Manage Products"
-msgstr "Mahsulotlarni boshqarish"
-
-#: .\templates\base.html:80
-msgid "Select Language"
+#: .\shops\views\admin.py:28
+msgid "Shop created successfully!"
 msgstr ""
 
-#: .\templates\base.html:108
-msgid "View Shopping Cart"
-msgstr "Xarid savatini ko'rish"
-
-#: .\templates\base.html:118
-msgid "View Wishlist"
-msgstr "Istaklar ro'yxatini ko'rish"
-
-#: .\templates\base.html:135
-msgid "My Account"
-msgstr "Mening hisobim"
-
-#: .\templates\base.html:147
-msgid "My Profile"
-msgstr "Mening profilim"
-
-#: .\templates\base.html:150 .\templates\my_orders.html:5
-#: .\templates\my_orders.html:14
-msgid "My Orders"
-msgstr "Mening buyurtmalarim"
-
-#: .\templates\base.html:155 .\templates\base.html:208
-msgid "Logout"
-msgstr "Chiqish"
-
-#: .\templates\base.html:162 .\templates\base.html:210
-#: .\templates\login.html:80 .\templates\register.html:216
-msgid "Log In"
-msgstr "Kirish"
-
-#: .\templates\base.html:166 .\templates\base.html:211
-msgid "Sign Up"
-msgstr "Ro'yxatdan o'tish"
-
-#: .\templates\base.html:191
-msgid ""
-"Your one-stop shop for amazing products. We focus on quality, affordability, "
-"and customer satisfaction."
-msgstr ""
-"Ajoyib mahsulotlar uchun yagona do'koningiz. Biz sifat, qulay narx va "
-"mijozlar mamnuniyatiga e'tibor qaratamiz."
-
-#: .\templates\base.html:195
-msgid "Quick Links"
-msgstr "Tezkor havolalar"
-
-#: .\templates\base.html:197 .\templates\product_details.html:40
-msgid "Home"
-msgstr "Bosh sahifa"
-
-#: .\templates\base.html:200
-msgid "About Us"
-msgstr "Biz haqimizda"
-
-#: .\templates\base.html:205
-msgid "Account"
-msgstr "Hisob"
-
-#: .\templates\base.html:213
-msgid "My Cart"
-msgstr "Mening savatim"
-
-#: .\templates\base.html:214
-msgid "Wishlist"
-msgstr "Istaklar ro'yxati"
-
-#: .\templates\base.html:215
-msgid "Order History"
-msgstr "Buyurtmalar tarixi"
-
-#: .\templates\base.html:219
-msgid "Stay Connected"
-msgstr "Bog'lanishda bo'ling"
-
-#: .\templates\base.html:220
-msgid "Follow us on social media for updates and offers."
-msgstr ""
-"Yangiliklar va takliflar uchun ijtimoiy tarmoqlarda bizni kuzatib boring."
-
-#: .\templates\base.html:222
-msgid "Facebook"
-msgstr "Facebook"
-
-#: .\templates\base.html:224
-msgid "Twitter"
-msgstr "Twitter"
-
-#: .\templates\base.html:226
-msgid "Instagram"
-msgstr "Instagram"
-
-#: .\templates\base.html:228
-msgid "LinkedIn"
-msgstr "LinkedIn"
-
-#: .\templates\base.html:235
-msgid "All Rights Reserved."
-msgstr "Barcha huquqlar himoyalangan."
-
-#: .\templates\base.html:236
-msgid "Privacy Policy"
-msgstr "Maxfiylik siyosati"
-
-#: .\templates\base.html:236 .\templates\register.html:158
-msgid "Terms of Service"
-msgstr "Xizmat ko'rsatish shartlari"
-
-#: .\templates\check_email.html:6
+#: .\templates\accounts\check_email.html:6
 msgid "Verify Your Email 📩"
 msgstr "Elektron pochtangizni tasdiqlang 📩"
 
-#: .\templates\check_email.html:8
+#: .\templates\accounts\check_email.html:8
 msgid ""
 "We've sent you a 4-digit passcode to verify your email address. Please check "
 "your inbox (and spam folder just in case) and enter the code below to "
@@ -929,1129 +726,246 @@ msgstr ""
 "kiruvchi xatlar qutisini (va ehtimol spam papkasini) tekshiring va davom "
 "etish uchun quyidagi kodni kiriting."
 
-#: .\templates\check_email.html:13
+#: .\templates\accounts\check_email.html:13
 msgid "Enter 4-digit code"
 msgstr "4 raqamli kodni kiriting"
 
-#: .\templates\check_email.html:14
-#: .\templates\verify_email_to_change_email_passcode.html:30
+#: .\templates\accounts\check_email.html:14
+#: .\templates\accounts\verify_email_to_change_email_passcode.html:30
 msgid "Verify"
 msgstr "Tasdiqlash"
 
-#: .\templates\check_email.html:25
+#: .\templates\accounts\check_email.html:25
 msgid "Didn't receive the email?"
 msgstr "Elektron xat kelmadimi?"
 
-#: .\templates\check_email.html:25
+#: .\templates\accounts\check_email.html:25
 msgid "Try again"
 msgstr "Qayta urinib ko'ring"
 
-#: .\templates\checkout.html:5
-msgid "Checkout - Details"
-msgstr "To'lov - Tafsilotlar"
-
-#: .\templates\checkout.html:12 .\templates\payment.html:12
-#: .\templates\payment_success.html:12
-msgid "Checkout"
-msgstr "To'lov"
-
-#: .\templates\checkout.html:25 .\templates\checkout.html:192
-#: .\templates\my_cart.html:23 .\templates\my_cart.html:138
-#: .\templates\payment.html:25 .\templates\payment.html:143
-#: .\templates\payment_success.html:25 .\templates\payment_success.html:99
-#: .\templates\product_details.html:177
-msgid "Details"
-msgstr "Tafsilotlar"
-
-#: .\templates\checkout.html:39 .\templates\my_cart.html:37
-#: .\templates\payment.html:39 .\templates\payment_success.html:39
-msgid "Confirmation"
-msgstr "Tasdiqlash"
-
-#: .\templates\checkout.html:49 .\templates\payment_success.html:73
-msgid "Delivery Details"
-msgstr "Yetkazib berish tafsilotlari"
-
-#: .\templates\checkout.html:50
-msgid "Step 2 of 4"
-msgstr "4 dan 2-qadam"
-
-#: .\templates\checkout.html:60
-msgid "Contact Information"
-msgstr "Aloqa ma'lumotlari"
-
-#: .\templates\checkout.html:64 .\templates\login.html:58
-#: .\templates\register.html:110 .\templates\reset_password.html:16
-msgid "Email Address"
-msgstr "Elektron pochta manzili"
-
-#: .\templates\checkout.html:65
-msgid "Enter your email"
-msgstr "Elektron pochtangizni kiriting"
-
-#: .\templates\checkout.html:71
-msgid "Enter your phone number"
-msgstr "Telefon raqamingizni kiriting"
-
-#: .\templates\checkout.html:86
-msgid "Enter your first name"
-msgstr "Ismingizni kiriting"
-
-#: .\templates\checkout.html:92
-msgid "Enter your last name"
-msgstr "Familiyangizni kiriting"
-
-#: .\templates\checkout.html:101 .\templates\profile_edit.html:71
-msgid "Address Line 2 (Optional)"
-msgstr "Manzil qatori 2 (Ixtiyoriy)"
-
-#: .\templates\checkout.html:128
-msgid "Save this address to my profile and set as primary address?"
-msgstr "Ushbu manzilni profilimga saqlash va asosiy manzil sifatida o'rnatish?"
-
-#: .\templates\checkout.html:129
-msgid "We\\"
-msgstr "Biz\\"
-
-#: .\templates\checkout.html:138
-msgid "Delivery Options"
-msgstr "Yetkazib berish variantlari"
-
-#: .\templates\checkout.html:146
-msgid "Standard Delivery"
-msgstr "Standart yetkazib berish"
-
-#: .\templates\checkout.html:147
-msgid "3-5 business days"
-msgstr "3-5 ish kuni"
-
-#: .\templates\checkout.html:156
-msgid "Express Delivery"
-msgstr "Tezkor yetkazib berish"
-
-#: .\templates\checkout.html:157
-msgid "1-2 business days"
-msgstr "1-2 ish kuni"
-
-#: .\templates\checkout.html:166
-msgid "Next Day Delivery"
-msgstr "Keyingi kun yetkazib berish"
-
-#: .\templates\checkout.html:167
-msgid "Next business day"
-msgstr "Keyingi ish kuni"
-
-#: .\templates\checkout.html:177
-msgid "Back to Cart"
-msgstr "Savatga qaytish"
-
-#: .\templates\checkout.html:180
-msgid "Continue to Payment"
-msgstr "To'lovga o'tish"
-
-#: .\templates\checkout.html:190 .\templates\my_cart.html:136
-#: .\templates\payment.html:141 .\templates\payment_success.html:97
-msgid "Order Summary"
-msgstr "Buyurtma xulosasi"
-
-#: .\templates\checkout.html:225 .\templates\payment.html:176
-#: .\templates\payment_success.html:132
-msgid "Subtotal"
-msgstr "Oraliq jami"
-
-#: .\templates\checkout.html:229 .\templates\my_cart.html:149
-#: .\templates\payment.html:180 .\templates\payment_success.html:136
-msgid "Shipping"
-msgstr "Yetkazib berish"
-
-#: .\templates\checkout.html:240 .\templates\my_cart.html:160
-#: .\templates\payment.html:186 .\templates\payment_success.html:142
-msgid "Total"
-msgstr "Jami"
-
-#: .\templates\checkout.html:245 .\templates\my_cart.html:170
-msgid "We Accept"
-msgstr "Biz qabul qilamiz"
-
-#: .\templates\create_new_password.html:7 .\templates\reset_password.html:9
+#: .\templates\accounts\create_new_password.html:7
+#: .\templates\accounts\reset_password.html:9
 msgid "Reset Your Password"
 msgstr "Parolingizni tiklash"
 
-#: .\templates\create_new_password.html:8
+#: .\templates\accounts\create_new_password.html:8
 msgid "Enter a new password to update your account."
 msgstr "Hisobingizni yangilash uchun yangi parol kiriting."
 
-#: .\templates\create_new_password.html:14
+#: .\templates\accounts\create_new_password.html:14
 msgid "New Password"
 msgstr "Yangi parol"
 
-#: .\templates\create_new_password.html:19 .\templates\register.html:124
+#: .\templates\accounts\create_new_password.html:19
+#: .\templates\accounts\register.html:124
 msgid "Confirm Password"
 msgstr "Parolni tasdiqlang"
 
-#: .\templates\create_new_password.html:26 .\templates\reset_password.html:4
+#: .\templates\accounts\create_new_password.html:26
+#: .\templates\accounts\reset_password.html:4
 msgid "Reset Password"
 msgstr "Parolni tiklash"
 
-#: .\templates\create_new_password.html:147
+#: .\templates\accounts\create_new_password.html:147
 msgid "Passwords do not match! 🔴"
 msgstr "Parollar mos kelmaydi! 🔴"
 
-#: .\templates\create_new_password.html:148
+#: .\templates\accounts\create_new_password.html:148
 msgid "Passwords do not match! Please try again."
 msgstr "Parollar mos kelmaydi! Iltimos, qayta urinib ko'ring."
 
-#: .\templates\edit_product.html:4 .\templates\edit_product.html:56
-msgid "Edit Product"
-msgstr "Mahsulotni tahrirlash"
-
-#: .\templates\edit_product.html:57
-msgid "Update product information"
-msgstr "Mahsulot ma'lumotlarini yangilash"
-
-#: .\templates\edit_product.html:233
-msgid "Current image:"
-msgstr "Joriy rasm:"
-
-#: .\templates\edit_product.html:297 .\templates\profile_edit.html:139
-msgid "Save Changes"
-msgstr "O'zgarishlarni saqlash"
-
-#: .\templates\edit_product.html:326
-msgid "Preview"
-msgstr "Ko'rib chiqish"
-
-#: .\templates\favourites.html:15
-msgid "My Cosmic Collection"
-msgstr "Mening kosmik kolleksiyam"
-
-#: .\templates\favourites.html:16
-msgid "Your universe of favorite items"
-msgstr "Sevimli mahsulotlaringiz olami"
-
-#: .\templates\favourites.html:20
-msgid "Disintegrate All"
-msgstr "Hammasini o'chirish"
-
-#: .\templates\favourites.html:36 .\templates\favourites.html:49
-#: .\templates\manage_products.html:146 .\templates\manage_products.html:158
-#: .\templates\manage_products.html:180 .\templates\my_cart.html:70
-#: .\templates\my_cart.html:80
-msgid "View"
-msgstr "Ko'rish"
-
-#: .\templates\favourites.html:54 .\templates\product_details.html:109
-msgid "In Stock"
-msgstr "Mavjud"
-
-#: .\templates\favourites.html:56 .\templates\manage_products.html:44
-#: .\templates\manage_products.html:69 .\templates\manage_products.html:173
-#: .\templates\product_details.html:112
-msgid "Out of Stock"
-msgstr "Mavjud emas"
-
-#: .\templates\favourites.html:60
-msgid "Remove from favorites"
-msgstr "Sevimlilardan olib tashlash"
-
-#: .\templates\favourites.html:63
-msgid "View details"
-msgstr "Tafsilotlarni ko'rish"
-
-#: .\templates\favourites.html:66
-msgid "Add to cart"
-msgstr "Savatga qo'shish"
-
-#: .\templates\favourites.html:76 .\templates\manage_products.html:55
-#: .\templates\product_details.html:157
-msgid "Category:"
-msgstr "Kategoriya:"
-
-#: .\templates\favourites.html:81 .\templates\register.html:129
-#: .\templates\register.html:177 .\templates\register.html:206
-msgid "Back"
-msgstr "Orqaga"
-
-#: .\templates\favourites.html:95
-msgid "Your Cosmic Collection Is Empty"
-msgstr "Sizning kosmik kolleksiyangiz bo'sh"
-
-#: .\templates\favourites.html:96
-msgid ""
-"Start adding your favorite products to create your personal galaxy of "
-"amazing items!"
-msgstr ""
-"Ajoyib mahsulotlardan iborat shaxsiy galaktikangizni yaratish uchun sevimli "
-"mahsulotlaringizni qo'sha boshlang!"
-
-#: .\templates\favourites.html:98
-msgid "Explore Products"
-msgstr "Mahsulotlarni ko'rib chiqish"
-
-#: .\templates\home.html:4
-msgid "This is a home page for a project"
-msgstr "Bu loyiha uchun bosh sahifa"
-
-#: .\templates\list_products.html:6
-msgid "Product Showcase"
-msgstr "Mahsulotlar ko'rgazmasi"
-
-#: .\templates\list_products.html:19
-msgid "Product Collection"
-msgstr "Mahsulotlar kolleksiyasi"
-
-#: .\templates\list_products.html:23 .\templates\manage_products.html:25
-msgid "Search products..."
-msgstr "Mahsulotlarni qidirish..."
-
-#: .\templates\list_products.html:47
-msgid "Filters"
-msgstr "Filtrlar"
-
-#: .\templates\list_products.html:59
-msgid "Product Categories"
-msgstr "Mahsulot kategoriyalari"
-
-#: .\templates\list_products.html:75 .\templates\my_cart.html:155
-msgid "Apply"
-msgstr "Qo'llash"
-
-#: .\templates\list_products.html:77 .\templates\list_products.html:180
-#: .\templates\manage_products.html:101
-msgid "Reset"
-msgstr "Qayta o'rnatish"
-
-#: .\templates\list_products.html:87
-msgid "Filter Products"
-msgstr "Mahsulotlarni filtrlash"
-
-#: .\templates\list_products.html:105
-msgid "Sort By"
-msgstr "Saralash"
-
-#: .\templates\list_products.html:110 .\templates\list_products.html:194
-#: .\templates\list_products.html:245
-msgid "Price: Low to High"
-msgstr "Narx: Arzondan qimmatga"
-
-#: .\templates\list_products.html:115 .\templates\list_products.html:195
-#: .\templates\list_products.html:248
-msgid "Price: High to Low"
-msgstr "Narx: Qimmatdan arzon"
-
-#: .\templates\list_products.html:120 .\templates\list_products.html:196
-msgid "Orders: Low to High"
-msgstr "Buyurtmalar: Kamdan ko'pga"
-
-#: .\templates\list_products.html:125 .\templates\list_products.html:197
-msgid "Orders: High to Low"
-msgstr "Buyurtmalar: Ko'pdan kamga"
-
-#: .\templates\list_products.html:130 .\templates\list_products.html:198
-#: .\templates\list_products.html:254 .\templates\manage_products.html:80
-msgid "Newest First"
-msgstr "Avval yangilari"
-
-#: .\templates\list_products.html:136
-msgid "Price Range"
-msgstr "Narx oralig'i"
-
-#: .\templates\list_products.html:139
-msgid "Min $"
-msgstr "Min $"
-
-#: .\templates\list_products.html:145
-msgid "Max $"
-msgstr "Maks $"
-
-#: .\templates\list_products.html:179
-msgid "Apply Filters"
-msgstr "Filtrlarni qo'llash"
-
-#: .\templates\list_products.html:215
-#, python-format
-msgid ""
-"Rating: %(rating)s+\n"
-"                                    stars"
-msgstr ""
-"Reyting: %(rating)s+\n"
-"                                    yulduz"
-
-#: .\templates\list_products.html:223
-#, python-format
-msgid ""
-"Category:\n"
-"                                    %(name)s"
-msgstr ""
-"Kategoriya:\n"
-"                                    %(name)s"
-
-#: .\templates\list_products.html:231
-msgid "Clear All"
-msgstr "Hammasini tozalash"
-
-#: .\templates\list_products.html:235
-msgid "No filters applied"
-msgstr "Filtrlar qo'llanilmagan"
-
-#: .\templates\list_products.html:241
-msgid "Sort by:"
-msgstr "Saralash:"
-
-#: .\templates\list_products.html:243 .\templates\product_details.html:56
-msgid "Featured"
-msgstr "Tanlanganlar"
-
-#: .\templates\list_products.html:251
-msgid "Most Popular"
-msgstr "Eng mashhur"
-
-#: .\templates\list_products.html:272
-msgid "New"
-msgstr "Yangi"
-
-#: .\templates\list_products.html:281
-#, python-format
-msgid ""
-"In\n"
-"                                            Cart (%(quantity)s)"
-msgstr ""
-"Savatda\n"
-"                                            (%(quantity)s)"
-
-#: .\templates\list_products.html:297
-#, python-format
-msgid ""
-"Added\n"
-"                                %(date)s"
-msgstr ""
-"Qo'shilgan\n"
-"                                %(date)s"
-
-#: .\templates\list_products.html:312
-#, python-format
-msgid "%(total)s Ordered"
-msgstr "%(total)s ta buyurtma qilingan"
-
-#: .\templates\list_products.html:319
-#, python-format
-msgid ""
-"In your cart:\n"
-"                                            <strong>%(quantity)s</strong>"
-msgstr ""
-"Savatingizda:\n"
-"                                            <strong>%(quantity)s</strong>"
-
-#: .\templates\list_products.html:331 .\templates\product_details.html:142
-msgid "Buy Now"
-msgstr "Hozir sotib olish"
-
-#: .\templates\list_products.html:338
-msgid "Update Cart"
-msgstr "Savatni yangilash"
-
-#: .\templates\list_products.html:342 .\templates\product_details.html:132
-msgid "Add to Cart"
-msgstr "Savatga qo'shish"
-
-#: .\templates\list_products.html:355 .\templates\manage_products.html:198
-msgid "No Products Available"
-msgstr "Mavjud mahsulotlar yo'q"
-
-#: .\templates\list_products.html:356
-msgid "Check back soon for new additions to our catalog."
-msgstr ""
-"Katalogimizga yangi qo'shilgan mahsulotlar uchun tez orada qayta tekshiring."
-
-#: .\templates\login.html:5 .\templates\login.html:28
+#: .\templates\accounts\login.html:5 .\templates\accounts\login.html:28
 msgid "Login"
 msgstr "Kirish"
 
-#: .\templates\login.html:22
+#: .\templates\accounts\login.html:22
 msgid "Welcome Back"
 msgstr "Xush kelibsiz"
 
-#: .\templates\login.html:23
+#: .\templates\accounts\login.html:23
 msgid "Sign in to continue your shopping journey"
 msgstr "Xarid sayohatingizni davom ettirish uchun tizimga kiring"
 
-#: .\templates\login.html:29
+#: .\templates\accounts\login.html:29
 msgid "Please enter your credentials"
 msgstr "Iltimos, ma'lumotlaringizni kiriting"
 
-#: .\templates\login.html:47 .\templates\register.html:74
+#: .\templates\accounts\login.html:47 .\templates\accounts\register.html:74
 #, fuzzy
 #| msgid "Continue Shopping"
 msgid "Continue with Google"
 msgstr "Google bilan davom ettirish"
 
-#: .\templates\login.html:52
+#: .\templates\accounts\login.html:52
 #, fuzzy
 #| msgid "Or login with"
 msgid "or login with email"
 msgstr "Yoki email bilan kirish"
 
-#: .\templates\login.html:74
+#: .\templates\accounts\login.html:58 .\templates\accounts\register.html:110
+#: .\templates\accounts\reset_password.html:16
+#: .\templates\orders\checkout.html:64
+msgid "Email Address"
+msgstr "Elektron pochta manzili"
+
+#: .\templates\accounts\login.html:74
 msgid "Remember me"
 msgstr "Meni eslab qol"
 
-#: .\templates\login.html:77
+#: .\templates\accounts\login.html:77
 msgid "Forgot Password?"
 msgstr "Parolni unutdingizmi?"
 
-#: .\templates\login.html:84
+#: .\templates\accounts\login.html:80 .\templates\accounts\register.html:216
+#: .\templates\base.html:162 .\templates\base.html:195
+#: .\templates\base.html:370
+msgid "Log In"
+msgstr "Kirish"
+
+#: .\templates\accounts\login.html:84
 msgid "Don\\"
 msgstr "Hisobingiz yo'qmi\\"
 
-#: .\templates\login.html:84 .\templates\register.html:5
+#: .\templates\accounts\login.html:84 .\templates\accounts\register.html:5
 msgid "Register"
 msgstr "Ro'yxatdan o'tish"
 
-#: .\templates\manage_products.html:5 .\templates\manage_products.html:17
-msgid "Product Management"
-msgstr "Mahsulotlarni boshqarish"
-
-#: .\templates\manage_products.html:36
-msgid "Total Products"
-msgstr "Jami mahsulotlar"
-
-#: .\templates\manage_products.html:40 .\templates\manage_products.html:68
-#: .\templates\manage_products.html:173
-msgid "Active"
-msgstr "Faol"
-
-#: .\templates\manage_products.html:48
-msgid "Inventory Value"
-msgstr "Inventar qiymati"
-
-#: .\templates\manage_products.html:57
-msgid "All Categories"
-msgstr "Barcha kategoriyalar"
-
-#: .\templates\manage_products.html:65
-msgid "Status:"
-msgstr "Status:"
-
-#: .\templates\manage_products.html:67
-msgid "All Status"
-msgstr "Barcha statuslar"
-
-#: .\templates\manage_products.html:74
-msgid "Sort By:"
-msgstr "Saralash:"
-
-#: .\templates\manage_products.html:76
-msgid "Name (A-Z)"
-msgstr "Nomi (A-Z)"
-
-#: .\templates\manage_products.html:78
-msgid "Name (Z-A)"
-msgstr "Nomi (Z-A)"
-
-#: .\templates\manage_products.html:82
-msgid "Oldest First"
-msgstr "Avval eskilari"
-
-#: .\templates\manage_products.html:84
-msgid "Price (High-Low)"
-msgstr "Narx (Yuqori-past)"
-
-#: .\templates\manage_products.html:86
-msgid "Price (Low-High)"
-msgstr "Narx (Past-yuqori)"
-
-#: .\templates\manage_products.html:91
-msgid "Items Per Page:"
-msgstr "Sahifada mahsulotlar soni:"
-
-#: .\templates\manage_products.html:106
-#, python-format
-msgid "%(counter)s item selected"
-msgid_plural "%(counter)s items selected"
-msgstr[0] "%(counter)s ta element tanlangan"
-
-#: .\templates\manage_products.html:109
-msgid "Edit Selected"
-msgstr "Tanlanganni tahrirlash"
-
-#: .\templates\manage_products.html:112
-msgid "Delete Selected"
-msgstr "Tanlanganni o'chirish"
-
-#: .\templates\manage_products.html:115
-msgid "Export Selected"
-msgstr "Tanlanganni eksport qilish"
-
-#: .\templates\manage_products.html:129
-msgid "SKU"
-msgstr "SKU"
-
-#: .\templates\manage_products.html:131
-msgid "Stock"
-msgstr "Mavjud"
-
-#: .\templates\manage_products.html:134
-msgid "Created"
-msgstr "Yaratilgan"
-
-#: .\templates\manage_products.html:135
-msgid "Actions"
-msgstr "Harakatlar"
-
-#: .\templates\manage_products.html:170 .\templates\product_details.html:159
-msgid "Uncategorized"
-msgstr "Kategoriyasiz"
-
-#: .\templates\manage_products.html:183 .\templates\profile.html:117
-#: .\templates\profile.html:135
-msgid "Edit"
-msgstr "Tahrirlash"
-
-#: .\templates\manage_products.html:187 .\templates\manage_products.html:226
-msgid "Delete"
-msgstr "O'chirish"
-
-#: .\templates\manage_products.html:199
-msgid "Get started by adding your first product to the inventory."
-msgstr "Inventarga birinchi mahsulotingizni qo'shish bilan boshlang."
-
-#: .\templates\manage_products.html:218
-msgid "Confirm Deletion"
-msgstr "O'chirishni tasdiqlash"
-
-#: .\templates\manage_products.html:222
-msgid ""
-"Are you sure you want to delete this product? This action cannot be undone."
-msgstr ""
-"Haqiqatan ham bu mahsulotni o'chirishni xohlaysizmi? Bu amalni bekor qilib "
-"bo'lmaydi."
-
-#: .\templates\my_cart.html:10
-msgid "Your Shopping Cart"
-msgstr "Sizning xarid savatingiz"
-
-#: .\templates\my_cart.html:47
-msgid "Items in Your Cart"
-msgstr "Savatingizdagi mahsulotlar"
-
-#: .\templates\my_cart.html:48
-#, python-format
-msgid "%(counter)s Item"
-msgid_plural "%(counter)s Items"
-msgstr[0] "%(counter)s ta mahsulot"
-
-#: .\templates\my_cart.html:60
-msgid "Your cart is empty"
-msgstr "Savatingiz bo'sh"
-
-#: .\templates\my_cart.html:61
-msgid "Looks like you haven\\'t added any products to your cart yet."
-msgstr "Hali savatingizga hech qanday mahsulot qo'shmaganga o'xshaysiz."
-
-#: .\templates\my_cart.html:62 .\templates\my_cart.html:126
-#: .\templates\payment_success.html:89
-msgid "Continue Shopping"
-msgstr "Xaridni davom ettirish"
-
-#: .\templates\my_cart.html:86
-msgid "DISCOUNTED"
-msgstr "CHEGIRMALI"
-
-#: .\templates\my_cart.html:96
-msgid "Decrease quantity"
-msgstr "Miqdorni kamaytirish"
-
-#: .\templates\my_cart.html:101
-msgid "Increase quantity"
-msgstr "Miqdorni oshirish"
-
-#: .\templates\my_cart.html:110
-msgid "Remove item"
-msgstr "Mahsulotni olib tashlash"
-
-#: .\templates\my_cart.html:113
-msgid "Save for later"
-msgstr "Keyinroq uchun saqlash"
-
-#: .\templates\my_cart.html:123
-msgid "Clear Cart"
-msgstr "Savatni tozalash"
-
-#: .\templates\my_cart.html:145
-#, python-format
-msgid "Subtotal (%(counter)s item)"
-msgid_plural "Subtotal (%(counter)s items)"
-msgstr[0] "Oraliq jami (%(counter)s ta mahsulot)"
-
-#: .\templates\my_cart.html:150
-msgid "Calculated at checkout"
-msgstr "To'lov paytida hisoblanadi"
-
-#: .\templates\my_cart.html:154
-msgid "Promo Code"
-msgstr "Promo kod"
-
-#: .\templates\my_cart.html:165
-msgid "Proceed to Checkout"
-msgstr "To'lovga o'tish"
-
-#: .\templates\my_orders.html:16
-msgid "All Orders"
-msgstr "Barcha buyurtmalar"
-
-#: .\templates\my_orders.html:30
-#, python-format
-msgid "Order #%(order_id)s"
-msgstr "Buyurtma #%(order_id)s"
-
-#: .\templates\my_orders.html:43 .\templates\my_orders.html:60
-#: .\templates\my_orders.html:77
-msgid "Order Placed"
-msgstr "Buyurtma qo'yilgan"
-
-#: .\templates\my_orders.html:121
-msgid "No shipping address provided"
-msgstr "Yetkazib berish manzili ko'rsatilmagan"
-
-#: .\templates\my_orders.html:123
-msgid "Method:"
-msgstr "Usul:"
-
-#: .\templates\my_orders.html:127
-msgid "Items"
-msgstr "Mahsulotlar"
-
-#: .\templates\my_orders.html:135
-msgid "No Image"
-msgstr "Rasm yo'q"
-
-#: .\templates\my_orders.html:141
-#, python-format
-msgid "Qty: %(qty)s"
-msgstr "Soni: %(qty)s"
-
-#: .\templates\my_orders.html:151
-msgid "Subtotal:"
-msgstr "Oraliq jami:"
-
-#: .\templates\my_orders.html:155
-msgid "Shipping:"
-msgstr "Yetkazib berish:"
-
-#: .\templates\my_orders.html:160
-#, python-format
-msgid "Discount (%(code)s):"
-msgstr "Chegirma (%(code)s):"
-
-#: .\templates\my_orders.html:165
-msgid "Total:"
-msgstr "Jami:"
-
-#: .\templates\my_orders.html:172
-msgid "Return Items"
-msgstr "Mahsulotlarni qaytarish"
-
-#: .\templates\my_orders.html:174
-msgid "View Details"
-msgstr "Tafsilotlarni ko'rish"
-
-#: .\templates\my_orders.html:176
-msgid "Cancel Order"
-msgstr "Buyurtmani bekor qilish"
-
-#: .\templates\my_orders.html:186
-msgid "You don\\"
-msgstr "Sizda hech qanday buyurtma yo'q\\"
-
-#: .\templates\my_orders.html:187
-msgid "When you place orders, they will appear here"
-msgstr "Siz buyurtmalar qo'yganda, ular shu yerda paydo bo'ladi"
-
-#: .\templates\my_orders.html:188
-msgid "Shop Now"
-msgstr "Hozir xarid qilish"
-
-#: .\templates\page.html:6 .\templates\page.html:10
-msgid "Previous"
-msgstr "Oldingi"
-
-#: .\templates\page.html:26 .\templates\page.html:30
-#: .\templates\register.html:98 .\templates\register.html:132
-msgid "Next"
-msgstr "Keyingi"
-
-#: .\templates\payment.html:5
-msgid "Checkout - Payment"
-msgstr "To'lov - To'lov ma'lumotlari"
-
-#: .\templates\payment.html:49
-msgid "Payment Information"
-msgstr "To'lov ma'lumotlari"
-
-#: .\templates\payment.html:50
-msgid "Step 3 of 4"
-msgstr "4 dan 3-qadam"
-
-#: .\templates\payment.html:89
-msgid "Card Details"
-msgstr "Karta ma'lumotlari"
-
-#: .\templates\payment.html:92
-msgid "Card Holder's First and Last Name"
-msgstr "Karta egasining ismi va familiyasi"
-
-#: .\templates\payment.html:93
-msgid "Enter cardholder\\"
-msgstr "Karta egasini kiriting\\"
-
-#: .\templates\payment.html:97
-msgid "Card Number"
-msgstr "Karta raqami"
-
-#: .\templates\payment.html:99
-msgid "1234 5678 9012 3456"
-msgstr "1234 5678 9012 3456"
-
-#: .\templates\payment.html:108
-msgid "Expiry Date"
-msgstr "Amal qilish muddati"
-
-#: .\templates\payment.html:109
-msgid "MM/YY"
-msgstr "OO/YY"
-
-#: .\templates\payment.html:114
-msgid "CVV"
-msgstr "CVV"
-
-#: .\templates\payment.html:116
-msgid "123"
-msgstr "123"
-
-#: .\templates\payment.html:117
-msgid "The 3-digit security code on the back of your card"
-msgstr "Kartangiz orqasidagi 3 raqamli xavfsizlik kodi"
-
-#: .\templates\payment.html:128
-msgid "Back to Details"
-msgstr "Tafsilotlarga qaytish"
-
-#: .\templates\payment.html:131
-msgid "Pay and Complete Order"
-msgstr "To'lash va buyurtmani yakunlash"
-
-#: .\templates\payment.html:191
-msgid "Secure Checkout"
-msgstr "Xavfsiz to'lov"
-
-#: .\templates\payment.html:200
-msgid "SSL Secured"
-msgstr "SSL bilan himoyalangan"
-
-#: .\templates\payment.html:204
-msgid "Protected"
-msgstr "Himoyalangan"
-
-#: .\templates\payment_success.html:5
-msgid "Checkout - Success"
-msgstr "To'lov - Muvaffaqiyatli"
-
-#: .\templates\payment_success.html:57
-msgid "Thank You for Your Order!"
-msgstr "Buyurtmangiz uchun rahmat!"
-
-#: .\templates\payment_success.html:58
-msgid "Order ID:"
-msgstr "Buyurtma ID:"
-
-#: .\templates\payment_success.html:60
-msgid ""
-"Your payment has been successfully processed and your order is confirmed."
-msgstr ""
-"To'lovingiz muvaffaqiyatli amalga oshirildi va buyurtmangiz tasdiqlandi."
-
-#: .\templates\payment_success.html:63
-msgid "We\\'ve sent a confirmation email to"
-msgstr ""
-
-#: .\templates\payment_success.html:63
-#, fuzzy
-#| msgid "Review your details"
-msgid "with your order details."
-msgstr "Ma'lumotlaringizni ko'rib chiqing"
-
-#: .\templates\payment_success.html:74
-msgid "Estimated delivery:"
-msgstr "Taxminiy yetkazib berish:"
-
-#: .\templates\payment_success.html:74
-msgid "up to"
-msgstr "gacha"
-
-#: .\templates\payment_success.html:77
-msgid "Shipping to:"
-msgstr "Yetkazib berish manzili:"
-
-#: .\templates\payment_success.html:78
-msgid "Postal code"
-msgstr "Pochta indeksi"
-
-#: .\templates\payment_success.html:86
-msgid "View Order Details"
-msgstr "Buyurtma tafsilotlarini ko'rish"
-
-#: .\templates\payment_success.html:147
-msgid "Secure Payment"
-msgstr "Xavfsiz to'lov"
-
-#: .\templates\product_details.html:69 .\templates\product_details.html:72
-#: .\templates\product_details.html:75
-msgid "Additional view"
-msgstr "Qo'shimcha ko'rinish"
-
-#: .\templates\product_details.html:103
-msgid "off"
-msgstr "chegirma"
-
-#: .\templates\product_details.html:110
-msgid "available"
-msgstr "mavjud"
-
-#: .\templates\product_details.html:135
-msgid "In cart:"
-msgstr "Savatda:"
-
-#: .\templates\product_details.html:135
-msgid "items"
-msgstr "mahsulotlar"
-
-#: .\templates\product_details.html:152
-msgid "SKU:"
-msgstr "SKU:"
-
-#: .\templates\product_details.html:163
-msgid "Shop:"
-msgstr "Do'kon:"
-
-#: .\templates\product_details.html:168
-msgid "Added:"
-msgstr "Qo'shilgan:"
-
-#: .\templates\product_details.html:179
-msgid "Reviews"
-msgstr "Sharhlar"
-
-#: .\templates\product_details.html:180 .\templates\product_details.html:373
-msgid "Shipping & Returns"
-msgstr "Yetkazib berish va qaytarish"
-
-#: .\templates\product_details.html:201
-msgid "Product Specifications"
-msgstr "Mahsulot texnik xususiyatlari"
-
-#: .\templates\product_details.html:215
-msgid "Customer Reviews"
-msgstr "Mijozlar sharhlari"
-
-#: .\templates\product_details.html:229
-msgid "Based on"
-msgstr "Asoslangan"
-
-#: .\templates\product_details.html:229
-msgid "reviews"
-msgstr "sharhlar"
-
-#: .\templates\product_details.html:238
-msgid "star"
-msgstr "yulduz"
-
-#: .\templates\product_details.html:263
-msgid "Anonymous"
-msgstr "Anonim"
-
-#: .\templates\product_details.html:294 .\templates\product_details.html:344
-msgid "Review image"
-msgstr "Sharh rasmi"
-
-#: .\templates\product_details.html:302
-msgid "No feedbacks available for this product"
-msgstr "Bu mahsulot uchun sharhlar mavjud emas"
-
-#: .\templates\product_details.html:308
-msgid "Edit Your Review,Write a Review"
-msgstr "Sharhingizni tahrirlash,Sharh yozish"
-
-#: .\templates\product_details.html:325
-msgid "Review(Optional)"
-msgstr "Sharh (Ixtiyoriy)"
-
-#: .\templates\product_details.html:327
-msgid "Share your experience with this product"
-msgstr "Bu mahsulot bilan tajribangizni baham ko'ring"
-
-#: .\templates\product_details.html:334
-msgid "Post anonymously"
-msgstr "Anonim ravishda nashr etish"
-
-#: .\templates\product_details.html:339
-msgid "Add Image (Optional)"
-msgstr "Rasm qo'shish (Ixtiyoriy)"
-
-#: .\templates\product_details.html:352
-msgid "Update Review,Submit Review"
-msgstr "Sharhni yangilash,Sharhni yuborish"
-
-#: .\templates\product_details.html:357
-msgid "Delete Review"
-msgstr "Sharhni o'chirish"
-
-#: .\templates\product_details.html:364
-msgid "You must purchase this product to write a review."
-msgstr "Sharh yozish uchun bu mahsulotni sotib olishingiz kerak."
-
-#: .\templates\product_details.html:375
-msgid "Shipping Policy"
-msgstr "Yetkazib berish siyosati"
-
-#: .\templates\product_details.html:376
-msgid ""
-"We offer standard shipping that typically takes 3-5 business days. Express "
-"shipping options are available at checkout for faster delivery."
-msgstr ""
-"Biz odatda 3-5 ish kuni ichida yetkazib beriladigan standart yetkazib "
-"berishni taklif qilamiz. Tezroq yetkazib berish uchun to'lov paytida tezkor "
-"yetkazib berish variantlari mavjud."
-
-#: .\templates\product_details.html:378
-msgid "Return Policy"
-msgstr "Qaytarish siyosati"
-
-#: .\templates\product_details.html:379
-msgid "If you\\"
-msgstr "Agar siz\\"
-
-#: .\templates\product_details.html:381
-msgid "International Shipping"
-msgstr "Xalqaro yetkazib berish"
-
-#: .\templates\product_details.html:382
-msgid ""
-"We ship to most countries worldwide. International shipping times may vary "
-"depending on your location and local customs processing."
-msgstr ""
-"Biz dunyo bo'ylab ko'pgina mamlakatlarga yetkazib beramiz. Xalqaro yetkazib "
-"berish vaqti joylashuvingiz va mahalliy bojxona ishloviga qarab o'zgarishi "
-"mumkin."
-
-#: .\templates\product_details.html:387
-msgid "You May Also Like"
-msgstr "Sizga ham yoqishi mumkin"
-
-#: .\templates\product_details.html:395
-msgid "Related Product"
-msgstr "Tegishli mahsulot"
-
-#: .\templates\product_details.html:409
-msgid "Recently Viewed"
-msgstr "Yaqinda ko'rilgan"
-
-#: .\templates\product_details.html:417
-msgid "Viewed Product"
-msgstr "Ko'rilgan mahsulot"
-
-#: .\templates\profile.html:116 .\templates\profile_edit.html:16
+#: .\templates\accounts\profile.html:116
+#: .\templates\accounts\profile_edit.html:16
 msgid "Personal Information"
 msgstr "Shaxsiy ma'lumot"
 
-#: .\templates\profile.html:134 .\templates\profile_edit.html:56
+#: .\templates\accounts\profile.html:117 .\templates\accounts\profile.html:135
+#: .\templates\products\manage_products.html:211
+msgid "Edit"
+msgstr "Tahrirlash"
+
+#: .\templates\accounts\profile.html:134
+#: .\templates\accounts\profile_edit.html:56
 msgid "Address Details"
 msgstr "Manzil ma'lumotlari"
 
-#: .\templates\profile.html:160 .\templates\profile_edit.html:131
+#: .\templates\accounts\profile.html:160
+#: .\templates\accounts\profile_edit.html:131
 msgid "Is primary address"
 msgstr "Asosiy manzil"
 
-#: .\templates\profile.html:164
+#: .\templates\accounts\profile.html:164
 msgid "No address information has been added yet."
 msgstr "Hali manzil ma'lumotlari qo'shilmagan."
 
-#: .\templates\profile.html:164
+#: .\templates\accounts\profile.html:164
 msgid "Add address details"
 msgstr "Manzil ma'lumotlarini qo'shish"
 
-#: .\templates\profile_edit.html:8
+#: .\templates\accounts\profile_edit.html:8
 msgid "Edit Profile"
 msgstr "Profilni tahrirlash"
 
-#: .\templates\profile_edit.html:9
+#: .\templates\accounts\profile_edit.html:9
 msgid "Update your personal information and address details"
 msgstr "Shaxsiy ma'lumotlaringiz va manzil ma'lumotlaringizni yangilang"
 
-#: .\templates\register.html:16
+#: .\templates\accounts\profile_edit.html:71
+#: .\templates\orders\checkout.html:101
+msgid "Address Line 2 (Optional)"
+msgstr "Manzil qatori 2 (Ixtiyoriy)"
+
+#: .\templates\accounts\profile_edit.html:138
+#: .\templates\categories\add_category.html:49
+#: .\templates\products\add_product_form.html:243
+#: .\templates\products\edit_product.html:294
+#: .\templates\products\manage_products.html:254
+#: .\templates\shops\add_shop.html:92
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+#: .\templates\accounts\profile_edit.html:139
+#: .\templates\products\edit_product.html:297
+msgid "Save Changes"
+msgstr "O'zgarishlarni saqlash"
+
+#: .\templates\accounts\register.html:16
 msgid "Create Account"
 msgstr "Hisob yaratish"
 
-#: .\templates\register.html:21
+#: .\templates\accounts\register.html:21
 msgid "Personal Info"
 msgstr "Shaxsiy ma'lumot"
 
-#: .\templates\register.html:22
+#: .\templates\accounts\register.html:22
 msgid "Your basic details"
 msgstr "Asosiy ma'lumotlaringiz"
 
-#: .\templates\register.html:28
+#: .\templates\accounts\register.html:28
 msgid "Account Info"
 msgstr "Hisob ma'lumotlari"
 
-#: .\templates\register.html:29
+#: .\templates\accounts\register.html:29
 msgid "Set up your login"
 msgstr "Kirishingizni sozlang"
 
-#: .\templates\register.html:35
+#: .\templates\accounts\register.html:35
 msgid "Confirm Information"
 msgstr "Ma'lumotlarni tasdiqlash"
 
-#: .\templates\register.html:36
+#: .\templates\accounts\register.html:36
 msgid "Review your details"
 msgstr "Ma'lumotlaringizni ko'rib chiqing"
 
-#: .\templates\register.html:42
+#: .\templates\accounts\register.html:42
 msgid "Verification"
 msgstr "Tekshirish"
 
-#: .\templates\register.html:43
+#: .\templates\accounts\register.html:43
 msgid "Enter code from email"
 msgstr "Elektron pochtadan kodni kiriting"
 
-#: .\templates\register.html:54
+#: .\templates\accounts\register.html:54
 msgid "Join Our Community"
 msgstr "Bizning hamjamiyatimizga qo'shiling"
 
-#: .\templates\register.html:55
+#: .\templates\accounts\register.html:55
 msgid "Fill in your details to create an account"
 msgstr "Hisob yaratish uchun ma'lumotlaringizni to'ldiring"
 
-#: .\templates\register.html:59
+#: .\templates\accounts\register.html:59
 msgid "or"
 msgstr ""
 
-#: .\templates\register.html:141
+#: .\templates\accounts\register.html:98 .\templates\accounts\register.html:132
+#: .\templates\page.html:26 .\templates\page.html:30
+msgid "Next"
+msgstr "Keyingi"
+
+#: .\templates\accounts\register.html:129
+#: .\templates\accounts\register.html:177
+#: .\templates\accounts\register.html:206
+#: .\templates\favourites\favourites.html:82
+msgid "Back"
+msgstr "Orqaga"
+
+#: .\templates\accounts\register.html:141
 msgid "Review Your Information"
 msgstr "Ma'lumotlaringizni ko'rib chiqing"
 
-#: .\templates\register.html:144
+#: .\templates\accounts\register.html:144
 msgid "First Name:"
 msgstr "Ism:"
 
-#: .\templates\register.html:148
+#: .\templates\accounts\register.html:148
 msgid "Last Name:"
 msgstr "Familiya:"
 
-#: .\templates\register.html:152
+#: .\templates\accounts\register.html:152
 msgid "Email:"
 msgstr "Elektron pochta:"
 
-#: .\templates\register.html:160
+#: .\templates\accounts\register.html:158 .\templates\base.html:396
+msgid "Terms of Service"
+msgstr "Xizmat ko'rsatish shartlari"
+
+#: .\templates\accounts\register.html:160
 msgid ""
 "Welcome to our website. If you continue to browse and use this website, you "
 "are agreeing to comply with and be bound by the following terms and "
@@ -2061,7 +975,7 @@ msgstr ""
 "foydalanishni davom ettirsangiz, quyidagi foydalanish shartlari va "
 "qoidalariga rioya qilishga va bog'lanishga rozi bo'lasiz."
 
-#: .\templates\register.html:161
+#: .\templates\accounts\register.html:161
 msgid ""
 "The content of the pages of this website is for your general information and "
 "use only. It is subject to change without notice."
@@ -2069,7 +983,7 @@ msgstr ""
 "Ushbu veb-saytning sahifalari mazmuni faqat umumiy ma'lumot va foydalanish "
 "uchun. U oldindan ogohlantirmasdan o'zgartirilishi mumkin."
 
-#: .\templates\register.html:162
+#: .\templates\accounts\register.html:162
 msgid ""
 "This website uses cookies to monitor browsing preferences. If you do allow "
 "cookies to be used, personal information may be stored by us for use by "
@@ -2080,7 +994,7 @@ msgstr ""
 "bersangiz, shaxsiy ma'lumotlar uchinchi shaxslar tomonidan foydalanish uchun "
 "biz tomonimizdan saqlanishi mumkin."
 
-#: .\templates\register.html:163
+#: .\templates\accounts\register.html:163
 msgid ""
 "Neither we nor any third parties provide any warranty or guarantee as to the "
 "accuracy, timeliness, performance, completeness or suitability of the "
@@ -2092,25 +1006,25 @@ msgstr ""
 "to'liqligini yoki biron bir maqsadga mosligini kafolatlamaydi yoki kafolat "
 "bermaydi."
 
-#: .\templates\register.html:168
+#: .\templates\accounts\register.html:168
 msgid "I agree to the Terms of Service and Privacy Policy"
 msgstr "Xizmat ko'rsatish shartlari va Maxfiylik siyosatiga roziman"
 
-#: .\templates\register.html:172
+#: .\templates\accounts\register.html:172
 msgid "Subscribe to our newsletter for updates and offers"
 msgstr ""
 "Yangilanishlar va takliflar uchun bizning axborot byulletenimizga obuna "
 "bo'ling"
 
-#: .\templates\register.html:180
+#: .\templates\accounts\register.html:180
 msgid "Submit Details"
 msgstr "Ma'lumotlarni yuborish"
 
-#: .\templates\register.html:189
+#: .\templates\accounts\register.html:189
 msgid "Email Verification"
 msgstr "Elektron pochta tekshiruvi"
 
-#: .\templates\register.html:190
+#: .\templates\accounts\register.html:190
 msgid ""
 "We've sent a 4-digit verification code to your email. Please enter it below "
 "to complete your registration."
@@ -2118,41 +1032,41 @@ msgstr ""
 "Elektron pochtangizga 4 raqamli tekshirish kodini yubordik. Ro'yxatdan "
 "o'tishni yakunlash uchun uni quyida kiriting."
 
-#: .\templates\register.html:198
+#: .\templates\accounts\register.html:198
 msgid "Didn't receive a code?"
 msgstr "Kod kelmadimi?"
 
-#: .\templates\register.html:199
+#: .\templates\accounts\register.html:199
 msgid "Resend Code"
 msgstr "Kodni qayta yuborish"
 
-#: .\templates\register.html:209
+#: .\templates\accounts\register.html:209
 msgid "Complete Registration"
 msgstr "Ro'yxatdan o'tishni yakunlash"
 
-#: .\templates\register.html:216
+#: .\templates\accounts\register.html:216
 msgid "Already have an account?"
 msgstr "Hisobingiz bormi?"
 
-#: .\templates\reset_password.html:10
+#: .\templates\accounts\reset_password.html:10
 msgid "Enter your email address, and we'll send you a password reset link."
 msgstr ""
 "Elektron pochta manzilingizni kiriting, va biz sizga parolni tiklash "
 "havolasini yuboramiz."
 
-#: .\templates\reset_password.html:26
+#: .\templates\accounts\reset_password.html:26
 msgid "Send Reset Link"
 msgstr "Tiklash havolasini yuborish"
 
-#: .\templates\reset_password.html:30
+#: .\templates\accounts\reset_password.html:30
 msgid "Back to Login"
 msgstr "Kirishga qaytish"
 
-#: .\templates\verify_email_to_change_email_passcode.html:6
+#: .\templates\accounts\verify_email_to_change_email_passcode.html:6
 msgid "Verify Your New Email"
 msgstr "Yangi elektron pochtangizni tasdiqlang"
 
-#: .\templates\verify_email_to_change_email_passcode.html:8
+#: .\templates\accounts\verify_email_to_change_email_passcode.html:8
 #, python-format
 msgid ""
 "We've sent a verification code to your new email address <b>%(email)s</b>. "
@@ -2165,14 +1079,1636 @@ msgstr ""
 "        ehtimol spam papkasini) tekshiring va elektron pochta "
 "o'zgarishingizni tasdiqlash uchun quyidagi kodni kiriting."
 
-#: .\templates\verify_email_to_change_email_passcode.html:28
+#: .\templates\accounts\verify_email_to_change_email_passcode.html:28
 msgid "Enter verification code"
 msgstr "Tekshirish kodini kiriting"
 
-#: .\templates\verify_email_to_change_email_passcode.html:34
+#: .\templates\accounts\verify_email_to_change_email_passcode.html:34
 msgid "Didn\\'t receive the email?"
 msgstr "Elektron xat kelmadimi?"
 
-#: .\templates\verify_email_to_change_email_passcode.html:34
+#: .\templates\accounts\verify_email_to_change_email_passcode.html:34
 msgid "Resend Verification Code"
 msgstr "Tekshirish kodini qayta yuborish"
+
+#: .\templates\base.html:8 .\templates\base.html:41 .\templates\base.html:332
+#: .\templates\base.html:349 .\templates\base.html:395
+msgid "E-Shop"
+msgstr "E-Do'kon"
+
+#: .\templates\base.html:46
+msgid "Toggle navigation"
+msgstr "Navigatsiyani almashtirish"
+
+#: .\templates\base.html:59 .\templates\base.html:222 .\templates\base.html:360
+msgid "Deals"
+msgstr "Takliflar"
+
+#: .\templates\base.html:66 .\templates\base.html:257
+msgid "Manage Products"
+msgstr "Mahsulotlarni boshqarish"
+
+#: .\templates\base.html:82
+msgid "Select Language"
+msgstr ""
+
+#: .\templates\base.html:105
+msgid "View Shopping Cart"
+msgstr "Xarid savatini ko'rish"
+
+#: .\templates\base.html:113
+msgid "View Wishlist"
+msgstr "Istaklar ro'yxatini ko'rish"
+
+#: .\templates\base.html:121
+#, fuzzy
+#| msgid "Specifications"
+msgid "View Notifications"
+msgstr "Texnik xususiyatlar"
+
+#: .\templates\base.html:136
+msgid "My Account"
+msgstr "Mening hisobim"
+
+#: .\templates\base.html:147 .\templates\base.html:272
+msgid "My Profile"
+msgstr "Mening profilim"
+
+#: .\templates\base.html:150 .\templates\base.html:279
+#: .\templates\orders\my_orders.html:5 .\templates\orders\my_orders.html:14
+msgid "My Orders"
+msgstr "Mening buyurtmalarim"
+
+#: .\templates\base.html:155 .\templates\base.html:285
+#: .\templates\base.html:368
+msgid "Logout"
+msgstr "Chiqish"
+
+#: .\templates\base.html:166 .\templates\base.html:196
+#: .\templates\base.html:371
+msgid "Sign Up"
+msgstr "Ro'yxatdan o'tish"
+
+#: .\templates\base.html:209 .\templates\base.html:358
+#: .\templates\products\product_details.html:40
+msgid "Home"
+msgstr "Bosh sahifa"
+
+#: .\templates\base.html:229 .\templates\base.html:374
+msgid "Wishlist"
+msgstr "Istaklar ro'yxati"
+
+#: .\templates\base.html:266 .\templates\base.html:365
+msgid "Account"
+msgstr "Hisob"
+
+#: .\templates\base.html:293
+msgid "Language"
+msgstr ""
+
+#: .\templates\base.html:318 .\templates\base.html:382
+msgid "Facebook"
+msgstr "Facebook"
+
+#: .\templates\base.html:321 .\templates\base.html:384
+msgid "Twitter"
+msgstr "Twitter"
+
+#: .\templates\base.html:324 .\templates\base.html:386
+msgid "Instagram"
+msgstr "Instagram"
+
+#: .\templates\base.html:327 .\templates\base.html:388
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: .\templates\base.html:332 .\templates\base.html:395
+msgid "All Rights Reserved."
+msgstr "Barcha huquqlar himoyalangan."
+
+#: .\templates\base.html:352
+msgid ""
+"Your one-stop shop for amazing products. We focus on quality, affordability, "
+"and customer satisfaction."
+msgstr ""
+"Ajoyib mahsulotlar uchun yagona do'koningiz. Biz sifat, qulay narx va "
+"mijozlar mamnuniyatiga e'tibor qaratamiz."
+
+#: .\templates\base.html:356
+msgid "Quick Links"
+msgstr "Tezkor havolalar"
+
+#: .\templates\base.html:361
+msgid "About Us"
+msgstr "Biz haqimizda"
+
+#: .\templates\base.html:373
+msgid "My Cart"
+msgstr "Mening savatim"
+
+#: .\templates\base.html:375
+msgid "Order History"
+msgstr "Buyurtmalar tarixi"
+
+#: .\templates\base.html:379 .\templates\home.html:383
+msgid "Stay Connected"
+msgstr "Bog'lanishda bo'ling"
+
+#: .\templates\base.html:380
+msgid "Follow us on social media for updates and offers."
+msgstr ""
+"Yangiliklar va takliflar uchun ijtimoiy tarmoqlarda bizni kuzatib boring."
+
+#: .\templates\base.html:396
+msgid "Privacy Policy"
+msgstr "Maxfiylik siyosati"
+
+#: .\templates\carts\my_cart.html:10
+msgid "Your Shopping Cart"
+msgstr "Sizning xarid savatingiz"
+
+#: .\templates\carts\my_cart.html:23 .\templates\carts\my_cart.html:137
+#: .\templates\orders\checkout.html:25 .\templates\orders\checkout.html:192
+#: .\templates\payments\payment.html:25 .\templates\payments\payment.html:143
+#: .\templates\payments\payment_success.html:25
+#: .\templates\payments\payment_success.html:99
+#: .\templates\products\product_details.html:210
+msgid "Details"
+msgstr "Tafsilotlar"
+
+#: .\templates\carts\my_cart.html:37 .\templates\orders\checkout.html:39
+#: .\templates\payments\payment.html:39
+#: .\templates\payments\payment_success.html:39
+msgid "Confirmation"
+msgstr "Tasdiqlash"
+
+#: .\templates\carts\my_cart.html:47
+msgid "Items in Your Cart"
+msgstr "Savatingizdagi mahsulotlar"
+
+#: .\templates\carts\my_cart.html:48
+#, python-format
+msgid "%(counter)s Item"
+msgid_plural "%(counter)s Items"
+msgstr[0] "%(counter)s ta mahsulot"
+
+#: .\templates\carts\my_cart.html:60
+msgid "Your cart is empty"
+msgstr "Savatingiz bo'sh"
+
+#: .\templates\carts\my_cart.html:61
+msgid "Looks like you haven\\'t added any products to your cart yet."
+msgstr "Hali savatingizga hech qanday mahsulot qo'shmaganga o'xshaysiz."
+
+#: .\templates\carts\my_cart.html:62 .\templates\carts\my_cart.html:125
+#: .\templates\payments\payment_success.html:89
+msgid "Continue Shopping"
+msgstr "Xaridni davom ettirish"
+
+#: .\templates\carts\my_cart.html:69 .\templates\carts\my_cart.html:79
+#: .\templates\favourites\favourites.html:36
+#: .\templates\favourites\favourites.html:49
+#: .\templates\products\manage_products.html:172
+#: .\templates\products\manage_products.html:184
+#: .\templates\products\manage_products.html:207
+msgid "View"
+msgstr "Ko'rish"
+
+#: .\templates\carts\my_cart.html:85
+msgid "DISCOUNTED"
+msgstr "CHEGIRMALI"
+
+#: .\templates\carts\my_cart.html:95
+msgid "Decrease quantity"
+msgstr "Miqdorni kamaytirish"
+
+#: .\templates\carts\my_cart.html:100
+msgid "Increase quantity"
+msgstr "Miqdorni oshirish"
+
+#: .\templates\carts\my_cart.html:109
+msgid "Remove item"
+msgstr "Mahsulotni olib tashlash"
+
+#: .\templates\carts\my_cart.html:112
+msgid "Save for later"
+msgstr "Keyinroq uchun saqlash"
+
+#: .\templates\carts\my_cart.html:122
+msgid "Clear Cart"
+msgstr "Savatni tozalash"
+
+#: .\templates\carts\my_cart.html:135 .\templates\orders\checkout.html:190
+#: .\templates\payments\payment.html:141
+#: .\templates\payments\payment_success.html:97
+msgid "Order Summary"
+msgstr "Buyurtma xulosasi"
+
+#: .\templates\carts\my_cart.html:144
+#, python-format
+msgid "Subtotal (%(counter)s item)"
+msgid_plural "Subtotal (%(counter)s items)"
+msgstr[0] "Oraliq jami (%(counter)s ta mahsulot)"
+
+#: .\templates\carts\my_cart.html:148 .\templates\orders\checkout.html:229
+#: .\templates\payments\payment.html:180
+#: .\templates\payments\payment_success.html:136
+msgid "Shipping"
+msgstr "Yetkazib berish"
+
+#: .\templates\carts\my_cart.html:149
+msgid "Calculated at checkout"
+msgstr "To'lov paytida hisoblanadi"
+
+#: .\templates\carts\my_cart.html:153
+msgid "Promo Code"
+msgstr "Promo kod"
+
+#: .\templates\carts\my_cart.html:154
+#: .\templates\products\list_products.html:75
+msgid "Apply"
+msgstr "Qo'llash"
+
+#: .\templates\carts\my_cart.html:159 .\templates\orders\checkout.html:240
+#: .\templates\payments\payment.html:186
+#: .\templates\payments\payment_success.html:142
+msgid "Total"
+msgstr "Jami"
+
+#: .\templates\carts\my_cart.html:164
+msgid "Proceed to Checkout"
+msgstr "To'lovga o'tish"
+
+#: .\templates\carts\my_cart.html:169 .\templates\orders\checkout.html:245
+msgid "We Accept"
+msgstr "Biz qabul qilamiz"
+
+#: .\templates\categories\add_category.html:4
+#: .\templates\products\manage_products.html:23
+#, fuzzy
+#| msgid "Category"
+msgid "Add Category"
+msgstr "Kategoriya"
+
+#: .\templates\categories\add_category.html:12
+#, fuzzy
+#| msgid "Category"
+msgid "Add New Category"
+msgstr "Kategoriya"
+
+#: .\templates\categories\add_category.html:13
+#, fuzzy
+#| msgid "Enter product details below"
+msgid "Enter category details below"
+msgstr "Mahsulot tafsilotlarini quyida kiriting"
+
+#: .\templates\categories\add_category.html:20
+#, fuzzy
+#| msgid "Contact Information"
+msgid "Category Information"
+msgstr "Aloqa ma'lumotlari"
+
+#: .\templates\categories\add_category.html:24
+#, fuzzy
+#| msgid "Category"
+msgid "Category Name"
+msgstr "Kategoriya"
+
+#: .\templates\categories\add_category.html:26
+#, fuzzy
+#| msgid "Choose a descriptive name for your product"
+msgid "Choose a descriptive name for your category"
+msgstr "Mahsulotingiz uchun tavsiflovchi nom tanlang"
+
+#: .\templates\categories\add_category.html:40
+msgid "Optional: Select a parent category to create a subcategory"
+msgstr ""
+
+#: .\templates\categories\add_category.html:52
+#, fuzzy
+#| msgid "Category"
+msgid "Create Category"
+msgstr "Kategoriya"
+
+#: .\templates\favourites\favourites.html:15
+msgid "My Cosmic Collection"
+msgstr "Mening kosmik kolleksiyam"
+
+#: .\templates\favourites\favourites.html:16
+msgid "Your universe of favorite items"
+msgstr "Sevimli mahsulotlaringiz olami"
+
+#: .\templates\favourites\favourites.html:20
+msgid "Disintegrate All"
+msgstr "Hammasini o'chirish"
+
+#: .\templates\favourites\favourites.html:54
+#: .\templates\products\product_details.html:113
+msgid "In Stock"
+msgstr "Mavjud"
+
+#: .\templates\favourites\favourites.html:56
+#: .\templates\products\list_products.html:281
+#: .\templates\products\list_products.html:343
+#: .\templates\products\manage_products.html:60
+#: .\templates\products\manage_products.html:87
+#: .\templates\products\manage_products.html:200
+#: .\templates\products\product_details.html:116
+#: .\templates\products\product_details.html:164
+msgid "Out of Stock"
+msgstr "Mavjud emas"
+
+#: .\templates\favourites\favourites.html:61
+msgid "Remove from favorites"
+msgstr "Sevimlilardan olib tashlash"
+
+#: .\templates\favourites\favourites.html:64
+msgid "View details"
+msgstr "Tafsilotlarni ko'rish"
+
+#: .\templates\favourites\favourites.html:67
+msgid "Add to cart"
+msgstr "Savatga qo'shish"
+
+#: .\templates\favourites\favourites.html:77
+#: .\templates\products\manage_products.html:71
+#: .\templates\products\product_details.html:185
+msgid "Category:"
+msgstr "Kategoriya:"
+
+#: .\templates\favourites\favourites.html:96
+msgid "Your Cosmic Collection Is Empty"
+msgstr "Sizning kosmik kolleksiyangiz bo'sh"
+
+#: .\templates\favourites\favourites.html:97
+msgid ""
+"Start adding your favorite products to create your personal galaxy of "
+"amazing items!"
+msgstr ""
+"Ajoyib mahsulotlardan iborat shaxsiy galaktikangizni yaratish uchun sevimli "
+"mahsulotlaringizni qo'sha boshlang!"
+
+#: .\templates\favourites\favourites.html:99
+msgid "Explore Products"
+msgstr "Mahsulotlarni ko'rib chiqish"
+
+#: .\templates\home.html:17
+#, fuzzy
+#| msgid "Related Product"
+msgid "Discover Amazing Products"
+msgstr "Tegishli mahsulot"
+
+#: .\templates\home.html:18
+msgid "Shop the latest trends with confidence and ease"
+msgstr ""
+
+#: .\templates\home.html:21 .\templates\orders\my_orders.html:161
+msgid "Shop Now"
+msgstr "Hozir xarid qilish"
+
+#: .\templates\home.html:25
+#, fuzzy
+#| msgid "Explore Products"
+msgid "Explore"
+msgstr "Mahsulotlarni ko'rib chiqish"
+
+#: .\templates\home.html:42
+msgid "Handpicked"
+msgstr ""
+
+#: .\templates\home.html:43
+#, fuzzy
+#| msgid "Featured Product"
+msgid "Featured Products"
+msgstr "Tavsiya etilgan mahsulot"
+
+#: .\templates\home.html:44
+msgid "Discover our curated selection just for you"
+msgstr ""
+
+#: .\templates\home.html:52 .\templates\home.html:256
+#: .\templates\products\list_products.html:275
+msgid "New"
+msgstr "Yangi"
+
+#: .\templates\home.html:55 .\templates\home.html:258
+msgid "Sale"
+msgstr ""
+
+#: .\templates\home.html:106
+#, fuzzy
+#| msgid "No feedbacks available for this product"
+msgid "No featured products available at the moment."
+msgstr "Bu mahsulot uchun sharhlar mavjud emas"
+
+#: .\templates\home.html:107 .\templates\home.html:310
+#, fuzzy
+#| msgid "Total Products"
+msgid "Browse All Products"
+msgstr "Jami mahsulotlar"
+
+#: .\templates\home.html:115
+#, fuzzy
+#| msgid "Viewed Product"
+msgid "View All Products"
+msgstr "Ko'rilgan mahsulot"
+
+#: .\templates\home.html:127
+msgid "Limited Time Offer"
+msgstr ""
+
+#: .\templates\home.html:128
+msgid "Special Deals & Discounts"
+msgstr ""
+
+#: .\templates\home.html:129
+#, python-format
+msgid "Discover our discounted products with incredible deals up to 70%% off"
+msgstr ""
+
+#: .\templates\home.html:133
+msgid "Days"
+msgstr ""
+
+#: .\templates\home.html:137
+msgid "Hours"
+msgstr ""
+
+#: .\templates\home.html:141
+msgid "Minutes"
+msgstr ""
+
+#: .\templates\home.html:145
+msgid "Seconds"
+msgstr ""
+
+#: .\templates\home.html:149
+#, fuzzy
+#| msgid "Shop Now"
+msgid "Shop Deals Now"
+msgstr "Hozir xarid qilish"
+
+#: .\templates\home.html:160 .\templates\home.html:174
+msgid "Browse"
+msgstr ""
+
+#: .\templates\home.html:161
+#, fuzzy
+#| msgid "Category"
+msgid "Shop by Category"
+msgstr "Kategoriya"
+
+#: .\templates\home.html:162
+msgid "Find exactly what you're looking for in our curated collections"
+msgstr ""
+
+#: .\templates\home.html:182
+msgid "No categories available at the moment."
+msgstr ""
+
+#: .\templates\home.html:193
+msgid "Top Rated"
+msgstr ""
+
+#: .\templates\home.html:194
+msgid "Popular Shops"
+msgstr ""
+
+#: .\templates\home.html:195
+msgid "Trusted by thousands of customers worldwide"
+msgstr ""
+
+#: .\templates\home.html:208
+msgid "Visit Shop"
+msgstr ""
+
+#: .\templates\home.html:226
+msgid "Followers"
+msgstr ""
+
+#: .\templates\home.html:236
+msgid "No shops available at the moment."
+msgstr ""
+
+#: .\templates\home.html:247
+msgid "Just In"
+msgstr ""
+
+#: .\templates\home.html:248
+msgid "New Arrivals"
+msgstr ""
+
+#: .\templates\home.html:249
+msgid "The latest additions to our catalog, fresh off the shelf"
+msgstr ""
+
+#: .\templates\home.html:309
+#, fuzzy
+#| msgid "No Products Available"
+msgid "No new products available at the moment."
+msgstr "Mavjud mahsulotlar yo'q"
+
+#: .\templates\home.html:318
+msgid "View All New Arrivals"
+msgstr ""
+
+#: .\templates\home.html:330
+msgid "Why Choose Us"
+msgstr ""
+
+#: .\templates\home.html:331
+#, fuzzy
+#| msgid "Shipping & Returns"
+msgid "Shopping Benefits"
+msgstr "Yetkazib berish va qaytarish"
+
+#: .\templates\home.html:332
+msgid "We're committed to making your shopping experience exceptional"
+msgstr ""
+
+#: .\templates\home.html:340
+#, fuzzy
+#| msgid "Standard Delivery"
+msgid "Fast Delivery"
+msgstr "Standart yetkazib berish"
+
+#: .\templates\home.html:341
+msgid ""
+"Get your products delivered quickly and reliably, with real-time tracking"
+msgstr ""
+
+#: .\templates\home.html:349 .\templates\payments\payment_success.html:147
+msgid "Secure Payment"
+msgstr "Xavfsiz to'lov"
+
+#: .\templates\home.html:350
+msgid ""
+"Your payments are safe with our secure payment system using latest encryption"
+msgstr ""
+
+#: .\templates\home.html:358
+#, fuzzy
+#| msgid "Returned"
+msgid "Easy Returns"
+msgstr "Qaytarilgan"
+
+#: .\templates\home.html:359
+msgid "Simple and hassle-free 30-day return process with money-back guarantee"
+msgstr ""
+
+#: .\templates\home.html:367
+msgid "24/7 Support"
+msgstr ""
+
+#: .\templates\home.html:368
+msgid ""
+"Our customer support team is always ready to help you with any questions"
+msgstr ""
+
+#: .\templates\home.html:384
+msgid "Join Our Newsletter"
+msgstr ""
+
+#: .\templates\home.html:385
+#, fuzzy
+#| msgid "Subscribe to our newsletter for updates and offers"
+msgid ""
+"Subscribe to our newsletter for the latest products, deals, and updates "
+"delivered to your inbox"
+msgstr ""
+"Yangilanishlar va takliflar uchun bizning axborot byulletenimizga obuna "
+"bo'ling"
+
+#: .\templates\home.html:389
+#, fuzzy
+#| msgid "Email Address"
+msgid "Your email address"
+msgstr "Elektron pochta manzili"
+
+#: .\templates\home.html:392
+msgid "Subscribe"
+msgstr ""
+
+#: .\templates\home.html:398
+msgid "We respect your privacy. Unsubscribe anytime."
+msgstr ""
+
+#: .\templates\notifications\notifications_list.html:16
+msgid "Your notifications and updates"
+msgstr ""
+
+#: .\templates\notifications\notifications_list.html:22
+msgid "Mark all as read"
+msgstr ""
+
+#: .\templates\notifications\notifications_list.html:30
+msgid "All"
+msgstr ""
+
+#: .\templates\notifications\notifications_list.html:31
+msgid "Unread"
+msgstr ""
+
+#: .\templates\notifications\notifications_list.html:43
+msgid "ago"
+msgstr ""
+
+#: .\templates\notifications\notifications_list.html:50
+msgid "Mark as read"
+msgstr ""
+
+#: .\templates\notifications\notifications_list.html:63
+#, fuzzy
+#| msgid "Specifications"
+msgid "No notifications yet"
+msgstr "Texnik xususiyatlar"
+
+#: .\templates\notifications\notifications_list.html:64
+#, fuzzy
+#| msgid "When you place orders, they will appear here"
+msgid "When you receive notifications, they will appear here."
+msgstr "Siz buyurtmalar qo'yganda, ular shu yerda paydo bo'ladi"
+
+#: .\templates\orders\checkout.html:5
+msgid "Checkout - Details"
+msgstr "To'lov - Tafsilotlar"
+
+#: .\templates\orders\checkout.html:12 .\templates\payments\payment.html:12
+#: .\templates\payments\payment_success.html:12
+msgid "Checkout"
+msgstr "To'lov"
+
+#: .\templates\orders\checkout.html:49
+#: .\templates\payments\payment_success.html:73
+msgid "Delivery Details"
+msgstr "Yetkazib berish tafsilotlari"
+
+#: .\templates\orders\checkout.html:50
+msgid "Step 2 of 4"
+msgstr "4 dan 2-qadam"
+
+#: .\templates\orders\checkout.html:60
+msgid "Contact Information"
+msgstr "Aloqa ma'lumotlari"
+
+#: .\templates\orders\checkout.html:65
+msgid "Enter your email"
+msgstr "Elektron pochtangizni kiriting"
+
+#: .\templates\orders\checkout.html:71
+msgid "Enter your phone number"
+msgstr "Telefon raqamingizni kiriting"
+
+#: .\templates\orders\checkout.html:86
+msgid "Enter your first name"
+msgstr "Ismingizni kiriting"
+
+#: .\templates\orders\checkout.html:92
+msgid "Enter your last name"
+msgstr "Familiyangizni kiriting"
+
+#: .\templates\orders\checkout.html:128
+msgid "Save this address to my profile and set as primary address?"
+msgstr "Ushbu manzilni profilimga saqlash va asosiy manzil sifatida o'rnatish?"
+
+#: .\templates\orders\checkout.html:129
+msgid "We\\"
+msgstr "Biz\\"
+
+#: .\templates\orders\checkout.html:138
+msgid "Delivery Options"
+msgstr "Yetkazib berish variantlari"
+
+#: .\templates\orders\checkout.html:146
+msgid "Standard Delivery"
+msgstr "Standart yetkazib berish"
+
+#: .\templates\orders\checkout.html:147
+msgid "3-5 business days"
+msgstr "3-5 ish kuni"
+
+#: .\templates\orders\checkout.html:156
+msgid "Express Delivery"
+msgstr "Tezkor yetkazib berish"
+
+#: .\templates\orders\checkout.html:157
+msgid "1-2 business days"
+msgstr "1-2 ish kuni"
+
+#: .\templates\orders\checkout.html:166
+msgid "Next Day Delivery"
+msgstr "Keyingi kun yetkazib berish"
+
+#: .\templates\orders\checkout.html:167
+msgid "Next business day"
+msgstr "Keyingi ish kuni"
+
+#: .\templates\orders\checkout.html:177
+msgid "Back to Cart"
+msgstr "Savatga qaytish"
+
+#: .\templates\orders\checkout.html:180
+msgid "Continue to Payment"
+msgstr "To'lovga o'tish"
+
+#: .\templates\orders\checkout.html:225 .\templates\payments\payment.html:176
+#: .\templates\payments\payment_success.html:132
+msgid "Subtotal"
+msgstr "Oraliq jami"
+
+#: .\templates\orders\my_orders.html:16
+msgid "All Orders"
+msgstr "Barcha buyurtmalar"
+
+#: .\templates\orders\my_orders.html:29
+#, python-format
+msgid "Order #%(order_id)s"
+msgstr "Buyurtma #%(order_id)s"
+
+#: .\templates\orders\my_orders.html:42 .\templates\orders\my_orders.html:59
+#: .\templates\orders\my_orders.html:76
+msgid "Order Placed"
+msgstr "Buyurtma qo'yilgan"
+
+#: .\templates\orders\my_orders.html:100
+msgid "No shipping address provided"
+msgstr "Yetkazib berish manzili ko'rsatilmagan"
+
+#: .\templates\orders\my_orders.html:102
+msgid "Method:"
+msgstr "Usul:"
+
+#: .\templates\orders\my_orders.html:106
+msgid "Items"
+msgstr "Mahsulotlar"
+
+#: .\templates\orders\my_orders.html:114
+msgid "No Image"
+msgstr "Rasm yo'q"
+
+#: .\templates\orders\my_orders.html:120
+#, python-format
+msgid "Qty: %(qty)s"
+msgstr "Soni: %(qty)s"
+
+#: .\templates\orders\my_orders.html:130
+msgid "Subtotal:"
+msgstr "Oraliq jami:"
+
+#: .\templates\orders\my_orders.html:134
+msgid "Shipping:"
+msgstr "Yetkazib berish:"
+
+#: .\templates\orders\my_orders.html:139
+#, python-format
+msgid "Discount (%(code)s):"
+msgstr "Chegirma (%(code)s):"
+
+#: .\templates\orders\my_orders.html:144
+msgid "Total:"
+msgstr "Jami:"
+
+#: .\templates\orders\my_orders.html:150
+msgid "View Details"
+msgstr "Tafsilotlarni ko'rish"
+
+#: .\templates\orders\my_orders.html:159
+msgid "You don\\"
+msgstr "Sizda hech qanday buyurtma yo'q\\"
+
+#: .\templates\orders\my_orders.html:160
+msgid "When you place orders, they will appear here"
+msgstr "Siz buyurtmalar qo'yganda, ular shu yerda paydo bo'ladi"
+
+#: .\templates\page.html:6 .\templates\page.html:10
+msgid "Previous"
+msgstr "Oldingi"
+
+#: .\templates\payments\payment.html:5
+msgid "Checkout - Payment"
+msgstr "To'lov - To'lov ma'lumotlari"
+
+#: .\templates\payments\payment.html:49
+msgid "Payment Information"
+msgstr "To'lov ma'lumotlari"
+
+#: .\templates\payments\payment.html:50
+msgid "Step 3 of 4"
+msgstr "4 dan 3-qadam"
+
+#: .\templates\payments\payment.html:89
+msgid "Card Details"
+msgstr "Karta ma'lumotlari"
+
+#: .\templates\payments\payment.html:92
+msgid "Card Holder's First and Last Name"
+msgstr "Karta egasining ismi va familiyasi"
+
+#: .\templates\payments\payment.html:93
+msgid "Enter cardholder\\"
+msgstr "Karta egasini kiriting\\"
+
+#: .\templates\payments\payment.html:97
+msgid "Card Number"
+msgstr "Karta raqami"
+
+#: .\templates\payments\payment.html:99
+msgid "1234 5678 9012 3456"
+msgstr "1234 5678 9012 3456"
+
+#: .\templates\payments\payment.html:108
+msgid "Expiry Date"
+msgstr "Amal qilish muddati"
+
+#: .\templates\payments\payment.html:109
+msgid "MM/YY"
+msgstr "OO/YY"
+
+#: .\templates\payments\payment.html:114
+msgid "CVV"
+msgstr "CVV"
+
+#: .\templates\payments\payment.html:116
+msgid "123"
+msgstr "123"
+
+#: .\templates\payments\payment.html:117
+msgid "The 3-digit security code on the back of your card"
+msgstr "Kartangiz orqasidagi 3 raqamli xavfsizlik kodi"
+
+#: .\templates\payments\payment.html:128
+msgid "Back to Details"
+msgstr "Tafsilotlarga qaytish"
+
+#: .\templates\payments\payment.html:131
+msgid "Pay and Complete Order"
+msgstr "To'lash va buyurtmani yakunlash"
+
+#: .\templates\payments\payment.html:191
+msgid "Secure Checkout"
+msgstr "Xavfsiz to'lov"
+
+#: .\templates\payments\payment.html:200
+msgid "SSL Secured"
+msgstr "SSL bilan himoyalangan"
+
+#: .\templates\payments\payment.html:204
+msgid "Protected"
+msgstr "Himoyalangan"
+
+#: .\templates\payments\payment_success.html:5
+msgid "Checkout - Success"
+msgstr "To'lov - Muvaffaqiyatli"
+
+#: .\templates\payments\payment_success.html:57
+msgid "Thank You for Your Order!"
+msgstr "Buyurtmangiz uchun rahmat!"
+
+#: .\templates\payments\payment_success.html:58
+msgid "Order ID:"
+msgstr "Buyurtma ID:"
+
+#: .\templates\payments\payment_success.html:60
+msgid ""
+"Your payment has been successfully processed and your order is confirmed."
+msgstr ""
+"To'lovingiz muvaffaqiyatli amalga oshirildi va buyurtmangiz tasdiqlandi."
+
+#: .\templates\payments\payment_success.html:63
+msgid "We\\'ve sent a confirmation email to"
+msgstr ""
+
+#: .\templates\payments\payment_success.html:63
+#, fuzzy
+#| msgid "Review your details"
+msgid "with your order details."
+msgstr "Ma'lumotlaringizni ko'rib chiqing"
+
+#: .\templates\payments\payment_success.html:74
+msgid "Estimated delivery:"
+msgstr "Taxminiy yetkazib berish:"
+
+#: .\templates\payments\payment_success.html:74
+msgid "up to"
+msgstr "gacha"
+
+#: .\templates\payments\payment_success.html:77
+msgid "Shipping to:"
+msgstr "Yetkazib berish manzili:"
+
+#: .\templates\payments\payment_success.html:78
+msgid "Postal code"
+msgstr "Pochta indeksi"
+
+#: .\templates\payments\payment_success.html:86
+msgid "View Order Details"
+msgstr "Buyurtma tafsilotlarini ko'rish"
+
+#: .\templates\products\add_product_form.html:4
+#: .\templates\products\manage_products.html:230
+msgid "Add Product"
+msgstr "Mahsulot qo'shish"
+
+#: .\templates\products\add_product_form.html:56
+#: .\templates\products\manage_products.html:36
+msgid "Add New Product"
+msgstr "Yangi mahsulot qo'shish"
+
+#: .\templates\products\add_product_form.html:57
+msgid "Enter product details below"
+msgstr "Mahsulot tafsilotlarini quyida kiriting"
+
+#: .\templates\products\add_product_form.html:64
+#: .\templates\products\edit_product.html:63 .\templates\shops\add_shop.html:20
+msgid "Basic Information"
+msgstr "Asosiy ma'lumot"
+
+#: .\templates\products\add_product_form.html:68
+#: .\templates\products\edit_product.html:67
+msgid "Product Name"
+msgstr "Mahsulot nomi"
+
+#: .\templates\products\add_product_form.html:70
+#: .\templates\products\edit_product.html:72
+msgid "Choose a descriptive name for your product"
+msgstr "Mahsulotingiz uchun tavsiflovchi nom tanlang"
+
+#: .\templates\products\add_product_form.html:85
+#: .\templates\products\edit_product.html:90
+msgid "URL Slug"
+msgstr "URL Slug"
+
+#: .\templates\products\add_product_form.html:90
+#: .\templates\products\edit_product.html:98
+msgid "Used in product URL: example-product"
+msgstr "Mahsulot URL-da ishlatiladi: misol-mahsulot"
+
+#: .\templates\products\add_product_form.html:105
+#: .\templates\products\edit_product.html:116
+msgid "Classification"
+msgstr "Tasnif"
+
+#: .\templates\products\add_product_form.html:141
+#: .\templates\products\edit_product.html:161
+#: .\templates\products\product_details.html:7
+#: .\templates\products\product_details.html:218
+msgid "Product Details"
+msgstr "Mahsulot tafsilotlari"
+
+#: .\templates\products\add_product_form.html:147
+#: .\templates\products\edit_product.html:170
+msgid "Short catchy description for product listings (max 255 characters)"
+msgstr ""
+"Mahsulot ro'yxati uchun qisqa diqqatni tortadigan tavsif (maksimal 255 ta "
+"belgi)"
+
+#: .\templates\products\add_product_form.html:154
+#: .\templates\products\edit_product.html:180
+msgid "Detailed product description with marketing tone"
+msgstr "Marketing ohangida batafsil mahsulot tavsifi"
+
+#: .\templates\products\add_product_form.html:161
+#: .\templates\products\edit_product.html:190
+msgid "Enter features separated by comma"
+msgstr "Xususiyatlarni vergul bilan ajratib kiriting"
+
+#: .\templates\products\add_product_form.html:162
+#: .\templates\products\edit_product.html:191
+msgid "Feature 1, Feature 2, Feature 3"
+msgstr "Xususiyat 1, Xususiyat 2, Xususiyat 3"
+
+#: .\templates\products\add_product_form.html:169
+#: .\templates\products\edit_product.html:201
+msgid "Enter specifications as a key-value pair separated by comma"
+msgstr ""
+"Texnik xususiyatlarni kalit-qiymat juftligi sifatida vergul bilan ajratib "
+"kiriting"
+
+#: .\templates\products\add_product_form.html:170
+#: .\templates\products\edit_product.html:202
+msgid "Weight: 2.5kg, Dimensions: 10 x 15 x 5 cm, Material: Aluminum"
+msgstr "Og'irligi: 2.5kg, O'lchamlari: 10 x 15 x 5 sm, Material: Alyuminiy"
+
+#: .\templates\products\add_product_form.html:175
+#: .\templates\products\edit_product.html:207
+msgid "Product Image"
+msgstr "Mahsulot rasmi"
+
+#: .\templates\products\add_product_form.html:184
+#: .\templates\products\edit_product.html:216
+#: .\templates\shops\add_shop.html:72
+msgid "Drop your image here or click to browse"
+msgstr "Rasmingizni shu yerga tashlang yoki ko'rish uchun bosing"
+
+#: .\templates\products\add_product_form.html:185
+#: .\templates\products\edit_product.html:217
+msgid "Supports: JPG, PNG, GIF (Max 5MB)"
+msgstr "Qo'llab-quvvatlanadi: JPG, PNG, GIF (Maksimal 5MB)"
+
+#: .\templates\products\add_product_form.html:191
+#: .\templates\products\add_product_form.html:289
+#: .\templates\products\edit_product.html:223
+#: .\templates\products\edit_product.html:307
+#: .\templates\shops\add_shop.html:79 .\templates\shops\add_shop.html:138
+msgid "No file selected"
+msgstr "Fayl tanlanmagan"
+
+#: .\templates\products\add_product_form.html:192
+#: .\templates\products\edit_product.html:224
+#: .\templates\products\list_products.html:328
+#: .\templates\products\product_details.html:145
+#: .\templates\shops\add_shop.html:80
+msgid "Remove"
+msgstr "O'chirish"
+
+#: .\templates\products\add_product_form.html:200
+#: .\templates\products\edit_product.html:243
+msgid "Product Status"
+msgstr "Mahsulot holati"
+
+#: .\templates\products\add_product_form.html:206
+#: .\templates\products\edit_product.html:249
+msgid "Available for Purchase"
+msgstr "Sotib olish uchun mavjud"
+
+#: .\templates\products\add_product_form.html:207
+#: .\templates\products\edit_product.html:250
+msgid "Make product visible to customers"
+msgstr "Mahsulotni mijozlar uchun ko'rinadigan qilish"
+
+#: .\templates\products\add_product_form.html:218
+#: .\templates\products\edit_product.html:264
+msgid "Featured Product"
+msgstr "Tavsiya etilgan mahsulot"
+
+#: .\templates\products\add_product_form.html:219
+#: .\templates\products\edit_product.html:265
+msgid "Show in featured sections"
+msgstr "Tavsiya etilgan bo'limlarda ko'rsatish"
+
+#: .\templates\products\add_product_form.html:230
+#: .\templates\products\edit_product.html:279
+msgid "Discounted"
+msgstr "Chegirmali"
+
+#: .\templates\products\add_product_form.html:231
+#: .\templates\products\edit_product.html:280
+msgid "Apply discount to this product"
+msgstr "Ushbu mahsulotga chegirma qo'llash"
+
+#: .\templates\products\add_product_form.html:246
+msgid "Launch Product"
+msgstr "Mahsulotni ishga tushirish"
+
+#: .\templates\products\edit_product.html:4
+#: .\templates\products\edit_product.html:56
+msgid "Edit Product"
+msgstr "Mahsulotni tahrirlash"
+
+#: .\templates\products\edit_product.html:57
+msgid "Update product information"
+msgstr "Mahsulot ma'lumotlarini yangilash"
+
+#: .\templates\products\edit_product.html:233
+msgid "Current image:"
+msgstr "Joriy rasm:"
+
+#: .\templates\products\edit_product.html:326
+msgid "Preview"
+msgstr "Ko'rib chiqish"
+
+#: .\templates\products\list_products.html:6
+msgid "Product Showcase"
+msgstr "Mahsulotlar ko'rgazmasi"
+
+#: .\templates\products\list_products.html:19
+msgid "Product Collection"
+msgstr "Mahsulotlar kolleksiyasi"
+
+#: .\templates\products\list_products.html:23
+#: .\templates\products\manage_products.html:41
+msgid "Search products..."
+msgstr "Mahsulotlarni qidirish..."
+
+#: .\templates\products\list_products.html:47
+msgid "Filters"
+msgstr "Filtrlar"
+
+#: .\templates\products\list_products.html:59
+msgid "Product Categories"
+msgstr "Mahsulot kategoriyalari"
+
+#: .\templates\products\list_products.html:77
+#: .\templates\products\list_products.html:180
+#: .\templates\products\manage_products.html:125
+msgid "Reset"
+msgstr "Qayta o'rnatish"
+
+#: .\templates\products\list_products.html:87
+msgid "Filter Products"
+msgstr "Mahsulotlarni filtrlash"
+
+#: .\templates\products\list_products.html:105
+msgid "Sort By"
+msgstr "Saralash"
+
+#: .\templates\products\list_products.html:110
+#: .\templates\products\list_products.html:194
+#: .\templates\products\list_products.html:245
+msgid "Price: Low to High"
+msgstr "Narx: Arzondan qimmatga"
+
+#: .\templates\products\list_products.html:115
+#: .\templates\products\list_products.html:195
+#: .\templates\products\list_products.html:248
+msgid "Price: High to Low"
+msgstr "Narx: Qimmatdan arzon"
+
+#: .\templates\products\list_products.html:120
+#: .\templates\products\list_products.html:196
+msgid "Orders: Low to High"
+msgstr "Buyurtmalar: Kamdan ko'pga"
+
+#: .\templates\products\list_products.html:125
+#: .\templates\products\list_products.html:197
+msgid "Orders: High to Low"
+msgstr "Buyurtmalar: Ko'pdan kamga"
+
+#: .\templates\products\list_products.html:130
+#: .\templates\products\list_products.html:198
+#: .\templates\products\list_products.html:254
+#: .\templates\products\manage_products.html:101
+msgid "Newest First"
+msgstr "Avval yangilari"
+
+#: .\templates\products\list_products.html:136
+msgid "Price Range"
+msgstr "Narx oralig'i"
+
+#: .\templates\products\list_products.html:139
+msgid "Min $"
+msgstr "Min $"
+
+#: .\templates\products\list_products.html:145
+msgid "Max $"
+msgstr "Maks $"
+
+#: .\templates\products\list_products.html:179
+msgid "Apply Filters"
+msgstr "Filtrlarni qo'llash"
+
+#: .\templates\products\list_products.html:215
+#, python-format
+msgid ""
+"Rating: %(rating)s+\n"
+"                                    stars"
+msgstr ""
+"Reyting: %(rating)s+\n"
+"                                    yulduz"
+
+#: .\templates\products\list_products.html:223
+#, python-format
+msgid ""
+"Category:\n"
+"                                    %(name)s"
+msgstr ""
+"Kategoriya:\n"
+"                                    %(name)s"
+
+#: .\templates\products\list_products.html:231
+msgid "Clear All"
+msgstr "Hammasini tozalash"
+
+#: .\templates\products\list_products.html:235
+msgid "No filters applied"
+msgstr "Filtrlar qo'llanilmagan"
+
+#: .\templates\products\list_products.html:241
+msgid "Sort by:"
+msgstr "Saralash:"
+
+#: .\templates\products\list_products.html:243
+#: .\templates\products\product_details.html:58
+msgid "Featured"
+msgstr "Tanlanganlar"
+
+#: .\templates\products\list_products.html:251
+msgid "Most Popular"
+msgstr "Eng mashhur"
+
+#: .\templates\products\list_products.html:286
+#, python-format
+msgid ""
+"In\n"
+"                                            Cart (%(quantity)s)"
+msgstr ""
+"Savatda\n"
+"                                            (%(quantity)s)"
+
+#: .\templates\products\list_products.html:302
+#, python-format
+msgid ""
+"Added\n"
+"                                %(date)s"
+msgstr ""
+"Qo'shilgan\n"
+"                                %(date)s"
+
+#: .\templates\products\list_products.html:317
+#, python-format
+msgid "%(total)s Ordered"
+msgstr "%(total)s ta buyurtma qilingan"
+
+#: .\templates\products\list_products.html:324
+#, python-format
+msgid ""
+"In your cart:\n"
+"                                            <strong>%(quantity)s</strong>"
+msgstr ""
+"Savatingizda:\n"
+"                                            <strong>%(quantity)s</strong>"
+
+#: .\templates\products\list_products.html:336
+#: .\templates\products\product_details.html:149
+#: .\templates\products\product_details.html:167
+msgid "Buy Now"
+msgstr "Hozir sotib olish"
+
+#: .\templates\products\list_products.html:348
+msgid "Update Cart"
+msgstr "Savatni yangilash"
+
+#: .\templates\products\list_products.html:352
+#: .\templates\products\product_details.html:139
+msgid "Add to Cart"
+msgstr "Savatga qo'shish"
+
+#: .\templates\products\list_products.html:369
+#: .\templates\products\manage_products.html:227
+msgid "No Products Available"
+msgstr "Mavjud mahsulotlar yo'q"
+
+#: .\templates\products\list_products.html:370
+msgid "Check back soon for new additions to our catalog."
+msgstr ""
+"Katalogimizga yangi qo'shilgan mahsulotlar uchun tez orada qayta tekshiring."
+
+#: .\templates\products\manage_products.html:5
+#: .\templates\products\manage_products.html:17
+msgid "Product Management"
+msgstr "Mahsulotlarni boshqarish"
+
+#: .\templates\products\manage_products.html:30
+#: .\templates\shops\add_shop.html:4
+#, fuzzy
+#| msgid "Shop"
+msgid "Add Shop"
+msgstr "Do'kon"
+
+#: .\templates\products\manage_products.html:52
+msgid "Total Products"
+msgstr "Jami mahsulotlar"
+
+#: .\templates\products\manage_products.html:56
+#: .\templates\products\manage_products.html:85
+#: .\templates\products\manage_products.html:199
+msgid "Active"
+msgstr "Faol"
+
+#: .\templates\products\manage_products.html:64
+msgid "Inventory Value"
+msgstr "Inventar qiymati"
+
+#: .\templates\products\manage_products.html:73
+msgid "All Categories"
+msgstr "Barcha kategoriyalar"
+
+#: .\templates\products\manage_products.html:81
+msgid "Status:"
+msgstr "Status:"
+
+#: .\templates\products\manage_products.html:83
+msgid "All Status"
+msgstr "Barcha statuslar"
+
+#: .\templates\products\manage_products.html:92
+msgid "Sort By:"
+msgstr "Saralash:"
+
+#: .\templates\products\manage_products.html:95
+msgid "Name (A-Z)"
+msgstr "Nomi (A-Z)"
+
+#: .\templates\products\manage_products.html:98
+msgid "Name (Z-A)"
+msgstr "Nomi (Z-A)"
+
+#: .\templates\products\manage_products.html:104
+msgid "Oldest First"
+msgstr "Avval eskilari"
+
+#: .\templates\products\manage_products.html:107
+msgid "Price (High-Low)"
+msgstr "Narx (Yuqori-past)"
+
+#: .\templates\products\manage_products.html:110
+msgid "Price (Low-High)"
+msgstr "Narx (Past-yuqori)"
+
+#: .\templates\products\manage_products.html:115
+msgid "Items Per Page:"
+msgstr "Sahifada mahsulotlar soni:"
+
+#: .\templates\products\manage_products.html:131
+#, fuzzy, python-format
+#| msgid "%(counter)s item selected"
+#| msgid_plural "%(counter)s items selected"
+msgid "%(counter)s item selected"
+msgid_plural ""
+"%(counter)s items\n"
+"                    selected"
+msgstr[0] "%(counter)s ta element tanlangan"
+
+#: .\templates\products\manage_products.html:135
+msgid "Edit Selected"
+msgstr "Tanlanganni tahrirlash"
+
+#: .\templates\products\manage_products.html:138
+msgid "Delete Selected"
+msgstr "Tanlanganni o'chirish"
+
+#: .\templates\products\manage_products.html:141
+msgid "Export Selected"
+msgstr "Tanlanganni eksport qilish"
+
+#: .\templates\products\manage_products.html:155
+msgid "SKU"
+msgstr "SKU"
+
+#: .\templates\products\manage_products.html:157
+msgid "Stock"
+msgstr "Mavjud"
+
+#: .\templates\products\manage_products.html:160
+msgid "Created"
+msgstr "Yaratilgan"
+
+#: .\templates\products\manage_products.html:161
+msgid "Actions"
+msgstr "Harakatlar"
+
+#: .\templates\products\manage_products.html:196
+#: .\templates\products\product_details.html:187
+msgid "Uncategorized"
+msgstr "Kategoriyasiz"
+
+#: .\templates\products\manage_products.html:215
+#: .\templates\products\manage_products.html:255
+msgid "Delete"
+msgstr "O'chirish"
+
+#: .\templates\products\manage_products.html:228
+msgid "Get started by adding your first product to the inventory."
+msgstr "Inventarga birinchi mahsulotingizni qo'shish bilan boshlang."
+
+#: .\templates\products\manage_products.html:247
+msgid "Confirm Deletion"
+msgstr "O'chirishni tasdiqlash"
+
+#: .\templates\products\manage_products.html:251
+msgid ""
+"Are you sure you want to delete this product? This action cannot be undone."
+msgstr ""
+"Haqiqatan ham bu mahsulotni o'chirishni xohlaysizmi? Bu amalni bekor qilib "
+"bo'lmaydi."
+
+#: .\templates\products\product_details.html:73
+#: .\templates\products\product_details.html:76
+#: .\templates\products\product_details.html:79
+msgid "Additional view"
+msgstr "Qo'shimcha ko'rinish"
+
+#: .\templates\products\product_details.html:107
+msgid "off"
+msgstr "chegirma"
+
+#: .\templates\products\product_details.html:114
+msgid "available"
+msgstr "mavjud"
+
+#: .\templates\products\product_details.html:142
+msgid "In cart:"
+msgstr "Savatda:"
+
+#: .\templates\products\product_details.html:142
+msgid "items"
+msgstr "mahsulotlar"
+
+#: .\templates\products\product_details.html:158
+msgid "This product is currently out of stock"
+msgstr ""
+
+#: .\templates\products\product_details.html:180
+msgid "SKU:"
+msgstr "SKU:"
+
+#: .\templates\products\product_details.html:191
+msgid "Shop:"
+msgstr "Do'kon:"
+
+#: .\templates\products\product_details.html:196
+msgid "Added:"
+msgstr "Qo'shilgan:"
+
+#: .\templates\products\product_details.html:201
+#, fuzzy
+#| msgid "%(total)s Ordered"
+msgid "Total ordered:"
+msgstr "%(total)s ta buyurtma qilingan"
+
+#: .\templates\products\product_details.html:212
+msgid "Reviews"
+msgstr "Sharhlar"
+
+#: .\templates\products\product_details.html:213
+#: .\templates\products\product_details.html:408
+msgid "Shipping & Returns"
+msgstr "Yetkazib berish va qaytarish"
+
+#: .\templates\products\product_details.html:234
+msgid "Product Specifications"
+msgstr "Mahsulot texnik xususiyatlari"
+
+#: .\templates\products\product_details.html:248
+msgid "Customer Reviews"
+msgstr "Mijozlar sharhlari"
+
+#: .\templates\products\product_details.html:262
+msgid "Based on"
+msgstr "Asoslangan"
+
+#: .\templates\products\product_details.html:262
+msgid "reviews"
+msgstr "sharhlar"
+
+#: .\templates\products\product_details.html:271
+msgid "star"
+msgstr "yulduz"
+
+#: .\templates\products\product_details.html:296
+msgid "Anonymous"
+msgstr "Anonim"
+
+#: .\templates\products\product_details.html:327
+#: .\templates\products\product_details.html:379
+msgid "Review image"
+msgstr "Sharh rasmi"
+
+#: .\templates\products\product_details.html:335
+msgid "No feedbacks available for this product"
+msgstr "Bu mahsulot uchun sharhlar mavjud emas"
+
+#: .\templates\products\product_details.html:341
+msgid "Edit Your Review,Write a Review"
+msgstr "Sharhingizni tahrirlash,Sharh yozish"
+
+#: .\templates\products\product_details.html:358
+msgid "Review(Optional)"
+msgstr "Sharh (Ixtiyoriy)"
+
+#: .\templates\products\product_details.html:360
+msgid "Share your experience with this product"
+msgstr "Bu mahsulot bilan tajribangizni baham ko'ring"
+
+#: .\templates\products\product_details.html:368
+msgid "Post anonymously"
+msgstr "Anonim ravishda nashr etish"
+
+#: .\templates\products\product_details.html:373
+msgid "Add Image (Optional)"
+msgstr "Rasm qo'shish (Ixtiyoriy)"
+
+#: .\templates\products\product_details.html:387
+msgid "Update Review,Submit Review"
+msgstr "Sharhni yangilash,Sharhni yuborish"
+
+#: .\templates\products\product_details.html:392
+msgid "Delete Review"
+msgstr "Sharhni o'chirish"
+
+#: .\templates\products\product_details.html:399
+msgid "You must purchase this product to write a review."
+msgstr "Sharh yozish uchun bu mahsulotni sotib olishingiz kerak."
+
+#: .\templates\products\product_details.html:410
+msgid "Shipping Policy"
+msgstr "Yetkazib berish siyosati"
+
+#: .\templates\products\product_details.html:411
+msgid ""
+"We offer standard shipping that typically takes 3-5 business days. Express "
+"shipping options are available at checkout for faster delivery."
+msgstr ""
+"Biz odatda 3-5 ish kuni ichida yetkazib beriladigan standart yetkazib "
+"berishni taklif qilamiz. Tezroq yetkazib berish uchun to'lov paytida tezkor "
+"yetkazib berish variantlari mavjud."
+
+#: .\templates\products\product_details.html:413
+msgid "Return Policy"
+msgstr "Qaytarish siyosati"
+
+#: .\templates\products\product_details.html:414
+msgid "If you\\"
+msgstr "Agar siz\\"
+
+#: .\templates\products\product_details.html:416
+msgid "International Shipping"
+msgstr "Xalqaro yetkazib berish"
+
+#: .\templates\products\product_details.html:417
+msgid ""
+"We ship to most countries worldwide. International shipping times may vary "
+"depending on your location and local customs processing."
+msgstr ""
+"Biz dunyo bo'ylab ko'pgina mamlakatlarga yetkazib beramiz. Xalqaro yetkazib "
+"berish vaqti joylashuvingiz va mahalliy bojxona ishloviga qarab o'zgarishi "
+"mumkin."
+
+#: .\templates\products\product_details.html:422
+msgid "You May Also Like"
+msgstr "Sizga ham yoqishi mumkin"
+
+#: .\templates\products\product_details.html:432
+msgid "Related Product"
+msgstr "Tegishli mahsulot"
+
+#: .\templates\products\product_details.html:446
+msgid "Recently Viewed"
+msgstr "Yaqinda ko'rilgan"
+
+#: .\templates\products\product_details.html:456
+msgid "Viewed Product"
+msgstr "Ko'rilgan mahsulot"
+
+#: .\templates\shops\add_shop.html:12
+#, fuzzy
+#| msgid "Add New Product"
+msgid "Add New Shop"
+msgstr "Yangi mahsulot qo'shish"
+
+#: .\templates\shops\add_shop.html:13
+#, fuzzy
+#| msgid "Enter product details below"
+msgid "Enter shop details below"
+msgstr "Mahsulot tafsilotlarini quyida kiriting"
+
+#: .\templates\shops\add_shop.html:24
+#, fuzzy
+#| msgid "Shop Now"
+msgid "Shop Name"
+msgstr "Hozir xarid qilish"
+
+#: .\templates\shops\add_shop.html:26
+#, fuzzy
+#| msgid "Choose a descriptive name for your product"
+msgid "Choose a unique name for your shop"
+msgstr "Mahsulotingiz uchun tavsiflovchi nom tanlang"
+
+#: .\templates\shops\add_shop.html:36
+#, fuzzy
+#| msgid "Detailed product description with marketing tone"
+msgid "Detailed description of your shop"
+msgstr "Marketing ohangida batafsil mahsulot tavsifi"
+
+#: .\templates\shops\add_shop.html:45
+#, fuzzy
+#| msgid "Shop Now"
+msgid "Shop Owner"
+msgstr "Hozir xarid qilish"
+
+#: .\templates\shops\add_shop.html:59 .\templates\shops\add_shop.html:63
+#, fuzzy
+#| msgid "No Image"
+msgid "Shop Image"
+msgstr "Rasm yo'q"
+
+#: .\templates\shops\add_shop.html:73
+#, fuzzy
+#| msgid "Supports: JPG, PNG, GIF (Max 5MB)"
+msgid "Supports: JPG, PNG (Max 4MB)"
+msgstr "Qo'llab-quvvatlanadi: JPG, PNG, GIF (Maksimal 5MB)"
+
+#: .\templates\shops\add_shop.html:95
+#, fuzzy
+#| msgid "Created"
+msgid "Create Shop"
+msgstr "Yaratilgan"
+
+#~ msgid "This is a home page for a project"
+#~ msgstr "Bu loyiha uchun bosh sahifa"
+
+#~ msgid "Return Items"
+#~ msgstr "Mahsulotlarni qaytarish"
+
+#~ msgid "Cancel Order"
+#~ msgstr "Buyurtmani bekor qilish"
