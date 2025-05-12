@@ -54,7 +54,6 @@ class CountsConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_user_counts(self):
-        """Get current user counts from database"""
         from carts.models import CartItems, Cart
         from favourites.models import Favourite, FavouriteItem
         from notifications.models import Notifications
@@ -62,15 +61,12 @@ class CountsConsumer(AsyncWebsocketConsumer):
         if not self.user.is_authenticated:
             return {'cart_count': 0, 'wishlist_count': 0, 'notifications_count': 0}
 
-        # Get cart count
         cart = Cart.objects.filter(user=self.user).first()
         cart_count = CartItems.objects.filter(cart=cart).count() if cart else 0
 
-        # Get wishlist count
         favourite = Favourite.objects.filter(user=self.user).first()
         wishlist_count = FavouriteItem.objects.filter(favourite=favourite).count() if favourite else 0
 
-        # Get unread notifications count
         notifications_count = Notifications.objects.filter(
             to_user=self.user,
             is_read=False
