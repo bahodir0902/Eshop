@@ -96,7 +96,7 @@ def fetch_product(request):
 
 
 class ProductListView(View):
-    @method_decorator(ratelimit(key='user_or_ip', rate='20/m', block=True))
+    @method_decorator(ratelimit(key='user_or_ip', rate='30/m', block=True))
     def get(self, request):
 
         products = fetch_product(request)
@@ -133,6 +133,8 @@ class ProductDetailView(View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         related_products = Product.objects.exclude(pk=product.pk).filter(category=product.category)
+        total_ordered = OrderDetails.objects.filter(product=product).values('order').distinct().count()
+        product.total_ordered = total_ordered
 
         feedbacks = self.get_feedbacks(product)
 
