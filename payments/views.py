@@ -70,7 +70,7 @@ class PaymentView(LoginRequiredMixin, View):
 
                 Payment.objects.create(
                     order_id=pk,
-                       payment_method='debit_card',
+                    payment_method='debit_card',
                     amount=data.get('total_order_cost'),
                     status='paid',
                     currency='USD'

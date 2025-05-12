@@ -28,7 +28,9 @@
     {% block extra_css %}{% endblock %}
 </head>
 
-<body>
+<!-- In your base.html template -->
+<body class="{% if user.is_authenticated %}authenticated{% endif %}">
+
 <header id="page-header">
     {% block header %}
         <!-- Original Desktop Navbar (PRESERVED) -->
@@ -102,21 +104,24 @@
                             <a class="nav-link nav-icon-link {% if request.resolver_match.url_name == 'list' and request.resolver_match.app_name == 'cart' %}active{% endif %}"
                                href="{% url 'cart:list' %}" aria-label="{% trans 'View Shopping Cart' %}">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span class="badge rounded-pill bg-primary cart-count">{% if cart_items_count %}{{ cart_items_count }}{% else %}0{% endif %}</span>
+                                <span class="badge rounded-pill bg-primary cart-count">{% if cart_items_count %}
+                                    {{ cart_items_count }}{% else %}0{% endif %}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link nav-icon-link {% if request.resolver_match.url_name == 'favourites' %}active{% endif %}"
                                href="{% url 'favourites:favourites' %}" aria-label="{% trans 'View Wishlist' %}">
                                 <i class="fas fa-heart"></i>
-                                <span class="badge rounded-pill bg-danger wishlist-count">{% if fav_items_count %}{{ fav_items_count }}{% else %}0{% endif %}</span>
+                                <span class="badge rounded-pill bg-danger wishlist-count">{% if fav_items_count %}
+                                    {{ fav_items_count }}{% else %}0{% endif %}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link nav-icon-link {% if request.resolver_match.url_name == 'notifications' %}active{% endif %}"
                                href="{% url 'notifications:list' %}" aria-label="{% trans 'View Notifications' %}">
                                 <i class="fas fa-bell"></i>
-                                <span class="badge rounded-pill bg-warning notifications-count">{% if unread_notifications_count %}{{ unread_notifications_count }}{% else %}0{% endif %}</span>
+                                <span class="badge rounded-pill bg-warning notifications-count">{% if unread_notifications_count %}
+                                    {{ unread_notifications_count }}{% else %}0{% endif %}</span>
                             </a>
                         </li>
 
@@ -178,7 +183,8 @@
 
                 {% if request.user.is_authenticated %}
                     <div class="mobile-user-profile">
-                        <img class="mobile-user-avatar" src="{% static 'images/default-avatar.png' %}" alt="{% trans 'User' %}">
+                        <img class="mobile-user-avatar" src="{% static 'images/default-avatar.png' %}"
+                             alt="{% trans 'User' %}">
                         <div class="mobile-user-info">
                             <h6>{{ request.user.first_name }} {{ request.user.last_name }}</h6>
                             <p>{{ request.user.email }}</p>
@@ -221,7 +227,8 @@
                                href="{% url 'favourites:favourites' %}">
                                 <i class="fas fa-heart me-2"></i>
                                 <span>{% trans 'Wishlist' %}</span>
-                                <span class="mobile-menu-badge wishlist-count">{% if fav_items_count %}{{ fav_items_count }}{% else %}0{% endif %}</span>
+                                <span class="mobile-menu-badge wishlist-count">{% if fav_items_count %}
+                                    {{ fav_items_count }}{% else %}0{% endif %}</span>
                             </a>
                         </li>
                         <li>
@@ -229,7 +236,8 @@
                                href="{% url 'cart:list' %}">
                                 <i class="fas fa-shopping-cart me-2"></i>
                                 <span>{% trans 'Cart' %}</span>
-                                <span class="mobile-menu-badge cart-count">{% if cart_items_count %}{{ cart_items_count }}{% else %}0{% endif %}</span>
+                                <span class="mobile-menu-badge cart-count">{% if cart_items_count %}
+                                    {{ cart_items_count }}{% else %}0{% endif %}</span>
                             </a>
                         </li>
                         <li>
@@ -237,7 +245,8 @@
                                href="{% url 'notifications:list' %}">
                                 <i class="fas fa-bell me-2"></i>
                                 <span>{% trans 'Notifications' %}</span>
-                                <span class="mobile-menu-badge notifications-count">{% if unread_notifications_count %}{{ unread_notifications_count }}{% else %}0{% endif %}</span>
+                                <span class="mobile-menu-badge notifications-count">{% if unread_notifications_count %}
+                                    {{ unread_notifications_count }}{% else %}0{% endif %}</span>
                             </a>
                         </li>
                         {% if perms.products.change_product %}
@@ -282,7 +291,8 @@
 
                 <div class="mobile-menu-section">
                     <h5 class="mobile-menu-title">{% trans 'Language' %}</h5>
-                    <form action="{% url 'set_language' %}" method="post" id="mobile-language-form" class="mobile-language-form">
+                    <form action="{% url 'set_language' %}" method="post" id="mobile-language-form"
+                          class="mobile-language-form">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{{ request.path }}">
                         {% get_available_languages as LANGUAGES %}
@@ -383,12 +393,35 @@
             <hr class="footer-divider">
             <div class="text-center footer-copyright">
                 © {% now "Y" %} {% trans 'E-Shop' %}. {% trans 'All Rights Reserved.' %} |
-                   <a href="#">{% trans 'Privacy Policy' %}</a> | <a href="#">{% trans 'Terms of Service' %}</a>
+                <a href="#">{% trans 'Privacy Policy' %}</a> | <a href="#">{% trans 'Terms of Service' %}</a>
             </div>
         </div>
     {% endblock %}
 </footer>
 
+
+<script>
+    // Handle logout properly
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check for logout links
+        const logoutLinks = document.querySelectorAll('a[href*="logout"], .logout-link');
+        logoutLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                // Signal that we're closing the session
+                window.localStorage.setItem('closing_session', 'true');
+
+                // Close WebSocket connection on logout
+                if (window.sharedCountsSocket) {
+                    window.sharedCountsSocket.close();
+                }
+            });
+        });
+    });
+</script>
+
+{% if user.is_authenticated %}
+    <script src="{% static 'js/counts.js' %}"></script>
+{% endif %}
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"
@@ -398,7 +431,10 @@
 <script src="{% static 'js/base.js' %}" defer></script>
 
 <!-- Block for extra JS -->
-{% block extra_js %}{% endblock %}
+<!-- In your base.html template -->
+{% block extra_js %}
+
+{% endblock %}
 {% block overlays %}{% endblock %}
 </body>
 </html>

@@ -8,6 +8,11 @@ import time
 import uuid
 from django.utils.translation import gettext_lazy as _
 
+def check_rating(value):
+    if value < 0 or value > 5:
+        raise ValidationError(_('FeedBack rating should be between 1 and 5.'))
+    return value
+
 def validate_image_size(image):
     max_size = 4 * 1024 * 1024
     if image.size > max_size:
@@ -29,6 +34,7 @@ class Shop(BaseModel):
         blank=True,
         verbose_name=_("Image")
     )
+    rate = models.PositiveSmallIntegerField(default=0, validators=[check_rating])
 
     class Meta:
         verbose_name = _("Shop")

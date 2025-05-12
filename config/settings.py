@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,7 +48,9 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_ratelimit',
     'rosetta',
+    'channels',
     'django_celery_beat',
+
     # local
     'eshop',
     'accounts',
@@ -94,7 +97,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -209,4 +212,14 @@ CELERY_BEAT_SCHEDULE = {
     #     'task': 'common.tasks.backup_sqlite_database',
     #     'schedule': crontab(hour=3, minute=0),  # Every day at 3 AM
     # },
+}
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
 }

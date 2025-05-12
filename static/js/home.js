@@ -1,6 +1,6 @@
-// Modern Home Page JavaScript with enhanced functionality
-
 document.addEventListener('DOMContentLoaded', function() {
+    checkCartStatus(); // Add this line before your existing functions
+
     // Initialize add to cart buttons
     setupAddToCartButtons();
 
@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle image loading errors
     handleImageError();
+
 });
 
 /**
@@ -843,3 +844,22 @@ function showToast(message, type = 'info') {
     `;
     document.head.appendChild(style);
 })();
+
+function checkCartStatus() {
+    // Cart data is passed from Django via window.cartItemsData
+    if (window.cartItemsData && Array.isArray(window.cartItemsData)) {
+        // Update buttons for items already in cart
+        window.cartItemsData.forEach(cartItem => {
+            const productId = cartItem.product_id;
+            const button = document.querySelector(`.add-to-cart[data-product-id="${productId}"]`);
+
+            if (button) {
+                button.classList.add('in-cart');
+                button.innerHTML = '<i class="fas fa-check"></i>';
+
+                // Create cart indicator for items already in cart
+                createOrUpdateCartIndicator(button, productId, cartItem.quantity, cartItem.id);
+            }
+        });
+    }
+}

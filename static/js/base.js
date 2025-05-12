@@ -26,10 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Language selector hover effect
     setupLanguageSelector();
-
-    // Optional: Update cart/wishlist/notifications counts via AJAX
-    setupCountsUpdate();
-
+    
     // Add ripple effect to buttons
     setupRippleEffect();
 });
@@ -179,40 +176,40 @@ function setupLanguageSelector() {
 /**
  * Set up counts update functionality
  */
-function setupCountsUpdate() {
-    function updateCounts() {
-        // Example endpoint - replace with your actual endpoint
-        fetch('/common/get-counts/')
-            .then(response => response.json())
-            .then(data => {
-                // Update all badge counters
-                const countElements = document.querySelectorAll('.cart-count, .wishlist-count, .notifications-count');
-
-                countElements.forEach(element => {
-                    const type = element.classList.contains('cart-count') ? 'cart_count' :
-                                element.classList.contains('wishlist-count') ? 'wishlist_count' : 'notifications_count';
-
-                    if (data[type] !== undefined) {
-                        element.textContent = data[type];
-                        element.style.display = data[type] > 0 ? 'flex' : 'none';
-
-                        // Add a pulse animation when count changes
-                        element.classList.add('badge-pulse');
-                        setTimeout(() => {
-                            element.classList.remove('badge-pulse');
-                        }, 1000);
-                    }
-                });
-            })
-            .catch(error => console.warn('Count update endpoint not available:', error));
-    }
-
-    // Initial count update
-    updateCounts();
-
-    // Refresh notification count every 60 seconds
-    setInterval(updateCounts, 60000);
-}
+// function setupCountsUpdate() {
+//     function updateCounts() {
+//         // Example endpoint - replace with your actual endpoint
+//         fetch('/common/get-counts/')
+//             .then(response => response.json())
+//             .then(data => {
+//                 // Update all badge counters
+//                 const countElements = document.querySelectorAll('.cart-count, .wishlist-count, .notifications-count');
+//
+//                 countElements.forEach(element => {
+//                     const type = element.classList.contains('cart-count') ? 'cart_count' :
+//                                 element.classList.contains('wishlist-count') ? 'wishlist_count' : 'notifications_count';
+//
+//                     if (data[type] !== undefined) {
+//                         element.textContent = data[type];
+//                         element.style.display = data[type] > 0 ? 'flex' : 'none';
+//
+//                         // Add a pulse animation when count changes
+//                         element.classList.add('badge-pulse');
+//                         setTimeout(() => {
+//                             element.classList.remove('badge-pulse');
+//                         }, 1000);
+//                     }
+//                 });
+//             })
+//             .catch(error => console.warn('Count update endpoint not available:', error));
+//     }
+//
+//     // Initial count update
+//     updateCounts();
+//
+//     // Refresh notification count every 60 seconds
+//     setInterval(updateCounts, 60000);
+// }
 
 /**
  * Highlight current page in mobile menu

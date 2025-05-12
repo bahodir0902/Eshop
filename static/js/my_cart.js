@@ -58,10 +58,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const item = this.closest('.cart-item');
             const quantityInput = item.querySelector('.quantity-input');
             const productId = item.getAttribute('data-product-id');
+            const stockCount = parseInt(item.getAttribute('data-stock')) || 99; // Get stock from data attribute
             let quantity = parseInt(quantityInput.value);
 
             if (action === 'increase') {
-                quantity = Math.min(quantity + 1, 99); // Max quantity is 99
+                // Check if we can increase quantity
+                if (quantity >= stockCount) {
+                    showToast(`Only ${stockCount} items available in stock`, 'error');
+                    return;
+                }
+                quantity = Math.min(quantity + 1, stockCount); // Use actual stock as max
             } else if (action === 'decrease') {
                 quantity = Math.max(quantity - 1, 1); // Min quantity is 1
             }
@@ -252,7 +258,45 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Add stock indicator for each item
+    addStockIndicators();
 });
+
+/**
+ * Add stock indicators to cart items
+ */
+function addStockIndicators() {
+    const cartItems = document.querySelectorAll('.cart-item');
+
+    cartItems.forEach(item => {
+        const stockCount = parseInt(item.getAttribute('data-stock')) || 0;
+        const currentQuantity = parseInt(item.querySelector('.quantity-input').value);
+
+        // Create stock indicator
+        const stockIndicator = document.createElement('div');
+        stockIndicator.className = 'stock-indicator';
+
+        if (stockCount <= 5) {
+            stockIndicator.className += ' low-stock';
+            stockIndicator.innerHTML = `<i class="fa-solid fa-exclamation-triangle"></i> Only ${stockCount} left in stock`;
+        } else {
+            stockIndicator.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${stockCount} in stock`;
+        }
+
+        // Insert after item info
+        const itemInfo = item.querySelector('.item-info');
+        itemInfo.appendChild(stockIndicator);
+
+        // Disable increase button if at stock limit
+        const increaseBtn = item.querySelector('.increase-quantity');
+        if (currentQuantity >= stockCount) {
+            increaseBtn.disabled = true;
+            increaseBtn.style.opacity = '0.5';
+            increaseBtn.style.cursor = 'not-allowed';
+        }
+    });
+}
 
 /**
  * Update cart summary totals
@@ -374,6 +418,31 @@ function showToast(message, type = 'info') {
             #cart-toast.success { border-left: 4px solid #10b981; }
             #cart-toast.error { border-left: 4px solid #ef4444; }
             #cart-toast.info { border-left: 4px solid #6366f1; }
+            
+            .stock-indicator {
+                font-size: 0.8rem;
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                margin-top: 0.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
+            
+            .stock-indicator {
+                background-color: #f0f9ff;
+                color: #0369a1;
+            }
+            
+            .stock-indicator.low-stock {
+                background-color: #fef7f7;
+                color: #dc2626;
+            }
+            
+            .qty-btn:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
         `;
         document.head.appendChild(style);
     }

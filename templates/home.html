@@ -205,7 +205,7 @@
                             <img src="{% static 'img/shop-placeholder.jpg' %}" alt="{{ shop.name }}">
                         {% endif %}
                         <div class="shop-overlay">
-                            <a href="#" class="btn-secondary">{% trans "Visit Shop" %}</a>
+                            <a href="{% url 'shops:shop_detail' shop.pk %}" class="btn-secondary">{% trans "Visit Shop" %}</a>
                         </div>
                     </div>
                     <div class="shop-info">
@@ -408,5 +408,8 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/home.js' %}"></script>
+    <script>
+        window.cartItemsData = {{ cart_items_data|safe }};
+    </script>
+    <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}
