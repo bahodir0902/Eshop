@@ -92,7 +92,7 @@ class ProductFormTest(TestCase):
         )
 
         # Test form with valid image
-        form = AddProductModelForm(data=form_data, files={'image': test_image})
+        form = AddProductModelForm(data=form_data, files={'image': test_image}, user=self.user)
 
         self.assertTrue(form.is_valid(), f"Form errors: {form.errors}")
 
@@ -104,7 +104,7 @@ class ProductFormTest(TestCase):
             'price': 'abc',  # Invalid price
         }
 
-        form = AddProductModelForm(data=form_data)
+        form = AddProductModelForm(data=form_data, user=self.user)
         self.assertFalse(form.is_valid())
         self.assertIn('name', form.errors)
         self.assertIn('price', form.errors)
@@ -115,18 +115,18 @@ class ProductFormTest(TestCase):
         form_data = self.valid_form_data.copy()
         form_data['specifications'] = 'Invalid format without colon'
 
-        form = AddProductModelForm(data=form_data)
+        form = AddProductModelForm(data=form_data, user=self.user)
         self.assertFalse(form.is_valid())
         self.assertIn('specifications', form.errors)
 
     def test_update_product_form_valid(self):
         """Test UpdateProductModelForm with valid data"""
         form_data = self.valid_form_data.copy()
-        form = UpdateProductModelForm(data=form_data, instance=self.product)
+        form = UpdateProductModelForm(data=form_data, instance=self.product, user=self.user)
 
         self.assertTrue(form.is_valid())
 
     def test_update_product_form_stock_count_initial(self):
         """Test stock_count initial value in UpdateProductModelForm"""
-        form = UpdateProductModelForm(instance=self.product)
+        form = UpdateProductModelForm(instance=self.product, user=self.user)
         self.assertEqual(form.fields['stock_count'].initial, 100)

@@ -89,7 +89,7 @@ class UpdateCartItem(LoginRequiredMixin, View):
 
         product = Product.objects.filter(pk=pk).first()
         if not product:
-            return JsonResponse({'success': False, 'error': 'Product not found.'})
+            return JsonResponse({'success': False, 'error': 'Product id not found. Please try again later.'})
 
         item, created = CartItems.objects.get_or_create(
             cart=cart, product=product, defaults={'quantity': quantity}
