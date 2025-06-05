@@ -1,9 +1,8 @@
-import ast
-import json
 from django import forms
 from products.models import Product, Inventory, Category
 from django.utils.translation import gettext_lazy as _
 from shops.models import Shop
+
 
 class AddProductModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -15,9 +14,7 @@ class AddProductModelForm(forms.ModelForm):
                 shop = Shop.objects.filter(owner=user)
                 self.fields['shop'].initial = shop.first()
                 self.fields['shop'].queryset = shop
-        # self.fields['shop'].disabled = True
 
-    stock_count = forms.IntegerField(min_value=0)
     short_description = forms.CharField(
         max_length=255,
         required=False,
@@ -79,23 +76,11 @@ class AddProductModelForm(forms.ModelForm):
                   'key_features', 'specifications', 'image', 'slug',
                   'category', 'inventory', 'shop', 'stock_count',
                   'is_available', 'is_discounted', 'is_featured'
-        ]
+                  ]
 
-
-
-    def save(self, commit=...):
-        stock_count = self.cleaned_data.pop('stock_count')
-        inventory = self.cleaned_data.get('inventory')
-
-        new_inventory = Inventory.objects.create(
-            name=inventory.name,
-            stock_count=stock_count,
-            reserved_quantity=stock_count,
-            warehouse_location=inventory.warehouse_location
-        )
-        product = Product.objects.create(**self.cleaned_data)
-        product.inventory = new_inventory
-
+    def save(self, commit=True):
+        # Use the standard ModelForm save method
+        product = super().save(commit=commit)
         return product
 
 
@@ -103,14 +88,16 @@ class UpdateProductModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
-        self.fields['stock_count'].initial = self.instance.inventory.stock_count
+
+        # Set initial stock_count from the product itself (not inventory)
+        if self.instance and self.instance.pk:
+            self.fields['stock_count'].initial = self.instance.stock_count
 
         for group in user.groups.all():
             if group.name == 'Sellers':
                 shop = Shop.objects.filter(owner=user)
                 self.fields['shop'].initial = shop.first()
                 self.fields['shop'].queryset = shop
-        # self.fields['shop'].disabled = True
 
     stock_count = forms.IntegerField(min_value=0)
     short_description = forms.CharField(
@@ -131,7 +118,7 @@ class UpdateProductModelForm(forms.ModelForm):
         required=False,
         widget=forms.Textarea(attrs={
             'rows': 4,
-            'placeholder': " 'Feature 1, Feature 2, Feature 3. Separated by comma"
+            'placeholder': "Feature 1, Feature 2, Feature 3. Separated by comma"
         })
     )
 
@@ -142,13 +129,14 @@ class UpdateProductModelForm(forms.ModelForm):
             'placeholder': '{"Weight": "2.5kg", "Dimensions": "10 x 15 x 5 cm"}'
         })
     )
+
     class Meta:
         model = Product
         fields = ['name', 'price', 'short_description', 'full_description',
                   'key_features', 'specifications', 'image', 'slug',
                   'category', 'inventory', 'shop', 'stock_count',
                   'is_available', 'is_discounted', 'is_featured'
-        ]
+                  ]
 
     def clean_specifications(self):
         specifications = self.cleaned_data.get('specifications')
@@ -174,18 +162,11 @@ class UpdateProductModelForm(forms.ModelForm):
 
         return specifications
 
-    def save(self, commit=...):
-        stock_count = self.cleaned_data.pop('stock_count')
-        # self.instance.slug = self.instance.name.lower().replace(' ', '-')
-
-        self.instance.inventory.stock_count = stock_count
-        self.instance.inventory.save()
-
-        product = super().save(commit=False)
-        if commit:
-            product.save()
-
+    def save(self, commit=True):
+        # Use the standard ModelForm save method
+        product = super().save(commit=commit)
         return product
+
 
 class CategoryForm(forms.ModelForm):
     class Meta:

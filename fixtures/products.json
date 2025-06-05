@@ -1,0 +1,102 @@
+[
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "created_at": "2025-01-15T22:04:01.132074Z",
+      "updated_at": "2025-01-15T22:04:01.132074Z",
+      "is_active": true,
+      "name": "Smartphone X",
+      "price": "499.99",
+      "is_available": true,
+      "short_description": "Latest smartphone",
+      "shop": 1,
+      "slug": "smartphone-x",
+      "full_description": "A high-tech phone.",
+      "key_features": "Fast CPU",
+      "specifications": "64GB",
+      "image": null,
+      "is_discounted": false,
+      "is_featured": true,
+      "is_approved": false,
+      "approved_by": null,
+      "category": 1,
+      "inventory": 1
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "created_at": "2024-09-01T22:04:01.132107Z",
+      "updated_at": "2024-09-01T22:04:01.132107Z",
+      "is_active": true,
+      "name": "T-Shirt Blue",
+      "price": "19.99",
+      "is_available": true,
+      "short_description": "Comfy tee",
+      "shop": 2,
+      "slug": "t-shirt-blue",
+      "full_description": "Soft cotton shirt.",
+      "key_features": "Breathable",
+      "specifications": "Medium size",
+      "image": null,
+      "is_discounted": true,
+      "is_featured": false,
+      "is_approved": false,
+      "approved_by": null,
+      "category": 2,
+      "inventory": 2
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "created_at": "2024-07-22T22:04:01.132122Z",
+      "updated_at": "2024-07-22T22:04:01.132122Z",
+      "is_active": true,
+      "name": "Python Book",
+      "price": "29.99",
+      "is_available": true,
+      "short_description": "Learn Python",
+      "shop": 1,
+      "slug": "python-book",
+      "full_description": "Programming guide.",
+      "key_features": "Beginner-friendly",
+      "specifications": "300 pages",
+      "image": null,
+      "is_discounted": false,
+      "is_featured": true,
+      "is_approved": true,
+      "approved_by": 1,
+      "category": 3,
+      "inventory": 3
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "created_at": "2025-04-06T22:04:01.132133Z",
+      "updated_at": "2025-04-06T22:04:01.132133Z",
+      "is_active": true,
+      "name": "Smartphone Y",
+      "price": "599.99",
+      "is_available": true,
+      "short_description": "Advanced phone",
+      "shop": 1,
+      "slug": "smartphone-y",
+      "full_description": "Next-gen tech.",
+      "key_features": "5G",
+      "specifications": "128GB",
+      "image": null,
+      "is_discounted": false,
+      "is_featured": false,
+      "is_approved": false,
+      "approved_by": null,
+      "category": 1,
+      "inventory": 4
+    }
+  }
+]

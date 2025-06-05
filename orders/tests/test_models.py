@@ -35,7 +35,6 @@ class OrderModelTest(TestCase):
 
         # Create test inventory
         self.inventory = Inventory.objects.create(
-            stock_count=10,
             warehouse_location='Test Location'
         )
 
@@ -45,6 +44,7 @@ class OrderModelTest(TestCase):
             price=Decimal('99.99'),
             shop=self.shop,
             slug='test-product',
+            stock_count=100,
             inventory=self.inventory
         )
 

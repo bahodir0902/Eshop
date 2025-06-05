@@ -28,9 +28,6 @@ class ProductFormTest(TestCase):
 
         # Create inventory
         self.inventory = Inventory.objects.create(
-            name='Main Warehouse',
-            stock_count=100,
-            reserved_quantity=10,
             warehouse_location='New York'
         )
 
@@ -42,6 +39,7 @@ class ProductFormTest(TestCase):
             shop=self.shop,
             slug='test-product',
             category=self.category,
+            stock_count=100,
             inventory=self.inventory
         )
 

@@ -34,7 +34,7 @@ class FavouriteView(LoginRequiredMixin, View):
             'cart_items': cart_items,
             'cart_items_json': json.dumps(cart_items_data)
         }
-
+        print(favourite_items)
         return render(request, 'favourites/favourites.html', context=data)
 
 

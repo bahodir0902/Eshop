@@ -48,9 +48,6 @@ def unique_image_path(instance, filename):
     return str(os.path.join('product_images/', unique_filename))
 
 class Inventory(BaseModel):
-    name = models.CharField(_("Name"), max_length=255, null=True, blank=True, default=None)
-    stock_count = models.IntegerField(_("Stock Count"))
-    reserved_quantity = models.IntegerField(_("Reserved Quantity"), default=0, blank=True)
     warehouse_location = models.CharField(_("Warehouse Location"), max_length=255)
 
     class Meta:
@@ -59,7 +56,7 @@ class Inventory(BaseModel):
 
     @override
     def __str__(self):
-        return f'{self.name} - {self.warehouse_location}'
+        return f'{self.warehouse_location}'
 
 
 class Product(BaseModel):
@@ -106,6 +103,7 @@ class Product(BaseModel):
     is_approved = models.BooleanField(_("Is Approved"), default=False)
     approved_by = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Approved By"))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product_category', null=True, blank=True, verbose_name=_("Category"))
+    stock_count = models.IntegerField(_("Stock Count"))
     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, related_name='product', verbose_name=_("Inventory"))
     objects = models.Manager()
     available_products = AvailableProducts()

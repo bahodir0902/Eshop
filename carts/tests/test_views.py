@@ -32,8 +32,6 @@ class MockSetup(TestCase):
 
         # Create test inventory
         self.inventory = Inventory.objects.create(
-            name='Test Inventory',
-            stock_count=10,
             warehouse_location='Test Location'
         )
 
@@ -45,6 +43,7 @@ class MockSetup(TestCase):
             name='Product 1',
             price=Decimal('100.00'),
             slug='product-1',
+            stock_count=100,
             inventory=self.inventory,
             category=self.category,
             is_available=True,
@@ -56,6 +55,7 @@ class MockSetup(TestCase):
             name='Product 2',
             price=Decimal('200.00'),
             slug='product-2',
+            stock_count=100,
             inventory=self.inventory,
             category=self.category,
             is_available=True,

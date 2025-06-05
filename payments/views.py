@@ -58,12 +58,12 @@ class PaymentView(LoginRequiredMixin, View):
 
                 for item in cart_items:
                     inventory = item.product.inventory
-                    if inventory.stock_count < item.quantity:
+                    if item.product.stock_count < item.quantity:
                         raise ValueError(
-                            f"Not enough stock for '{item.product.name}'. Only {inventory.stock_count} left."
+                            f"Not enough stock for '{item.product.name}'. Only {item.product.stock_count} left."
                         )
-                    inventory.stock_count -= item.quantity
-                    inventory.save()
+                    item.product.stock_count -= item.quantity
+                    item.save()
 
                 cart_items.delete()
                 cart.delete()

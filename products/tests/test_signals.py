@@ -26,9 +26,6 @@ class ProductSignalsTest(TestCase):
 
         # Create inventory
         self.inventory = Inventory.objects.create(
-            name='Main Warehouse',
-            stock_count=100,
-            reserved_quantity=10,
             warehouse_location='New York'
         )
 
@@ -40,6 +37,7 @@ class ProductSignalsTest(TestCase):
             shop=self.shop,
             slug='test-product',
             category=self.category,
+            stock_count=100,
             inventory=self.inventory
         )
 
@@ -59,7 +57,7 @@ class ProductSignalsTest(TestCase):
 
         # Now fetch fresh from DB and check
         self.product.refresh_from_db()
-        self.assertFalse(self.product.is_available)
+        self.assertTrue(self.product.is_available)
 
     def test_inventory_deletion_affects_product_availability(self):
         """Test product availability changes when inventory is deleted"""

@@ -1,0 +1,237 @@
+[
+  {
+    "model": "favourites.favourite",
+    "pk": 1,
+    "fields": {
+      "id": "28b9b803-193d-42b6-a093-f7fe6b3f35f5",
+      "created_at": "2025-02-08T21:37:10Z",
+      "updated_at": "2025-02-08T21:37:10Z",
+      "is_active": true,
+      "user": 1
+    }
+  },
+  {
+    "model": "favourites.favourite",
+    "pk": 2,
+    "fields": {
+      "id": "40818ac1-4a0b-4e47-b871-5db4e0eda234",
+      "created_at": "2024-08-05T21:37:10Z",
+      "updated_at": "2024-08-05T21:37:10Z",
+      "is_active": true,
+      "user": 2
+    }
+  },
+  {
+    "model": "favourites.favourite",
+    "pk": 3,
+    "fields": {
+      "id": "b4ba3d3d-7694-42ff-8a9f-d04f0f901b77",
+      "created_at": "2024-09-21T21:37:10Z",
+      "updated_at": "2024-09-21T21:37:10Z",
+      "is_active": true,
+      "user": 3
+    }
+  },
+  {
+    "model": "favourites.favourite",
+    "pk": 4,
+    "fields": {
+      "id": "ffcdde54-2c7f-409a-bccf-53525d21e59a",
+      "created_at": "2024-11-15T21:37:10Z",
+      "updated_at": "2024-11-15T21:37:10Z",
+      "is_active": true,
+      "user": 4
+    }
+  },
+  {
+    "model": "favourites.favourite",
+    "pk": 5,
+    "fields": {
+      "id": "7c7d9b69-5757-414a-a1ea-db8f490ac25d",
+      "created_at": "2025-03-07T21:37:10Z",
+      "updated_at": "2025-03-07T21:37:10Z",
+      "is_active": true,
+      "user": 5
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 1,
+    "fields": {
+      "id": "cb4da0ea-fc98-4b8f-bb23-803da34ad088",
+      "created_at": "2024-11-26T21:37:10Z",
+      "updated_at": "2024-11-26T21:37:10Z",
+      "is_active": true,
+      "favourite": 1,
+      "product": 3
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 2,
+    "fields": {
+      "id": "aa325e2a-560e-455d-98aa-25f29fb66d5c",
+      "created_at": "2025-01-23T21:37:10Z",
+      "updated_at": "2025-01-23T21:37:10Z",
+      "is_active": true,
+      "favourite": 1,
+      "product": 5
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 3,
+    "fields": {
+      "id": "e423346a-0876-4403-b66f-0a0c2ddd7739",
+      "created_at": "2024-08-15T21:37:10Z",
+      "updated_at": "2024-08-15T21:37:10Z",
+      "is_active": true,
+      "favourite": 1,
+      "product": 19
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 4,
+    "fields": {
+      "id": "79d3a624-3dc8-49e6-96aa-8cd5f9a88669",
+      "created_at": "2024-08-30T21:37:10Z",
+      "updated_at": "2024-08-30T21:37:10Z",
+      "is_active": true,
+      "favourite": 2,
+      "product": 4
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 5,
+    "fields": {
+      "id": "92dd2e93-12bc-4f7c-a77b-66efa7092d3d",
+      "created_at": "2024-05-22T21:37:10Z",
+      "updated_at": "2024-05-22T21:37:10Z",
+      "is_active": true,
+      "favourite": 2,
+      "product": 16
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 6,
+    "fields": {
+      "id": "d04497ae-ab3b-4fcb-b9cf-9967e7130534",
+      "created_at": "2024-05-20T21:37:10Z",
+      "updated_at": "2024-05-20T21:37:10Z",
+      "is_active": true,
+      "favourite": 2,
+      "product": 17
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 7,
+    "fields": {
+      "id": "08a37fc5-026e-4a92-85d2-d7d29d8fe42d",
+      "created_at": "2024-08-01T21:37:10Z",
+      "updated_at": "2024-08-01T21:37:10Z",
+      "is_active": true,
+      "favourite": 3,
+      "product": 10
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 8,
+    "fields": {
+      "id": "0c371d35-b07a-477f-82b6-df2ce1f08572",
+      "created_at": "2025-01-14T21:37:10Z",
+      "updated_at": "2025-01-14T21:37:10Z",
+      "is_active": true,
+      "favourite": 3,
+      "product": 20
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 9,
+    "fields": {
+      "id": "59f28071-1701-4dee-9420-69e87b0d9a79",
+      "created_at": "2024-12-31T21:37:10Z",
+      "updated_at": "2024-12-31T21:37:10Z",
+      "is_active": true,
+      "favourite": 3,
+      "product": 13
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 10,
+    "fields": {
+      "id": "ab3b80b2-6d8d-4044-9cd7-4079c0ed8f82",
+      "created_at": "2024-06-03T21:37:10Z",
+      "updated_at": "2024-06-03T21:37:10Z",
+      "is_active": true,
+      "favourite": 4,
+      "product": 22
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 11,
+    "fields": {
+      "id": "aab8fc54-79d4-4b6b-a4b0-4237c1605f32",
+      "created_at": "2024-09-21T21:37:10Z",
+      "updated_at": "2024-09-21T21:37:10Z",
+      "is_active": true,
+      "favourite": 4,
+      "product": 7
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 12,
+    "fields": {
+      "id": "6ee638a7-5797-4a45-b38b-7155d0bfb0e9",
+      "created_at": "2024-08-30T21:37:10Z",
+      "updated_at": "2024-08-30T21:37:10Z",
+      "is_active": true,
+      "favourite": 4,
+      "product": 25
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 13,
+    "fields": {
+      "id": "7a7f9731-3f9a-4bbb-9018-4b10fd92d09f",
+      "created_at": "2024-08-12T21:37:10Z",
+      "updated_at": "2024-08-12T21:37:10Z",
+      "is_active": true,
+      "favourite": 5,
+      "product": 13
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 14,
+    "fields": {
+      "id": "c9f922bb-e0a3-4c3a-ab58-e6106c708bf4",
+      "created_at": "2025-01-18T21:37:10Z",
+      "updated_at": "2025-01-18T21:37:10Z",
+      "is_active": true,
+      "favourite": 5,
+      "product": 9
+    }
+  },
+  {
+    "model": "favourites.favouriteitem",
+    "pk": 15,
+    "fields": {
+      "id": "436825fb-1846-4fe9-b17a-78adc769c371",
+      "created_at": "2025-02-06T21:37:10Z",
+      "updated_at": "2025-02-06T21:37:10Z",
+      "is_active": true,
+      "favourite": 5,
+      "product": 15
+    }
+  }
+]

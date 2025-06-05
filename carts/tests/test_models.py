@@ -55,8 +55,6 @@ class CartItemsModelTest(TestCase):
 
         # Create a test inventory
         self.inventory = Inventory.objects.create(
-            name='Test Inventory',
-            stock_count=10,
             warehouse_location='Test Location'
         )
 
@@ -65,6 +63,7 @@ class CartItemsModelTest(TestCase):
             name='Test Product',
             price=100.00,
             slug='test-product',
+            stock_count=100,
             inventory=self.inventory,
             shop=self.shop,
             category=self.category

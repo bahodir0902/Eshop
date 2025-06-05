@@ -1,4 +1,5 @@
 /* Base Styles */
+/*Add product styles*/
 :root {
     --primary-color: #4c6fff;
     --primary-dark: #3d5ce1;
@@ -23,7 +24,7 @@
 }
 
 /* Container and Card */
-.container {
+.form-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem 1rem;
@@ -35,7 +36,14 @@
     box-shadow: var(--shadow-lg);
     overflow: hidden;
 }
-
+#page-header, #page-footer {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+#page-header .navbar {
+    width: 100%;
+}
 /* Form Header */
 .form-header {
     padding: 2rem;

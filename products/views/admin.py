@@ -16,6 +16,7 @@ from django.utils.translation import gettext_lazy as _
 from products.forms import CategoryForm
 from shops.models import Shop
 
+
 def fetch_product(request):
     groups = request.user.groups.all()
 
@@ -48,9 +49,9 @@ def fetch_product(request):
             pass
 
     if status == 'out_of_stock':
-        products = products.filter(is_available=False)
+        products = products.filter(stock_count=0)
     elif status == 'active':
-        products = products.filter(is_available=True)
+        products = products.filter(is_available=True, stock_count__gt=0)
 
     if q and q.lower() != 'none':
         products = products.annotate(
@@ -82,7 +83,6 @@ def fetch_product(request):
         products = products.order_by('-is_available', 'name')
 
     products = products.annotate(
-        stock_count=Sum('inventory__stock_count'),
         rating=Avg('feedbacks__rating'),
         total_ordered=Count('ordered_product')
     )
@@ -99,7 +99,6 @@ def fetch_product(request):
 class ManageProductView(View):
     @method_decorator(restrict_user(is_admin, is_seller))
     def get(self, request):
-
         products = fetch_product(request)
 
         group = None
@@ -112,7 +111,6 @@ class ManageProductView(View):
         data = dashboard_statistics(group, request)
         data['products'] = products
         data['q'] = request.GET.get('q')
-
         data['categories'] = Category.objects.all()
 
         return render(request, 'products/manage_products.html', context=data)
@@ -129,19 +127,18 @@ class AddProductView(View):
     def post(self, request):
         form = AddProductModelForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
-            product = form.save(commit=False)
             for group in request.user.groups.all():
                 if group.name == 'Sellers':
                     shop = Shop.objects.filter(owner=request.user).first()
                     if not shop:
                         return HttpResponse("You are not owner of the shop.")
-                    product.shop = shop
-            product.save()
+                    form.instance.shop = shop
+            product = form.save()
             return redirect('products:products')
+
         form.add_error(None, 'Please enter valid data.')
         print(form.errors)
         return render(request, 'products/add_product_form.html', {'form': form})
-
 
 class EditProductView(View):
     @method_decorator(restrict_user(is_admin, is_seller))
@@ -154,37 +151,38 @@ class EditProductView(View):
     @method_decorator(transaction.atomic)
     def post(self, request, pk):
         product = Product.objects.filter(pk=pk).first()
-        form = UpdateProductModelForm(request.POST, instance=product, files=request.FILES, user=request.user)
+        form = UpdateProductModelForm(request.POST, request.FILES, instance=product, user=request.user)
         if form.is_valid():
-            products = form.save(commit=False)
-            products.save()
+            product = form.save(commit=False)
+            product.save()
             return redirect('products:manage_products')
         form.add_error(None, 'Please enter valid data.')
         return render(request, 'products/edit_product.html', {'form': form})
 
 
 def get_dashboard_statistics(products):
-
     total_products = products.count()
-    total_active = products.filter(is_available=True).count()
+    total_active = products.filter(is_available=True, stock_count__gt=0).count()
     categories = list(Category.objects.filter(parent_category=None))
 
-    value = 0
+    total_inventory_value = 0
     total_out_of_stock = 0
+
     for product in products:
-        if product.inventory.stock_count == 0:
+        if product.stock_count == 0:
             total_out_of_stock += 1
-        value += product.price * product.inventory.stock_count
+        total_inventory_value += product.price * product.stock_count
 
     context_data = {
         'total_products': total_products,
         'total_active': total_active,
-        'total_inventory_value': value,
+        'total_inventory_value': total_inventory_value,
         'out_of_stock': total_out_of_stock,
         'categories': categories
     }
 
     return context_data
+
 
 def dashboard_statistics(group, request):
     if group == 'Admins':
@@ -203,7 +201,7 @@ def delete_product(request, pk):
 class AddCategoryView(View):
     @method_decorator(login_required)
     @method_decorator(permission_required('shops.add_shop', raise_exception=True))
-    def get(self,request):
+    def get(self, request):
         form = CategoryForm()
         return render(request, 'categories/add_category.html', {
             'form': form,

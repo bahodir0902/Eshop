@@ -1,0 +1,26 @@
+[
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Electronics",
+      "parent_category": null
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "name": "Clothing",
+      "parent_category": null
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "name": "Books",
+      "parent_category": null
+    }
+  }
+]

@@ -26,7 +26,6 @@ class FavouriteModelTests(TestCase):
 
         # Create inventory
         self.inventory = Inventory.objects.create(
-            stock_count=10,
             warehouse_location='Test Location'
         )
 
@@ -36,6 +35,7 @@ class FavouriteModelTests(TestCase):
             price=100.00,
             shop=self.shop,
             slug='test-product',
+            stock_count=100,
             inventory=self.inventory
         )
 
@@ -76,7 +76,6 @@ class FavouriteViewTests(TestCase):
 
         # Create inventory
         self.inventory = Inventory.objects.create(
-            stock_count=10,
             warehouse_location='Test Location'
         )
 
@@ -86,6 +85,7 @@ class FavouriteViewTests(TestCase):
             price=100.00,
             shop=self.shop,
             slug='test-product',
+            stock_count=100,
             inventory=self.inventory
         )
 
@@ -187,7 +187,6 @@ class FavouriteViewEdgeCaseTests(TestCase):
 
         # Create inventory
         self.inventory = Inventory.objects.create(
-            stock_count=10,
             warehouse_location='Test Location'
         )
 
@@ -197,6 +196,7 @@ class FavouriteViewEdgeCaseTests(TestCase):
             price=100.00,
             shop=self.shop,
             slug='test-product',
+            stock_count=100,
             inventory=self.inventory
         )
 

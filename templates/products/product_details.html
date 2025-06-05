@@ -109,9 +109,9 @@
                 </div>
 
                 <div class="availability">
-                    {% if product.inventory.stock_count > 0 %}
+                    {% if product.stock_count > 0 %}
                         <span class="in-stock"><i class="fa fa-check-circle"></i> {% trans 'In Stock' %}</span>
-                        <span class="stock-count">{{ product.inventory.stock_count }} {% trans 'available' %}</span>
+                        <span class="stock-count">{{ product.stock_count }} {% trans 'available' %}</span>
                     {% else %}
                         <span class="out-of-stock"><i class="fa fa-times-circle"></i> {% trans 'Out of Stock' %}</span>
                     {% endif %}
@@ -125,10 +125,10 @@
 
 
             <div class="product-actions">
-                {% if product.inventory.stock_count > 0 %}
+                {% if product.stock_count > 0 %}
                     <div class="quantity-selector" id="quantity-selector">
                         <button class="qty-btn minus" id="decrease-qty"><i class="fas fa-minus"></i></button>
-                        <input type="number" value="1" min="1" max="{{ product.inventory.stock_count }}"
+                        <input type="number" value="1" min="1" max="{{ product.stock_count }}"
                                id="product-quantity">
                         <button class="qty-btn plus" id="increase-qty"><i class="fas fa-plus"></i></button>
                     </div>

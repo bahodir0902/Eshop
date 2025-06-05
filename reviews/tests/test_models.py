@@ -33,8 +33,6 @@ class FeedBackModelTest(TestCase):
 
         # Create inventory
         self.inventory = Inventory.objects.create(
-            name='Main Warehouse',
-            stock_count=100,
             warehouse_location='New York'
         )
 
@@ -46,6 +44,7 @@ class FeedBackModelTest(TestCase):
             shop=self.shop,
             slug='test-product',
             category=self.category,
+            stock_count=100,
             inventory=self.inventory
         )
 

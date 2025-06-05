@@ -64,7 +64,7 @@
                 {% else %}
                 <div class="cart-items-list">
                     {% for item in cart_items %}
-                        <div class="cart-item" data-product-id="{{ item.product.id }}" data-stock="{{ item.product.inventory.stock_count }}">                        <div class="item-image">
+                        <div class="cart-item" data-product-id="{{ item.product.id }}" data-stock="{{ item.product.stock_count }}">                        <div class="item-image">
                             {% if item.product.image %}
                             <a href="{% url 'products:product_detail' slug=item.product.slug %}" class="btn-icon" title="{% trans 'View' %}">
                                 <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"></a>

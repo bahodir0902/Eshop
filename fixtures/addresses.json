@@ -1,0 +1,92 @@
+[
+  {
+    "model": "accounts.address",
+    "pk": 1,
+    "fields": {
+      "id": "7c829f03-2e96-492d-b154-940b52755ec7",
+      "created_at": "2025-01-23T21:37:10Z",
+      "updated_at": "2025-01-23T21:37:10Z",
+      "is_active": true,
+      "user": 1,
+      "address_line1": "123 Main St",
+      "address_line2": "Apt 4B",
+      "city": "New York",
+      "state": "NY",
+      "postal_code": "10001",
+      "country": "United States",
+      "is_default": true
+    }
+  },
+  {
+    "model": "accounts.address",
+    "pk": 2,
+    "fields": {
+      "id": "fe37d1d0-ad54-4c07-a400-8a691322cf4d",
+      "created_at": "2024-08-05T21:37:10Z",
+      "updated_at": "2024-08-05T21:37:10Z",
+      "is_active": true,
+      "user": 2,
+      "address_line1": "456 Oak Avenue",
+      "address_line2": "",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postal_code": "90001",
+      "country": "United States",
+      "is_default": true
+    }
+  },
+  {
+    "model": "accounts.address",
+    "pk": 3,
+    "fields": {
+      "id": "1ab00683-7c63-47ba-8ff4-d09cdeff71e1",
+      "created_at": "2024-12-12T21:37:10Z",
+      "updated_at": "2024-12-12T21:37:10Z",
+      "is_active": true,
+      "user": 3,
+      "address_line1": "789 Pine Street",
+      "address_line2": "Suite 101",
+      "city": "Chicago",
+      "state": "IL",
+      "postal_code": "60007",
+      "country": "United States",
+      "is_default": true
+    }
+  },
+  {
+    "model": "accounts.address",
+    "pk": 4,
+    "fields": {
+      "id": "9f7f68d7-3f56-4d64-bb3b-6ab5185bc2c0",
+      "created_at": "2025-04-14T21:37:10Z",
+      "updated_at": "2025-04-14T21:37:10Z",
+      "is_active": true,
+      "user": 4,
+      "address_line1": "101 Cedar Road",
+      "address_line2": "",
+      "city": "Miami",
+      "state": "FL",
+      "postal_code": "33101",
+      "country": "United States",
+      "is_default": true
+    }
+  },
+  {
+    "model": "accounts.address",
+    "pk": 5,
+    "fields": {
+      "id": "a43e0177-dd26-43a2-9a17-0d81428c3fe0",
+      "created_at": "2024-09-18T21:37:10Z",
+      "updated_at": "2024-09-18T21:37:10Z",
+      "is_active": true,
+      "user": 5,
+      "address_line1": "202 Maple Drive",
+      "address_line2": "Unit 3C",
+      "city": "Seattle",
+      "state": "WA",
+      "postal_code": "98101",
+      "country": "United States",
+      "is_default": true
+    }
+  }
+]

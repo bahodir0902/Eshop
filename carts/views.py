@@ -45,7 +45,7 @@ class AddCartItem(LoginRequiredMixin, View):
         if not product:
             return JsonResponse({'success': False, 'error': 'Product not found'})
 
-        if product.inventory.stock_count <= 0:
+        if product.stock_count <= 0:
             return JsonResponse({
                 'success': False,
                 'error': 'This product is out of stock'

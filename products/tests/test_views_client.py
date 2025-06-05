@@ -37,9 +37,6 @@ class ProductListViewTest(TestCase):
 
         # Create inventory
         cls.inventory = Inventory.objects.create(
-            name='Main Warehouse',
-            stock_count=100,
-            reserved_quantity=10,
             warehouse_location='New York'
         )
 
@@ -52,6 +49,7 @@ class ProductListViewTest(TestCase):
                 shop=cls.shop,
                 slug=f'electronics-product-{i}',
                 category=cls.electronics,
+                stock_count=110,
                 inventory=cls.inventory
             )
 
@@ -62,6 +60,7 @@ class ProductListViewTest(TestCase):
                 shop=cls.shop,
                 slug=f'phone-product-{i}',
                 category=cls.phones,
+                stock_count=120,
                 inventory=cls.inventory
             )
 
@@ -72,6 +71,7 @@ class ProductListViewTest(TestCase):
                 shop=cls.shop,
                 slug=f'clothing-product-{i}',
                 category=cls.clothing,
+                stock_count=140,
                 inventory=cls.inventory
             )
 
@@ -196,9 +196,6 @@ class ProductDetailViewTest(TestCase):
 
         # Create inventory
         self.inventory = Inventory.objects.create(
-            name='Main Warehouse',
-            stock_count=100,
-            reserved_quantity=10,
             warehouse_location='New York'
         )
 
@@ -213,6 +210,7 @@ class ProductDetailViewTest(TestCase):
             shop=self.shop,
             slug='test-product',
             category=self.category,
+            stock_count=100,
             inventory=self.inventory
         )
 
@@ -224,6 +222,7 @@ class ProductDetailViewTest(TestCase):
             shop=self.shop,
             slug='related-product',
             category=self.category,
+            stock_count=1130,
             inventory=self.inventory
         )
 

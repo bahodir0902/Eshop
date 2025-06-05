@@ -36,7 +36,6 @@ class PaymentModelTest(TestCase):
 
         # Create test inventory
         self.inventory = Inventory.objects.create(
-            stock_count=10,
             warehouse_location='Test Location'
         )
 

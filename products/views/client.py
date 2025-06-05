@@ -35,13 +35,14 @@ def fetch_product(request):
         if cached_page:
             return cached_page
 
-    products = Product.objects.all().order_by('-is_available', 'name', 'created_at')
+    products = Product.objects.all().order_by('-is_available', 'name', 'price', 'created_at')
 
     if category_id:
         db_category = Category.objects.filter(pk=category_id).first()
-        subcategories = db_category.get_all_subcategories()
-        subcategories_id = [cat.id for cat in subcategories] + [db_category.id]
-        products = Product.objects.filter(category_id__in=subcategories_id)
+        if db_category:
+            subcategories = db_category.get_all_subcategories()
+            subcategories_id = [cat.id for cat in subcategories] + [db_category.id]
+            products = products.filter(category_id__in=subcategories_id)
 
     if q and q != 'None':
         products = products.annotate(
@@ -60,17 +61,17 @@ def fetch_product(request):
 
     if sort == 'price_asc':
         products = products.order_by('price')
-    if sort == 'price_desc':
+    elif sort == 'price_desc':
         products = products.order_by('-price')
-    if sort == 'name_asc':
+    elif sort == 'name_asc':
         products = products.order_by('name')
-    if sort == 'name_desc':
+    elif sort == 'name_desc':
         products = products.order_by('-name')
-    if sort == 'orders_asc':
+    elif sort == 'orders_asc':
         products = products.annotate(order_count=Count('ordered_product')).order_by('order_count')
-    if sort == 'orders_desc':
+    elif sort == 'orders_desc':
         products = products.annotate(order_count=Count('ordered_product')).order_by('-order_count')
-    if sort == 'newest':
+    elif sort == 'newest':
         products = products.order_by('-created_at')
 
     if rating and rating.isdigit():
@@ -82,9 +83,11 @@ def fetch_product(request):
     if max_price and max_price.isdigit():
         products = products.filter(price__lte=max_price)
 
-    products = products.annotate(stock_count=Sum('inventory__stock_count'))
-    products = products.annotate(rating=Avg('feedbacks__rating'))
-    products = products.annotate(total_ordered=Count('ordered_product'))
+    # Add calculated fields
+    products = products.annotate(
+        rating=Avg('feedbacks__rating'),
+        total_ordered=Count('ordered_product')
+    )
 
     paginator = Paginator(products, per_page) if per_page else Paginator(products, 32)
     products = paginator.get_page(page_number)
@@ -98,7 +101,6 @@ def fetch_product(request):
 class ProductListView(View):
     @method_decorator(ratelimit(key='user_or_ip', rate='30/m', block=True))
     def get(self, request):
-
         products = fetch_product(request)
 
         data = {
@@ -120,10 +122,6 @@ class ProductListView(View):
             data['favourite_items'] = favourite_items
 
         categories = Category.objects.all().annotate(product_count=Count('product_category'))
-        # categories = Category.objects.filter(parent_category=None).annotate(product_count=Count('product_category'))
-        # for category in categories:
-        #     pass
-
         data['categories'] = categories
 
         return render(request, 'products/list_products.html', context=data)
@@ -132,7 +130,10 @@ class ProductListView(View):
 class ProductDetailView(View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
-        related_products = Product.objects.exclude(pk=product.pk).filter(category=product.category)
+        related_products = Product.objects.exclude(pk=product.pk).filter(
+            category=product.category,
+        )
+
         total_ordered = OrderDetails.objects.filter(product=product).values('order').distinct().count()
         product.total_ordered = total_ordered
 
@@ -146,10 +147,12 @@ class ProductDetailView(View):
 
         if request.user.is_authenticated:
             favourite = Favourite.objects.filter(user=request.user).first()
-            favourite_items = FavouriteItem.objects.filter(favourite=favourite)
+            if favourite:
+                favourite_items = FavouriteItem.objects.filter(favourite=favourite)
 
             cart = Cart.objects.filter(user=request.user).first()
-            cart_items = CartItems.objects.filter(cart=cart)
+            if cart:
+                cart_items = CartItems.objects.filter(cart=cart)
 
             recent_products = RecentProducts.objects.filter(user=request.user)
             current_item = RecentProducts.objects.filter(user=request.user, product=product).first()
@@ -161,21 +164,35 @@ class ProductDetailView(View):
             for order in orders:
                 if OrderDetails.objects.filter(order=order, product=product).exists():
                     can_submit_review = True
-
                     user_feedback = FeedBack.objects.filter(product=product, user=request.user).first()
+                    break
 
-        features = product.key_features.split(
-            ',')  # features = [f.strip() for f in product.key_features.split(',') if f.strip()]
+        # Parse features - handle both comma-separated and list formats
+        features = []
+        if product.key_features:
+            if product.key_features.startswith('[') and product.key_features.endswith(']'):
+                try:
+                    # Handle JSON-like list format
+                    import json
+                    features = json.loads(product.key_features.replace("'", '"'))
+                except:
+                    # Fallback to comma-separated
+                    features = [f.strip() for f in product.key_features.strip('[]').split(',')]
+            else:
+                # Handle comma-separated format
+                features = [f.strip() for f in product.key_features.split(',') if f.strip()]
 
-        raw_specifications = product.specifications
-
-        items = re.split(r'[,\n]+', raw_specifications)
+        # Parse specifications
         specifications = {}
-        for item in items:
-            item = item.strip()
-            if ':' in item:
-                key, value = item.split(':', 1)  # only split on the first colon
-                specifications[key.strip()] = value.strip()
+        if product.specifications:
+            raw_specifications = product.specifications
+            items = re.split(r'[,\n]+', raw_specifications)
+
+            for item in items:
+                item = item.strip()
+                if ':' in item:
+                    key, value = item.split(':', 1)  # only split on the first colon
+                    specifications[key.strip()] = value.strip()
 
         data = {
             'product': product,
