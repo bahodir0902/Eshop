@@ -8,7 +8,7 @@ services:
     build: .
     volumes:
       - .:/app
-      - static_volume:/app/staticfiles/
+      - ./staticfiles:/app/staticfiles
       - media_volume:/app/media
     ports:
       - "8000:8000"
@@ -81,7 +81,6 @@ services:
       - backend
 
 volumes:
-  static_volume:
   media_volume:
 
 networks:
