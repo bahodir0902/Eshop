@@ -24,9 +24,6 @@ jobs:
             set -e
             cd /home/${{ secrets.SERVER_USER }}/Eshop
 
-            # Optional: Tell git to ignore changes to .env
-            git update-index --assume-unchanged .env
-
             # Check for local changes and stash if needed
             if ! git diff-index --quiet HEAD --; then
                 echo "Local changes found, stashing..."
