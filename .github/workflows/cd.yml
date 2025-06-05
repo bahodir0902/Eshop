@@ -1,14 +1,17 @@
 name: CD -> VPS
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - "CI"
+    types:
+      - completed
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.actor != 'github-actions[bot]'  # <--- Prevent loop
 
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.actor != 'github-actions[bot]' }}
 
     steps:
       - name: "Checkout repository"
@@ -21,18 +24,17 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: '22'
-
           script: |
             set -e
             cd /home/${{ secrets.SERVER_USER }}/Eshop
 
-            # Check for local changes and stash if needed
+            # Stash local changes if any
             if ! git diff-index --quiet HEAD --; then
                 echo "Local changes found, stashing..."
                 git stash push -m "auto-cd-stash" || true
             fi
 
-            # Pull fresh state from main branch
+            # Pull latest main
             git fetch origin main
             git reset --hard origin/main
             
@@ -41,10 +43,6 @@ jobs:
             sudo docker image prune -f
             sudo docker volume ls --format '{{.Name}}' | grep '^eshop_' | xargs -r sudo docker volume rm
             sudo docker network ls --format '{{.Name}}' | grep '^eshop_' | xargs -r sudo docker network rm
-
-
-           
-          
             
-            
-           
+            sudo docker compose build
+            sudo docker compose up -d
