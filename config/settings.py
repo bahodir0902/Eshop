@@ -136,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en'
 
-TIME_ZONE = env.str('timezone')
+TIME_ZONE = env.str('TIMEZONE')
 USE_L10N = True
 USE_I18N = True
 USE_TZ = env.bool('USE_TZ', default=True)
