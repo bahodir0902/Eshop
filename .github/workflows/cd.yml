@@ -1,0 +1,31 @@
+name: CD -> VPS (Supervisorlar bilan)
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v3
+
+      - name: "Restart Supervisor program on VPS"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: '22'
+
+          script: |
+            set -e
+            cd /home/${{ secrets.SERVER_USER }}/DRF-normativlar
+            
+            git stash || true
+            git pull --rebase origin main || true
+           
+            
+           

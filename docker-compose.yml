@@ -1,0 +1,62 @@
+services:
+  redis:
+    image: redis:7-alpine
+    networks:
+      - backend
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - static_volume:/app/static/
+      - media_volume:/app/media
+    ports:
+      - "8001:8001"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    networks:
+      - backend
+
+  celery:
+    build: .
+    command: celery -A config worker --loglevel=info
+    volumes:
+      - .:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+      - web
+    env_file:
+      - .env
+    networks:
+      - backend
+
+  celery-beat:
+    build: .
+    command: celery -A config beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+      - web
+    env_file:
+      - .env
+    networks:
+      - backend
+
+volumes:
+  static_volume:
+  media_volume:
+
+networks:
+  backend:
