@@ -36,7 +36,12 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             
-            
+            sudo docker compose down --volumes --remove-orphans
+            sudo docker images --format "{{.Repository}} {{.ID}}" | grep 'eshop' | awk '{print $2}' | xargs -r sudo docker rmi
+            sudo docker image prune -f
+            sudo docker volume ls --format '{{.Name}}' | grep '^eshop_' | xargs -r sudo docker volume rm
+            sudo docker network ls --format '{{.Name}}' | grep '^eshop_' | xargs -r sudo docker network rm
+
 
            
           
