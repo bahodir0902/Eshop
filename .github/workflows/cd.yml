@@ -1,4 +1,4 @@
-name: CD -> VPS (Supervisorlar bilan)
+name: CD -> VPS
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v3
 
-      - name: "Restart Supervisor program on VPS"
+      - name: "Deleting old images and containers and creating new ones on VPS"
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -22,10 +22,23 @@ jobs:
 
           script: |
             set -e
-            cd /home/${{ secrets.SERVER_USER }}/DRF-normativlar
-            
-            git stash || true
-            git pull --rebase origin main || true
+            cd /home/${{ secrets.SERVER_USER }}/Eshop
+
+            # Optional: Tell git to ignore changes to .env
+            git update-index --assume-unchanged .env
+
+            # Check for local changes and stash if needed
+            if ! git diff-index --quiet HEAD --; then
+                echo "Local changes found, stashing..."
+                git stash push -m "auto-cd-stash" || true
+            fi
+
+            # Pull fresh state from main branch
+            git fetch origin main
+            git reset --hard origin/main
+
            
+          
+            
             
            
