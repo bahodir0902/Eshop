@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   redis:
     image: redis:7-alpine
@@ -8,15 +10,21 @@ services:
     build: .
     volumes:
       - .:/app
-      - static_volume:/app/static/
+      - static_volume:/app/staticfiles/
       - media_volume:/app/media
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-    env_file:
-      - .env
+
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - redis
     networks:
@@ -27,30 +35,44 @@ services:
     command: celery -A config worker --loglevel=info
     volumes:
       - .:/app
+    env_file:
+      - .env
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - redis
-      - web
-    env_file:
-      - .env
     networks:
       - backend
 
   celery-beat:
     build: .
-    command: celery -A config beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    command: >
+      sh -c "
+        python3 manage.py migrate django_celery_beat --noinput &&
+        celery -A config beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+      "
     volumes:
       - .:/app
+    env_file:
+      - .env
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - redis
-      - web
-    env_file:
-      - .env
     networks:
       - backend
 
