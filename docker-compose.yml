@@ -12,6 +12,8 @@ services:
       - media_volume:/app/media
     ports:
       - "8000:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     env_file:
       - .env
     environment:
@@ -33,6 +35,8 @@ services:
     command: celery -A config worker --loglevel=info
     volumes:
       - .:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     env_file:
       - .env
     environment:
@@ -58,6 +62,8 @@ services:
       "
     volumes:
       - .:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     env_file:
       - .env
     environment:
