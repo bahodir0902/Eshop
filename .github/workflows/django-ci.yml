@@ -30,17 +30,34 @@ jobs:
             DB_PASSWORD: test_password
             DB_HOST: localhost
             DB_PORT: 5432
-            REDIS_HOST: redis://localhost
+            REDIS_HOST: localhost
             REDIS_PORT: 6379
             CELERY_BROKER_URL: redis://localhost:6379/0
             CELERY_RESULT_BACKEND: redis://localhost:6379/0
-            TIMEZONE: "Asia/Tashkent"
+            TIMEZONE: ${{ secrets.TIMEZONE }}
+
+            EMAIL_BACKEND: ${{ secrets.EMAIL_BACKEND }}
+            EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+            EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+            EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
+            EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+            EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+
+            AUTH_USER_MODEL: 'accounts.User'
+
+            USE_TZ: True
+            GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+            GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+            GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+            GOOGLE_AUTH_URL: ${{ secrets.GOOGLE_AUTH_URL }}
+            GOOGLE_TOKEN_URL: ${{ secrets.GOOGLE_TOKEN_URL }}
+            GOOGLE_USER_INFO_URL: ${{ secrets.GOOGLE_USER_INFO_URL }}
         steps:
             - uses: actions/checkout@v2
             - name: Set up Python
               uses: actions/setup-python@v2
               with:
-                  python-version: 3.11
+                  python-version: 3.13
             - name: Install dependencies
               run: |
                   python -m pip install --upgrade pip
