@@ -56,6 +56,7 @@ class Register(View):
             form.save()
             return JsonResponse({'success': True})
 
+        #TODO
         print(form.errors)
         return JsonResponse({'success': False, 'errors': form.errors})
 
@@ -323,7 +324,6 @@ class GoogleCallBackView(View):
 
         user_info = user_info_response.json()
 
-        print(user_info)
         google_user_id = user_info.get('sub')
         first_name = user_info.get('name', None)
         last_name = user_info.get('given_name', None)
@@ -344,6 +344,7 @@ class GoogleCallBackView(View):
 
         if created:
             user.set_unusable_password()
+            user.is_verified_email = True
             user.save()
 
         login(request, user)
