@@ -23,6 +23,7 @@ class ShopForm(forms.ModelForm):
         if user and not user.is_superuser:
             self.fields.get('owner', None)
         else:
+            #TODO -> Sort Sellers by groups, not by staff
             self.fields['owner'].queryset = User.objects.filter(is_staff=True)
 
 
